@@ -1,0 +1,116 @@
+{
+  "name": "struct-grid-editor",
+  "displayName": "StructGridEditor",
+  "description": "Edit JSON and YAML files in a spreadsheet-like grid view.",
+  "version": "0.0.1",
+  "license": "MIT",
+  "engines": {
+    "vscode": "^1.107.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "main": "./dist/extension.js",
+  "contributes": {
+    "problemMatchers": [
+      {
+        "name": "esbuild-watch",
+        "owner": "typescript",
+        "fileLocation": "relative",
+        "pattern": {
+          "regexp": "^\\s*(✘\\s*\\[ERROR\\]\\s*(.*))$",
+          "message": 1
+        },
+        "background": {
+          "activeOnStart": true,
+          "beginsPattern": "^\\[watch\\] build started$",
+          "endsPattern": "^\\[watch\\] build finished$"
+        }
+      }
+    ],
+    "commands": [
+      {
+        "command": "struct-grid-editor.openInGrid",
+        "title": "StructGridEditor で開く",
+        "category": "StructGridEditor"
+      }
+    ],
+    "menus": {
+      "explorer/context": [
+        {
+          "command": "struct-grid-editor.openInGrid",
+          "when": "resourceExtname == .json || resourceExtname == .yaml || resourceExtname == .yml",
+          "group": "navigation"
+        }
+      ],
+      "editor/title/context": [
+        {
+          "command": "struct-grid-editor.openInGrid",
+          "when": "resourceExtname == .json || resourceExtname == .yaml || resourceExtname == .yml",
+          "group": "navigation"
+        }
+      ],
+      "editor/title": [
+        {
+          "command": "struct-grid-editor.openInGrid",
+          "when": "resourceExtname == .json || resourceExtname == .yaml || resourceExtname == .yml",
+          "group": "navigation"
+        }
+      ]
+    },
+    "customEditors": [
+      {
+        "viewType": "struct-grid-editor.jsonEditor",
+        "displayName": "StructGridEditor",
+        "selector": [
+          {
+            "filenamePattern": "*.json"
+          },
+          {
+            "filenamePattern": "*.yaml"
+          },
+          {
+            "filenamePattern": "*.yml"
+          }
+        ],
+        "priority": "default"
+      }
+    ]
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run package",
+    "compile": "npm run check-types && npm run lint && node esbuild.js",
+    "watch": "npm-run-all -p watch:*",
+    "watch:esbuild": "node esbuild.js --watch",
+    "watch:tsc": "tsc --noEmit --watch --project tsconfig.json",
+    "package": "npm run check-types && npm run lint && node esbuild.js --production",
+    "compile-tests": "tsc -p . --outDir out",
+    "watch-tests": "tsc -p . -w --outDir out",
+    "pretest": "npm run compile-tests && npm run compile && npm run lint",
+    "check-types": "tsc --noEmit",
+    "lint": "eslint src",
+    "test": "vscode-test",
+    "test:unit": "vitest run",
+    "generate:sample": "node scripts/generate-large-sample.js"
+  },
+  "devDependencies": {
+    "@types/mocha": "^10.0.10",
+    "@types/node": "24.x",
+    "@types/vscode": "^1.107.0",
+    "@vscode/test-cli": "^0.0.15",
+    "@vscode/test-electron": "^3.0.0",
+    "esbuild": "^0.28.1",
+    "eslint": "^10.5.0",
+    "npm-run-all": "^4.1.5",
+    "typescript": "^6.0.3",
+    "typescript-eslint": "^8.61.1",
+    "vitest": "^5.0.1"
+  },
+  "overrides": {
+    "diff": "^8.0.4",
+    "serialize-javascript": "^7.0.6"
+  },
+  "dependencies": {
+    "yaml": "^2.9.1"
+  }
+}
