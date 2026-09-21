@@ -1,0 +1,32 @@
+[
+  {
+    "id": 1,
+    "name": "ユーザーA",
+    "role": "管理者",
+    "active": true
+  },
+  {
+    "id": 2,
+    "name": "ユーザーB",
+    "role": "一般ユーザー",
+    "active": false
+  },
+  {
+    "id": 3,
+    "name": "ユーザーC",
+    "role": "閲覧者",
+    "active": true
+  },
+  {
+    "id": 0,
+    "name": "",
+    "role": "",
+    "active": false
+  },
+  {
+    "id": "ww",
+    "name": "",
+    "role": null,
+    "active": false
+  }
+]

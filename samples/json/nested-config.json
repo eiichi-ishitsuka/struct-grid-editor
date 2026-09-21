@@ -1,0 +1,26 @@
+{
+  "appName": "StructGridEditorDemo",
+  "version": "1.0.0",
+  "server": {
+    "host": "127.0.0.1",
+    "port": 8080,
+    "ssl": {
+      "enabled": false,
+      "certPath": "/etc/ssl/certs/demo.crt"
+    }
+  },
+  "database": {
+    "type": "postgres",
+    "connection": {
+      "host": "localhost",
+      "port": 5432,
+      "user": "postgres_user",
+      "poolSize": 10
+    }
+  },
+  "features": [
+    "grid-view",
+    "nested-path-editor",
+    "yaml-support"
+  ]
+}

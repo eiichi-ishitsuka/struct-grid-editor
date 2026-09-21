@@ -1,0 +1,35 @@
+[
+  {
+    "id": 1,
+    "name": "山田 太郎",
+    "department": "開発部",
+    "skills": [
+      "TypeScript",
+      "Python",
+      "Go"
+    ],
+    "active": true
+  },
+  {
+    "id": 2,
+    "name": "佐藤 花子",
+    "department": "デザイン部",
+    "skills": [
+      "UI/UX",
+      "Figma",
+      "CSS"
+    ],
+    "active": true
+  },
+  {
+    "id": 3,
+    "name": "鈴木 一郎",
+    "department": "インフラ部",
+    "skills": [
+      "Kubernetes",
+      "Terraform",
+      "GCP"
+    ],
+    "active": false
+  }
+]
