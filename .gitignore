@@ -5,3 +5,4 @@ node_modules
 *.vsix
 .vitest/
 .agents/skills/**
+samples/large_data/
