@@ -252,3 +252,68 @@ export class MoveTableColumnUseCase {
         return parser.serialize(updatedDoc);
     }
 }
+
+/**
+ * テーブルビュー内の指定カラムの値を全行クリア（空文字化）するユースケース。
+ */
+export class ClearTableColumnUseCase {
+    constructor(private readonly parsers: IDocumentParser[]) {}
+
+    /**
+     * カラム値のクリアを実行します。
+     * @param text 元のファイルテキスト
+     * @param fileExtension ファイル拡張子
+     * @param arrayPathStr 対象配列のパス文字列
+     * @param columnKey 対象のカラムキー名
+     * @returns 更新・シリアライズされたテキスト
+     */
+    public execute(
+        text: string,
+        fileExtension: string,
+        arrayPathStr: string,
+        columnKey: string
+    ): string {
+        const parser = this.parsers.find(p => p.supports(fileExtension));
+        if (!parser) {
+            throw new Error(`サポートされていないファイル拡張子です: .${fileExtension}`);
+        }
+
+        const document = parser.parse(text);
+        const arrayPath = CellPath.fromString(arrayPathStr);
+
+        const updatedDoc = document.clearTableColumn(arrayPath, columnKey);
+        return parser.serialize(updatedDoc);
+    }
+}
+
+/**
+ * テーブルビュー内の全データセルの値を全クリアするユースケース。
+ */
+export class ClearTableDataUseCase {
+    constructor(private readonly parsers: IDocumentParser[]) {}
+
+    /**
+     * テーブル全セルのクリアを実行します。
+     * @param text 元のファイルテキスト
+     * @param fileExtension ファイル拡張子
+     * @param arrayPathStr 対象配列のパス文字列
+     * @returns 更新・シリアライズされたテキスト
+     */
+    public execute(
+        text: string,
+        fileExtension: string,
+        arrayPathStr: string
+    ): string {
+        const parser = this.parsers.find(p => p.supports(fileExtension));
+        if (!parser) {
+            throw new Error(`サポートされていないファイル拡張子です: .${fileExtension}`);
+        }
+
+        const document = parser.parse(text);
+        const arrayPath = CellPath.fromString(arrayPathStr);
+
+        const updatedDoc = document.clearTableData(arrayPath);
+        return parser.serialize(updatedDoc);
+    }
+}
+

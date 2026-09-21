@@ -107,4 +107,43 @@ describe('StructuredDocument Operations', () => {
 
         expect(js).toEqual({ a: 1, c: 3 });
     });
+
+    /**
+     * 【観点】テーブル列の値クリア操作の確認
+     * 【テスト内容】オブジェクト配列内の指定カラム（'role'）をクリアした際、各レコードのキー自体は残り、値のみが空文字列に更新されることを検証する。
+     */
+    it('should clear values of a specific column in a table array', () => {
+        const data = [
+            { id: 1, name: 'Alice', role: 'Dev' },
+            { id: 2, name: 'Bob', role: 'Designer' }
+        ];
+        const doc = new StructuredDocument(TreeNode.fromJS(data), DocumentFormat.defaultJson());
+
+        const updated = doc.clearTableColumn(new CellPath([]), 'role');
+        const js = updated.toJS();
+
+        expect(js[0].role).toBe('');
+        expect(js[1].role).toBe('');
+        expect(js[0].name).toBe('Alice');
+        expect(js[1].name).toBe('Bob');
+    });
+
+    /**
+     * 【観点】テーブル全データセルの値クリア操作の確認
+     * 【テスト内容】オブジェクト配列内の全レコードのデータセルの値をクリアした際、各キーの構造は保持されたまま、全フィールド値が空文字列に更新されることを検証する。
+     */
+    it('should clear all data cells in a table array', () => {
+        const data = [
+            { id: 1, name: 'Alice', role: 'Dev' },
+            { id: 2, name: 'Bob', role: 'Designer' }
+        ];
+        const doc = new StructuredDocument(TreeNode.fromJS(data), DocumentFormat.defaultJson());
+
+        const updated = doc.clearTableData(new CellPath([]));
+        const js = updated.toJS();
+
+        expect(js[0]).toEqual({ id: '', name: '', role: '' });
+        expect(js[1]).toEqual({ id: '', name: '', role: '' });
+    });
 });
+

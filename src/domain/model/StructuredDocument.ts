@@ -441,6 +441,75 @@ export class StructuredDocument {
     }
 
     /**
+     * 指定された配列パス内の全行から指定カラムの値をクリア（空文字列に設定）します。
+     * @param arrayPath 対象の配列へのアクセスパス
+     * @param columnKey クリア対象のカラムキー名
+     * @returns 更新後の新しい StructuredDocument インスタンス
+     */
+    public clearTableColumn(arrayPath: CellPath, columnKey: string): StructuredDocument {
+        const js = this.root.toJS();
+        let target = js;
+
+        if (arrayPath.length > 0) {
+            for (const seg of arrayPath.segments) {
+                target = target[seg];
+            }
+        }
+
+        if (!Array.isArray(target)) {
+            return this;
+        }
+
+        for (let i = 0; i < target.length; i++) {
+            const item = target[i];
+            if (typeof item === 'object' && item !== null && !Array.isArray(item)) {
+                if (columnKey in item) {
+                    item[columnKey] = '';
+                }
+            } else if (columnKey === 'col1' || columnKey === String(i)) {
+                target[i] = '';
+            }
+        }
+
+        const newRoot = TreeNode.fromJS(js);
+        return new StructuredDocument(newRoot, this.format, this.treeFlattener);
+    }
+
+    /**
+     * 指定された配列パス内の全行のデータセルの値をクリア（空文字列に設定）します。
+     * @param arrayPath 対象の配列へのアクセスパス
+     * @returns 更新後の新しい StructuredDocument インスタンス
+     */
+    public clearTableData(arrayPath: CellPath): StructuredDocument {
+        const js = this.root.toJS();
+        let target = js;
+
+        if (arrayPath.length > 0) {
+            for (const seg of arrayPath.segments) {
+                target = target[seg];
+            }
+        }
+
+        if (!Array.isArray(target)) {
+            return this;
+        }
+
+        for (let i = 0; i < target.length; i++) {
+            const item = target[i];
+            if (typeof item === 'object' && item !== null && !Array.isArray(item)) {
+                for (const k of Object.keys(item)) {
+                    item[k] = '';
+                }
+            } else {
+                target[i] = '';
+            }
+        }
+
+        const newRoot = TreeNode.fromJS(js);
+        return new StructuredDocument(newRoot, this.format, this.treeFlattener);
+    }
+
+    /**
      * ドキュメントツリー内に存在するすべての配列ノードを探索して一覧を返します。
      * @returns 発見された配列ノードの情報リスト
      */

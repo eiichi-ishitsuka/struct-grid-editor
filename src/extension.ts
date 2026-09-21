@@ -12,6 +12,8 @@ import {
     RenameKeyUseCase,
     MoveTableRowUseCase,
     MoveTableColumnUseCase,
+    ClearTableColumnUseCase,
+    ClearTableDataUseCase,
 } from './application/usecase/RowModificationUseCases';
 import { WebviewRenderer } from './infrastructure/webview/WebviewRenderer';
 import { StructGridEditorProvider } from './infrastructure/vscode/StructGridEditorProvider';
@@ -38,6 +40,8 @@ export function activate(context: vscode.ExtensionContext) {
     const renameKeyUseCase = new RenameKeyUseCase(parsers);
     const moveTableRowUseCase = new MoveTableRowUseCase(parsers);
     const moveTableColumnUseCase = new MoveTableColumnUseCase(parsers);
+    const clearTableColumnUseCase = new ClearTableColumnUseCase(parsers);
+    const clearTableDataUseCase = new ClearTableDataUseCase(parsers);
 
     // 3. プレゼンター & レンダラーの初期化
     const renderer = new WebviewRenderer();
@@ -56,7 +60,9 @@ export function activate(context: vscode.ExtensionContext) {
             renameKeyUseCase,
             moveTableRowUseCase,
             moveTableColumnUseCase,
-            renderer
+            renderer,
+            clearTableColumnUseCase,
+            clearTableDataUseCase
         )
     );
 

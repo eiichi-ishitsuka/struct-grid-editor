@@ -11,6 +11,8 @@ import {
     RenameKeyUseCase,
     MoveTableRowUseCase,
     MoveTableColumnUseCase,
+    ClearTableColumnUseCase,
+    ClearTableDataUseCase,
 } from '../../application/usecase/RowModificationUseCases';
 import { WebviewRenderer } from '../webview/WebviewRenderer';
 
@@ -49,7 +51,9 @@ export class StructGridEditorProvider implements vscode.CustomTextEditorProvider
         renameKeyUseCase: RenameKeyUseCase,
         moveTableRowUseCase: MoveTableRowUseCase,
         moveTableColumnUseCase: MoveTableColumnUseCase,
-        renderer: WebviewRenderer
+        renderer: WebviewRenderer,
+        clearTableColumnUseCase?: ClearTableColumnUseCase,
+        clearTableDataUseCase?: ClearTableDataUseCase
     ): vscode.Disposable {
         const provider = new StructGridEditorProvider(
             context,
@@ -63,7 +67,9 @@ export class StructGridEditorProvider implements vscode.CustomTextEditorProvider
             renameKeyUseCase,
             moveTableRowUseCase,
             moveTableColumnUseCase,
-            renderer
+            renderer,
+            clearTableColumnUseCase,
+            clearTableDataUseCase
         );
         return vscode.window.registerCustomEditorProvider(
             StructGridEditorProvider.viewType,
@@ -83,7 +89,9 @@ export class StructGridEditorProvider implements vscode.CustomTextEditorProvider
         private readonly renameKeyUseCase: RenameKeyUseCase,
         private readonly moveTableRowUseCase: MoveTableRowUseCase,
         private readonly moveTableColumnUseCase: MoveTableColumnUseCase,
-        private readonly renderer: WebviewRenderer
+        private readonly renderer: WebviewRenderer,
+        private readonly clearTableColumnUseCase?: ClearTableColumnUseCase,
+        private readonly clearTableDataUseCase?: ClearTableDataUseCase
     ) {}
 
     /**
@@ -204,6 +212,27 @@ export class StructGridEditorProvider implements vscode.CustomTextEditorProvider
                             message.fromIndex,
                             message.toIndex
                         );
+                        break;
+                    }
+                    case 'clear_table_column': {
+                        if (this.clearTableColumnUseCase) {
+                            newText = this.clearTableColumnUseCase.execute(
+                                text,
+                                ext,
+                                message.arrayPath || '',
+                                message.columnKey
+                            );
+                        }
+                        break;
+                    }
+                    case 'clear_table_data': {
+                        if (this.clearTableDataUseCase) {
+                            newText = this.clearTableDataUseCase.execute(
+                                text,
+                                ext,
+                                message.arrayPath || ''
+                            );
+                        }
                         break;
                     }
                     case 'open_text_editor': {

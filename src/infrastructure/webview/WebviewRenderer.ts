@@ -275,6 +275,78 @@ export class WebviewRenderer {
         th.drag-over-right {
             border-right: 2px solid var(--vscode-focusBorder, #007fd4) !important;
         }
+        .corner-cell {
+            cursor: pointer;
+            text-align: center;
+            user-select: none;
+            position: relative;
+            background-color: var(--vscode-editor-background);
+            transition: background-color 0.15s ease;
+        }
+        .corner-cell:hover {
+            background-color: var(--vscode-list-hoverBackground, rgba(255, 255, 255, 0.12));
+        }
+        .corner-cell.corner-selected {
+            background-color: var(--vscode-editor-selectionBackground, #04395e) !important;
+        }
+        .corner-icon {
+            display: inline-block;
+            width: 7px;
+            height: 7px;
+            border-right: 2px solid var(--vscode-descriptionForeground);
+            border-bottom: 2px solid var(--vscode-descriptionForeground);
+            opacity: 0.6;
+            transform: rotate(45deg) translate(-1px, -1px);
+        }
+        /* Selected states */
+        .cell-selected {
+            background-color: var(--vscode-editor-selectionBackground, #04395e) !important;
+            outline: 1px solid var(--vscode-focusBorder, #007fd4) !important;
+            outline-offset: -1px;
+        }
+        tr.row-selected td {
+            background-color: var(--vscode-editor-selectionBackground, #04395e) !important;
+        }
+        tr.row-selected td.col-index {
+            background-color: var(--vscode-editor-selectionHighlightBackground, #094771) !important;
+            color: var(--vscode-editor-foreground);
+            font-weight: bold;
+        }
+        th.col-header-selected {
+            background-color: var(--vscode-editor-selectionHighlightBackground, #094771) !important;
+            color: var(--vscode-editor-foreground);
+        }
+        td.col-selected {
+            background-color: var(--vscode-editor-selectionBackground, #04395e) !important;
+        }
+        /* Toast notification */
+        .toast-notification {
+            position: fixed;
+            bottom: 24px;
+            left: 50%;
+            transform: translateX(-50%) translateY(20px);
+            background-color: var(--vscode-notifications-background, #252526);
+            color: var(--vscode-notifications-foreground, #cccccc);
+            border: 1px solid var(--vscode-notifications-border, #454545);
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
+            padding: 8px 18px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 500;
+            z-index: 10000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.2s ease, transform 0.2s ease;
+        }
+        .toast-notification.show {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+        .context-menu-separator {
+            height: 1px;
+            background-color: var(--vscode-menu-separatorBackground, #454545);
+            margin: 4px 0;
+        }
         .context-menu {
             position: fixed;
             z-index: 9999;
@@ -399,15 +471,29 @@ export class WebviewRenderer {
 <body>
     <div id="app"></div>
     <div id="contextMenu" class="context-menu"></div>
+    <div id="toastNotification" class="toast-notification"></div>
 
     <script>
         const vscode = acquireVsCodeApi();
         const initialData = ${jsonData};
 
         // State
+        const savedState = vscode.getState() || {};
+        let customColOrders = savedState.customColOrders || {};
+        let customRowOrders = savedState.customRowOrders || {};
+        let currentSelection = { type: 'none' };
         let currentMode = initialData.viewMode || 'kv'; // 'table' | 'kv'
         let activeArrayPath = initialData.viewMode === 'table' ? (initialData.tableData?.path ?? '') : null;
         let searchQuery = '';
+
+        function saveCustomOrderState() {
+            const st = vscode.getState() || {};
+            vscode.setState({
+                ...st,
+                customColOrders,
+                customRowOrders
+            });
+        }
 
         function escapeHtml(str) {
             return (str ?? '')
@@ -428,6 +514,52 @@ export class WebviewRenderer {
             }
             const sub = (initialData.subArrays || []).find(s => s.path === activeArrayPath);
             return sub?.tableData || null;
+        }
+
+        function getOrderedTableView() {
+            const baseView = getActiveTableView();
+            if (!baseView) return null;
+            const pathKey = activeArrayPath || '__root__';
+
+            let cols = [...baseView.columns];
+            const customCols = customColOrders[pathKey];
+            if (customCols && Array.isArray(customCols) && customCols.length > 0) {
+                const colMap = new Map(cols.map(c => [c.key, c]));
+                const ordered = [];
+                for (const k of customCols) {
+                    if (colMap.has(k)) {
+                        ordered.push(colMap.get(k));
+                        colMap.delete(k);
+                    }
+                }
+                for (const c of colMap.values()) {
+                    ordered.push(c);
+                }
+                cols = ordered;
+            }
+
+            let rows = [...baseView.rows];
+            const customRows = customRowOrders[pathKey];
+            if (customRows && Array.isArray(customRows) && customRows.length > 0) {
+                const rowMap = new Map(rows.map(r => [r.path, r]));
+                const ordered = [];
+                for (const p of customRows) {
+                    if (rowMap.has(p)) {
+                        ordered.push(rowMap.get(p));
+                        rowMap.delete(p);
+                    }
+                }
+                for (const r of rowMap.values()) {
+                    ordered.push(r);
+                }
+                rows = ordered;
+            }
+
+            return {
+                ...baseView,
+                columns: cols,
+                rows: rows
+            };
         }
 
         function getBreadcrumbSegments(rawPath) {
@@ -506,7 +638,7 @@ export class WebviewRenderer {
 
         function renderApp() {
             const app = document.getElementById('app');
-            const tableView = getActiveTableView();
+            const tableView = getOrderedTableView();
             const isTableMode = currentMode === 'table' && tableView;
 
             let html = '';
@@ -544,16 +676,17 @@ export class WebviewRenderer {
 
             app.innerHTML = html;
             attachEventListeners();
+            updateSelectionVisuals();
         }
 
         // Render Spreadsheet Table View
         function renderTableSpreadsheet(tableView) {
-            let thead = '<tr><th class="col-index">#</th>';
+            let thead = '<tr><th class="col-index corner-cell" id="cornerSelectAll" title="すべて選択 (Ctrl+A / Cmd+A)"><span class="corner-icon"></span></th>';
             tableView.columns.forEach((col, colIdx) => {
                 const typeClass = col.type === 'array' ? 'array' : col.type === 'object' ? 'object' : col.type === 'number' ? 'number' : col.type === 'boolean' ? 'boolean' : 'other';
                 const typeSym = col.type === 'array' ? '[ ]' : col.type === 'object' ? '{ }' : col.type === 'number' ? '1234' : col.type === 'boolean' ? 'T/F' : 'Aa';
                 thead += \`
-                <th class="col-header-cell" draggable="true" data-col-index="\${colIdx}" data-col-key="\${escapeHtml(col.key)}">
+                <th class="col-header-cell" draggable="true" data-col-index="\${colIdx}" data-col-key="\${escapeHtml(col.key)}" title="クリックで列を選択 / ドラッグして移動">
                     <span class="col-header-label" contenteditable="true" spellcheck="false" data-col-key="\${escapeHtml(col.key)}" data-old-label="\${escapeHtml(col.label)}" title="クリックして列名を編集">\${escapeHtml(col.label)}</span>
                     <span class="col-type-tag col-type-\${typeClass}">\${typeSym}</span>
                 </th>\`;
@@ -580,7 +713,7 @@ export class WebviewRenderer {
                     }
 
                     tbody += \`<tr class="table-row-item" draggable="true" data-row-index="\${rowIdx}" data-row-path="\${escapeHtml(row.path)}">\`;
-                    tbody += \`<td class="col-index drag-handle" data-row-index="\${rowIdx}" data-row-path="\${escapeHtml(row.path)}" title="ドラッグして行を移動 / 右クリックで行を削除">\${rowIdx + 1}</td>\`;
+                    tbody += \`<td class="col-index drag-handle row-header" data-row-index="\${rowIdx}" data-row-path="\${escapeHtml(row.path)}" title="クリックで行を選択 / ドラッグして移動 / 右クリックで削除">\${rowIdx + 1}</td>\`;
 
                     for (const col of tableView.columns) {
                         const cell = row.cells[col.key];
@@ -590,14 +723,14 @@ export class WebviewRenderer {
 
                         if (col.type === 'array' || cellType === 'array') {
                             tbody += \`
-                            <td class="col-val col-val-array">
+                            <td class="col-val col-val-array" data-path="\${escapeHtml(cellPath)}" data-col-key="\${escapeHtml(col.key)}" data-row-index="\${rowIdx}">
                                 <button class="btn-edit-array edit-sub-array-btn" data-array-path="\${escapeHtml(cellPath)}" title="編集する">
                                     編集する
                                 </button>
                             </td>\`;
                         } else {
                             tbody += \`
-                            <td class="col-val" contenteditable="true" data-path="\${escapeHtml(cellPath)}" data-type="\${cellType}">\${escapeHtml(val)}</td>
+                            <td class="col-val" contenteditable="true" data-path="\${escapeHtml(cellPath)}" data-col-key="\${escapeHtml(col.key)}" data-row-index="\${rowIdx}" data-type="\${cellType}">\${escapeHtml(val)}</td>
                             \`;
                         }
                     }
@@ -609,7 +742,7 @@ export class WebviewRenderer {
             }
 
             return \`
-            <div class="table-container">
+            <div class="table-container" id="tableContainer">
                 <table id="spreadsheetTable">
                     <thead>\${thead}</thead>
                     <tbody>\${tbody}</tbody>
@@ -917,7 +1050,7 @@ export class WebviewRenderer {
                 });
             });
 
-            // Context menu logic
+            // Context menu element and logic
             const contextMenu = document.getElementById('contextMenu');
             const hideContextMenu = () => {
                 if (contextMenu) {
@@ -925,34 +1058,328 @@ export class WebviewRenderer {
                     contextMenu.innerHTML = '';
                 }
             };
-            document.addEventListener('click', hideContextMenu);
 
-            // Right-click on row index cell in spreadsheet (#)
-            document.querySelectorAll('.col-index.drag-handle').forEach(el => {
+            function showContextMenu(e, items) {
+                if (!contextMenu) return;
+                contextMenu.innerHTML = '';
+                items.forEach(item => {
+                    if (item.isSeparator) {
+                        const sep = document.createElement('div');
+                        sep.className = 'context-menu-separator';
+                        contextMenu.appendChild(sep);
+                    } else {
+                        const div = document.createElement('div');
+                        div.className = 'context-menu-item' + (item.danger ? ' danger' : '');
+                        div.innerText = item.label;
+                        div.addEventListener('click', (ev) => {
+                            ev.stopPropagation();
+                            hideContextMenu();
+                            item.action();
+                        });
+                        contextMenu.appendChild(div);
+                    }
+                });
+                contextMenu.style.left = e.clientX + 'px';
+                contextMenu.style.top = e.clientY + 'px';
+                contextMenu.style.display = 'block';
+            }
+
+            // Toast Notification helper
+            let toastTimeout = null;
+            function showToastMessage(text) {
+                const toast = document.getElementById('toastNotification');
+                if (!toast) return;
+                toast.innerText = text;
+                toast.classList.add('show');
+                if (toastTimeout) clearTimeout(toastTimeout);
+                toastTimeout = setTimeout(() => {
+                    toast.classList.remove('show');
+                }, 1800);
+            }
+
+            // Selection Visuals update
+            function updateSelectionVisuals() {
+                document.querySelectorAll('.cell-selected, .row-selected, .col-header-selected, .col-selected, .corner-selected').forEach(el => {
+                    el.classList.remove('cell-selected', 'row-selected', 'col-header-selected', 'col-selected', 'corner-selected');
+                });
+
+                if (currentSelection.type === 'all') {
+                    const corner = document.getElementById('cornerSelectAll');
+                    if (corner) corner.classList.add('corner-selected');
+                    document.querySelectorAll('td.col-val').forEach(td => td.classList.add('cell-selected'));
+                } else if (currentSelection.type === 'row') {
+                    const row = document.querySelector('tr.table-row-item[data-row-index="' + currentSelection.rowIndex + '"]');
+                    if (row) row.classList.add('row-selected');
+                } else if (currentSelection.type === 'col') {
+                    const th = document.querySelector('th.col-header-cell[data-col-key="' + currentSelection.colKey + '"]');
+                    if (th) th.classList.add('col-header-selected');
+                    document.querySelectorAll('td.col-val[data-col-key="' + currentSelection.colKey + '"]').forEach(td => {
+                        td.classList.add('col-selected');
+                    });
+                } else if (currentSelection.type === 'cell') {
+                    const td = document.querySelector('td.col-val[data-path="' + currentSelection.path + '"]');
+                    if (td) td.classList.add('cell-selected');
+                }
+            }
+
+            // TSV formatting & generation
+            function formatTsvValue(val) {
+                if (val === null || val === undefined) return '';
+                const str = String(val);
+                if (str.indexOf('\\t') !== -1 || str.indexOf('\\n') !== -1 || str.indexOf('\\r') !== -1 || str.indexOf('"') !== -1) {
+                    return '"' + str.replace(/"/g, '""') + '"';
+                }
+                return str;
+            }
+
+            function generateTsv() {
+                const view = getOrderedTableView();
+                if (!view) return '';
+
+                if (currentSelection.type === 'all') {
+                    const header = view.columns.map(c => formatTsvValue(c.label)).join('\\t');
+                    const rows = view.rows.map(r => {
+                        return view.columns.map(c => formatTsvValue(r.cells[c.key]?.displayValue ?? '')).join('\\t');
+                    }).join('\\n');
+                    return header + '\\n' + rows;
+                } else if (currentSelection.type === 'row') {
+                    const row = view.rows.find(r => r.path === currentSelection.path) || view.rows[currentSelection.rowIndex];
+                    if (!row) return '';
+                    return view.columns.map(c => formatTsvValue(row.cells[c.key]?.displayValue ?? '')).join('\\t');
+                } else if (currentSelection.type === 'col') {
+                    return view.rows.map(r => formatTsvValue(r.cells[currentSelection.colKey]?.displayValue ?? '')).join('\\n');
+                } else if (currentSelection.type === 'cell') {
+                    const cellElem = document.querySelector('td.col-val[data-path="' + currentSelection.path + '"]');
+                    return formatTsvValue(cellElem ? cellElem.innerText : '');
+                }
+                return '';
+            }
+
+            async function copySelection(showToast = true) {
+                const tsv = generateTsv();
+                if (!tsv) return;
+                try {
+                    await navigator.clipboard.writeText(tsv);
+                    if (showToast) showToastMessage('クリップボードにTSV形式でコピーしました');
+                } catch (err) {
+                    const ta = document.createElement('textarea');
+                    ta.value = tsv;
+                    ta.style.position = 'fixed';
+                    ta.style.opacity = '0';
+                    document.body.appendChild(ta);
+                    ta.select();
+                    document.execCommand('copy');
+                    document.body.removeChild(ta);
+                    if (showToast) showToastMessage('クリップボードにTSV形式でコピーしました');
+                }
+            }
+
+            async function cutSelection() {
+                if (currentSelection.type === 'none') return;
+                await copySelection(false);
+                deleteSelection();
+                showToastMessage('切り取りました（TSV形式でコピー済み）');
+            }
+
+            function deleteSelection() {
+                if (currentSelection.type === 'row') {
+                    vscode.postMessage({
+                        command: 'delete_row',
+                        path: currentSelection.path
+                    });
+                    currentSelection = { type: 'none' };
+                    updateSelectionVisuals();
+                } else if (currentSelection.type === 'col') {
+                    vscode.postMessage({
+                        command: 'clear_table_column',
+                        arrayPath: activeArrayPath || '',
+                        columnKey: currentSelection.colKey
+                    });
+                    document.querySelectorAll('td.col-val[data-col-key="' + currentSelection.colKey + '"]').forEach(td => {
+                        td.innerText = '';
+                    });
+                } else if (currentSelection.type === 'all') {
+                    vscode.postMessage({
+                        command: 'clear_table_data',
+                        arrayPath: activeArrayPath || ''
+                    });
+                    document.querySelectorAll('td.col-val').forEach(td => {
+                        td.innerText = '';
+                    });
+                } else if (currentSelection.type === 'cell') {
+                    vscode.postMessage({
+                        command: 'update_cell',
+                        path: currentSelection.path,
+                        value: ''
+                    });
+                    const cellElem = document.querySelector('td.col-val[data-path="' + currentSelection.path + '"]');
+                    if (cellElem) cellElem.innerText = '';
+                }
+            }
+
+            // Top-left Corner Cell Click & Context Menu (全選択)
+            const corner = document.getElementById('cornerSelectAll');
+            if (corner) {
+                corner.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    currentSelection = { type: 'all' };
+                    updateSelectionVisuals();
+                });
+
+                corner.addEventListener('contextmenu', (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    currentSelection = { type: 'all' };
+                    updateSelectionVisuals();
+
+                    showContextMenu(e, [
+                        { label: 'すべてコピー (TSV)', action: () => copySelection(true) },
+                        { label: 'すべて切り取り', action: () => cutSelection() },
+                        { isSeparator: true },
+                        { label: '全データをクリア', danger: true, action: () => deleteSelection() }
+                    ]);
+                });
+            }
+
+            // Row Header Click & Context Menu (行選択 / 行削除)
+            document.querySelectorAll('.col-index.drag-handle.row-header').forEach(el => {
+                el.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    const rowIndex = parseInt(el.getAttribute('data-row-index'), 10);
+                    const rowPath = el.getAttribute('data-row-path');
+                    currentSelection = { type: 'row', rowIndex, path: rowPath };
+                    updateSelectionVisuals();
+                });
+
                 el.addEventListener('contextmenu', (e) => {
                     e.preventDefault();
                     e.stopPropagation();
+                    const rowIndex = parseInt(el.getAttribute('data-row-index'), 10);
                     const rowPath = el.getAttribute('data-row-path');
-                    const rowIndex = el.getAttribute('data-row-index');
-                    if (!contextMenu) return;
+                    currentSelection = { type: 'row', rowIndex, path: rowPath };
+                    updateSelectionVisuals();
 
-                    const rowNum = parseInt(rowIndex, 10) + 1;
-                    contextMenu.innerHTML = '<div class="context-menu-item danger" id="cmDeleteRow">行 ' + rowNum + ' を削除</div>';
-                    contextMenu.style.left = e.clientX + 'px';
-                    contextMenu.style.top = e.clientY + 'px';
-                    contextMenu.style.display = 'block';
-
-                    const btn = document.getElementById('cmDeleteRow');
-                    if (btn) {
-                        btn.addEventListener('click', () => {
-                            hideContextMenu();
-                            vscode.postMessage({
-                                command: 'delete_row',
-                                path: rowPath
-                            });
-                        });
-                    }
+                    showContextMenu(e, [
+                        { label: '行をコピー (TSV)', action: () => copySelection(true) },
+                        { label: '行を切り取り', action: () => cutSelection() },
+                        { isSeparator: true },
+                        { label: '行 ' + (rowIndex + 1) + ' を削除', danger: true, action: () => deleteSelection() }
+                    ]);
                 });
+            });
+
+            // Column Header Click & Context Menu (列選択)
+            document.querySelectorAll('th.col-header-cell').forEach(th => {
+                th.addEventListener('click', (e) => {
+                    if (e.target.classList.contains('col-header-label')) {
+                        return; // allow inline label editing
+                    }
+                    e.stopPropagation();
+                    const colIndex = parseInt(th.getAttribute('data-col-index'), 10);
+                    const colKey = th.getAttribute('data-col-key');
+                    currentSelection = { type: 'col', colIndex, colKey };
+                    updateSelectionVisuals();
+                });
+
+                th.addEventListener('contextmenu', (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    const colIndex = parseInt(th.getAttribute('data-col-index'), 10);
+                    const colKey = th.getAttribute('data-col-key');
+                    currentSelection = { type: 'col', colIndex, colKey };
+                    updateSelectionVisuals();
+
+                    showContextMenu(e, [
+                        { label: '列をコピー (TSV)', action: () => copySelection(true) },
+                        { label: '列を切り取り', action: () => cutSelection() },
+                        { isSeparator: true },
+                        { label: '列の値をクリア', danger: true, action: () => deleteSelection() }
+                    ]);
+                });
+            });
+
+            // Data Cell Click & Context Menu (セル選択)
+            document.querySelectorAll('td.col-val').forEach(cell => {
+                cell.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    const path = cell.getAttribute('data-path');
+                    const colKey = cell.getAttribute('data-col-key');
+                    const rowIndex = parseInt(cell.getAttribute('data-row-index'), 10);
+                    currentSelection = { type: 'cell', path, colKey, rowIndex };
+                    updateSelectionVisuals();
+                });
+
+                cell.addEventListener('contextmenu', (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    const path = cell.getAttribute('data-path');
+                    const colKey = cell.getAttribute('data-col-key');
+                    const rowIndex = parseInt(cell.getAttribute('data-row-index'), 10);
+
+                    if (currentSelection.type !== 'all' && currentSelection.type !== 'row' && currentSelection.type !== 'col') {
+                        currentSelection = { type: 'cell', path, colKey, rowIndex };
+                        updateSelectionVisuals();
+                    }
+
+                    showContextMenu(e, [
+                        { label: 'コピー (TSV)', action: () => copySelection(true) },
+                        { label: '切り取り', action: () => cutSelection() },
+                        { isSeparator: true },
+                        { label: 'セルの値をクリア', danger: true, action: () => deleteSelection() }
+                    ]);
+                });
+            });
+
+            // Deselect on outside click
+            document.addEventListener('click', (e) => {
+                hideContextMenu();
+                if (!e.target.closest('#spreadsheetTable') && !e.target.closest('#contextMenu')) {
+                    if (currentSelection.type !== 'none') {
+                        currentSelection = { type: 'none' };
+                        updateSelectionVisuals();
+                    }
+                }
+            });
+
+            // Global Keyboard Shortcuts (Ctrl+C, Ctrl+X, Delete/Backspace, Ctrl+A, Escape)
+            document.addEventListener('keydown', (e) => {
+                const isEditing = document.activeElement && (
+                    document.activeElement.tagName === 'INPUT' ||
+                    (document.activeElement.getAttribute('contenteditable') === 'true' && (
+                        document.activeElement.classList.contains('col-header-label') ||
+                        document.activeElement.classList.contains('path-text')
+                    ))
+                );
+                if (isEditing) return;
+
+                const isCmdOrCtrl = e.ctrlKey || e.metaKey;
+
+                if (isCmdOrCtrl && (e.key === 'c' || e.key === 'C')) {
+                    if (currentSelection.type !== 'none') {
+                        e.preventDefault();
+                        copySelection(true);
+                    }
+                } else if (isCmdOrCtrl && (e.key === 'x' || e.key === 'X')) {
+                    if (currentSelection.type !== 'none') {
+                        e.preventDefault();
+                        cutSelection();
+                    }
+                } else if (isCmdOrCtrl && (e.key === 'a' || e.key === 'A')) {
+                    if (currentMode === 'table') {
+                        e.preventDefault();
+                        currentSelection = { type: 'all' };
+                        updateSelectionVisuals();
+                    }
+                } else if (e.key === 'Delete' || e.key === 'Backspace') {
+                    const isCellTyping = document.activeElement && document.activeElement.classList.contains('col-val') && document.activeElement.getAttribute('contenteditable') === 'true';
+                    if (currentSelection.type !== 'none' && !isCellTyping) {
+                        e.preventDefault();
+                        deleteSelection();
+                    }
+                } else if (e.key === 'Escape') {
+                    currentSelection = { type: 'none' };
+                    updateSelectionVisuals();
+                }
             });
 
             // Right-click on path-text in KV view
@@ -962,27 +1389,22 @@ export class WebviewRenderer {
                     e.stopPropagation();
                     const path = el.getAttribute('data-path');
                     const key = el.getAttribute('data-old-key') || path;
-                    if (!contextMenu) return;
-
-                    contextMenu.innerHTML = '<div class="context-menu-item danger" id="cmDeleteKey">キー "' + escapeHtml(key) + '" を削除</div>';
-                    contextMenu.style.left = e.clientX + 'px';
-                    contextMenu.style.top = e.clientY + 'px';
-                    contextMenu.style.display = 'block';
-
-                    const btn = document.getElementById('cmDeleteKey');
-                    if (btn) {
-                        btn.addEventListener('click', () => {
-                            hideContextMenu();
-                            vscode.postMessage({
-                                command: 'delete_row',
-                                path: path
-                            });
-                        });
-                    }
+                    showContextMenu(e, [
+                        {
+                            label: 'キー "' + key + '" を削除',
+                            danger: true,
+                            action: () => {
+                                vscode.postMessage({
+                                    command: 'delete_row',
+                                    path: path
+                                });
+                            }
+                        }
+                    ]);
                 });
             });
 
-            // Row Drag & Drop
+            // Row Drag & Drop (見た目のみの並び替え: JSON/YAML の順序は変更しない)
             let draggedRowIndex = null;
             document.querySelectorAll('tr.table-row-item').forEach(row => {
                 row.addEventListener('dragstart', (e) => {
@@ -1020,17 +1442,21 @@ export class WebviewRenderer {
                     const targetIndex = parseInt(row.getAttribute('data-row-index'), 10);
                     if (draggedRowIndex === null || draggedRowIndex === targetIndex) return;
 
-                    vscode.postMessage({
-                        command: 'move_table_row',
-                        arrayPath: activeArrayPath || '',
-                        fromIndex: draggedRowIndex,
-                        toIndex: targetIndex
-                    });
+                    const pathKey = activeArrayPath || '__root__';
+                    const view = getOrderedTableView();
+                    if (view && view.rows) {
+                        const rowPaths = view.rows.map(r => r.path);
+                        const [moved] = rowPaths.splice(draggedRowIndex, 1);
+                        rowPaths.splice(targetIndex, 0, moved);
+                        customRowOrders[pathKey] = rowPaths;
+                        saveCustomOrderState();
+                        renderApp();
+                    }
                     draggedRowIndex = null;
                 });
             });
 
-            // Column Drag & Drop
+            // Column Drag & Drop (見た目のみの並び替え: JSON/YAML の順序は変更しない)
             let draggedColIndex = null;
             document.querySelectorAll('th.col-header-cell').forEach(th => {
                 th.addEventListener('dragstart', (e) => {
@@ -1072,12 +1498,16 @@ export class WebviewRenderer {
                     const targetIndex = parseInt(th.getAttribute('data-col-index'), 10);
                     if (draggedColIndex === null || draggedColIndex === targetIndex) return;
 
-                    vscode.postMessage({
-                        command: 'move_table_column',
-                        arrayPath: activeArrayPath || '',
-                        fromIndex: draggedColIndex,
-                        toIndex: targetIndex
-                    });
+                    const pathKey = activeArrayPath || '__root__';
+                    const view = getOrderedTableView();
+                    if (view && view.columns) {
+                        const colKeys = view.columns.map(c => c.key);
+                        const [moved] = colKeys.splice(draggedColIndex, 1);
+                        colKeys.splice(targetIndex, 0, moved);
+                        customColOrders[pathKey] = colKeys;
+                        saveCustomOrderState();
+                        renderApp();
+                    }
                     draggedColIndex = null;
                 });
             });
