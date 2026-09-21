@@ -1,6 +1,7 @@
 .vscode/**
 .vscode-test/**
 out/**
+vsix/**
 node_modules/**
 src/**
 .gitignore
@@ -12,3 +13,11 @@ vsc-extension-quickstart.md
 **/*.map
 **/*.ts
 **/.vscode-test.*
+.agents/**
+.vitest/**
+docs/**
+samples/**
+scripts/**
+typedoc.json
+vitest.config.ts
+*.vsix

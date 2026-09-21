@@ -215,9 +215,118 @@ export class WebviewRenderer {
         .col-header-cell {
             user-select: none;
             cursor: grab;
+            position: relative;
         }
         .col-header-cell:active {
             cursor: grabbing;
+        }
+        .col-header-inner {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            padding-right: 8px;
+        }
+        .col-resizer {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 7px;
+            bottom: 0;
+            cursor: col-resize;
+            user-select: none;
+            z-index: 15;
+        }
+        .col-resizer:hover, .col-resizer.is-resizing {
+            background-color: var(--vscode-focusBorder, #007fd4);
+        }
+        .col-sort-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: none;
+            border: none;
+            color: var(--vscode-descriptionForeground);
+            cursor: pointer;
+            padding: 1px 3px;
+            font-size: 11px;
+            border-radius: 2px;
+            opacity: 0.6;
+            line-height: 1;
+            transition: all 0.15s ease;
+        }
+        .col-sort-btn:hover {
+            opacity: 1;
+            background-color: var(--vscode-toolbar-hoverBackground, rgba(255, 255, 255, 0.1));
+            color: var(--vscode-editor-foreground);
+        }
+        .col-sort-btn.active {
+            opacity: 1;
+            color: var(--vscode-textLink-foreground, #3794ff);
+            font-weight: bold;
+        }
+        .col-visibility-wrapper {
+            position: relative;
+        }
+        .col-visibility-dropdown {
+            position: absolute;
+            top: calc(100% + 4px);
+            left: 0;
+            background: var(--vscode-menu-background, #252526);
+            color: var(--vscode-menu-foreground, #cccccc);
+            border: 1px solid var(--vscode-menu-border, #454545);
+            border-radius: 4px;
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
+            padding: 8px 12px;
+            z-index: 1000;
+            min-width: 180px;
+            max-height: 280px;
+            overflow-y: auto;
+        }
+        .col-visibility-title {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-weight: 600;
+            font-size: 11px;
+            margin-bottom: 6px;
+            padding-bottom: 4px;
+            border-bottom: 1px solid var(--vscode-menu-separatorBackground, #454545);
+        }
+        .btn-link {
+            background: none;
+            border: none;
+            color: var(--vscode-textLink-foreground, #3794ff);
+            cursor: pointer;
+            font-size: 11px;
+            padding: 0;
+            text-decoration: none;
+        }
+        .btn-link:hover {
+            text-decoration: underline;
+        }
+        .col-visibility-list {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+        .col-visibility-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 3px 2px;
+            font-size: 12px;
+            cursor: pointer;
+            user-select: none;
+        }
+        .col-visibility-item:hover {
+            color: var(--vscode-editor-foreground, #fff);
+        }
+        .col-visibility-item input[type="checkbox"] {
+            cursor: pointer;
+            margin: 0;
         }
         .col-header-label {
             display: inline-block;
@@ -380,12 +489,17 @@ export class WebviewRenderer {
         }
         .col-val {
             font-family: var(--vscode-editor-font-family, monospace);
-            min-width: 120px;
+            min-width: 60px;
             cursor: text;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            box-sizing: border-box;
         }
         .col-val:focus {
             outline: 2px solid var(--vscode-focusBorder);
             background-color: var(--vscode-editor-selectionBackground);
+            white-space: normal;
         }
         .col-val-array,
         .col-val-object {
@@ -466,6 +580,74 @@ export class WebviewRenderer {
             text-align: center;
             color: var(--vscode-descriptionForeground);
         }
+        .pagination-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 8px 16px;
+            background-color: var(--vscode-editor-background);
+            border-top: 1px solid var(--vscode-panel-border);
+            font-size: 12px;
+            color: var(--vscode-descriptionForeground);
+            flex-wrap: wrap;
+            gap: 8px;
+            position: sticky;
+            left: 0;
+            z-index: 8;
+        }
+        .pagination-info {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .pagination-controls {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .pagination-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 28px;
+            height: 24px;
+            padding: 0 8px;
+            font-size: 12px;
+            background-color: var(--vscode-button-secondaryBackground, #3a3d41);
+            color: var(--vscode-button-secondaryForeground, #ffffff);
+            border: 1px solid var(--vscode-button-border, transparent);
+            border-radius: 3px;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            user-select: none;
+        }
+        .pagination-btn:hover:not(:disabled) {
+            background-color: var(--vscode-button-secondaryHoverBackground, #45494e);
+        }
+        .pagination-btn:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+        .pagination-page-jump {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            margin-left: 8px;
+        }
+        .pagination-input {
+            width: 48px;
+            height: 22px;
+            padding: 0 4px;
+            background-color: var(--vscode-input-background, #3c3c3c);
+            color: var(--vscode-input-foreground, #cccccc);
+            border: 1px solid var(--vscode-input-border, #3c3c3c);
+            border-radius: 2px;
+            font-size: 12px;
+            text-align: center;
+        }
+        .pagination-input:focus {
+            outline: 1px solid var(--vscode-focusBorder);
+        }
     </style>
 </head>
 <body>
@@ -481,17 +663,26 @@ export class WebviewRenderer {
         const savedState = vscode.getState() || {};
         let customColOrders = savedState.customColOrders || {};
         let customRowOrders = savedState.customRowOrders || {};
+        let customColWidths = savedState.customColWidths || {};
+        let hiddenCols = savedState.hiddenCols || {};
+        let sortState = savedState.sortState || {};
         let currentSelection = { type: 'none' };
         let currentMode = initialData.viewMode || 'kv'; // 'table' | 'kv'
         let activeArrayPath = initialData.viewMode === 'table' ? (initialData.tableData?.path ?? '') : null;
         let searchQuery = '';
+        let currentPage = savedState.currentPage || 1;
+        const PAGE_SIZE = 100;
 
         function saveCustomOrderState() {
             const st = vscode.getState() || {};
             vscode.setState({
                 ...st,
                 customColOrders,
-                customRowOrders
+                customRowOrders,
+                customColWidths,
+                hiddenCols,
+                sortState,
+                currentPage
             });
         }
 
@@ -521,7 +712,10 @@ export class WebviewRenderer {
             if (!baseView) return null;
             const pathKey = activeArrayPath || '__root__';
 
-            let cols = [...baseView.columns];
+            const allCols = [...baseView.columns];
+            const hidden = hiddenCols[pathKey] || [];
+            let cols = allCols.filter(c => !hidden.includes(c.key));
+
             const customCols = customColOrders[pathKey];
             if (customCols && Array.isArray(customCols) && customCols.length > 0) {
                 const colMap = new Map(cols.map(c => [c.key, c]));
@@ -539,25 +733,66 @@ export class WebviewRenderer {
             }
 
             let rows = [...baseView.rows];
-            const customRows = customRowOrders[pathKey];
-            if (customRows && Array.isArray(customRows) && customRows.length > 0) {
-                const rowMap = new Map(rows.map(r => [r.path, r]));
-                const ordered = [];
-                for (const p of customRows) {
-                    if (rowMap.has(p)) {
-                        ordered.push(rowMap.get(p));
-                        rowMap.delete(p);
+            const curSort = sortState[pathKey];
+            if (curSort && curSort.colKey && curSort.direction) {
+                const sortKey = curSort.colKey;
+                const isAsc = curSort.direction === 'asc';
+                rows.sort((a, b) => {
+                    const cellA = a.cells[sortKey];
+                    const cellB = b.cells[sortKey];
+                    const valA = cellA ? cellA.displayValue : '';
+                    const valB = cellB ? cellB.displayValue : '';
+                    const typeA = cellA ? cellA.type : 'string';
+                    const typeB = cellB ? cellB.type : 'string';
+
+                    const aEmpty = (valA === '' || valA === null || valA === undefined);
+                    const bEmpty = (valB === '' || valB === null || valB === undefined);
+                    if (aEmpty && bEmpty) return 0;
+                    if (aEmpty) return 1;
+                    if (bEmpty) return -1;
+
+                    let cmp = 0;
+                    if (typeA === 'number' && typeB === 'number') {
+                        const numA = parseFloat(valA);
+                        const numB = parseFloat(valB);
+                        cmp = (!isNaN(numA) && !isNaN(numB)) ? (numA - numB) : String(valA).localeCompare(String(valB));
+                    } else if (typeA === 'boolean' && typeB === 'boolean') {
+                        const boolA = String(valA) === 'true' ? 1 : 0;
+                        const boolB = String(valB) === 'true' ? 1 : 0;
+                        cmp = boolA - boolB;
+                    } else {
+                        const numA = Number(valA);
+                        const numB = Number(valB);
+                        if (!isNaN(numA) && !isNaN(numB) && String(valA).trim() !== '' && String(valB).trim() !== '') {
+                            cmp = numA - numB;
+                        } else {
+                            cmp = String(valA).localeCompare(String(valB), undefined, { numeric: true, sensitivity: 'base' });
+                        }
                     }
+                    return isAsc ? cmp : -cmp;
+                });
+            } else {
+                const customRows = customRowOrders[pathKey];
+                if (customRows && Array.isArray(customRows) && customRows.length > 0) {
+                    const rowMap = new Map(rows.map(r => [r.path, r]));
+                    const ordered = [];
+                    for (const p of customRows) {
+                        if (rowMap.has(p)) {
+                            ordered.push(rowMap.get(p));
+                            rowMap.delete(p);
+                        }
+                    }
+                    for (const r of rowMap.values()) {
+                        ordered.push(r);
+                    }
+                    rows = ordered;
                 }
-                for (const r of rowMap.values()) {
-                    ordered.push(r);
-                }
-                rows = ordered;
             }
 
             return {
                 ...baseView,
                 columns: cols,
+                allColumns: allCols,
                 rows: rows
             };
         }
@@ -636,12 +871,70 @@ export class WebviewRenderer {
             return html;
         }
 
+        // Selection Visuals update
+        function updateSelectionVisuals() {
+            document.querySelectorAll('.cell-selected, .row-selected, .col-header-selected, .col-selected, .corner-selected').forEach(el => {
+                el.classList.remove('cell-selected', 'row-selected', 'col-header-selected', 'col-selected', 'corner-selected');
+            });
+
+            if (currentSelection.type === 'all') {
+                const corner = document.getElementById('cornerSelectAll');
+                if (corner) corner.classList.add('corner-selected');
+                document.querySelectorAll('td.col-val').forEach(td => td.classList.add('cell-selected'));
+            } else if (currentSelection.type === 'row') {
+                const row = document.querySelector('tr.table-row-item[data-row-index="' + currentSelection.rowIndex + '"]');
+                if (row) row.classList.add('row-selected');
+            } else if (currentSelection.type === 'col') {
+                const th = document.querySelector('th.col-header-cell[data-col-key="' + currentSelection.colKey + '"]');
+                if (th) th.classList.add('col-header-selected');
+                document.querySelectorAll('td.col-val[data-col-key="' + currentSelection.colKey + '"]').forEach(td => {
+                    td.classList.add('col-selected');
+                });
+            } else if (currentSelection.type === 'cell') {
+                const td = document.querySelector('td.col-val[data-path="' + currentSelection.path + '"]');
+                if (td) td.classList.add('cell-selected');
+            }
+        }
+
         function renderApp() {
             const app = document.getElementById('app');
             const tableView = getOrderedTableView();
             const isTableMode = currentMode === 'table' && tableView;
 
             let html = '';
+
+            let colVisibilityBtnHtml = '';
+            if (isTableMode) {
+                const allCols = tableView.allColumns || tableView.columns;
+                const pathKey = activeArrayPath || '__root__';
+                const hidden = hiddenCols[pathKey] || [];
+                const hiddenCount = hidden.length;
+                const totalCount = allCols.length;
+                const visibleCount = totalCount - hiddenCount;
+                colVisibilityBtnHtml = \`
+                <div class="col-visibility-wrapper">
+                    <button class="btn btn-secondary" id="colVisibilityBtn" title="列の表示・非表示を設定">
+                        👁 列 (\${visibleCount}/\${totalCount})
+                    </button>
+                    <div id="colVisibilityDropdown" class="col-visibility-dropdown" style="display: none;">
+                        <div class="col-visibility-title">
+                            <span>列の表示切替</span>
+                            \${hiddenCount > 0 ? '<button class="btn-link" id="showAllColsBtn">すべて表示</button>' : ''}
+                        </div>
+                        <div class="col-visibility-list">
+                            \${allCols.map(c => {
+                                const isChecked = !hidden.includes(c.key);
+                                return \`
+                                <label class="col-visibility-item">
+                                    <input type="checkbox" class="col-vis-checkbox" data-col-key="\${escapeHtml(c.key)}" \${isChecked ? 'checked' : ''} />
+                                    <span>\${escapeHtml(c.label)}</span>
+                                </label>\`;
+                            }).join('')}
+                        </div>
+                    </div>
+                </div>
+                \`;
+            }
 
             // Header
             html += \`
@@ -655,6 +948,7 @@ export class WebviewRenderer {
                 </div>
                 <div class="toolbar">
                     <input type="text" class="search-box" id="searchInput" placeholder="検索..." value="\${escapeHtml(searchQuery)}" />
+                    \${colVisibilityBtnHtml}
                     <button class="btn btn-secondary" id="openTextEditorBtn" title="通常のテキストエディタで開く">テキストで開く</button>
                 </div>
             </div>
@@ -681,14 +975,40 @@ export class WebviewRenderer {
 
         // Render Spreadsheet Table View
         function renderTableSpreadsheet(tableView) {
+            const pathKey = activeArrayPath || '__root__';
+            const widths = customColWidths[pathKey] || {};
+            const curSort = sortState[pathKey];
+
             let thead = '<tr><th class="col-index corner-cell" id="cornerSelectAll" title="すべて選択 (Ctrl+A / Cmd+A)"><span class="corner-icon"></span></th>';
             tableView.columns.forEach((col, colIdx) => {
                 const typeClass = col.type === 'array' ? 'array' : col.type === 'object' ? 'object' : col.type === 'number' ? 'number' : col.type === 'boolean' ? 'boolean' : 'other';
                 const typeSym = col.type === 'array' ? '[ ]' : col.type === 'object' ? '{ }' : col.type === 'number' ? '1234' : col.type === 'boolean' ? 'T/F' : 'Aa';
+                const w = widths[col.key];
+                const widthStyle = w ? \`width: \${w}px; min-width: \${w}px; max-width: \${w}px;\` : '';
+
+                let sortIndicator = '↕';
+                let sortClass = 'col-sort-btn';
+                let sortTitle = 'クリックして昇順ソート';
+                if (curSort && curSort.colKey === col.key) {
+                    if (curSort.direction === 'asc') {
+                        sortIndicator = '▲';
+                        sortClass += ' active asc';
+                        sortTitle = '昇順でソート中 (クリックで降順へ)';
+                    } else {
+                        sortIndicator = '▼';
+                        sortClass += ' active desc';
+                        sortTitle = '降順でソート中 (クリックでソート解除)';
+                    }
+                }
+
                 thead += \`
-                <th class="col-header-cell" draggable="true" data-col-index="\${colIdx}" data-col-key="\${escapeHtml(col.key)}" title="クリックで列を選択 / ドラッグして移動">
-                    <span class="col-header-label" contenteditable="true" spellcheck="false" data-col-key="\${escapeHtml(col.key)}" data-old-label="\${escapeHtml(col.label)}" title="クリックして列名を編集">\${escapeHtml(col.label)}</span>
-                    <span class="col-type-tag col-type-\${typeClass}">\${typeSym}</span>
+                <th class="col-header-cell" style="\${widthStyle}" draggable="true" data-col-index="\${colIdx}" data-col-key="\${escapeHtml(col.key)}" title="クリックで列を選択 / ドラッグして移動">
+                    <div class="col-header-inner">
+                        <span class="col-header-label" contenteditable="true" spellcheck="false" data-col-key="\${escapeHtml(col.key)}" data-old-label="\${escapeHtml(col.label)}" title="クリックして列名を編集">\${escapeHtml(col.label)}</span>
+                        <span class="col-type-tag col-type-\${typeClass}">\${typeSym}</span>
+                        <button class="\${sortClass}" data-col-key="\${escapeHtml(col.key)}" title="\${sortTitle}">\${sortIndicator}</button>
+                    </div>
+                    <div class="col-resizer" data-col-key="\${escapeHtml(col.key)}" title="ドラッグして列幅を調整 / ダブルクリックでリセット"></div>
                 </th>\`;
             });
             thead += '<th class="col-add-header"><button class="btn-add-col" id="addColBtn" title="一番右に列を挿入">＋</button></th></tr>';
@@ -696,7 +1016,33 @@ export class WebviewRenderer {
             let tbody = '';
             const q = searchQuery.toLowerCase();
 
-            if (tableView.rows.length === 0) {
+            // 検索クエリが存在する場合は行をフィルタリング
+            let filteredRows = [];
+            if (q) {
+                filteredRows = tableView.rows
+                    .map((row, originalIndex) => ({ row, originalIndex }))
+                    .filter(item => {
+                        const rowText = Object.values(item.row.cells).map(c => c.displayValue).join(' ').toLowerCase();
+                        return rowText.includes(q);
+                    });
+            } else {
+                filteredRows = tableView.rows.map((row, originalIndex) => ({ row, originalIndex }));
+            }
+
+            const totalFilteredRows = filteredRows.length;
+            const totalPages = Math.max(1, Math.ceil(totalFilteredRows / PAGE_SIZE));
+            if (currentPage > totalPages) {
+                currentPage = totalPages;
+            }
+            if (currentPage < 1) {
+                currentPage = 1;
+            }
+
+            const startIndex = (currentPage - 1) * PAGE_SIZE;
+            const endIndex = Math.min(startIndex + PAGE_SIZE, totalFilteredRows);
+            const pageRows = filteredRows.slice(startIndex, endIndex);
+
+            if (totalFilteredRows === 0) {
                 tbody = \`
                 <tr>
                     <td colspan="\${tableView.columns.length + 2}" class="empty-placeholder">
@@ -704,18 +1050,16 @@ export class WebviewRenderer {
                     </td>
                 </tr>\`;
             } else {
-                tableView.rows.forEach((row, rowIdx) => {
-                    if (q) {
-                        const rowText = Object.values(row.cells).map(c => c.displayValue).join(' ').toLowerCase();
-                        if (!rowText.includes(q)) {
-                            return;
-                        }
-                    }
+                pageRows.forEach(item => {
+                    const row = item.row;
+                    const rowIdx = item.originalIndex;
 
                     tbody += \`<tr class="table-row-item" draggable="true" data-row-index="\${rowIdx}" data-row-path="\${escapeHtml(row.path)}">\`;
                     tbody += \`<td class="col-index drag-handle row-header" data-row-index="\${rowIdx}" data-row-path="\${escapeHtml(row.path)}" title="クリックで行を選択 / ドラッグして移動 / 右クリックで削除">\${rowIdx + 1}</td>\`;
 
                     for (const col of tableView.columns) {
+                        const w = widths[col.key];
+                        const widthStyle = w ? \`width: \${w}px; min-width: \${w}px; max-width: \${w}px;\` : '';
                         const cell = row.cells[col.key];
                         const val = cell ? cell.displayValue : '';
                         const cellPath = cell ? cell.path : \`\${row.path}.\${col.key}\`;
@@ -723,14 +1067,14 @@ export class WebviewRenderer {
 
                         if (col.type === 'array' || cellType === 'array') {
                             tbody += \`
-                            <td class="col-val col-val-array" data-path="\${escapeHtml(cellPath)}" data-col-key="\${escapeHtml(col.key)}" data-row-index="\${rowIdx}">
+                            <td class="col-val col-val-array" style="\${widthStyle}" data-path="\${escapeHtml(cellPath)}" data-col-key="\${escapeHtml(col.key)}" data-row-index="\${rowIdx}">
                                 <button class="btn-edit-array edit-sub-array-btn" data-array-path="\${escapeHtml(cellPath)}" title="編集する">
                                     編集する
                                 </button>
                             </td>\`;
                         } else {
                             tbody += \`
-                            <td class="col-val" contenteditable="true" data-path="\${escapeHtml(cellPath)}" data-col-key="\${escapeHtml(col.key)}" data-row-index="\${rowIdx}" data-type="\${cellType}">\${escapeHtml(val)}</td>
+                            <td class="col-val" style="\${widthStyle}" contenteditable="true" data-path="\${escapeHtml(cellPath)}" data-col-key="\${escapeHtml(col.key)}" data-row-index="\${rowIdx}" data-type="\${cellType}">\${escapeHtml(val)}</td>
                             \`;
                         }
                     }
@@ -741,12 +1085,37 @@ export class WebviewRenderer {
                 });
             }
 
+            let paginationHtml = '';
+            if (totalFilteredRows > PAGE_SIZE) {
+                paginationHtml = \`
+                <div class="pagination-container" id="tablePagination">
+                    <div class="pagination-info">
+                        <span><strong>\${currentPage}</strong> / \${totalPages} ページ</span>
+                        <span style="color: var(--vscode-descriptionForeground);">
+                            (全 \${totalFilteredRows.toLocaleString()} 件中 \${(startIndex + 1).toLocaleString()} - \${endIndex.toLocaleString()} 件を表示)
+                        </span>
+                    </div>
+                    <div class="pagination-controls">
+                        <button class="pagination-btn" id="pageFirstBtn" title="最初のページへ" \${currentPage === 1 ? 'disabled' : ''}>«</button>
+                        <button class="pagination-btn" id="pagePrevBtn" title="前のページへ" \${currentPage === 1 ? 'disabled' : ''}>‹ 前へ</button>
+                        <button class="pagination-btn" id="pageNextBtn" title="次のページへ" \${currentPage === totalPages ? 'disabled' : ''}>次へ ›</button>
+                        <button class="pagination-btn" id="pageLastBtn" title="最後のページへ" \${currentPage === totalPages ? 'disabled' : ''}>»</button>
+                        <div class="pagination-page-jump">
+                            <span>移動:</span>
+                            <input type="number" min="1" max="\${totalPages}" class="pagination-input" id="pageJumpInput" value="\${currentPage}" />
+                            <button class="pagination-btn" id="pageJumpBtn">Go</button>
+                        </div>
+                    </div>
+                </div>\`;
+            }
+
             return \`
             <div class="table-container" id="tableContainer">
                 <table id="spreadsheetTable">
                     <thead>\${thead}</thead>
                     <tbody>\${tbody}</tbody>
                 </table>
+                \${paginationHtml}
                 <div class="add-row-bottom">
                     <button class="btn-add-plus" id="addTableRowBtn" title="行を追加">＋</button>
                 </div>
@@ -828,11 +1197,153 @@ export class WebviewRenderer {
         }
 
         function attachEventListeners() {
+            let isResizing = false;
+
+            // Column Visibility Button & Dropdown
+            const colVisibilityBtn = document.getElementById('colVisibilityBtn');
+            const colVisibilityDropdown = document.getElementById('colVisibilityDropdown');
+            if (colVisibilityBtn && colVisibilityDropdown) {
+                colVisibilityBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    const isVisible = colVisibilityDropdown.style.display !== 'none';
+                    colVisibilityDropdown.style.display = isVisible ? 'none' : 'block';
+                });
+
+                document.addEventListener('click', (e) => {
+                    if (!e.target.closest('#colVisibilityDropdown') && !e.target.closest('#colVisibilityBtn')) {
+                        if (colVisibilityDropdown) {
+                            colVisibilityDropdown.style.display = 'none';
+                        }
+                    }
+                });
+            }
+
+            document.querySelectorAll('.col-vis-checkbox').forEach(cb => {
+                cb.addEventListener('change', (e) => {
+                    const colKey = cb.getAttribute('data-col-key');
+                    const isChecked = cb.checked;
+                    const pathKey = activeArrayPath || '__root__';
+                    hiddenCols[pathKey] = hiddenCols[pathKey] || [];
+
+                    if (!isChecked) {
+                        if (!hiddenCols[pathKey].includes(colKey)) {
+                            hiddenCols[pathKey].push(colKey);
+                        }
+                    } else {
+                        hiddenCols[pathKey] = hiddenCols[pathKey].filter(k => k !== colKey);
+                    }
+                    saveCustomOrderState();
+                    renderApp();
+                    const newDropdown = document.getElementById('colVisibilityDropdown');
+                    if (newDropdown) {
+                        newDropdown.style.display = 'block';
+                    }
+                });
+            });
+
+            const showAllColsBtn = document.getElementById('showAllColsBtn');
+            if (showAllColsBtn) {
+                showAllColsBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    const pathKey = activeArrayPath || '__root__';
+                    hiddenCols[pathKey] = [];
+                    saveCustomOrderState();
+                    renderApp();
+                    showToastMessage('すべての列を再表示しました');
+                });
+            }
+
+            // Column Sort Buttons
+            document.querySelectorAll('.col-sort-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    e.preventDefault();
+                    const colKey = btn.getAttribute('data-col-key');
+                    const pathKey = activeArrayPath || '__root__';
+                    const cur = sortState[pathKey];
+                    if (cur && cur.colKey === colKey) {
+                        if (cur.direction === 'asc') {
+                            sortState[pathKey] = { colKey, direction: 'desc' };
+                        } else {
+                            delete sortState[pathKey];
+                        }
+                    } else {
+                        sortState[pathKey] = { colKey, direction: 'asc' };
+                    }
+                    currentPage = 1;
+                    saveCustomOrderState();
+                    renderApp();
+                });
+            });
+
+            // Column Resizer
+            document.querySelectorAll('.col-resizer').forEach(resizer => {
+                resizer.addEventListener('mousedown', (e) => {
+                    e.stopPropagation();
+                    e.preventDefault();
+                    isResizing = true;
+
+                    const colKey = resizer.getAttribute('data-col-key');
+                    const th = resizer.closest('th');
+                    const startX = e.clientX;
+                    const startWidth = th.offsetWidth;
+                    const pathKey = activeArrayPath || '__root__';
+
+                    resizer.classList.add('is-resizing');
+                    document.body.style.cursor = 'col-resize';
+                    document.body.style.userSelect = 'none';
+
+                    let finalWidth = startWidth;
+
+                    const onMouseMove = (moveEvent) => {
+                        const diff = moveEvent.clientX - startX;
+                        finalWidth = Math.max(60, startWidth + diff);
+                        th.style.width = finalWidth + 'px';
+                        th.style.minWidth = finalWidth + 'px';
+                        th.style.maxWidth = finalWidth + 'px';
+                        document.querySelectorAll('td.col-val[data-col-key="' + colKey + '"]').forEach(td => {
+                            td.style.width = finalWidth + 'px';
+                            td.style.minWidth = finalWidth + 'px';
+                            td.style.maxWidth = finalWidth + 'px';
+                        });
+                    };
+
+                    const onMouseUp = () => {
+                        isResizing = false;
+                        resizer.classList.remove('is-resizing');
+                        document.body.style.cursor = '';
+                        document.body.style.userSelect = '';
+                        document.removeEventListener('mousemove', onMouseMove);
+                        document.removeEventListener('mouseup', onMouseUp);
+
+                        customColWidths[pathKey] = customColWidths[pathKey] || {};
+                        customColWidths[pathKey][colKey] = finalWidth;
+                        saveCustomOrderState();
+                    };
+
+                    document.addEventListener('mousemove', onMouseMove);
+                    document.addEventListener('mouseup', onMouseUp);
+                });
+
+                resizer.addEventListener('dblclick', (e) => {
+                    e.stopPropagation();
+                    e.preventDefault();
+                    const colKey = resizer.getAttribute('data-col-key');
+                    const pathKey = activeArrayPath || '__root__';
+                    if (customColWidths[pathKey] && customColWidths[pathKey][colKey]) {
+                        delete customColWidths[pathKey][colKey];
+                        saveCustomOrderState();
+                        renderApp();
+                    }
+                });
+            });
+
             // Search Input
             const searchInput = document.getElementById('searchInput');
             if (searchInput) {
                 searchInput.addEventListener('input', (e) => {
                     searchQuery = e.target.value;
+                    currentPage = 1;
                     renderApp();
                     const newSearch = document.getElementById('searchInput');
                     if (newSearch) {
@@ -882,6 +1393,8 @@ export class WebviewRenderer {
                     activeArrayPath = arrayPath;
                     currentMode = 'table';
                     searchQuery = '';
+                    currentPage = 1;
+                    saveCustomOrderState();
                     renderApp();
                 });
             });
@@ -904,6 +1417,8 @@ export class WebviewRenderer {
                         currentMode = 'table';
                     }
                     searchQuery = '';
+                    currentPage = 1;
+                    saveCustomOrderState();
                     renderApp();
                 });
             });
@@ -919,6 +1434,8 @@ export class WebviewRenderer {
                         currentMode = 'kv';
                     }
                     searchQuery = '';
+                    currentPage = 1;
+                    saveCustomOrderState();
                     renderApp();
                 });
             }
@@ -931,6 +1448,78 @@ export class WebviewRenderer {
                         command: 'add_table_row',
                         arrayPath: activeArrayPath || ''
                     });
+                });
+            }
+
+            // Pagination Event Listeners
+            const pageFirstBtn = document.getElementById('pageFirstBtn');
+            if (pageFirstBtn) {
+                pageFirstBtn.addEventListener('click', () => {
+                    currentPage = 1;
+                    saveCustomOrderState();
+                    renderApp();
+                    const c = document.getElementById('tableContainer');
+                    if (c) c.scrollTop = 0;
+                });
+            }
+
+            const pagePrevBtn = document.getElementById('pagePrevBtn');
+            if (pagePrevBtn) {
+                pagePrevBtn.addEventListener('click', () => {
+                    if (currentPage > 1) {
+                        currentPage--;
+                        saveCustomOrderState();
+                        renderApp();
+                        const c = document.getElementById('tableContainer');
+                        if (c) c.scrollTop = 0;
+                    }
+                });
+            }
+
+            const pageNextBtn = document.getElementById('pageNextBtn');
+            if (pageNextBtn) {
+                pageNextBtn.addEventListener('click', () => {
+                    currentPage++;
+                    saveCustomOrderState();
+                    renderApp();
+                    const c = document.getElementById('tableContainer');
+                    if (c) c.scrollTop = 0;
+                });
+            }
+
+            const pageLastBtn = document.getElementById('pageLastBtn');
+            if (pageLastBtn) {
+                pageLastBtn.addEventListener('click', () => {
+                    currentPage = 999999999;
+                    saveCustomOrderState();
+                    renderApp();
+                    const c = document.getElementById('tableContainer');
+                    if (c) c.scrollTop = 0;
+                });
+            }
+
+            const pageJumpBtn = document.getElementById('pageJumpBtn');
+            const pageJumpInput = document.getElementById('pageJumpInput');
+            const handlePageJump = () => {
+                if (!pageJumpInput) return;
+                const val = parseInt(pageJumpInput.value, 10);
+                if (!isNaN(val) && val >= 1) {
+                    currentPage = val;
+                    saveCustomOrderState();
+                    renderApp();
+                    const c = document.getElementById('tableContainer');
+                    if (c) c.scrollTop = 0;
+                }
+            };
+            if (pageJumpBtn) {
+                pageJumpBtn.addEventListener('click', handlePageJump);
+            }
+            if (pageJumpInput) {
+                pageJumpInput.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter') {
+                        e.preventDefault();
+                        handlePageJump();
+                    }
                 });
             }
 
@@ -1097,30 +1686,7 @@ export class WebviewRenderer {
                 }, 1800);
             }
 
-            // Selection Visuals update
-            function updateSelectionVisuals() {
-                document.querySelectorAll('.cell-selected, .row-selected, .col-header-selected, .col-selected, .corner-selected').forEach(el => {
-                    el.classList.remove('cell-selected', 'row-selected', 'col-header-selected', 'col-selected', 'corner-selected');
-                });
 
-                if (currentSelection.type === 'all') {
-                    const corner = document.getElementById('cornerSelectAll');
-                    if (corner) corner.classList.add('corner-selected');
-                    document.querySelectorAll('td.col-val').forEach(td => td.classList.add('cell-selected'));
-                } else if (currentSelection.type === 'row') {
-                    const row = document.querySelector('tr.table-row-item[data-row-index="' + currentSelection.rowIndex + '"]');
-                    if (row) row.classList.add('row-selected');
-                } else if (currentSelection.type === 'col') {
-                    const th = document.querySelector('th.col-header-cell[data-col-key="' + currentSelection.colKey + '"]');
-                    if (th) th.classList.add('col-header-selected');
-                    document.querySelectorAll('td.col-val[data-col-key="' + currentSelection.colKey + '"]').forEach(td => {
-                        td.classList.add('col-selected');
-                    });
-                } else if (currentSelection.type === 'cell') {
-                    const td = document.querySelector('td.col-val[data-path="' + currentSelection.path + '"]');
-                    if (td) td.classList.add('cell-selected');
-                }
-            }
 
             // TSV formatting & generation
             function formatTsvValue(val) {
@@ -1232,12 +1798,44 @@ export class WebviewRenderer {
                     currentSelection = { type: 'all' };
                     updateSelectionVisuals();
 
-                    showContextMenu(e, [
+                    const pathKey = activeArrayPath || '__root__';
+                    const hidden = hiddenCols[pathKey] || [];
+                    const curSort = sortState[pathKey];
+
+                    const cornerItems = [
                         { label: 'すべてコピー (TSV)', action: () => copySelection(true) },
-                        { label: 'すべて切り取り', action: () => cutSelection() },
+                        { label: 'すべて切り取り', action: () => cutSelection() }
+                    ];
+
+                    if (curSort) {
+                        cornerItems.push({
+                            label: 'ソートを解除',
+                            action: () => {
+                                delete sortState[pathKey];
+                                saveCustomOrderState();
+                                renderApp();
+                            }
+                        });
+                    }
+
+                    if (hidden.length > 0) {
+                        cornerItems.push({
+                            label: 'すべての非表示列を再表示 (' + hidden.length + '列)',
+                            action: () => {
+                                hiddenCols[pathKey] = [];
+                                saveCustomOrderState();
+                                renderApp();
+                                showToastMessage('すべての列を再表示しました');
+                            }
+                        });
+                    }
+
+                    cornerItems.push(
                         { isSeparator: true },
                         { label: '全データをクリア', danger: true, action: () => deleteSelection() }
-                    ]);
+                    );
+
+                    showContextMenu(e, cornerItems);
                 });
             }
 
@@ -1271,8 +1869,8 @@ export class WebviewRenderer {
             // Column Header Click & Context Menu (列選択)
             document.querySelectorAll('th.col-header-cell').forEach(th => {
                 th.addEventListener('click', (e) => {
-                    if (e.target.classList.contains('col-header-label')) {
-                        return; // allow inline label editing
+                    if (e.target.classList.contains('col-header-label') || e.target.closest('.col-resizer') || e.target.closest('.col-sort-btn')) {
+                        return; // allow inline label editing, resizing, or sorting
                     }
                     e.stopPropagation();
                     const colIndex = parseInt(th.getAttribute('data-col-index'), 10);
@@ -1289,12 +1887,95 @@ export class WebviewRenderer {
                     currentSelection = { type: 'col', colIndex, colKey };
                     updateSelectionVisuals();
 
-                    showContextMenu(e, [
+                    const pathKey = activeArrayPath || '__root__';
+                    const curSort = sortState[pathKey];
+                    const isSortedThis = curSort && curSort.colKey === colKey;
+                    const widths = customColWidths[pathKey] || {};
+                    const hasCustomWidth = !!widths[colKey];
+                    const hidden = hiddenCols[pathKey] || [];
+
+                    const menuItems = [
                         { label: '列をコピー (TSV)', action: () => copySelection(true) },
                         { label: '列を切り取り', action: () => cutSelection() },
                         { isSeparator: true },
+                        {
+                            label: '昇順でソート (A→Z / 0→9)',
+                            action: () => {
+                                sortState[pathKey] = { colKey, direction: 'asc' };
+                                currentPage = 1;
+                                saveCustomOrderState();
+                                renderApp();
+                            }
+                        },
+                        {
+                            label: '降順でソート (Z→A / 9→0)',
+                            action: () => {
+                                sortState[pathKey] = { colKey, direction: 'desc' };
+                                currentPage = 1;
+                                saveCustomOrderState();
+                                renderApp();
+                            }
+                        }
+                    ];
+
+                    if (isSortedThis) {
+                        menuItems.push({
+                            label: 'ソートを解除',
+                            action: () => {
+                                delete sortState[pathKey];
+                                saveCustomOrderState();
+                                renderApp();
+                            }
+                        });
+                    }
+
+                    menuItems.push({ isSeparator: true });
+
+                    if (hasCustomWidth) {
+                        menuItems.push({
+                            label: '列の幅をリセット',
+                            action: () => {
+                                delete customColWidths[pathKey][colKey];
+                                saveCustomOrderState();
+                                renderApp();
+                            }
+                        });
+                    }
+
+                    menuItems.push({
+                        label: 'この列を非表示',
+                        action: () => {
+                            hiddenCols[pathKey] = hiddenCols[pathKey] || [];
+                            if (!hiddenCols[pathKey].includes(colKey)) {
+                                hiddenCols[pathKey].push(colKey);
+                            }
+                            if (currentSelection.type === 'col' && currentSelection.colKey === colKey) {
+                                currentSelection = { type: 'none' };
+                            }
+                            saveCustomOrderState();
+                            renderApp();
+                            showToastMessage('列 "' + colKey + '" を非表示にしました');
+                        }
+                    });
+
+                    if (hidden.length > 0) {
+                        menuItems.push({
+                            label: 'すべての非表示列を再表示 (' + hidden.length + '列)',
+                            action: () => {
+                                hiddenCols[pathKey] = [];
+                                saveCustomOrderState();
+                                renderApp();
+                                showToastMessage('すべての列を再表示しました');
+                            }
+                        });
+                    }
+
+                    menuItems.push(
+                        { isSeparator: true },
                         { label: '列の値をクリア', danger: true, action: () => deleteSelection() }
-                    ]);
+                    );
+
+                    showContextMenu(e, menuItems);
                 });
             });
 
@@ -1460,6 +2141,10 @@ export class WebviewRenderer {
             let draggedColIndex = null;
             document.querySelectorAll('th.col-header-cell').forEach(th => {
                 th.addEventListener('dragstart', (e) => {
+                    if (isResizing) {
+                        e.preventDefault();
+                        return;
+                    }
                     if (document.activeElement && document.activeElement.classList.contains('col-header-label')) {
                         e.preventDefault();
                         return;

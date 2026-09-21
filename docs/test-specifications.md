@@ -2,19 +2,20 @@
 
 本ドキュメントは、`src/test/` 配下のテストコード（JSDoc / docstring）から自動抽出・生成されたテスト仕様一覧です。
 
-- **総テストスイート数**: 7
-- **総テストケース数**: 34
+- **総テストスイート数**: 8
+- **総テストケース数**: 36
 - **生成スクリプト**: `scripts/generate-test-docs.js` (`npm run doc` にて自動更新)
 
 ## 目次
 
 1. [ParseDocumentUseCase with Table View & Drill-down (11件)](#parsedocumentusecase-with-table-view-drill-down)
 2. [CellPath (5件)](#cellpath)
-3. [StructuredDocument Operations (6件)](#structureddocument-operations)
+3. [StructuredDocument Operations (8件)](#structureddocument-operations)
 4. [TableView Domain Model (4件)](#tableview-domain-model)
 5. [TreeFlattener (4件)](#treeflattener)
 6. [Extension Test Suite (1件)](#extension-test-suite)
 7. [JsonDocumentParser (3件)](#jsondocumentparser)
+8. [WebviewRenderer (0件)](#webviewrenderer)
 
 ---
 
@@ -53,7 +54,7 @@
 ## 3. StructuredDocument Operations
 
 - **テストファイル**: [`src/test/domain/StructuredDocumentOperations.test.ts`](../src/test/domain/StructuredDocumentOperations.test.ts)
-- **ケース数**: 6
+- **ケース数**: 8
 
 | # | テストケース名 | 観点 | テスト内容（検証内容） |
 | :--- | :--- | :--- | :--- |
@@ -63,6 +64,8 @@
 | 4 | `should move a table column across objects in an array` | テーブル列の並び替え（全オブジェクトのプロパティ順変更）の確認 | オブジェクト配列において、特定列（index 2 の 'role'）を先頭（index 0）に移動させた際、全レコード内のキー定義順が同期して並び変わることを検証する。 |
 | 5 | `should delete an item in an array by path` | 配列要素の削除（文字列・数値インデックスパス経由）の確認 | CellPath（'1'）を指定して配列の中間要素を削除した際、対象要素のみが配列から splice され、配列長が縮小して後続要素が前に詰まることを検証する。 |
 | 6 | `should delete a key in an object by path` | オブジェクトプロパティ（キー）の削除の確認 | CellPath（'b'）を指定してオブジェクト内のキーを削除した際、該当キーおよびその値のみがオブジェクトから除去され、他のキーは保持されることを検証する。 |
+| 7 | `should clear values of a specific column in a table array` | テーブル列の値クリア操作の確認 | オブジェクト配列内の指定カラム（'role'）をクリアした際、各レコードのキー自体は残り、値のみが空文字列に更新されることを検証する。 |
+| 8 | `should clear all data cells in a table array` | テーブル全データセルの値クリア操作の確認 | オブジェクト配列内の全レコードのデータセルの値をクリアした際、各キーの構造は保持されたまま、全フィールド値が空文字列に更新されることを検証する。 |
 
 ## 4. TableView Domain Model
 
@@ -107,4 +110,11 @@
 | 1 | `parses and serializes JSON with 2-space indentation` | JSONのフォーマット保全（2スペースインデント、末尾改行）を伴うパースおよびシリアライズの確認 | 2スペースインデントと末尾改行を持つJSON文字列をパースし、特定セル値を更新した後にシリアライズした際、元のインデントおよび改行形式が正確に保たれることを検証する。 |
 | 2 | `handles nested objects in JSON` | 深くネストされたJSONオブジェクトの構造解析と平坦化確認 | 多重ネストされたJSON（a.b.c）をパースし、toFlatRows() を介してドット区切りの正しいパスと値が抽出されることを検証する。 |
 | 3 | `parses and serializes YAML` | YAMLドキュメントのパース、セル値更新、および再シリアライズの確認 | ネストを含むYAML文字列をパースして構造を抽出し、ブール値セル（settings.enabled: true -> false）を更新してシリアライズした際、正しくYAML形式のまま値が更新出力されることを検証する。 |
+
+## 8. WebviewRenderer
+
+- **テストファイル**: [`src/test/infrastructure/WebviewRenderer.test.ts`](../src/test/infrastructure/WebviewRenderer.test.ts)
+- **ケース数**: 0
+
+*テストケースが検出されませんでした。*
 

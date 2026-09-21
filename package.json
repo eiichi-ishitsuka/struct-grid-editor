@@ -95,7 +95,9 @@
     "test:ui": "vitest --ui --open",
     "doc": "typedoc && node scripts/generate-test-docs.js",
     "doc:test": "node scripts/generate-test-docs.js",
-    "generate:sample": "node scripts/generate-large-sample.js"
+    "generate:sample": "node scripts/generate-large-sample.js",
+    "package:vsix": "vsce package --allow-missing-repository -o vsix/",
+    "vsix": "npm run package:vsix"
   },
   "devDependencies": {
     "@types/mocha": "^10.0.10",
@@ -104,6 +106,7 @@
     "@vitest/ui": "^5.0.1",
     "@vscode/test-cli": "^0.0.15",
     "@vscode/test-electron": "^3.0.0",
+    "@vscode/vsce": "^4.0.0",
     "esbuild": "^0.28.1",
     "eslint": "^10.5.0",
     "npm-run-all": "^4.1.5",
