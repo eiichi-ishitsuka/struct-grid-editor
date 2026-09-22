@@ -806,32 +806,25 @@ export class WebviewRenderer {
 
             const segments = [];
             let workingPath = rawPath;
+            let topLevelPrefix = '';
 
             // Check if path starts with top-level array index: "[<digits>].<property>"
+            // Skip the index segment itself; only show the property name onward.
             if (workingPath.startsWith('[')) {
                 const closeBracketIdx = workingPath.indexOf(']');
                 if (closeBracketIdx > 1 && workingPath.charAt(closeBracketIdx + 1) === '.') {
                     const idxStr = workingPath.substring(1, closeBracketIdx);
                     if (/^\d+$/.test(idxStr)) {
-                        const afterDot = workingPath.substring(closeBracketIdx + 2);
-                        const nextDotIdx = afterDot.indexOf('.');
-                        const prop = nextDotIdx === -1 ? afterDot : afterDot.substring(0, nextDotIdx);
-                        const rest = nextDotIdx === -1 ? '' : afterDot.substring(nextDotIdx + 1);
-
-                        const firstPath = '[' + idxStr + '].' + prop;
-                        segments.push({
-                            label: prop + '[' + idxStr + ']',
-                            path: firstPath
-                        });
-
-                        workingPath = rest;
+                        // Keep the full prefix for path data, but do NOT push an index segment
+                        topLevelPrefix = '[' + idxStr + ']';
+                        workingPath = workingPath.substring(closeBracketIdx + 2);
                     }
                 }
             }
 
             if (workingPath) {
                 const parts = workingPath.split('.').filter(function(p) { return p.length > 0; });
-                let acc = segments.length > 0 ? segments[0].path : '';
+                let acc = topLevelPrefix;
                 for (let i = 0; i < parts.length; i++) {
                     const part = parts[i];
                     acc = acc ? (acc + '.' + part) : part;
