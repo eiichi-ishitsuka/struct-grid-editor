@@ -104,8 +104,8 @@ export interface GridRowDto {
  * Webview に渡されるグリッド全体のデータ DTO。
  */
 export interface GridDataDto {
-    /** ドキュメント形式 ('json' または 'yaml') */
-    documentType: 'json' | 'yaml';
+    /** ドキュメント形式 ('json', 'yaml' または 'jsonl') */
+    documentType: 'json' | 'yaml' | 'jsonl';
     /** 現在の表示モード ('table' または 'kv') */
     viewMode: 'table' | 'kv';
     /** Key-Value 表示時の行リスト */

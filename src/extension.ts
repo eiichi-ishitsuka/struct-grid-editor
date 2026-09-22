@@ -1,6 +1,7 @@
 import * as vscode from 'vscode';
 import { JsonDocumentParser } from './infrastructure/parser/JsonDocumentParser';
 import { YamlDocumentParser } from './infrastructure/parser/YamlDocumentParser';
+import { JsonlDocumentParser } from './infrastructure/parser/JsonlDocumentParser';
 import { ParseDocumentUseCase } from './application/usecase/ParseDocumentUseCase';
 import { UpdateCellUseCase } from './application/usecase/UpdateCellUseCase';
 import {
@@ -27,7 +28,8 @@ export function activate(context: vscode.ExtensionContext) {
     // 1. アダプター & パーサーの初期化
     const jsonParser = new JsonDocumentParser();
     const yamlParser = new YamlDocumentParser();
-    const parsers = [jsonParser, yamlParser];
+    const jsonlParser = new JsonlDocumentParser();
+    const parsers = [jsonParser, yamlParser, jsonlParser];
 
     // 2. ユースケースの初期化
     const parseUseCase = new ParseDocumentUseCase(parsers);
@@ -91,9 +93,11 @@ async function ensureDiffEditorAssociations(): Promise<void> {
             '**/*.json': 'default',
             '**/*.yaml': 'default',
             '**/*.yml': 'default',
+            '**/*.jsonl': 'default',
             '*.json': 'default',
             '*.yaml': 'default',
             '*.yml': 'default',
+            '*.jsonl': 'default',
         };
         let changed = false;
         const updated = { ...current };

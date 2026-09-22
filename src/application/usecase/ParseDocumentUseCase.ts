@@ -19,9 +19,11 @@ export class ParseDocumentUseCase {
     public execute(text: string, fileExtension: string): { dto: GridDataDto; doc?: StructuredDocument } {
         const parser = this.parsers.find(p => p.supports(fileExtension));
         if (!parser) {
+            const cleanExt = fileExtension.toLowerCase().replace(/^\./, '');
+            const docType = cleanExt.includes('ya') ? 'yaml' : (cleanExt === 'jsonl' || cleanExt === 'ndjson' ? 'jsonl' : 'json');
             return {
                 dto: {
-                    documentType: 'json',
+                    documentType: docType,
                     viewMode: 'kv',
                     rows: [],
                     totalRows: 0,
@@ -93,9 +95,11 @@ export class ParseDocumentUseCase {
                 doc: document,
             };
         } catch (e: any) {
+            const cleanExt = fileExtension.toLowerCase().replace(/^\./, '');
+            const docType = cleanExt.includes('ya') ? 'yaml' : (cleanExt === 'jsonl' || cleanExt === 'ndjson' ? 'jsonl' : 'json');
             return {
                 dto: {
-                    documentType: fileExtension.includes('ya') ? 'yaml' : 'json',
+                    documentType: docType,
                     viewMode: 'kv',
                     rows: [],
                     totalRows: 0,

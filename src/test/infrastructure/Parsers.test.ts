@@ -1,6 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import { JsonDocumentParser } from '../../infrastructure/parser/JsonDocumentParser';
 import { YamlDocumentParser } from '../../infrastructure/parser/YamlDocumentParser';
+import { JsonlDocumentParser } from '../../infrastructure/parser/JsonlDocumentParser';
 import { CellPath } from '../../domain/model/CellPath';
 import { CellValue } from '../../domain/model/CellValue';
 
@@ -70,5 +71,80 @@ describe('YamlDocumentParser', () => {
         const output = parser.serialize(updated);
 
         expect(output).toContain('enabled: false');
+    });
+});
+
+describe('JsonlDocumentParser', () => {
+    const parser = new JsonlDocumentParser();
+
+    /**
+     * 【観点】拡張子サポート判定（jsonl, ndjson）の確認
+     */
+    it('supports jsonl and ndjson extensions', () => {
+        expect(parser.supports('jsonl')).toBe(true);
+        expect(parser.supports('.jsonl')).toBe(true);
+        expect(parser.supports('ndjson')).toBe(true);
+        expect(parser.supports('.ndjson')).toBe(true);
+        expect(parser.supports('json')).toBe(false);
+        expect(parser.supports('yaml')).toBe(false);
+    });
+
+    /**
+     * 【観点】JSONLのパース、トップレベル配列としての認識、セル値更新、および再シリアライズの確認
+     */
+    it('parses JSONL into array root, updates cell and serializes correctly', () => {
+        const jsonl = `{"id":1,"name":"Alice"}\n{"id":2,"name":"Bob"}\n`;
+        const doc = parser.parse(jsonl);
+
+        expect(doc.isArrayRoot()).toBe(true);
+        expect(doc.format.fileType).toBe('jsonl');
+        expect(doc.format.hasTrailingNewline).toBe(true);
+
+        const updated = doc.updateCell(CellPath.fromString('[0].name'), new CellValue('Alice Cooper'));
+        const output = parser.serialize(updated);
+
+        expect(output).toBe(`{"id":1,"name":"Alice Cooper"}\n{"id":2,"name":"Bob"}\n`);
+    });
+
+    /**
+     * 【観点】空行スキップおよびコメント付きJSONL（JSONC対応）の検証
+     */
+    it('handles empty lines and comments in JSONL', () => {
+        const jsonlWithComments = `// Header comment\n{"id":1,"status":"ok"}\n\n{"id":2,"status":"pending"} // line comment\n`;
+        const doc = parser.parse(jsonlWithComments);
+
+        expect(doc.toJS()).toEqual([
+            { id: 1, status: 'ok' },
+            { id: 2, status: 'pending' }
+        ]);
+
+        const output = parser.serialize(doc);
+        expect(output).toBe(`{"id":1,"status":"ok"}\n{"id":2,"status":"pending"}\n`);
+    });
+
+    /**
+     * 【観点】行追加・行削除の操作とシリアライズ確認
+     */
+    it('supports adding and deleting table rows in JSONL', () => {
+        const jsonl = `{"id":1,"name":"User1"}\n{"id":2,"name":"User2"}\n`;
+        const doc = parser.parse(jsonl);
+
+        const withNewRow = doc.addTableRow(new CellPath([]), { id: 3, name: 'User3' });
+        const outputAfterAdd = parser.serialize(withNewRow);
+        expect(outputAfterAdd).toBe(`{"id":1,"name":"User1"}\n{"id":2,"name":"User2"}\n{"id":3,"name":"User3"}\n`);
+
+        const afterDelete = withNewRow.deleteNode(CellPath.fromString('[0]'));
+        const outputAfterDelete = parser.serialize(afterDelete);
+        expect(outputAfterDelete).toBe(`{"id":2,"name":"User2"}\n{"id":3,"name":"User3"}\n`);
+    });
+
+    /**
+     * 【観点】空ドキュメントの安全なパースとシリアライズ
+     */
+    it('handles empty text gracefully', () => {
+        const doc = parser.parse('');
+        expect(doc.isArrayRoot()).toBe(true);
+        expect(doc.toJS()).toEqual([]);
+        expect(parser.serialize(doc)).toBe('');
     });
 });

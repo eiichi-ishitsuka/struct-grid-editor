@@ -1,11 +1,12 @@
 import { describe, it, expect } from 'vitest';
 import { JsonDocumentParser } from '../../infrastructure/parser/JsonDocumentParser';
 import { YamlDocumentParser } from '../../infrastructure/parser/YamlDocumentParser';
+import { JsonlDocumentParser } from '../../infrastructure/parser/JsonlDocumentParser';
 import { ParseDocumentUseCase } from '../../application/usecase/ParseDocumentUseCase';
 import { AddTableRowUseCase, AddTableColumnUseCase, RenameTableColumnUseCase } from '../../application/usecase/RowModificationUseCases';
 
 describe('ParseDocumentUseCase with Table View & Drill-down', () => {
-    const parsers = [new JsonDocumentParser(), new YamlDocumentParser()];
+    const parsers = [new JsonDocumentParser(), new YamlDocumentParser(), new JsonlDocumentParser()];
     const parseUseCase = new ParseDocumentUseCase(parsers);
     const addTableRowUseCase = new AddTableRowUseCase(parsers);
     const addTableColumnUseCase = new AddTableColumnUseCase(parsers);
@@ -286,5 +287,34 @@ network:
             { host: 'api.example.com' },
             { host: 'pay.example.com' }
         ]);
+    });
+
+    /**
+     * 【観点】JSONLドキュメントのスプレッドシート（table）モード判定と列・行のDTOマッピング確認
+     */
+    it('should parse JSONL into table mode with columns and rows', () => {
+        const jsonlText = `{"id":1,"name":"Alice","role":"Admin"}\n{"id":2,"name":"Bob","role":"User"}\n`;
+        const { dto } = parseUseCase.execute(jsonlText, 'jsonl');
+
+        expect(dto.documentType).toBe('jsonl');
+        expect(dto.viewMode).toBe('table');
+        expect(dto.totalRows).toBe(2);
+        expect(dto.tableData).toBeDefined();
+        expect(dto.tableData?.columns.map(c => c.key)).toEqual(['id', 'name', 'role']);
+        expect(dto.tableData?.rows[0].cells['name'].value).toBe('Alice');
+        expect(dto.tableData?.rows[1].cells['name'].value).toBe('Bob');
+    });
+
+    /**
+     * 【観点】JSONLドキュメントに対するテーブル行追加ユースケースの動作検証
+     */
+    it('should add table row in JSONL document through use case', () => {
+        const jsonlText = `{"id":1,"name":"Alice"}\n`;
+        const updated = addTableRowUseCase.execute(jsonlText, 'jsonl', '', { id: 2, name: 'Bob' });
+        const { dto } = parseUseCase.execute(updated, 'jsonl');
+
+        expect(dto.totalRows).toBe(2);
+        expect(dto.tableData?.rows[1].cells['name'].value).toBe('Bob');
+        expect(updated).toBe(`{"id":1,"name":"Alice"}\n{"id":2,"name":"Bob"}\n`);
     });
 });

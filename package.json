@@ -1,7 +1,7 @@
 {
   "name": "struct-grid-editor",
   "displayName": "StructGridEditor",
-  "description": "Edit JSON and YAML files in a spreadsheet-like grid view.",
+  "description": "Edit JSON, YAML, and JSONL files in a spreadsheet-like grid view.",
   "version": "0.0.1",
   "license": "MIT",
   "engines": {
@@ -39,21 +39,21 @@
       "explorer/context": [
         {
           "command": "struct-grid-editor.openInGrid",
-          "when": "resourceExtname == .json || resourceExtname == .yaml || resourceExtname == .yml",
+          "when": "resourceExtname == .json || resourceExtname == .yaml || resourceExtname == .yml || resourceExtname == .jsonl",
           "group": "navigation"
         }
       ],
       "editor/title/context": [
         {
           "command": "struct-grid-editor.openInGrid",
-          "when": "resourceExtname == .json || resourceExtname == .yaml || resourceExtname == .yml",
+          "when": "resourceExtname == .json || resourceExtname == .yaml || resourceExtname == .yml || resourceExtname == .jsonl",
           "group": "navigation"
         }
       ],
       "editor/title": [
         {
           "command": "struct-grid-editor.openInGrid",
-          "when": "resourceExtname == .json || resourceExtname == .yaml || resourceExtname == .yml",
+          "when": "resourceExtname == .json || resourceExtname == .yaml || resourceExtname == .yml || resourceExtname == .jsonl",
           "group": "navigation"
         }
       ]
@@ -71,6 +71,9 @@
           },
           {
             "filenamePattern": "*.yml"
+          },
+          {
+            "filenamePattern": "*.jsonl"
           }
         ],
         "priority": "default"

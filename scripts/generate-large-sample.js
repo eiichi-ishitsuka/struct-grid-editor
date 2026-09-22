@@ -6,14 +6,14 @@ const YAML = require('yaml');
 // Parse CLI arguments
 const args = process.argv.slice(2);
 let count = 1000;
-let format = 'both'; // 'json', 'yaml', or 'both'
+let format = 'all'; // 'json', 'yaml', 'jsonl', or 'all' ('both' maintained for backwards compatibility)
 
 for (let i = 0; i < args.length; i++) {
     if (args[i] === '--count' || args[i] === '-c') {
         count = parseInt(args[i + 1], 10) || 1000;
         i++;
     } else if (args[i] === '--format' || args[i] === '-f') {
-        format = args[i + 1] || 'both';
+        format = args[i + 1] || 'all';
         i++;
     }
 }
@@ -58,14 +58,21 @@ if (!fs.existsSync(outputDir)) {
     fs.mkdirSync(outputDir, { recursive: true });
 }
 
-if (format === 'json' || format === 'both') {
+if (format === 'json' || format === 'both' || format === 'all') {
     const jsonPath = path.join(outputDir, `large-sample-${count}.json`);
     fs.writeFileSync(jsonPath, JSON.stringify(records, null, 2), 'utf-8');
     console.log(`Successfully generated JSON: ${jsonPath} (${(fs.statSync(jsonPath).size / 1024).toFixed(1)} KB)`);
 }
 
-if (format === 'yaml' || format === 'both') {
+if (format === 'yaml' || format === 'both' || format === 'all') {
     const yamlPath = path.join(outputDir, `large-sample-${count}.yaml`);
     fs.writeFileSync(yamlPath, YAML.stringify(records), 'utf-8');
     console.log(`Successfully generated YAML: ${yamlPath} (${(fs.statSync(yamlPath).size / 1024).toFixed(1)} KB)`);
+}
+
+if (format === 'jsonl' || format === 'both' || format === 'all') {
+    const jsonlPath = path.join(outputDir, `large-sample-${count}.jsonl`);
+    const jsonlContent = records.map(r => JSON.stringify(r)).join('\n') + '\n';
+    fs.writeFileSync(jsonlPath, jsonlContent, 'utf-8');
+    console.log(`Successfully generated JSONL: ${jsonlPath} (${(fs.statSync(jsonlPath).size / 1024).toFixed(1)} KB)`);
 }

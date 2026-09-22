@@ -1,13 +1,13 @@
 /**
  * サポートされているドキュメントファイル形式。
  */
-export type DocumentFileType = 'json' | 'yaml';
+export type DocumentFileType = 'json' | 'yaml' | 'jsonl';
 
 /**
  * ドキュメントの書式オプション。
  */
 export interface DocumentFormatOptions {
-    /** ファイル形式 ('json' または 'yaml') */
+    /** ファイル形式 ('json', 'yaml' または 'jsonl') */
     fileType: DocumentFileType;
     /** インデント幅またはインデント文字列 */
     indent: number | string;
@@ -58,6 +58,18 @@ export class DocumentFormat {
         return new DocumentFormat({
             fileType: 'yaml',
             indent: 2,
+            hasTrailingNewline: true,
+        });
+    }
+
+    /**
+     * デフォルトのJSONL書式を生成します。
+     * @returns デフォルトJSONL書式
+     */
+    public static defaultJsonl(): DocumentFormat {
+        return new DocumentFormat({
+            fileType: 'jsonl',
+            indent: 0,
             hasTrailingNewline: true,
         });
     }
