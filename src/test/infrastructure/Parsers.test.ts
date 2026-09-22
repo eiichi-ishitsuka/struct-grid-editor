@@ -36,6 +36,20 @@ describe('JsonDocumentParser', () => {
         expect(rows[0].displayPath).toBe('a.b.c');
         expect(rows[0].value.value).toBe('hello');
     });
+
+    /**
+     * 【観点】コメント付きJSON（JSONC: settings.jsonやtsconfig.jsonなど）のパース確認
+     * 【テスト内容】行コメント（//）およびブロックコメント（/* ... *\/）が含まれるJSON文字列をエラーなくパースできることを検証する。
+     */
+    it('parses JSON with comments (JSONC)', () => {
+        const jsonc = `// Place your settings in this file\n{\n  /* multi-line comment */\n  "key": "value", // inline comment\n  "count": 10\n}\n`;
+        const doc = parser.parse(jsonc);
+        const rows = doc.toFlatRows();
+
+        expect(rows.length).toBe(2);
+        expect(rows.find(r => r.displayPath === 'key')?.value.value).toBe('value');
+        expect(rows.find(r => r.displayPath === 'count')?.value.value).toBe(10);
+    });
 });
 
 describe('YamlDocumentParser', () => {

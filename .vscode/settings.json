@@ -9,5 +9,14 @@
         "dist": true // set this to false to include "dist" folder in search results
     },
     // Turn off tsc task auto detection since we have the necessary tasks as npm scripts
-    "js/ts.tsc.autoDetect": "off"
+    "js/ts.tsc.autoDetect": "off",
+    // Source Control (Git) の diff 比較時は通常のエディタ（Text Diff Editor）を優先
+    "workbench.diffEditorAssociations": {
+        "**/*.json": "default",
+        "**/*.yaml": "default",
+        "**/*.yml": "default",
+        "*.json": "default",
+        "*.yaml": "default",
+        "*.yml": "default"
+    }
 }

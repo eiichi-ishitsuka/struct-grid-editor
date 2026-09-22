@@ -75,6 +75,40 @@ export function activate(context: vscode.ExtensionContext) {
             }
         })
     );
+
+    // 6. Source Control (Git) の diff 表示時は通常のエディタ（Text Diff Editor）を優先するよう自動構成
+    void ensureDiffEditorAssociations();
+}
+
+/**
+ * Git diff 表示時に通常のエディタ（Text Diff Editor）を優先するよう設定を構成します。
+ */
+async function ensureDiffEditorAssociations(): Promise<void> {
+    try {
+        const config = vscode.workspace.getConfiguration('workbench');
+        const current = config.get<Record<string, string>>('diffEditorAssociations') || {};
+        const needed: Record<string, string> = {
+            '**/*.json': 'default',
+            '**/*.yaml': 'default',
+            '**/*.yml': 'default',
+            '*.json': 'default',
+            '*.yaml': 'default',
+            '*.yml': 'default',
+        };
+        let changed = false;
+        const updated = { ...current };
+        for (const [pattern, editor] of Object.entries(needed)) {
+            if (!updated[pattern]) {
+                updated[pattern] = editor;
+                changed = true;
+            }
+        }
+        if (changed) {
+            await config.update('diffEditorAssociations', updated, vscode.ConfigurationTarget.Global);
+        }
+    } catch {
+        // 設定の自動書き込みに失敗した場合は無視
+    }
 }
 
 /**
