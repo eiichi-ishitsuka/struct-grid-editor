@@ -1,5 +1,5 @@
 # Change Log
 
-## 0.0.1 - 2026-09-21
+## 0.0.1 - 2026-09-22
 
 - Initial release
