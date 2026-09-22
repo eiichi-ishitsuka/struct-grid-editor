@@ -671,11 +671,26 @@ export class WebviewRenderer {
         let hiddenCols = savedState.hiddenCols || {};
         let sortState = savedState.sortState || {};
         let currentSelection = { type: 'none' };
-        let currentMode = initialData.viewMode || 'kv'; // 'table' | 'kv'
-        let activeArrayPath = initialData.viewMode === 'table' ? (initialData.tableData?.path ?? '') : null;
-        let searchQuery = '';
+        let currentMode = savedState.currentMode || initialData.viewMode || 'kv'; // 'table' | 'kv'
+        let activeArrayPath = savedState.hasOwnProperty('activeArrayPath') ? savedState.activeArrayPath : (initialData.viewMode === 'table' ? (initialData.tableData?.path ?? '') : null);
+        let searchQuery = savedState.searchQuery || '';
         let currentPage = savedState.currentPage || 1;
         const PAGE_SIZE = 100;
+
+        // Validate that activeArrayPath still exists in the newly parsed data
+        if (activeArrayPath && activeArrayPath !== '') {
+            const sub = (initialData.subArrays || []).find(s => s.path === activeArrayPath);
+            if (!sub) {
+                // The active array might have been deleted or renamed, fallback to root
+                if (initialData.viewMode === 'table') {
+                    activeArrayPath = '';
+                    currentMode = 'table';
+                } else {
+                    activeArrayPath = null;
+                    currentMode = 'kv';
+                }
+            }
+        }
 
         function saveCustomOrderState() {
             const st = vscode.getState() || {};
@@ -686,7 +701,10 @@ export class WebviewRenderer {
                 customColWidths,
                 hiddenCols,
                 sortState,
-                currentPage
+                currentPage,
+                currentMode,
+                activeArrayPath,
+                searchQuery
             });
         }
 
@@ -1341,6 +1359,7 @@ export class WebviewRenderer {
                 searchInput.addEventListener('input', (e) => {
                     searchQuery = e.target.value;
                     currentPage = 1;
+                    saveCustomOrderState();
                     renderApp();
                     const newSearch = document.getElementById('searchInput');
                     if (newSearch) {
