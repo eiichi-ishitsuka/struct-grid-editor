@@ -239,4 +239,15 @@ export class StructGridPage {
         const editorView = new EditorView();
         await editorView.closeAllEditors();
     }
+
+    /**
+     * 配列要素の「編集する」ボタンをクリックします。
+     */
+    public async clickEditArrayButton(path: string): Promise<void> {
+        const driver = VSBrowser.instance.driver;
+        const selector = `[data-array-path="${path}"]`;
+        const btn = await driver.findElement(By.css(selector));
+        await btn.click();
+        await sleep(500);
+    }
 }

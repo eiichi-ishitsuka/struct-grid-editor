@@ -107,4 +107,37 @@ describe('Phase 1: 基本動作検証 (Basic Operations)', function () {
         const fileContent = fs.readFileSync(testFile, 'utf-8');
         assert.ok(fileContent.includes(updatedName));
     });
+
+    /**
+     * 【観点】サブ配列の編集と状態維持（State Preservation）
+     * 【テスト内容】mixed-matrix.json を開き、assignees のサブ配列編集画面に入り、そこで行を追加しても root に戻らずサブ配列画面が維持されることを検証する。
+     */
+    it('UC-05: サブ配列の編集画面でセルを編集・行追加しても画面が維持されること', async () => {
+        testFile = createTempFixture('samples/json/mixed-matrix.json');
+        page = await StructGridPage.open(testFile);
+
+        // 1. root テーブルで1行目の assignees の「編集する」ボタンをクリック
+        // mixed-matrix.json はトップレベルがオブジェクトの配列のため table モードから始まる
+        // 1行目 (index=0) の assignees 列のセル内の .edit-sub-array-btn をクリックする
+        await page.clickEditArrayButton('[0].assignees');
+
+        // 2. breadcrumb が '[0].assignees' (または該当する表示) になっているか確認
+        const driver = require('vscode-extension-tester').VSBrowser.instance.driver;
+        const By = require('vscode-extension-tester').By;
+        const breadcrumbCurrent = await driver.findElement(By.css('.breadcrumb-current'));
+        const breadcrumbText = await breadcrumbCurrent.getText();
+        assert.strictEqual(breadcrumbText, 'assignees');
+
+        // 3. サブ配列の中で行を追加する
+        await page.clickAddTableRow();
+
+        // 4. 行追加後も、引き続きサブ配列の画面が維持されていることを確認（breadcrumbが変わっていないこと）
+        const breadcrumbCurrentAfter = await driver.findElement(By.css('.breadcrumb-current'));
+        const breadcrumbTextAfter = await breadcrumbCurrentAfter.getText();
+        assert.strictEqual(breadcrumbTextAfter, 'assignees');
+
+        // テーブルの行数が1増えていることを確認（田中、佐藤 + 1行 = 3行）
+        const rowCount = await page.getTableRowCount();
+        assert.strictEqual(rowCount, 3);
+    });
 });
