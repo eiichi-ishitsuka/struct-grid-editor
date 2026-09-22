@@ -2,6 +2,12 @@
   "name": "struct-grid-editor",
   "displayName": "StructGridEditor",
   "description": "Edit JSON, YAML, and JSONL files in a spreadsheet-like grid view.",
+  "icon": "assets/img/icon.jpg",
+  "publisher": "eiichi-ishitsuka",
+  "repository": {
+      "type": "git",
+      "url": "https://github.com/eiichi-ishitsuka/struct-grid-editor"
+  },
   "version": "0.0.1",
   "license": "MIT",
   "engines": {
@@ -10,6 +16,14 @@
   "categories": [
     "Other"
   ],
+  "keywords": [
+    "grid",
+    "json",
+    "yaml",
+    "jsonl",
+    "editor"
+  ],
+  "preview": true,
   "main": "./dist/extension.js",
   "contributes": {
     "problemMatchers": [
@@ -76,7 +90,7 @@
             "filenamePattern": "*.jsonl"
           }
         ],
-        "priority": "default"
+        "priority": "option"
       }
     ]
   },
