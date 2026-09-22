@@ -403,4 +403,35 @@ describe('WebviewRenderer', () => {
         expect(appHtml).toContain('data-col-key="active"');
         expect(appHtml).toContain('class="col-vis-checkbox"');
     });
+
+    /**
+     * 【観点】Excel/Googleスプレッドシートライクな操作性（セル内改行CSS、キーボードナビゲーションスクリプト）の検証
+     */
+    it('includes multiline pre-wrap CSS and spreadsheet keyboard navigation logic', () => {
+        const filePath = path.resolve(__dirname, '../../../samples/json/simple-list.json');
+        const text = fs.readFileSync(filePath, 'utf-8');
+        const result = useCase.execute(text, 'json');
+        const html = renderer.render(result.dto);
+
+        // 1. セル内改行（white-space: pre-wrap）がCSSに含まれていること
+        expect(html).toContain('white-space: pre-wrap;');
+
+        // 2. セル移動関数（navigateToAdjacentCell）およびセル内テキスト選択（selectCellContents）が含まれること
+        expect(html).toContain('function navigateToAdjacentCell(');
+        expect(html).toContain('function selectCellContents(');
+
+        // 3. Enter/NumpadEnter, Tab, Ctrl+A, テンキー・矢印キーの処理ロジックが含まれること
+        expect(html).toContain("e.key === 'Enter' || e.code === 'NumpadEnter'");
+        expect(html).toContain("e.key === 'Tab'");
+        expect(html).toContain("e.key === 'a' || e.key === 'A'");
+        expect(html).toContain("e.key === 'ArrowDown' || e.code === 'Numpad2'");
+        expect(html).toContain("e.key === 'ArrowUp' || e.code === 'Numpad8'");
+
+        // 4. スクリプト構文エラーがないこと
+        const scriptMatch = html.match(/<script>([\s\S]*?)<\/script>/);
+        expect(scriptMatch).not.toBeNull();
+        expect(() => {
+            new vm.Script(scriptMatch![1]);
+        }).not.toThrow();
+    });
 });

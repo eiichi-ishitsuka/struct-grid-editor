@@ -493,13 +493,17 @@ export class WebviewRenderer {
             cursor: text;
             overflow: hidden;
             text-overflow: ellipsis;
-            white-space: nowrap;
+            white-space: pre-wrap;
+            word-break: break-word;
+            vertical-align: top;
+            line-height: 1.4;
             box-sizing: border-box;
         }
         .col-val:focus {
             outline: 2px solid var(--vscode-focusBorder);
             background-color: var(--vscode-editor-selectionBackground);
-            white-space: normal;
+            white-space: pre-wrap;
+            word-break: break-word;
         }
         .col-val-array,
         .col-val-object {
@@ -1353,12 +1357,183 @@ export class WebviewRenderer {
                 });
             }
 
+            function selectCellContents(el) {
+                if (!el) return;
+                try {
+                    const range = document.createRange();
+                    range.selectNodeContents(el);
+                    const sel = window.getSelection();
+                    sel.removeAllRanges();
+                    sel.addRange(range);
+                } catch (err) {
+                    // ignore
+                }
+            }
+
+            function isAllSelected(el) {
+                const sel = window.getSelection();
+                if (!sel || sel.rangeCount === 0) return false;
+                const text = el.innerText || '';
+                if (text.length === 0) return true;
+                const selText = sel.toString();
+                return selText === text || selText.length >= text.length;
+            }
+
+            function navigateToAdjacentCell(currentCell, direction) {
+                if (!currentCell) return;
+                const currentRow = currentCell.closest('tr');
+                if (!currentRow) return;
+
+                const colKey = currentCell.getAttribute('data-col-key');
+                let targetCell = null;
+
+                if (currentMode === 'table') {
+                    if (direction === 'down') {
+                        const nextRow = currentRow.nextElementSibling;
+                        if (nextRow && nextRow.classList.contains('table-row-item')) {
+                            targetCell = Array.from(nextRow.querySelectorAll('td.col-val')).find(td => td.getAttribute('data-col-key') === colKey) || nextRow.querySelector('td.col-val');
+                        }
+                    } else if (direction === 'up') {
+                        const prevRow = currentRow.previousElementSibling;
+                        if (prevRow && prevRow.classList.contains('table-row-item')) {
+                            targetCell = Array.from(prevRow.querySelectorAll('td.col-val')).find(td => td.getAttribute('data-col-key') === colKey) || prevRow.querySelector('td.col-val');
+                        }
+                    } else if (direction === 'right') {
+                        const cells = Array.from(currentRow.querySelectorAll('td.col-val[contenteditable="true"]'));
+                        const cIdx = cells.indexOf(currentCell);
+                        if (cIdx >= 0 && cIdx + 1 < cells.length) {
+                            targetCell = cells[cIdx + 1];
+                        } else {
+                            const nextRow = currentRow.nextElementSibling;
+                            if (nextRow && nextRow.classList.contains('table-row-item')) {
+                                targetCell = nextRow.querySelector('td.col-val[contenteditable="true"]');
+                            }
+                        }
+                    } else if (direction === 'left') {
+                        const cells = Array.from(currentRow.querySelectorAll('td.col-val[contenteditable="true"]'));
+                        const cIdx = cells.indexOf(currentCell);
+                        if (cIdx > 0) {
+                            targetCell = cells[cIdx - 1];
+                        } else {
+                            const prevRow = currentRow.previousElementSibling;
+                            if (prevRow && prevRow.classList.contains('table-row-item')) {
+                                const prevCells = Array.from(prevRow.querySelectorAll('td.col-val[contenteditable="true"]'));
+                                if (prevCells.length > 0) {
+                                    targetCell = prevCells[prevCells.length - 1];
+                                }
+                            }
+                        }
+                    }
+                } else {
+                    // KV mode
+                    if (direction === 'down' || direction === 'right') {
+                        const nextRow = currentRow.nextElementSibling;
+                        if (nextRow) {
+                            targetCell = nextRow.querySelector('td.col-val[contenteditable="true"]');
+                        }
+                    } else if (direction === 'up' || direction === 'left') {
+                        const prevRow = currentRow.previousElementSibling;
+                        if (prevRow) {
+                            targetCell = prevRow.querySelector('td.col-val[contenteditable="true"]');
+                        }
+                    }
+                }
+
+                if (targetCell) {
+                    currentCell.blur();
+                    const targetPath = targetCell.getAttribute('data-path');
+                    const targetColKey = targetCell.getAttribute('data-col-key');
+                    const targetRowIndex = parseInt(targetCell.getAttribute('data-row-index'), 10);
+
+                    targetCell.focus();
+                    selectCellContents(targetCell);
+
+                    currentSelection = {
+                        type: 'cell',
+                        path: targetPath,
+                        colKey: targetColKey,
+                        rowIndex: targetRowIndex
+                    };
+                    updateSelectionVisuals();
+
+                    const st = vscode.getState() || {};
+                    vscode.setState({
+                        ...st,
+                        pendingFocus: {
+                            path: targetPath,
+                            colKey: targetColKey,
+                            rowIndex: targetRowIndex
+                        }
+                    });
+                } else {
+                    currentCell.blur();
+                }
+            }
+
             // Cell Editing (only editable cells)
             document.querySelectorAll('.col-val[contenteditable="true"]').forEach(cell => {
                 cell.addEventListener('keydown', (e) => {
-                    if (e.key === 'Enter' && !e.shiftKey) {
+                    const isCmdOrCtrl = e.ctrlKey || e.metaKey;
+
+                    // Ctrl + A / Cmd + A: セル内テキストを全選択
+                    if (isCmdOrCtrl && (e.key === 'a' || e.key === 'A')) {
                         e.preventDefault();
-                        e.target.blur();
+                        e.stopPropagation();
+                        selectCellContents(cell);
+                        return;
+                    }
+
+                    // Alt + Enter または Ctrl + Enter: セル内改行
+                    if ((e.altKey || (e.ctrlKey && !e.metaKey)) && (e.key === 'Enter' || e.code === 'NumpadEnter')) {
+                        e.preventDefault();
+                        document.execCommand('insertLineBreak');
+                        return;
+                    }
+
+                    // Enter / NumpadEnter: 値を確定して下（またはShift+Enterで上）へフォーカス移動
+                    if (e.key === 'Enter' || e.code === 'NumpadEnter') {
+                        e.preventDefault();
+                        if (e.shiftKey) {
+                            navigateToAdjacentCell(cell, 'up');
+                        } else {
+                            navigateToAdjacentCell(cell, 'down');
+                        }
+                        return;
+                    }
+
+                    // Tab: 右（またはShift+Tabで左）へフォーカス移動（元のセルはフォーカス解除）
+                    if (e.key === 'Tab') {
+                        e.preventDefault();
+                        if (e.shiftKey) {
+                            navigateToAdjacentCell(cell, 'left');
+                        } else {
+                            navigateToAdjacentCell(cell, 'right');
+                        }
+                        return;
+                    }
+
+                    // テンキーおよび矢印キーによるセル間移動
+                    const hasNewline = (cell.innerText || '').indexOf(String.fromCharCode(10)) !== -1;
+                    if (e.key === 'ArrowUp' || e.code === 'Numpad8') {
+                        if (isAllSelected(cell) || !hasNewline) {
+                            e.preventDefault();
+                            navigateToAdjacentCell(cell, 'up');
+                        }
+                    } else if (e.key === 'ArrowDown' || e.code === 'Numpad2') {
+                        if (isAllSelected(cell) || !hasNewline) {
+                            e.preventDefault();
+                            navigateToAdjacentCell(cell, 'down');
+                        }
+                    } else if (e.key === 'ArrowLeft' || e.code === 'Numpad4') {
+                        if (isAllSelected(cell)) {
+                            e.preventDefault();
+                            navigateToAdjacentCell(cell, 'left');
+                        }
+                    } else if (e.key === 'ArrowRight' || e.code === 'Numpad6') {
+                        if (isAllSelected(cell)) {
+                            e.preventDefault();
+                            navigateToAdjacentCell(cell, 'right');
+                        }
                     }
                 });
 
@@ -2022,16 +2197,46 @@ export class WebviewRenderer {
                 }
             });
 
-            // Global Keyboard Shortcuts (Ctrl+C, Ctrl+X, Delete/Backspace, Ctrl+A, Escape)
+            // Global Keyboard Shortcuts (Ctrl+C, Ctrl+X, Delete/Backspace, Ctrl+A, Escape, Arrow/Numpad Navigation)
             document.addEventListener('keydown', (e) => {
+                const isCellTyping = document.activeElement && document.activeElement.classList.contains('col-val') && document.activeElement.getAttribute('contenteditable') === 'true';
                 const isEditing = document.activeElement && (
                     document.activeElement.tagName === 'INPUT' ||
                     (document.activeElement.getAttribute('contenteditable') === 'true' && (
                         document.activeElement.classList.contains('col-header-label') ||
-                        document.activeElement.classList.contains('path-text')
+                        document.activeElement.classList.contains('path-text') ||
+                        document.activeElement.classList.contains('col-val')
                     ))
                 );
                 if (isEditing) return;
+
+                // セル選択中（未編集状態）での矢印キー・テンキー移動
+                if (currentSelection.type === 'cell' && !isCellTyping) {
+                    const currentElem = Array.from(document.querySelectorAll('td.col-val')).find(td => td.getAttribute('data-path') === currentSelection.path);
+                    if (currentElem) {
+                        if (e.key === 'ArrowDown' || e.code === 'Numpad2' || e.key === 'Enter' || e.code === 'NumpadEnter') {
+                            e.preventDefault();
+                            if (e.shiftKey && (e.key === 'Enter' || e.code === 'NumpadEnter')) {
+                                navigateToAdjacentCell(currentElem, 'up');
+                            } else {
+                                navigateToAdjacentCell(currentElem, 'down');
+                            }
+                            return;
+                        } else if (e.key === 'ArrowUp' || e.code === 'Numpad8') {
+                            e.preventDefault();
+                            navigateToAdjacentCell(currentElem, 'up');
+                            return;
+                        } else if (e.key === 'ArrowRight' || e.code === 'Numpad6' || (e.key === 'Tab' && !e.shiftKey)) {
+                            e.preventDefault();
+                            navigateToAdjacentCell(currentElem, 'right');
+                            return;
+                        } else if (e.key === 'ArrowLeft' || e.code === 'Numpad4' || (e.key === 'Tab' && e.shiftKey)) {
+                            e.preventDefault();
+                            navigateToAdjacentCell(currentElem, 'left');
+                            return;
+                        }
+                    }
+                }
 
                 const isCmdOrCtrl = e.ctrlKey || e.metaKey;
 
@@ -2052,8 +2257,7 @@ export class WebviewRenderer {
                         updateSelectionVisuals();
                     }
                 } else if (e.key === 'Delete' || e.key === 'Backspace') {
-                    const isCellTyping = document.activeElement && document.activeElement.classList.contains('col-val') && document.activeElement.getAttribute('contenteditable') === 'true';
-                    if (currentSelection.type !== 'none' && !isCellTyping) {
+                    if (currentSelection.type !== 'none') {
                         e.preventDefault();
                         deleteSelection();
                     }
@@ -2196,6 +2400,31 @@ export class WebviewRenderer {
                     draggedColIndex = null;
                 });
             });
+
+            // Restore pending focus (e.g. after Enter, Tab, Arrow key navigation)
+            const st = vscode.getState() || {};
+            if (st.pendingFocus) {
+                const pf = st.pendingFocus;
+                let target = null;
+                if (pf.path) {
+                    target = Array.from(document.querySelectorAll('td.col-val')).find(td => td.getAttribute('data-path') === pf.path);
+                }
+                if (!target && pf.colKey && pf.rowIndex !== undefined) {
+                    target = Array.from(document.querySelectorAll('td.col-val')).find(td => td.getAttribute('data-col-key') === pf.colKey && td.getAttribute('data-row-index') === String(pf.rowIndex));
+                }
+                if (target) {
+                    target.focus();
+                    selectCellContents(target);
+                    currentSelection = {
+                        type: 'cell',
+                        path: target.getAttribute('data-path'),
+                        colKey: target.getAttribute('data-col-key'),
+                        rowIndex: parseInt(target.getAttribute('data-row-index'), 10)
+                    };
+                    updateSelectionVisuals();
+                }
+                vscode.setState({ ...st, pendingFocus: undefined });
+            }
         }
 
         // Initialize Render
