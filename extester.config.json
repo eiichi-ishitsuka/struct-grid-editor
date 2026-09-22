@@ -1,0 +1,12 @@
+{
+  "setup": {
+    "vscodeVersion": "1.107.0",
+    "testResources": ".test-resources"
+  },
+  "run": {
+    "testFiles": ["out/ui-test/**/*.test.js"],
+    "mocha": {
+      "timeout": 60000
+    }
+  }
+}

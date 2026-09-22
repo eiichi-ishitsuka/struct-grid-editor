@@ -63,6 +63,31 @@ npm run test:unit
 npx vitest
 ```
 
+### E2E UI テスト (vscode-extension-tester)
+実際の VS Code インスタンス上でWebview（グリッドエディタ）のユーザー操作を Selenium WebDriver で自動検証します。
+
+**前提条件**: GUI デスクトップ環境（または xvfb などの仮想ディスプレイ環境）が必要です。
+
+```bash
+# TypeScriptコンパイル + テスト実行（VS CodeとChromeDriverを初回自動ダウンロード）
+npm run test:ui-e2e
+
+# コンパイルのみ
+npm run compile:ui-test
+```
+
+テストファイルの配置:
+```
+src/ui-test/
+├── helpers/test-utils.ts             # 一時フィクスチャ管理・待機ユーティリティ
+├── page-objects/StructGridPage.ts    # Webview操作の Page Object
+├── basic-operations.test.ts          # Phase 1: JSON/YAML/JSONL表示、セル編集・保存
+├── keyboard-navigation.test.ts       # Phase 2: Enter/Tab/Shift+Tab/Ctrl+A
+└── row-column-operations.test.ts     # Phase 3: 行・列の追加・削除、テキストエディタ切替
+```
+
+> **Note**: E2E テストで使用するサンプルファイルは `samples/` ディレクトリのファイルを一時コピーして使用するため、元ファイルは変更されません。
+
 ### 型チェック & Lint & ビルド
 TypeScript の型検証、ESLint、および esbuild による本番バンドルを一括実行します。
 

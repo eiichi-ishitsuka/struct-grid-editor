@@ -100,7 +100,9 @@
     "doc:test": "node scripts/generate-test-docs.js",
     "generate:sample": "node scripts/generate-large-sample.js",
     "package:vsix": "vsce package --allow-missing-repository -o vsix/",
-    "vsix": "npm run package:vsix"
+    "vsix": "npm run package:vsix",
+    "compile:ui-test": "tsc -p tsconfig.ui-test.json",
+    "test:ui-e2e": "npm run compile:ui-test && extest setup-and-run"
   },
   "devDependencies": {
     "@types/mocha": "^10.0.10",
@@ -117,7 +119,8 @@
     "typedoc-plugin-markdown": "^4.13.1",
     "typescript": "^6.0.3",
     "typescript-eslint": "^8.61.1",
-    "vitest": "^5.0.1"
+    "vitest": "^5.0.1",
+    "vscode-extension-tester": "^8.27.0"
   },
   "overrides": {
     "diff": "^8.0.4",

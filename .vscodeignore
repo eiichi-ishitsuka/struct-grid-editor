@@ -20,4 +20,9 @@ samples/**
 scripts/**
 typedoc.json
 vitest.config.ts
+extester.config.json
+tsconfig.ui-test.json
+.test-resources/**
+screenshots/**
+storage/**
 *.vsix

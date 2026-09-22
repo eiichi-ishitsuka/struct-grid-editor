@@ -21,6 +21,7 @@
         "node_modules",
         "dist",
         "out",
-        "vitest.config.ts"
+        "vitest.config.ts",
+        "src/ui-test/**/*"
     ]
 }
