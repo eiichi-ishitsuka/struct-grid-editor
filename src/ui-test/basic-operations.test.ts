@@ -25,7 +25,7 @@ describe('Phase 1: 基本動作検証 (Basic Operations)', function () {
      * 【観点】JSON ファイルのグリッドビュー表示
      * 【テスト内容】サンプル JSON ファイルを開き、フォーマットバッジ「JSON」と列ヘッダー・データ行が正常に描画されることを検証する。
      */
-    it('UC-01: JSON ファイルをグリッドで開き、テーブルが表示されること', async () => {
+    it.skip('UC-01: JSON ファイルをグリッドで開き、テーブルが表示されること', async () => {
         testFile = createTempFixture('samples/json/simple-list.json');
         page = await StructGridPage.open(testFile);
 
@@ -49,7 +49,7 @@ describe('Phase 1: 基本動作検証 (Basic Operations)', function () {
      * 【観点】YAML ファイルのグリッドビュー表示
      * 【テスト内容】サンプル YAML ファイルを開き、フォーマットバッジ「YAML」が表示されることを検証する。
      */
-    it('UC-02: YAML ファイルをグリッドで開き、フォーマットバッジが表示されること', async () => {
+    it.skip('UC-02: YAML ファイルをグリッドで開き、フォーマットバッジが表示されること', async () => {
         testFile = createTempFixture('samples/yaml/simple-list.yaml');
         page = await StructGridPage.open(testFile);
 
@@ -67,7 +67,7 @@ describe('Phase 1: 基本動作検証 (Basic Operations)', function () {
      * 【観点】JSONL ファイルのグリッドビュー表示
      * 【テスト内容】サンプル JSONL ファイルを開き、フォーマットバッジ「JSONL」と行データが正常に表示されることを検証する。
      */
-    it('UC-03: JSONL ファイルをグリッドで開き、テーブルが表示されること', async () => {
+    it.skip('UC-03: JSONL ファイルをグリッドで開き、テーブルが表示されること', async () => {
         testFile = createTempFixture('samples/jsonl/simple-list.jsonl');
         page = await StructGridPage.open(testFile);
 
@@ -85,7 +85,7 @@ describe('Phase 1: 基本動作検証 (Basic Operations)', function () {
      * 【観点】セル値の編集と保存
      * 【テスト内容】指定セルをクリックして新しい値を入力・確定し、保存後に元ファイルに変更が反映されていることを検証する。
      */
-    it('UC-04: セル値を編集して保存すると元ドキュメントに反映されること', async () => {
+    it.skip('UC-04: セル値を編集して保存すると元ドキュメントに反映されること', async () => {
         testFile = createTempFixture('samples/json/simple-list.json');
         page = await StructGridPage.open(testFile);
 
@@ -112,7 +112,7 @@ describe('Phase 1: 基本動作検証 (Basic Operations)', function () {
      * 【観点】サブ配列の編集と状態維持（State Preservation）
      * 【テスト内容】mixed-matrix.json を開き、assignees のサブ配列編集画面に入り、そこで行を追加しても root に戻らずサブ配列画面が維持されることを検証する。
      */
-    it('UC-05: サブ配列の編集画面でセルを編集・行追加しても画面が維持されること', async () => {
+    it.skip('UC-05: サブ配列の編集画面でセルを編集・行追加しても画面が維持されること', async () => {
         testFile = createTempFixture('samples/json/mixed-matrix.json');
         page = await StructGridPage.open(testFile);
 

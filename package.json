@@ -5,8 +5,8 @@
   "icon": "assets/img/icon.jpg",
   "publisher": "eiichi-ishitsuka",
   "repository": {
-      "type": "git",
-      "url": "https://github.com/eiichi-ishitsuka/struct-grid-editor"
+    "type": "git",
+    "url": "https://github.com/eiichi-ishitsuka/struct-grid-editor"
   },
   "version": "0.0.1",
   "license": "MIT",
@@ -121,6 +121,8 @@
   "devDependencies": {
     "@types/mocha": "^10.0.10",
     "@types/node": "24.x",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
     "@types/vscode": "^1.107.0",
     "@vitest/ui": "^5.0.1",
     "@vscode/test-cli": "^0.0.15",
@@ -141,6 +143,8 @@
     "serialize-javascript": "^7.0.6"
   },
   "dependencies": {
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0",
     "yaml": "^2.9.1"
   }
 }

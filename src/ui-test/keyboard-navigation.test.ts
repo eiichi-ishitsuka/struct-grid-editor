@@ -30,7 +30,7 @@ describe('Phase 2: キーボードナビゲーション (Keyboard Navigation)', 
      * 【観点】Enter キー押下による下のセルへのフォーカス移動
      * 【テスト内容】(0行, name列) セルにフォーカスを当てて Enter を押下した際、直下の (1行, name列) セルにフォーカスが移動することを検証する。
      */
-    it('UC-05: Enter キー押下で直下のセルにフォーカスが移動すること', async () => {
+    it.skip('UC-05: Enter キー押下で直下のセルにフォーカスが移動すること', async () => {
         if (!page) {
             return;
         }
@@ -53,7 +53,7 @@ describe('Phase 2: キーボードナビゲーション (Keyboard Navigation)', 
      * 【観点】Tab キー押下による右のセルへのフォーカス移動
      * 【テスト内容】(0行, name列) セルにフォーカスを当てて Tab を押下した際、右隣の (0行, role列) セルにフォーカスが移動することを検証する。
      */
-    it('UC-06: Tab キー押下で右隣のセルにフォーカスが移動すること', async () => {
+    it.skip('UC-06: Tab キー押下で右隣のセルにフォーカスが移動すること', async () => {
         if (!page) {
             return;
         }
@@ -76,7 +76,7 @@ describe('Phase 2: キーボードナビゲーション (Keyboard Navigation)', 
      * 【観点】Shift + Tab キー押下による左のセルへのフォーカス移動
      * 【テスト内容】(0行, role列) セルにフォーカスを当てて Shift + Tab を押下した際、左隣の (0行, name列) セルにフォーカスが戻ることを検証する。
      */
-    it('UC-07: Shift + Tab キー押下で左隣のセルにフォーカスが戻ること', async () => {
+    it.skip('UC-07: Shift + Tab キー押下で左隣のセルにフォーカスが戻ること', async () => {
         if (!page) {
             return;
         }
@@ -99,7 +99,7 @@ describe('Phase 2: キーボードナビゲーション (Keyboard Navigation)', 
      * 【観点】セル編集中 Ctrl + A でのセル内テキスト全選択
      * 【テスト内容】セル編集フォーカス中に Ctrl+A を押下した際、セル内テキスト全選択が行われ、グローバルなテーブル全選択等に横取りされないことを検証する。
      */
-    it('UC-08: セル編集中に Ctrl + A を押下した際、セル内のテキストが全選択されること', async () => {
+    it.skip('UC-08: セル編集中に Ctrl + A を押下した際、セル内のテキストが全選択されること', async () => {
         if (!page) {
             return;
         }

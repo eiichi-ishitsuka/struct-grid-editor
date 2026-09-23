@@ -118,7 +118,7 @@ export class StructGridEditorProvider implements vscode.CustomTextEditorProvider
             const text = document.getText();
             const ext = getFileExtension();
             const result = this.parseUseCase.execute(text, ext);
-            webviewPanel.webview.html = this.renderer.render(result.dto);
+            webviewPanel.webview.html = this.renderer.render(result.dto, webviewPanel.webview, this.context.extensionUri);
         };
 
         // Webview からの操作メッセージを受信して対応するユースケースを実行
