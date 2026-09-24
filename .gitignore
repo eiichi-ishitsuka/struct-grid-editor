@@ -1,0 +1,15 @@
+out
+dist
+node_modules
+.vscode-test/
+*.vsix
+vsix/
+.vitest/
+samples/large_data/
+.test-resources/
+screenshots/
+storage/
+
+# 整備中
+.agents/skills/**
+docs/adr/*

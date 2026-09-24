@@ -1,0 +1,146 @@
+{
+  "name": "struct-grid-editor",
+  "displayName": "StructGridEditor",
+  "description": "Edit JSON, YAML, and JSONL files in a spreadsheet-like grid view.",
+  "icon": "assets/img/icon.jpg",
+  "publisher": "eiichi-ishitsuka",
+  "repository": {
+      "type": "git",
+      "url": "https://github.com/eiichi-ishitsuka/struct-grid-editor"
+  },
+  "version": "0.0.1",
+  "license": "MIT",
+  "engines": {
+    "vscode": "^1.107.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "keywords": [
+    "grid",
+    "json",
+    "yaml",
+    "jsonl",
+    "editor"
+  ],
+  "preview": true,
+  "main": "./dist/extension.js",
+  "contributes": {
+    "problemMatchers": [
+      {
+        "name": "esbuild-watch",
+        "owner": "typescript",
+        "fileLocation": "relative",
+        "pattern": {
+          "regexp": "^\\s*(✘\\s*\\[ERROR\\]\\s*(.*))$",
+          "message": 1
+        },
+        "background": {
+          "activeOnStart": true,
+          "beginsPattern": "^\\[watch\\] build started$",
+          "endsPattern": "^\\[watch\\] build finished$"
+        }
+      }
+    ],
+    "commands": [
+      {
+        "command": "struct-grid-editor.openInGrid",
+        "title": "StructGridEditor で開く",
+        "category": "StructGridEditor"
+      }
+    ],
+    "menus": {
+      "explorer/context": [
+        {
+          "command": "struct-grid-editor.openInGrid",
+          "when": "resourceExtname == .json || resourceExtname == .yaml || resourceExtname == .yml || resourceExtname == .jsonl",
+          "group": "navigation"
+        }
+      ],
+      "editor/title/context": [
+        {
+          "command": "struct-grid-editor.openInGrid",
+          "when": "resourceExtname == .json || resourceExtname == .yaml || resourceExtname == .yml || resourceExtname == .jsonl",
+          "group": "navigation"
+        }
+      ],
+      "editor/title": [
+        {
+          "command": "struct-grid-editor.openInGrid",
+          "when": "resourceExtname == .json || resourceExtname == .yaml || resourceExtname == .yml || resourceExtname == .jsonl",
+          "group": "navigation"
+        }
+      ]
+    },
+    "customEditors": [
+      {
+        "viewType": "struct-grid-editor.jsonEditor",
+        "displayName": "StructGridEditor",
+        "selector": [
+          {
+            "filenamePattern": "*.json"
+          },
+          {
+            "filenamePattern": "*.yaml"
+          },
+          {
+            "filenamePattern": "*.yml"
+          },
+          {
+            "filenamePattern": "*.jsonl"
+          }
+        ],
+        "priority": "option"
+      }
+    ]
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run package",
+    "compile": "npm run check-types && npm run lint && node esbuild.js",
+    "watch": "npm-run-all -p watch:*",
+    "watch:esbuild": "node esbuild.js --watch",
+    "watch:tsc": "tsc --noEmit --watch --project tsconfig.json",
+    "package": "npm run check-types && npm run lint && node esbuild.js --production",
+    "compile-tests": "tsc -p . --outDir out",
+    "watch-tests": "tsc -p . -w --outDir out",
+    "pretest": "npm run compile-tests && npm run compile && npm run lint",
+    "check-types": "tsc --noEmit",
+    "lint": "eslint src",
+    "test": "vscode-test",
+    "test:unit": "vitest run",
+    "test:report": "vitest run --reporter=html",
+    "test:ui": "vitest --ui --open",
+    "doc": "typedoc && node scripts/generate-test-docs.js",
+    "doc:test": "node scripts/generate-test-docs.js",
+    "generate:sample": "node scripts/generate-large-sample.js",
+    "package:vsix": "vsce package --allow-missing-repository -o vsix/",
+    "vsix": "npm run package:vsix",
+    "compile:ui-test": "tsc -p tsconfig.ui-test.json",
+    "test:ui-e2e": "npm run compile:ui-test && extest setup-and-run"
+  },
+  "devDependencies": {
+    "@types/mocha": "^10.0.10",
+    "@types/node": "24.x",
+    "@types/vscode": "^1.107.0",
+    "@vitest/ui": "^5.0.1",
+    "@vscode/test-cli": "^0.0.15",
+    "@vscode/test-electron": "^3.0.0",
+    "@vscode/vsce": "^4.0.0",
+    "esbuild": "^0.28.1",
+    "eslint": "^10.5.0",
+    "npm-run-all": "^4.1.5",
+    "typedoc": "^0.28.20",
+    "typedoc-plugin-markdown": "^4.13.1",
+    "typescript": "^6.0.3",
+    "typescript-eslint": "^8.61.1",
+    "vitest": "^5.0.1",
+    "vscode-extension-tester": "^8.27.0"
+  },
+  "overrides": {
+    "diff": "^8.0.4",
+    "serialize-javascript": "^7.0.6"
+  },
+  "dependencies": {
+    "yaml": "^2.9.1"
+  }
+}

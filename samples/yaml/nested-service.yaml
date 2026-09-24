@@ -1,0 +1,20 @@
+# サービス基本設定
+service:
+  name: payment-gateway
+  version: 2.3.0
+  environment: staging
+
+# ネットワークとポート
+network:
+  ingress:
+    enabled: true
+    port: 443
+    hosts:
+      - api.staging.internal
+      - pay.staging.internal
+
+# リトライポリシー
+retry:
+  maxAttempts: 3
+  backoffMs: 1000
+  exponential: true

@@ -1,0 +1,5 @@
+{"timestamp": "2026-09-22T10:00:01Z", "level": "INFO", "method": "GET", "path": "/api/v1/users", "status": 200, "responseTimeMs": 14.2}
+{"timestamp": "2026-09-22T10:00:03Z", "level": "INFO", "method": "POST", "path": "/api/v1/login", "status": 200, "responseTimeMs": 85.6}
+{"timestamp": "2026-09-22T10:00:05Z", "level": "WARN", "method": "GET", "path": "/api/v1/items/999", "status": 404, "responseTimeMs": 22.0}
+{"timestamp": "2026-09-22T10:00:08Z", "level": "ERROR", "method": "POST", "path": "/api/v1/checkout", "status": 500, "responseTimeMs": 312.8}
+{"timestamp": "2026-09-22T10:00:10Z", "level": "INFO", "method": "GET", "path": "/api/v1/health", "status": 200, "responseTimeMs": 2.1}

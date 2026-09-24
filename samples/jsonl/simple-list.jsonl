@@ -1,0 +1,5 @@
+{"id": 1, "name": "Alice Smith", "role": "Admin", "active": true, "score": 95.5}
+{"id": 2, "name": "Bob Johnson", "role": "Developer", "active": true, "score": 88.0}
+{"id": 3, "name": "Charlie Brown", "role": "Designer", "active": false, "score": 72.4}
+{"id": 4, "name": "Diana Prince", "role": "Manager", "active": true, "score": 99.1}
+{"id": 5, "name": "Evan Wright", "role": "QA Engineer", "active": false, "score": 83.2}

@@ -1,0 +1,4 @@
+{"id": 101, "name": "Sato Taro", "department": "Engineering", "tags": ["frontend", "react", "typescript"], "profile": {"age": 29, "location": "Tokyo"}}
+{"id": 102, "name": "Suzuki Ichiro", "department": "Product", "tags": ["scrum", "pm"], "profile": {"age": 35, "location": "Osaka"}}
+{"id": 103, "name": "Takahashi Hanako", "department": "Design", "tags": ["ui", "ux", "figma"], "profile": {"age": 27, "location": "Fukuoka"}}
+{"id": 104, "name": "Tanaka Kenji", "department": "Engineering", "tags": ["backend", "go", "k8s"], "profile": {"age": 32, "location": "Tokyo"}}

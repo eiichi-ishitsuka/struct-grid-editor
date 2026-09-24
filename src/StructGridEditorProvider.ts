@@ -1,0 +1,1 @@
+export { StructGridEditorProvider } from './infrastructure/vscode/StructGridEditorProvider';

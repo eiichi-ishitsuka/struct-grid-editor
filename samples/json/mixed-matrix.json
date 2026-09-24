@@ -1,0 +1,46 @@
+[
+  {
+    "id": 1,
+    "title": "ユーザー登録機能の実装",
+    "priority": 1,
+    "isCompleted": false,
+    "assignees": ["田中", "佐藤"],
+    "meta": {
+      "estimateHours": 8,
+      "release": "v1.2.0"
+    }
+  },
+  {
+    "id": 2,
+    "title": "スプレッドシート型推論の改善",
+    "priority": 2,
+    "isCompleted": true,
+    "assignees": ["鈴木"],
+    "meta": {
+      "estimateHours": 4,
+      "release": "v1.2.0"
+    }
+  },
+  {
+    "id": 3,
+    "title": "D&D並び替え機能の追加",
+    "priority": 1,
+    "isCompleted": true,
+    "assignees": ["田中", "高橋", "渡辺"],
+    "meta": {
+      "estimateHours": 12,
+      "release": "v1.3.0"
+    }
+  },
+  {
+    "id": 4,
+    "title": "パフォーマンス最適化",
+    "priority": 3,
+    "isCompleted": false,
+    "assignees": ["佐藤"],
+    "meta": {
+      "estimateHours": 16,
+      "release": "v1.4.0"
+    }
+  }
+]
