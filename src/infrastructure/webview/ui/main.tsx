@@ -1,4 +1,5 @@
 import { createRoot } from 'react-dom/client';
+import type { GridDataDto } from '../../../application/dto/GridData';
 import './styles/webview.css';
 
 /**
@@ -8,13 +9,24 @@ import './styles/webview.css';
  * HTML から読み込まれない。以降の工程で Renderer を HTML shell に置き換える際に、
  * App コンポーネントの描画先として利用する。
  */
-function WebviewApp() {
+interface WebviewAppProps {
+    initialData: GridDataDto;
+}
+
+function WebviewApp({ initialData }: WebviewAppProps) {
+    void initialData;
     return null;
 }
 
 const rootElement = document.getElementById('app');
-if (!rootElement) {
-    throw new Error('Webview root element "#app" was not found.');
-}
+const initialData = rootElement?.dataset.initialData;
 
-createRoot(rootElement).render(<WebviewApp />);
+// 既存 UI を CSP 化した移行期間は legacy renderer が #app を描画する。
+// data-react-ui が付いた HTML shell だけを React が所有する。
+if (rootElement?.dataset.reactUi === 'true') {
+    if (!initialData) {
+        throw new Error('Webview initial data was not found.');
+    }
+
+    createRoot(rootElement).render(<WebviewApp initialData={JSON.parse(initialData) as GridDataDto} />);
+}

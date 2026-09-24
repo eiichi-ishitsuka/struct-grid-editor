@@ -1,4 +1,12 @@
+import { randomBytes } from 'crypto';
 import { GridDataDto, TableViewDto } from '../../application/dto/GridData';
+
+/** Webview 内で許可する拡張機能リソース。 */
+export interface WebviewAssets {
+    cspSource: string;
+    styleUri: string;
+    scriptUri: string;
+}
 
 /**
  * GridDataDto を元にスプレッドシート・グリッドUIの完全な HTML 文字列を生成するレンダラー。
@@ -9,12 +17,14 @@ export class WebviewRenderer {
      * @param data 描画対象の GridDataDto
      * @returns 生成された HTML 文字列
      */
-    public render(data: GridDataDto): string {
+    public render(data: GridDataDto, assets: WebviewAssets): string {
         if (data.error) {
-            return this.renderError(data.error);
+            return this.renderError(data.error, assets);
         }
 
         const jsonData = JSON.stringify(data).replace(/</g, '\\u003c');
+        const nonce = this.createNonce();
+        const initialData = this.escapeHtml(jsonData);
 
 
         return `<!DOCTYPE html>
@@ -22,8 +32,10 @@ export class WebviewRenderer {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy" content="${this.createContentSecurityPolicy(assets.cspSource, nonce)}">
     <title>StructGridEditor</title>
-    <style>
+    <link rel="stylesheet" href="${this.escapeHtml(assets.styleUri)}">
+    <style nonce="${nonce}">
         :root {
             --font-family: var(--vscode-font-family, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif);
         }
@@ -655,11 +667,11 @@ export class WebviewRenderer {
     </style>
 </head>
 <body>
-    <div id="app"></div>
+    <div id="app" data-initial-data="${initialData}"></div>
     <div id="contextMenu" class="context-menu"></div>
     <div id="toastNotification" class="toast-notification"></div>
 
-    <script>
+    <script nonce="${nonce}">
         const vscode = acquireVsCodeApi();
         const initialData = ${jsonData};
 
@@ -2423,16 +2435,21 @@ export class WebviewRenderer {
         // Initialize Render
         renderApp();
     </script>
+    <script nonce="${nonce}" src="${this.escapeHtml(assets.scriptUri)}"></script>
 </body>
 </html>`;
     }
 
-    private renderError(error: string): string {
+    private renderError(error: string, assets: WebviewAssets): string {
+        const nonce = this.createNonce();
+
         return `<!DOCTYPE html>
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
-    <style>
+    <meta http-equiv="Content-Security-Policy" content="${this.createContentSecurityPolicy(assets.cspSource, nonce)}">
+    <link rel="stylesheet" href="${this.escapeHtml(assets.styleUri)}">
+    <style nonce="${nonce}">
         body {
             font-family: var(--vscode-font-family);
             color: var(--vscode-editor-foreground);
@@ -2463,5 +2480,14 @@ export class WebviewRenderer {
             .replace(/>/g, '&gt;')
             .replace(/"/g, '&quot;')
             .replace(/'/g, '&#039;');
+    }
+
+    private createNonce(): string {
+        return randomBytes(16).toString('base64');
+    }
+
+    private createContentSecurityPolicy(cspSource: string, nonce: string): string {
+        const source = this.escapeHtml(cspSource);
+        return `default-src 'none'; style-src ${source} 'nonce-${nonce}'; script-src ${source} 'nonce-${nonce}';`;
     }
 }

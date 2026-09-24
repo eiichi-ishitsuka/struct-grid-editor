@@ -108,6 +108,19 @@ export class StructGridEditorProvider implements vscode.CustomTextEditorProvider
     ): Promise<void> {
         webviewPanel.webview.options = {
             enableScripts: true,
+            localResourceRoots: [
+                vscode.Uri.joinPath(this.context.extensionUri, 'dist', 'webview'),
+            ],
+        };
+        const webviewAssetRoot = vscode.Uri.joinPath(this.context.extensionUri, 'dist', 'webview');
+        const webviewAssets = {
+            cspSource: webviewPanel.webview.cspSource,
+            styleUri: webviewPanel.webview.asWebviewUri(
+                vscode.Uri.joinPath(webviewAssetRoot, 'main.css')
+            ).toString(),
+            scriptUri: webviewPanel.webview.asWebviewUri(
+                vscode.Uri.joinPath(webviewAssetRoot, 'main.js')
+            ).toString(),
         };
 
         const getFileExtension = () => {
@@ -119,7 +132,7 @@ export class StructGridEditorProvider implements vscode.CustomTextEditorProvider
             const text = document.getText();
             const ext = getFileExtension();
             const result = this.parseUseCase.execute(text, ext);
-            webviewPanel.webview.html = this.renderer.render(result.dto);
+            webviewPanel.webview.html = this.renderer.render(result.dto, webviewAssets);
         };
 
         // Webview からの操作メッセージを受信して対応するユースケースを実行
