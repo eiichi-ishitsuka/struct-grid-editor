@@ -1,5 +1,6 @@
 import { createRoot } from 'react-dom/client';
 import type { GridDataDto } from '../../../application/dto/GridData';
+import { App } from './App';
 import './styles/webview.css';
 
 /**
@@ -9,15 +10,6 @@ import './styles/webview.css';
  * HTML から読み込まれない。以降の工程で Renderer を HTML shell に置き換える際に、
  * App コンポーネントの描画先として利用する。
  */
-interface WebviewAppProps {
-    initialData: GridDataDto;
-}
-
-function WebviewApp({ initialData }: WebviewAppProps) {
-    void initialData;
-    return null;
-}
-
 const rootElement = document.getElementById('app');
 const initialData = rootElement?.dataset.initialData;
 
@@ -28,5 +20,5 @@ if (rootElement?.dataset.reactUi === 'true') {
         throw new Error('Webview initial data was not found.');
     }
 
-    createRoot(rootElement).render(<WebviewApp initialData={JSON.parse(initialData) as GridDataDto} />);
+    createRoot(rootElement).render(<App initialData={JSON.parse(initialData) as GridDataDto} />);
 }
