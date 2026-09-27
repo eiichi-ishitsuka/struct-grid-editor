@@ -81,13 +81,25 @@
             "filenamePattern": "*.json"
           },
           {
+            "filenamePattern": "**/*.json"
+          },
+          {
             "filenamePattern": "*.yaml"
+          },
+          {
+            "filenamePattern": "**/*.yaml"
           },
           {
             "filenamePattern": "*.yml"
           },
           {
+            "filenamePattern": "**/*.yml"
+          },
+          {
             "filenamePattern": "*.jsonl"
+          },
+          {
+            "filenamePattern": "**/*.jsonl"
           }
         ],
         "priority": "option"

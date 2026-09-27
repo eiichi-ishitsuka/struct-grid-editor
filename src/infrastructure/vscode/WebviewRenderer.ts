@@ -92,6 +92,6 @@ export class WebviewRenderer {
 
     private createContentSecurityPolicy(cspSource: string, nonce: string): string {
         const source = this.escapeHtml(cspSource);
-        return `default-src 'none'; style-src ${source} 'nonce-${nonce}'; script-src ${source} 'nonce-${nonce}';`;
+        return `default-src 'none'; style-src ${source} 'unsafe-inline' 'nonce-${nonce}'; script-src ${source} 'nonce-${nonce}';`;
     }
 }

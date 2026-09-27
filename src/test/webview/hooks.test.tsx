@@ -1,16 +1,22 @@
 // @vitest-environment jsdom
 import { act, renderHook } from '@testing-library/react';
 import { useState } from 'react';
-import { afterEach, describe, expect, it, vi } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { cellSelectionClass, useGridSelection } from '../../webview/hooks/useGridSelection';
 import { useFocusRestoration } from '../../webview/hooks/useFocusRestoration';
 import { defaultGridUiState, type GridUiState } from '../../webview/hooks/gridUiState';
 import { findAdjacentCell } from '../../webview/hooks/useKeyboardNavigation';
 import { useVsCodeState } from '../../webview/hooks/useVsCodeState';
+import { resetVsCodeApiForTesting } from '../../webview/vscodeApi';
 import type { IndexedTableRow, OrderedTableView } from '../../webview/model/tableView';
 
 describe('Webview UI hooks', () => {
+    beforeEach(() => {
+        resetVsCodeApiForTesting();
+    });
+
     afterEach(() => {
+        resetVsCodeApiForTesting();
         vi.unstubAllGlobals();
     });
 

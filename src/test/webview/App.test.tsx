@@ -4,6 +4,7 @@ import userEvent from '@testing-library/user-event';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import type { GridDataDto } from '../../application/dto/GridData';
 import { App } from '../../webview/App';
+import { resetVsCodeApiForTesting } from '../../webview/vscodeApi';
 
 const tableData: GridDataDto = {
     documentType: 'json',
@@ -30,6 +31,7 @@ describe('React Webview App', () => {
     const postMessageMock = vi.fn();
 
     beforeEach(() => {
+        resetVsCodeApiForTesting();
         postMessageMock.mockClear();
         (globalThis as unknown as { acquireVsCodeApi: unknown }).acquireVsCodeApi = () => ({
             getState: () => undefined,
@@ -40,6 +42,7 @@ describe('React Webview App', () => {
 
     afterEach(() => {
         cleanup();
+        resetVsCodeApiForTesting();
         delete (globalThis as unknown as { acquireVsCodeApi?: unknown }).acquireVsCodeApi;
     });
 

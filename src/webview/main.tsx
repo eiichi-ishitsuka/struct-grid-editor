@@ -17,8 +17,17 @@ const initialData = rootElement?.dataset.initialData;
 // data-react-ui が付いた HTML shell だけを React が所有する。
 if (rootElement?.dataset.reactUi === 'true') {
     if (!initialData) {
+        rootElement.innerHTML = '<div style="padding: 24px; color: var(--vscode-inputValidation-errorForeground, #f44336);">Webview の初期データが見つかりませんでした。</div>';
         throw new Error('Webview initial data was not found.');
     }
 
-    createRoot(rootElement).render(<App initialData={JSON.parse(initialData) as GridDataDto} />);
+    try {
+        const parsedData = JSON.parse(initialData) as GridDataDto;
+        createRoot(rootElement).render(<App initialData={parsedData} />);
+    } catch (err: unknown) {
+        const message = err instanceof Error ? err.message : String(err);
+        rootElement.innerHTML = `<div style="padding: 24px; color: var(--vscode-inputValidation-errorForeground, #f44336);">画面の初期化に失敗しました: ${message}</div>`;
+        console.error('Failed to initialize StructGridEditor webview:', err);
+    }
 }
+
