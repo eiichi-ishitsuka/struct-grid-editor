@@ -18,10 +18,26 @@ export interface UseTableViewResult {
     pathKey: string;
     sortState: TableSortState | undefined;
     setSearchQuery: (query: string) => void;
-    setActiveArrayPath: (path: string) => void;
+    setActiveArrayPath: (path: string | null) => void;
     setCurrentPage: (page: number) => void;
     setHiddenColumns: (columnKeys: string[]) => void;
     toggleSort: (colKey: string) => void;
+}
+
+/** 有効な配列パスを検証・解決する。対象が存在しない場合はデフォルトパスへフォールバックする。 */
+export function resolveActiveArrayPath(data: GridDataDto, candidate: string | null | undefined): string | null {
+    const defaultPath = data.viewMode === 'table' ? (data.tableData?.path ?? '') : null;
+    if (candidate === undefined) {
+        return defaultPath;
+    }
+    if (candidate === null) {
+        return data.viewMode === 'table' ? defaultPath : null;
+    }
+    if (candidate === '') {
+        return data.tableData ? '' : null;
+    }
+    const exists = data.subArrays?.some(subArray => subArray.path === candidate);
+    return exists ? candidate : defaultPath;
 }
 
 /** 表示パス、検索、ページングと永続設定から、現在の表表示モデルを組み立てる。 */
@@ -30,9 +46,7 @@ export function useTableView(
     uiState: GridUiState,
     setUiState: (updater: StateUpdater<GridUiState>) => void
 ): UseTableViewResult {
-    const [activeArrayPath, setActiveArrayPathState] = useState<string | null>(
-        data.viewMode === 'table' ? data.tableData?.path ?? '' : null
-    );
+    const activeArrayPath = resolveActiveArrayPath(data, uiState.activeArrayPath);
     const [searchQuery, setSearchQueryState] = useState('');
 
     const tableView = useMemo(
@@ -68,8 +82,12 @@ export function useTableView(
             setUiState(current => ({ ...current, currentPage: 1 }));
         },
         setActiveArrayPath: path => {
-            setActiveArrayPathState(path);
-            setUiState(current => ({ ...current, currentPage: 1 }));
+            const resolved = resolveActiveArrayPath(data, path);
+            setUiState(current => ({
+                ...current,
+                activeArrayPath: resolved,
+                currentPage: 1,
+            }));
         },
         setCurrentPage: currentPage => setUiState(current => ({ ...current, currentPage })),
         setHiddenColumns: columnKeys => setUiState(current => ({

@@ -3,7 +3,7 @@
 本ドキュメントは、`src/test/` 配下のテストコード（JSDoc / docstring）から自動抽出・生成されたテスト仕様一覧です。
 
 - **総テストスイート数**: 18
-- **総テストケース数**: 92
+- **総テストケース数**: 94
 - **生成スクリプト**: `scripts/generate-test-docs.js` (`npm run doc` にて自動更新)
 
 ## 目次
@@ -16,12 +16,12 @@
 6. [Extension Test Suite (1件)](#extension-test-suite)
 7. [JsonDocumentParser (9件)](#jsondocumentparser)
 8. [WebviewRenderer (3件)](#webviewrenderer)
-9. [React Webview App (9件)](#react-webview-app)
+9. [React Webview App (10件)](#react-webview-app)
 10. [Breadcrumbs Component (2件)](#breadcrumbs-component)
 11. [ColumnVisibilityMenu Component (3件)](#columnvisibilitymenu-component)
 12. [EditableCell Component (4件)](#editablecell-component)
 13. [Pagination Component (4件)](#pagination-component)
-14. [Webview UI hooks (6件)](#webview-ui-hooks)
+14. [Webview UI hooks (7件)](#webview-ui-hooks)
 15. [Webview message protocol (1件)](#webview-message-protocol)
 16. [table view model (8件)](#table-view-model)
 17. [TSV Generation Utilities (5件)](#tsv-generation-utilities)
@@ -143,7 +143,7 @@
 ## 9. React Webview App
 
 - **テストファイル**: [`src/test/webview/App.test.tsx`](../src/test/webview/App.test.tsx)
-- **ケース数**: 9
+- **ケース数**: 10
 
 | # | テストケース名 | 観点 | テスト内容（検証内容） |
 | :--- | :--- | :--- | :--- |
@@ -156,6 +156,7 @@
 | 7 | `navigates to sub-array and back via breadcrumbs` | サブ配列ボタンのクリックで配列を展開し、パンくずでルートへ戻れること | 未記載 |
 | 8 | `applies saved column widths from state` | 保存された列幅（customColWidths）を初期描画に反映すること | 未記載 |
 | 9 | `reorders columns on drag and drop` | 列のドラッグ＆ドロップで列の並び順が更新されること | 未記載 |
+| 10 | `navigates sub-array in KV mode and preserves array view across state restoration` | KVモードの配列を「編集する」で開いた後、Webview再読み込み（編集・行追加）が発生しても配列画面を維持すること | 未記載 |
 
 ## 10. Breadcrumbs Component
 
@@ -205,7 +206,7 @@
 ## 14. Webview UI hooks
 
 - **テストファイル**: [`src/test/webview/hooks.test.tsx`](../src/test/webview/hooks.test.tsx)
-- **ケース数**: 6
+- **ケース数**: 7
 
 | # | テストケース名 | 観点 | テスト内容（検証内容） |
 | :--- | :--- | :--- | :--- |
@@ -215,6 +216,7 @@
 | 4 | `finds the adjacent visible cell including horizontal wrapping` | Tab の行末折返しと矢印移動の次セルを DTO だけから求められること | 未記載 |
 | 5 | `returns the correct CSS class for cell/row/col/all selection` | 選択状態に応じた CSS クラスを正しく返すこと | 未記載 |
 | 6 | `provides selectRow, selectCol, and selectAll helpers` | 行選択・列選択・全選択のヘルパーが正しい selection を設定すること | 未記載 |
+| 7 | `persists activeArrayPath into uiState on navigation` | 配列パスの解決とフォールバックが正しく行われること | 未記載 |
 
 ## 15. Webview message protocol
 

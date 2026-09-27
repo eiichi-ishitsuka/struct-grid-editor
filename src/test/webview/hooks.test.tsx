@@ -2,10 +2,12 @@
 import { act, renderHook } from '@testing-library/react';
 import { useState } from 'react';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
+import type { GridDataDto } from '../../application/dto/GridData';
 import { cellSelectionClass, useGridSelection } from '../../webview/hooks/useGridSelection';
 import { useFocusRestoration } from '../../webview/hooks/useFocusRestoration';
 import { defaultGridUiState, type GridUiState } from '../../webview/hooks/gridUiState';
 import { findAdjacentCell } from '../../webview/hooks/useKeyboardNavigation';
+import { resolveActiveArrayPath, useTableView } from '../../webview/hooks/useTableView';
 import { useVsCodeState } from '../../webview/hooks/useVsCodeState';
 import { resetVsCodeApiForTesting } from '../../webview/vscodeApi';
 import type { IndexedTableRow, OrderedTableView } from '../../webview/model/tableView';
@@ -116,5 +118,132 @@ describe('Webview UI hooks', () => {
 
         act(() => result.current.clearSelection());
         expect(result.current.selection).toEqual({ type: 'none' });
+    });
+
+    /** 【観点】配列パスの解決とフォールバックが正しく行われること */
+    describe('resolveActiveArrayPath', () => {
+        const kvData: GridDataDto = {
+            documentType: 'yaml',
+            viewMode: 'kv',
+            rows: [],
+            totalRows: 1,
+            subArrays: [
+                {
+                    path: 'items',
+                    label: 'items',
+                    length: 2,
+                    isObjectArray: false,
+                    tableData: {
+                        path: 'items',
+                        columns: [{ key: 'value', label: 'Value', type: 'string' }],
+                        rows: [],
+                        totalRows: 0,
+                        totalColumns: 1,
+                        isObjectArray: false,
+                    },
+                },
+            ],
+        };
+
+        const tableData: GridDataDto = {
+            documentType: 'json',
+            viewMode: 'table',
+            rows: [],
+            totalRows: 1,
+            tableData: {
+                path: '',
+                columns: [{ key: 'id', label: 'ID', type: 'number' }],
+                rows: [],
+                totalRows: 0,
+                totalColumns: 1,
+                isObjectArray: true,
+            },
+            subArrays: [
+                {
+                    path: '[0].tags',
+                    label: 'tags',
+                    length: 1,
+                    isObjectArray: false,
+                    tableData: {
+                        path: '[0].tags',
+                        columns: [{ key: 'value', label: 'Value', type: 'string' }],
+                        rows: [],
+                        totalRows: 0,
+                        totalColumns: 1,
+                        isObjectArray: false,
+                    },
+                },
+            ],
+        };
+
+        it('resolves active array path for KV and table documents', () => {
+            // KV mode: undefined/null/empty falls back to null (KV view)
+            expect(resolveActiveArrayPath(kvData, undefined)).toBeNull();
+            expect(resolveActiveArrayPath(kvData, null)).toBeNull();
+            expect(resolveActiveArrayPath(kvData, '')).toBeNull();
+            // KV mode: valid sub-array
+            expect(resolveActiveArrayPath(kvData, 'items')).toBe('items');
+            // KV mode: non-existent path falls back to null
+            expect(resolveActiveArrayPath(kvData, 'nonexistent')).toBeNull();
+
+            // Table mode: undefined/null/empty falls back to '' (root table)
+            expect(resolveActiveArrayPath(tableData, undefined)).toBe('');
+            expect(resolveActiveArrayPath(tableData, null)).toBe('');
+            expect(resolveActiveArrayPath(tableData, '')).toBe('');
+            // Table mode: valid sub-array
+            expect(resolveActiveArrayPath(tableData, '[0].tags')).toBe('[0].tags');
+            // Table mode: non-existent path falls back to ''
+            expect(resolveActiveArrayPath(tableData, '[0].missing')).toBe('');
+        });
+    });
+
+    /** 【観点】useTableView で activeArrayPath を変更したとき、uiState に永続化されること */
+    it('persists activeArrayPath into uiState on navigation', () => {
+        const kvData: GridDataDto = {
+            documentType: 'yaml',
+            viewMode: 'kv',
+            rows: [],
+            totalRows: 1,
+            subArrays: [
+                {
+                    path: 'items',
+                    label: 'items',
+                    length: 1,
+                    isObjectArray: false,
+                    tableData: {
+                        path: 'items',
+                        columns: [{ key: 'value', label: 'Value', type: 'string' }],
+                        rows: [],
+                        totalRows: 0,
+                        totalColumns: 1,
+                        isObjectArray: false,
+                    },
+                },
+            ],
+        };
+
+        const { result } = renderHook(() => {
+            const [uiState, setUiState] = useState<GridUiState>(defaultGridUiState);
+            const table = useTableView(kvData, uiState, setUiState);
+            return { uiState, table };
+        });
+
+        // 初期状態は KV 表示（activeArrayPath = null, tableView = null）
+        expect(result.current.table.activeArrayPath).toBeNull();
+        expect(result.current.table.tableView).toBeNull();
+
+        // items 配列へドリルダウン
+        act(() => result.current.table.setActiveArrayPath('items'));
+
+        // uiState に activeArrayPath が保存され、tableView が生成される
+        expect(result.current.uiState.activeArrayPath).toBe('items');
+        expect(result.current.table.activeArrayPath).toBe('items');
+        expect(result.current.table.tableView).not.toBeNull();
+
+        // root へ戻る
+        act(() => result.current.table.setActiveArrayPath(''));
+        expect(result.current.uiState.activeArrayPath).toBeNull();
+        expect(result.current.table.activeArrayPath).toBeNull();
+        expect(result.current.table.tableView).toBeNull();
     });
 });

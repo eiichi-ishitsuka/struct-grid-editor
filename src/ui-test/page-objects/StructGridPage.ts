@@ -328,6 +328,52 @@ export class StructGridPage {
     }
 
     /**
+     * 配列の「編集する」ボタンをクリックします。
+     * @param arrayPath 対象の配列パス（省略時は最初に見つかった編集ボタン）
+     */
+    public async clickEditArray(arrayPath?: string): Promise<void> {
+        const driver = VSBrowser.instance.driver;
+        const selector = arrayPath
+            ? `.edit-array-btn[data-array-path="${arrayPath}"]`
+            : '.edit-array-btn';
+        const btn = await driver.findElement(By.css(selector));
+        await btn.click();
+        await sleep(500);
+    }
+
+    /**
+     * パンくずリスト全体のテキストを取得します。
+     */
+    public async getBreadcrumbsText(): Promise<string> {
+        const driver = VSBrowser.instance.driver;
+        const bar = await driver.findElement(By.css('.breadcrumb-bar'));
+        return (await bar.getText()).trim();
+    }
+
+    /**
+     * パンくずリストの 'root/' をクリックしてルート階層へ戻ります。
+     */
+    public async clickBreadcrumbRoot(): Promise<void> {
+        const driver = VSBrowser.instance.driver;
+        const rootBtn = await driver.findElement(By.css('.breadcrumb-bar .breadcrumb-link'));
+        await rootBtn.click();
+        await sleep(500);
+    }
+
+    /**
+     * 「編集する」ボタンが表示されているか確認します。
+     * @param arrayPath 対象の配列パス（省略時は任意の編集ボタン）
+     */
+    public async isEditArrayButtonPresent(arrayPath?: string): Promise<boolean> {
+        const driver = VSBrowser.instance.driver;
+        const selector = arrayPath
+            ? `.edit-array-btn[data-array-path="${arrayPath}"]`
+            : '.edit-array-btn';
+        const elements = await driver.findElements(By.css(selector));
+        return elements.length > 0;
+    }
+
+    /**
      * エディタタブを閉じます。
      */
     public async close(): Promise<void> {
