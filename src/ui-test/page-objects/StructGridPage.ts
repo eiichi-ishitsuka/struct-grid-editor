@@ -6,6 +6,7 @@ import {
     Key,
     WebElement,
     EditorView,
+    Workbench,
 } from 'vscode-extension-tester';
 import * as fs from 'fs';
 import { sleep, waitForCondition } from '../helpers/test-utils';
@@ -21,6 +22,8 @@ export class StructGridPage {
 
     /**
      * 指定ファイルを VS Code で開き、StructGridEditor の Webview を初期化して Page Object を返します。
+     * priority: "option" の場合、標準エディタが開く可能性があるため
+     * 必要に応じてコマンド "StructGridEditor で開く" を実行して切り替えます。
      * @param filePath 開くファイルの絶対パス
      */
     public static async open(filePath: string): Promise<StructGridPage> {
@@ -28,7 +31,22 @@ export class StructGridPage {
         await VSBrowser.instance.openResources(filePath);
         await sleep(1500);
 
-        const customEditor = new CustomEditor();
+        let customEditor: CustomEditor;
+        try {
+            customEditor = new CustomEditor();
+            await customEditor.getWebView();
+        } catch {
+            // priority: "option" 等でテキストエディタが開いている場合はコマンドで StructGridEditor に切り替える
+            const workbench = new Workbench();
+            try {
+                await workbench.executeCommand('StructGridEditor: StructGridEditor で開く');
+            } catch {
+                await workbench.executeCommand('StructGridEditor で開く');
+            }
+            await sleep(1500);
+            customEditor = new CustomEditor();
+        }
+
         const webview = customEditor.getWebView();
 
         // Webview の内部フレームへスイッチ
@@ -38,7 +56,7 @@ export class StructGridPage {
         await waitForCondition(async () => {
             try {
                 const driver = VSBrowser.instance.driver;
-                const elements = await driver.findElements(By.css('.table-container, .kv-table, .header'));
+                const elements = await driver.findElements(By.css('.table-container, .kv-table, .header, .webview-app'));
                 return elements.length > 0;
             } catch {
                 return false;
@@ -47,6 +65,88 @@ export class StructGridPage {
 
         return new StructGridPage(customEditor, webview);
     }
+
+    /**
+     * ファイルをテキストエディタで開いた状態から、コマンド「StructGridEditor で開く」を実行して
+     * StructGridEditor を起動し、Page Object を返します。
+     * @param filePath 開くファイルの絶対パス
+     */
+    public static async openViaCommand(filePath: string): Promise<StructGridPage> {
+        await VSBrowser.instance.openResources(filePath);
+        await sleep(1500);
+
+        const workbench = new Workbench();
+        try {
+            await workbench.executeCommand('StructGridEditor: StructGridEditor で開く');
+        } catch {
+            await workbench.executeCommand('StructGridEditor で開く');
+        }
+        await sleep(1500);
+
+        const customEditor = new CustomEditor();
+        const webview = customEditor.getWebView();
+        await webview.switchToFrame(15000);
+
+        await waitForCondition(async () => {
+            try {
+                const driver = VSBrowser.instance.driver;
+                const elements = await driver.findElements(By.css('.table-container, .kv-table, .header, .webview-app'));
+                return elements.length > 0;
+            } catch {
+                return false;
+            }
+        }, 15000);
+
+        return new StructGridPage(customEditor, webview);
+    }
+
+    /**
+     * ファイルを開いた後、「View: Reopen Editor With...」コマンドから StructGridEditor を選択して
+     * カスタムエディタへ切り替えます。
+     * @param filePath 開くファイルの絶対パス
+     */
+    public static async openViaReopenWith(filePath: string): Promise<StructGridPage> {
+        await VSBrowser.instance.openResources(filePath);
+        await sleep(1500);
+
+        const workbench = new Workbench();
+        const input = await workbench.openCommandPrompt();
+        await input.setText('>View: Reopen Editor With...');
+        await input.confirm();
+        await sleep(800);
+
+        const quickPicks = await input.getQuickPicks();
+        let selected = false;
+        for (const pick of quickPicks) {
+            const label = await pick.getLabel();
+            if (label.includes('StructGridEditor')) {
+                await pick.select();
+                selected = true;
+                break;
+            }
+        }
+        if (!selected) {
+            await input.confirm();
+        }
+        await sleep(1500);
+
+        const customEditor = new CustomEditor();
+        const webview = customEditor.getWebView();
+        await webview.switchToFrame(15000);
+
+        await waitForCondition(async () => {
+            try {
+                const driver = VSBrowser.instance.driver;
+                const elements = await driver.findElements(By.css('.table-container, .kv-table, .header, .webview-app'));
+                return elements.length > 0;
+            } catch {
+                return false;
+            }
+        }, 15000);
+
+        return new StructGridPage(customEditor, webview);
+    }
+
 
     /**
      * Webview iframe 内のコンテキストに切り替えます。

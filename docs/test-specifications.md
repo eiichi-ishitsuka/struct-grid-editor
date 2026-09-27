@@ -2,8 +2,8 @@
 
 本ドキュメントは、`src/test/` 配下のテストコード（JSDoc / docstring）から自動抽出・生成されたテスト仕様一覧です。
 
-- **総テストスイート数**: 11
-- **総テストケース数**: 56
+- **総テストスイート数**: 12
+- **総テストケース数**: 59
 - **生成スクリプト**: `scripts/generate-test-docs.js` (`npm run doc` にて自動更新)
 
 ## 目次
@@ -19,6 +19,7 @@
 9. [Webview message protocol (1件)](#webview-message-protocol)
 10. [table view model (8件)](#table-view-model)
 11. [TSV Generation Utilities (0件)](#tsv-generation-utilities)
+12. [vscodeApi wrapper (3件)](#vscodeapi-wrapper)
 
 ---
 
@@ -164,4 +165,15 @@
 - **ケース数**: 0
 
 *テストケースが検出されませんでした。*
+
+## 12. vscodeApi wrapper
+
+- **テストファイル**: [`src/test/webview/vscodeApi.test.ts`](../src/test/webview/vscodeApi.test.ts)
+- **ケース数**: 3
+
+| # | テストケース名 | 観点 | テスト内容（検証内容） |
+| :--- | :--- | :--- | :--- |
+| 1 | `acquires the VS Code API once and returns the cached singleton` | acquireVsCodeApi を複数回呼ばず、同一のインスタンスをキャッシュして返すこと | 未記載 |
+| 2 | `returns undefined from tryGetVsCodeApi when outside VS Code webview` | acquireVsCodeApi が未定義の環境で tryGetVsCodeApi が undefined を返すこと | 未記載 |
+| 3 | `throws from getVsCodeApi when outside VS Code webview` | acquireVsCodeApi が未定義の環境で getVsCodeApi がエラーをスローすること | 未記載 |
 
