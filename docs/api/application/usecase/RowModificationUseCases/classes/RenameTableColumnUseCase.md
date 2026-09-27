@@ -6,7 +6,7 @@
 
 # Class: RenameTableColumnUseCase
 
-Defined in: application/usecase/RowModificationUseCases.ts:121
+Defined in: [application/usecase/RowModificationUseCases.ts:121](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/ed0c1332f6f848335ce1461339913a2fab0f194d/src/application/usecase/RowModificationUseCases.ts#L121)
 
 テーブルビューのカラム名を変更するユースケース。
 
@@ -16,7 +16,7 @@ Defined in: application/usecase/RowModificationUseCases.ts:121
 
 > **new RenameTableColumnUseCase**(`parsers`): `RenameTableColumnUseCase`
 
-Defined in: application/usecase/RowModificationUseCases.ts:122
+Defined in: [application/usecase/RowModificationUseCases.ts:122](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/ed0c1332f6f848335ce1461339913a2fab0f194d/src/application/usecase/RowModificationUseCases.ts#L122)
 
 #### Parameters
 
@@ -34,7 +34,7 @@ Defined in: application/usecase/RowModificationUseCases.ts:122
 
 > **execute**(`text`, `fileExtension`, `arrayPathStr`, `oldKey`, `newKey`): `string`
 
-Defined in: application/usecase/RowModificationUseCases.ts:133
+Defined in: [application/usecase/RowModificationUseCases.ts:133](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/ed0c1332f6f848335ce1461339913a2fab0f194d/src/application/usecase/RowModificationUseCases.ts#L133)
 
 カラム名の変更を実行します。
 

@@ -6,7 +6,7 @@
 
 # Class: TreeFlattener
 
-Defined in: domain/service/TreeFlattener.ts:25
+Defined in: [domain/service/TreeFlattener.ts:25](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/ed0c1332f6f848335ce1461339913a2fab0f194d/src/domain/service/TreeFlattener.ts#L25)
 
 階層構造を持つ TreeNode とフラットな FlatRow 配列との相互変換を行うドメインサービス。
 
@@ -26,7 +26,7 @@ Defined in: domain/service/TreeFlattener.ts:25
 
 > **flatten**(`root`, `options?`): [`FlatRow`](../../../model/FlatRow/classes/FlatRow.md)[]
 
-Defined in: domain/service/TreeFlattener.ts:32
+Defined in: [domain/service/TreeFlattener.ts:32](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/ed0c1332f6f848335ce1461339913a2fab0f194d/src/domain/service/TreeFlattener.ts#L32)
 
 TreeNode 構文木を再帰的に走査し、グリッド描画用の FlatRow 配列に平坦化します。
 
@@ -56,7 +56,7 @@ TreeNode 構文木を再帰的に走査し、グリッド描画用の FlatRow �
 
 > **unflatten**(`rows`): `any`
 
-Defined in: domain/service/TreeFlattener.ts:89
+Defined in: [domain/service/TreeFlattener.ts:89](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/ed0c1332f6f848335ce1461339913a2fab0f194d/src/domain/service/TreeFlattener.ts#L89)
 
 フラットなパス・値ペアのリストから、ネストされた JavaScript データ構造を再構築します。
 

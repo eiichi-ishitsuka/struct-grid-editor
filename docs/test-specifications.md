@@ -2,27 +2,30 @@
 
 本ドキュメントは、`src/test/` 配下のテストコード（JSDoc / docstring）から自動抽出・生成されたテスト仕様一覧です。
 
-- **総テストスイート数**: 8
-- **総テストケース数**: 36
+- **総テストスイート数**: 11
+- **総テストケース数**: 56
 - **生成スクリプト**: `scripts/generate-test-docs.js` (`npm run doc` にて自動更新)
 
 ## 目次
 
-1. [ParseDocumentUseCase with Table View & Drill-down (11件)](#parsedocumentusecase-with-table-view-drill-down)
+1. [ParseDocumentUseCase with Table View & Drill-down (13件)](#parsedocumentusecase-with-table-view-drill-down)
 2. [CellPath (5件)](#cellpath)
 3. [StructuredDocument Operations (8件)](#structureddocument-operations)
 4. [TableView Domain Model (4件)](#tableview-domain-model)
 5. [TreeFlattener (4件)](#treeflattener)
 6. [Extension Test Suite (1件)](#extension-test-suite)
-7. [JsonDocumentParser (3件)](#jsondocumentparser)
-8. [WebviewRenderer (0件)](#webviewrenderer)
+7. [JsonDocumentParser (9件)](#jsondocumentparser)
+8. [WebviewRenderer (3件)](#webviewrenderer)
+9. [Webview message protocol (1件)](#webview-message-protocol)
+10. [table view model (8件)](#table-view-model)
+11. [TSV Generation Utilities (0件)](#tsv-generation-utilities)
 
 ---
 
 ## 1. ParseDocumentUseCase with Table View & Drill-down
 
 - **テストファイル**: [`src/test/application/ParseDocumentUseCase.test.ts`](../src/test/application/ParseDocumentUseCase.test.ts)
-- **ケース数**: 11
+- **ケース数**: 13
 
 | # | テストケース名 | 観点 | テスト内容（検証内容） |
 | :--- | :--- | :--- | :--- |
@@ -37,6 +40,8 @@
 | 9 | `should rename a column in an object array and replace keys across all objects` | RenameTableColumnUseCase によるテーブル列名リネームと全オブジェクトへの置換反映確認 | オブジェクト配列の列名（'name' -> 'fullName'）を変更した際、配列内の全要素の旧キーが新キーへと一括置換されることを検証する。 |
 | 10 | `should convert a primitive array inside an object to an array of objects when renaming column` | プリミティブ配列の列名リネームに伴うオブジェクト配列への自動構造変換確認 | ネストされたプリミティブ配列（単一列 `[ ]`）の列名を 'host' に変更した際、各要素が `{ host: "..." }` というオブジェクトに変換され、以降オブジェクト配列として認識されることを検証する。 |
 | 11 | `should rename column in YAML document` | YAMLドキュメントにおける列名リネームとYAMLシリアライズの整合性確認 | YAML形式のドキュメント内のネストされたプリミティブ配列に対して列名変更を実行した際、YAMLのインデント構造を維持したままオブジェクトリスト形式へ変換・保存されることを検証する。 |
+| 12 | `should parse JSONL into table mode with columns and rows` | JSONLドキュメントのスプレッドシート（table）モード判定と列・行のDTOマッピング確認 | 未記載 |
+| 13 | `should add table row in JSONL document through use case` | JSONLドキュメントに対するテーブル行追加ユースケースの動作検証 | 未記載 |
 
 ## 2. CellPath
 
@@ -103,17 +108,59 @@
 ## 7. JsonDocumentParser
 
 - **テストファイル**: [`src/test/infrastructure/Parsers.test.ts`](../src/test/infrastructure/Parsers.test.ts)
-- **ケース数**: 3
+- **ケース数**: 9
 
 | # | テストケース名 | 観点 | テスト内容（検証内容） |
 | :--- | :--- | :--- | :--- |
 | 1 | `parses and serializes JSON with 2-space indentation` | JSONのフォーマット保全（2スペースインデント、末尾改行）を伴うパースおよびシリアライズの確認 | 2スペースインデントと末尾改行を持つJSON文字列をパースし、特定セル値を更新した後にシリアライズした際、元のインデントおよび改行形式が正確に保たれることを検証する。 |
 | 2 | `handles nested objects in JSON` | 深くネストされたJSONオブジェクトの構造解析と平坦化確認 | 多重ネストされたJSON（a.b.c）をパースし、toFlatRows() を介してドット区切りの正しいパスと値が抽出されることを検証する。 |
-| 3 | `parses and serializes YAML` | YAMLドキュメントのパース、セル値更新、および再シリアライズの確認 | ネストを含むYAML文字列をパースして構造を抽出し、ブール値セル（settings.enabled: true -> false）を更新してシリアライズした際、正しくYAML形式のまま値が更新出力されることを検証する。 |
+| 3 | `parses JSON with comments (JSONC)` | コメント付きJSON（JSONC: settings.jsonやtsconfig.jsonなど）のパース確認 | 行コメント（//）およびブロックコメント（/* ... *\/）が含まれるJSON文字列をエラーなくパースできることを検証する。 |
+| 4 | `parses and serializes YAML` | YAMLドキュメントのパース、セル値更新、および再シリアライズの確認 | ネストを含むYAML文字列をパースして構造を抽出し、ブール値セル（settings.enabled: true -> false）を更新してシリアライズした際、正しくYAML形式のまま値が更新出力されることを検証する。 |
+| 5 | `supports jsonl and ndjson extensions` | 拡張子サポート判定（jsonl, ndjson）の確認 | 未記載 |
+| 6 | `parses JSONL into array root, updates cell and serializes correctly` | JSONLのパース、トップレベル配列としての認識、セル値更新、および再シリアライズの確認 | 未記載 |
+| 7 | `handles empty lines and comments in JSONL` | 空行スキップおよびコメント付きJSONL（JSONC対応）の検証 | 未記載 |
+| 8 | `supports adding and deleting table rows in JSONL` | 行追加・行削除の操作とシリアライズ確認 | 未記載 |
+| 9 | `handles empty text gracefully` | 空ドキュメントの安全なパースとシリアライズ | 未記載 |
 
 ## 8. WebviewRenderer
 
 - **テストファイル**: [`src/test/infrastructure/WebviewRenderer.test.ts`](../src/test/infrastructure/WebviewRenderer.test.ts)
+- **ケース数**: 3
+
+| # | テストケース名 | 観点 | テスト内容（検証内容） |
+| :--- | :--- | :--- | :--- |
+| 1 | `renders a CSP-protected HTML shell with local assets` | Webview の実行に必要な最小 HTML shell とローカル bundle を出力すること | 未記載 |
+| 2 | `escapes HTML-like initial data before embedding it in the shell` | 初期データ内のタグをスクリプトとして解釈させないこと | 未記載 |
+| 3 | `renders the error view with the same CSP protections` | 構文エラー画面にも同じ CSP と nonce を適用すること | 未記載 |
+
+## 9. Webview message protocol
+
+- **テストファイル**: [`src/test/webview/protocol.test.ts`](../src/test/webview/protocol.test.ts)
+- **ケース数**: 1
+
+| # | テストケース名 | 観点 | テスト内容（検証内容） |
+| :--- | :--- | :--- | :--- |
+| 1 | `accepts every supported command and its payload` | 定義済みの全コマンドを受信できること | 未記載 |
+
+## 10. table view model
+
+- **テストファイル**: [`src/test/webview/tableView.test.ts`](../src/test/webview/tableView.test.ts)
+- **ケース数**: 8
+
+| # | テストケース名 | 観点 | テスト内容（検証内容） |
+| :--- | :--- | :--- | :--- |
+| 1 | `returns the correct table path key` | getTablePathKey がパスに応じたキーまたは __root__ を返すこと | 未記載 |
+| 2 | `selects the active root or nested table without mutating DTOs` | ルートとネスト配列のテーブルを選択できること | 未記載 |
+| 3 | `applies visibility and custom ordering without mutating its inputs` | 非表示列と局所的な列・行順を表示モデルにだけ反映すること | 未記載 |
+| 4 | `sorts typed values while preserving empty values at the end` | 数値・真偽値のソートでは空セルを常に末尾に置くこと | 未記載 |
+| 5 | `sorts strings with natural alphanumeric comparison` | 文字列の自然順ソート（大文字小文字や数値混じり文字列）が正しく機能すること | 未記載 |
+| 6 | `filters rows across all column cell values` | 検索語が空の場合は全件を返し、検索時は全列を横断して絞り込むこと | 未記載 |
+| 7 | `filters case-insensitively and clamps pagination to the final page` | 検索結果に表示順の行番号を付け、検索後の最終ページへ補正すること | 未記載 |
+| 8 | `clamps negative page numbers and throws on invalid page sizes` | ページ番号が1未満のときは1に補正され、pageSizeが不正な場合は例外を投げること | 未記載 |
+
+## 11. TSV Generation Utilities
+
+- **テストファイル**: [`src/test/webview/tsv.test.ts`](../src/test/webview/tsv.test.ts)
 - **ケース数**: 0
 
 *テストケースが検出されませんでした。*

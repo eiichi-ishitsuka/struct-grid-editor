@@ -16,7 +16,7 @@ import {
     ClearTableColumnUseCase,
     ClearTableDataUseCase,
 } from './application/usecase/RowModificationUseCases';
-import { WebviewRenderer } from './infrastructure/webview/WebviewRenderer';
+import { WebviewRenderer } from './infrastructure/vscode/WebviewRenderer';
 import { StructGridEditorProvider } from './infrastructure/vscode/StructGridEditorProvider';
 
 /**

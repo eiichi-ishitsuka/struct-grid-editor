@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { JsonDocumentParser } from '../../infrastructure/parser/JsonDocumentParser';
 import { ParseDocumentUseCase } from '../../application/usecase/ParseDocumentUseCase';
-import { WebviewAssets, WebviewRenderer } from '../../infrastructure/webview/WebviewRenderer';
+import { WebviewAssets, WebviewRenderer } from '../../infrastructure/vscode/WebviewRenderer';
 
 const assets: WebviewAssets = {
     cspSource: 'vscode-webview://test-origin',
@@ -29,10 +29,10 @@ describe('WebviewRenderer', () => {
         expect(html).toContain(`style-src ${assets.cspSource}`);
         expect(html).toContain(`script-src ${assets.cspSource}`);
 
-        const styleNonce = html.match(/<style nonce="([^"]+)">/)?.[1];
-        expect(styleNonce).toBeTruthy();
-        expect(html).toContain(`<script nonce="${styleNonce}">`);
-        expect(html).toContain(`<script nonce="${styleNonce}" src="${assets.scriptUri}"></script>`);
+        const nonce = html.match(/<script nonce="([^"]+)"/)?.[1];
+        expect(nonce).toBeTruthy();
+        expect(html).toContain(`'nonce-${nonce}'`);
+        expect(html).toContain(`<script nonce="${nonce}" src="${assets.scriptUri}"></script>`);
     });
 
     /** 【観点】初期データ内のタグをスクリプトとして解釈させないこと */

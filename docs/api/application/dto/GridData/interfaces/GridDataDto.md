@@ -6,7 +6,7 @@
 
 # Interface: GridDataDto
 
-Defined in: application/dto/GridData.ts:106
+Defined in: [application/dto/GridData.ts:106](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/ed0c1332f6f848335ce1461339913a2fab0f194d/src/application/dto/GridData.ts#L106)
 
 Webview に渡されるグリッド全体のデータ DTO。
 
@@ -14,11 +14,11 @@ Webview に渡されるグリッド全体のデータ DTO。
 
 ### documentType
 
-> **documentType**: `"json"` \| `"yaml"`
+> **documentType**: `"json"` \| `"yaml"` \| `"jsonl"`
 
-Defined in: application/dto/GridData.ts:108
+Defined in: [application/dto/GridData.ts:108](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/ed0c1332f6f848335ce1461339913a2fab0f194d/src/application/dto/GridData.ts#L108)
 
-ドキュメント形式 ('json' または 'yaml')
+ドキュメント形式 ('json', 'yaml' または 'jsonl')
 
 ***
 
@@ -26,7 +26,7 @@ Defined in: application/dto/GridData.ts:108
 
 > `optional` **error?**: `string`
 
-Defined in: application/dto/GridData.ts:120
+Defined in: [application/dto/GridData.ts:120](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/ed0c1332f6f848335ce1461339913a2fab0f194d/src/application/dto/GridData.ts#L120)
 
 解析エラー等のメッセージ（存在する場合）
 
@@ -36,7 +36,7 @@ Defined in: application/dto/GridData.ts:120
 
 > **rows**: [`GridRowDto`](GridRowDto.md)[]
 
-Defined in: application/dto/GridData.ts:112
+Defined in: [application/dto/GridData.ts:112](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/ed0c1332f6f848335ce1461339913a2fab0f194d/src/application/dto/GridData.ts#L112)
 
 Key-Value 表示時の行リスト
 
@@ -46,7 +46,7 @@ Key-Value 表示時の行リスト
 
 > `optional` **subArrays?**: [`SubArrayInfoDto`](SubArrayInfoDto.md)[]
 
-Defined in: application/dto/GridData.ts:118
+Defined in: [application/dto/GridData.ts:118](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/ed0c1332f6f848335ce1461339913a2fab0f194d/src/application/dto/GridData.ts#L118)
 
 ドキュメント内のサブ配列一覧
 
@@ -56,7 +56,7 @@ Defined in: application/dto/GridData.ts:118
 
 > `optional` **tableData?**: [`TableViewDto`](TableViewDto.md)
 
-Defined in: application/dto/GridData.ts:116
+Defined in: [application/dto/GridData.ts:116](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/ed0c1332f6f848335ce1461339913a2fab0f194d/src/application/dto/GridData.ts#L116)
 
 テーブルビュー表示時のデータ
 
@@ -66,7 +66,7 @@ Defined in: application/dto/GridData.ts:116
 
 > **totalRows**: `number`
 
-Defined in: application/dto/GridData.ts:114
+Defined in: [application/dto/GridData.ts:114](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/ed0c1332f6f848335ce1461339913a2fab0f194d/src/application/dto/GridData.ts#L114)
 
 総行数
 
@@ -76,6 +76,6 @@ Defined in: application/dto/GridData.ts:114
 
 > **viewMode**: `"table"` \| `"kv"`
 
-Defined in: application/dto/GridData.ts:110
+Defined in: [application/dto/GridData.ts:110](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/ed0c1332f6f848335ce1461339913a2fab0f194d/src/application/dto/GridData.ts#L110)
 
 現在の表示モード ('table' または 'kv')

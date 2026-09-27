@@ -6,7 +6,7 @@
 
 # Class: AddRowUseCase
 
-Defined in: application/usecase/RowModificationUseCases.ts:8
+Defined in: [application/usecase/RowModificationUseCases.ts:8](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/ed0c1332f6f848335ce1461339913a2fab0f194d/src/application/usecase/RowModificationUseCases.ts#L8)
 
 オブジェクトまたは配列の指定親パス下に新規ノード（行／要素）を追加するユースケース。
 
@@ -16,7 +16,7 @@ Defined in: application/usecase/RowModificationUseCases.ts:8
 
 > **new AddRowUseCase**(`parsers`): `AddRowUseCase`
 
-Defined in: application/usecase/RowModificationUseCases.ts:9
+Defined in: [application/usecase/RowModificationUseCases.ts:9](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/ed0c1332f6f848335ce1461339913a2fab0f194d/src/application/usecase/RowModificationUseCases.ts#L9)
 
 #### Parameters
 
@@ -34,7 +34,7 @@ Defined in: application/usecase/RowModificationUseCases.ts:9
 
 > **execute**(`text`, `fileExtension`, `parentPathStr?`, `key?`, `initialVal?`): `string`
 
-Defined in: application/usecase/RowModificationUseCases.ts:20
+Defined in: [application/usecase/RowModificationUseCases.ts:20](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/ed0c1332f6f848335ce1461339913a2fab0f194d/src/application/usecase/RowModificationUseCases.ts#L20)
 
 新規行の追加を実行します。
 

@@ -6,7 +6,7 @@
 
 # Class: AddTableRowUseCase
 
-Defined in: application/usecase/RowModificationUseCases.ts:38
+Defined in: [application/usecase/RowModificationUseCases.ts:38](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/ed0c1332f6f848335ce1461339913a2fab0f194d/src/application/usecase/RowModificationUseCases.ts#L38)
 
 テーブルビュー（配列）に新しいデータ行を追加するユースケース。
 
@@ -16,7 +16,7 @@ Defined in: application/usecase/RowModificationUseCases.ts:38
 
 > **new AddTableRowUseCase**(`parsers`): `AddTableRowUseCase`
 
-Defined in: application/usecase/RowModificationUseCases.ts:39
+Defined in: [application/usecase/RowModificationUseCases.ts:39](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/ed0c1332f6f848335ce1461339913a2fab0f194d/src/application/usecase/RowModificationUseCases.ts#L39)
 
 #### Parameters
 
@@ -34,7 +34,7 @@ Defined in: application/usecase/RowModificationUseCases.ts:39
 
 > **execute**(`text`, `fileExtension`, `arrayPathStr?`, `newRowData?`): `string`
 
-Defined in: application/usecase/RowModificationUseCases.ts:49
+Defined in: [application/usecase/RowModificationUseCases.ts:49](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/ed0c1332f6f848335ce1461339913a2fab0f194d/src/application/usecase/RowModificationUseCases.ts#L49)
 
 テーブル行の追加を実行します。
 

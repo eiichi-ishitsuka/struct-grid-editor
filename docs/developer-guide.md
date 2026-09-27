@@ -16,23 +16,32 @@ src/
 │   └── port/                # IDocumentParser
 ├── application/             # アプリケーション層（ユースケース）
 │   ├── usecase/             # ParseDocumentUseCase, UpdateCellUseCase, RowModificationUseCases
-│   └── dto/                 # GridDataDto, GridRowDto
-├── infrastructure/          # インフラ層（外部ライブラリ・VS Code API・Webview）
-│   ├── parser/              # JsonDocumentParser, YamlDocumentParser
-│   ├── vscode/              # StructGridEditorProvider
-│   └── webview/             # WebviewRenderer
+│   └── dto/                 # GridDataDto, GridRowDto, TableViewDto
+├── infrastructure/          # インフラ層（外部ライブラリ・VS Code API）
+│   ├── parser/              # JsonDocumentParser, YamlDocumentParser, JsonlDocumentParser
+│   └── vscode/              # StructGridEditorProvider, WebviewRenderer
+├── webview/                 # Webview UI層（React 18 + Vanilla CSS）
+│   ├── main.tsx             # Webview エントリーポイント
+│   ├── App.tsx              # ルートコンポーネント & 操作ハンドリング
+│   ├── protocol.ts          # Webview 通信メッセージの型定義・バリデーション
+│   ├── vscodeApi.ts         # VS Code API ラッパー
+│   ├── components/          # SpreadsheetGrid, KvGrid, Toolbar, EditableCell, etc.
+│   ├── hooks/               # useTableView, useGridSelection, useKeyboardNavigation, etc.
+│   ├── model/               # 純粋関数表示モデル (tableView.ts, tsv.ts)
+│   └── styles/              # Vanilla CSS (webview.css)
 └── extension.ts             # エントリーポイント & DI（依存性注入）コンテナ
 ```
 
 ### 依存の方向
 ```
-[Infrastructure Layer]  -->  [Application Layer]  -->  [Domain Layer]
+[VS Code Extension (Infrastructure / App / Domain)]  <--(protocol.ts)-->  [Webview UI (src/webview)]
 ```
 - **ドメイン層 (`src/domain/`)**: VS Code API や Node.js、サードパーティパーサーに一切依存しません。
 - **アプリケーション層 (`src/application/`)**: ドメイン層のみに依存し、VS Code や Webview には依存しません。
-- **インフラ層 (`src/infrastructure/`)**: ドメインポート（`IDocumentParser` 等）を具象化し、VS Code API や Webview と連携します。
+- **インフラ層 (`src/infrastructure/`)**: ドメインポート（`IDocumentParser` 等）を具象化し、VS Code API や Webview シェル生成と連携します。
+- **Webview UI (`src/webview/`)**: React 18 + Vanilla CSS で構成され、`protocol.ts` の型安全なメッセージングを介してのみ拡張機能とやり取りします（DTO型のみ参照）。
 
-設計の背景や選定理由の詳細は [docs/adr/](adr/) を参照してください。
+設計の背景や選定理由の詳細は [docs/adr/](adr/)（特に [ADR 005](adr/005-webview-architecture.md), [ADR 007](adr/007-react-webview-refactoring.md)）を参照してください。
 
 ---
 
@@ -51,8 +60,8 @@ npm install
 
 ## 3. ビルドとテスト
 
-### 単体テスト (Vitest)
-ドメイン層およびパーサーアダプターの単体テストを実行します。VS Code を起動することなく高速に実行されます。
+### 単体テスト & コンポーネントテスト (Vitest)
+ドメイン層、パーサーアダプター、表示モデル純粋関数、および React Webview コンポーネント・hooks のテストを実行します。VS Code を起動することなく高速に実行されます。
 
 ```bash
 npm run test:unit
@@ -90,6 +99,7 @@ src/ui-test/
 
 ### 型チェック & Lint & ビルド
 TypeScript の型検証、ESLint、および esbuild による本番バンドルを一括実行します。
+`esbuild.js` により、拡張機能ホスト用 (`dist/extension.js`) と Webview UI 用 (`dist/webview/main.js`, `dist/webview/main.css`) の2つの独立したバンドルが生成されます。
 
 ```bash
 npm run compile

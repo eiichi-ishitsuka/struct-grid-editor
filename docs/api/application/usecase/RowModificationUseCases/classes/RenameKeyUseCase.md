@@ -6,7 +6,7 @@
 
 # Class: RenameKeyUseCase
 
-Defined in: application/usecase/RowModificationUseCases.ts:156
+Defined in: [application/usecase/RowModificationUseCases.ts:156](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/ed0c1332f6f848335ce1461339913a2fab0f194d/src/application/usecase/RowModificationUseCases.ts#L156)
 
 オブジェクト内のプロパティキー名を変更するユースケース。
 
@@ -16,7 +16,7 @@ Defined in: application/usecase/RowModificationUseCases.ts:156
 
 > **new RenameKeyUseCase**(`parsers`): `RenameKeyUseCase`
 
-Defined in: application/usecase/RowModificationUseCases.ts:157
+Defined in: [application/usecase/RowModificationUseCases.ts:157](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/ed0c1332f6f848335ce1461339913a2fab0f194d/src/application/usecase/RowModificationUseCases.ts#L157)
 
 #### Parameters
 
@@ -34,7 +34,7 @@ Defined in: application/usecase/RowModificationUseCases.ts:157
 
 > **execute**(`text`, `fileExtension`, `pathStr`, `newKey`): `string`
 
-Defined in: application/usecase/RowModificationUseCases.ts:167
+Defined in: [application/usecase/RowModificationUseCases.ts:167](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/ed0c1332f6f848335ce1461339913a2fab0f194d/src/application/usecase/RowModificationUseCases.ts#L167)
 
 キー名の変更を実行します。
 

@@ -41,7 +41,7 @@ async function main() {
 		],
 	});
 	const webviewContext = await esbuild.context({
-		entryPoints: ['src/infrastructure/webview/ui/main.tsx'],
+		entryPoints: ['src/webview/main.tsx'],
 		bundle: true,
 		format: 'iife',
 		minify: production,

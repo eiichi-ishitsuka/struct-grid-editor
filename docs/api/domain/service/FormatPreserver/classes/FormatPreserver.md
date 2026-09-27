@@ -6,7 +6,7 @@
 
 # Class: FormatPreserver
 
-Defined in: domain/service/FormatPreserver.ts:6
+Defined in: [domain/service/FormatPreserver.ts:6](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/ed0c1332f6f848335ce1461339913a2fab0f194d/src/domain/service/FormatPreserver.ts#L6)
 
 インデント幅、改行コード、末尾改行などのドキュメント書式特性を検出・保持するドメインサービス。
 
@@ -26,7 +26,7 @@ Defined in: domain/service/FormatPreserver.ts:6
 
 > **applyTrailingNewline**(`text`, `format`): `string`
 
-Defined in: domain/service/FormatPreserver.ts:50
+Defined in: [domain/service/FormatPreserver.ts:50](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/ed0c1332f6f848335ce1461339913a2fab0f194d/src/domain/service/FormatPreserver.ts#L50)
 
 DocumentFormat の設定に従って、シリアライズ後のテキスト末尾に改行を適用します。
 
@@ -56,7 +56,7 @@ DocumentFormat の設定に従って、シリアライズ後のテキスト末�
 
 > **detectFormat**(`text`, `fileType`): [`DocumentFormat`](../../../model/DocumentFormat/classes/DocumentFormat.md)
 
-Defined in: domain/service/FormatPreserver.ts:13
+Defined in: [domain/service/FormatPreserver.ts:13](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/ed0c1332f6f848335ce1461339913a2fab0f194d/src/domain/service/FormatPreserver.ts#L13)
 
 ソーステキストを検査し、ドキュメントの書式プロパティ（インデント幅や末尾改行の有無）を検出します。
 
@@ -86,7 +86,7 @@ Defined in: domain/service/FormatPreserver.ts:13
 
 > **detectIndent**(`text`): `string` \| `number`
 
-Defined in: domain/service/FormatPreserver.ts:29
+Defined in: [domain/service/FormatPreserver.ts:29](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/ed0c1332f6f848335ce1461339913a2fab0f194d/src/domain/service/FormatPreserver.ts#L29)
 
 テキスト内のインデント（スペース数またはタブ）を検出します。
 

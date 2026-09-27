@@ -14,8 +14,8 @@ import {
     ClearTableColumnUseCase,
     ClearTableDataUseCase,
 } from '../../application/usecase/RowModificationUseCases';
-import { WebviewRenderer } from '../webview/WebviewRenderer';
-import { isWebviewMessage } from '../webview/protocol';
+import { WebviewRenderer } from './WebviewRenderer';
+import { isWebviewMessage } from '../../webview/protocol';
 
 /**
  * VS Code の CustomTextEditorProvider アダプター。

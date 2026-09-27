@@ -6,7 +6,7 @@
 
 # Class: JsonDocumentParser
 
-Defined in: infrastructure/parser/JsonDocumentParser.ts:9
+Defined in: [infrastructure/parser/JsonDocumentParser.ts:70](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/ed0c1332f6f848335ce1461339913a2fab0f194d/src/infrastructure/parser/JsonDocumentParser.ts#L70)
 
 JSONドキュメントの解析およびシリアライズを担うインフラストラクチャ層のアダプター。
 
@@ -20,7 +20,7 @@ JSONドキュメントの解析およびシリアライズを担うインフラ�
 
 > **new JsonDocumentParser**(`formatPreserver?`): `JsonDocumentParser`
 
-Defined in: infrastructure/parser/JsonDocumentParser.ts:10
+Defined in: [infrastructure/parser/JsonDocumentParser.ts:71](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/ed0c1332f6f848335ce1461339913a2fab0f194d/src/infrastructure/parser/JsonDocumentParser.ts#L71)
 
 #### Parameters
 
@@ -38,9 +38,10 @@ Defined in: infrastructure/parser/JsonDocumentParser.ts:10
 
 > **parse**(`text`): [`StructuredDocument`](../../../../domain/model/StructuredDocument/classes/StructuredDocument.md)
 
-Defined in: infrastructure/parser/JsonDocumentParser.ts:27
+Defined in: [infrastructure/parser/JsonDocumentParser.ts:89](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/ed0c1332f6f848335ce1461339913a2fab0f194d/src/infrastructure/parser/JsonDocumentParser.ts#L89)
 
 JSON 文字列を解析し、StructuredDocument ドメインモデルを生成します。
+コメント付き JSON (JSONC) にも対応しています。
 
 #### Parameters
 
@@ -66,7 +67,7 @@ JSON 文字列を解析し、StructuredDocument ドメインモデルを生成�
 
 > **serialize**(`document`): `string`
 
-Defined in: infrastructure/parser/JsonDocumentParser.ts:41
+Defined in: [infrastructure/parser/JsonDocumentParser.ts:104](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/ed0c1332f6f848335ce1461339913a2fab0f194d/src/infrastructure/parser/JsonDocumentParser.ts#L104)
 
 StructuredDocument を元の書式（インデント幅や末尾改行）を保持しながら JSON 文字列にシリアライズします。
 
@@ -94,7 +95,7 @@ StructuredDocument を元の書式（インデント幅や末尾改行）を保�
 
 > **supports**(`fileExtension`): `boolean`
 
-Defined in: infrastructure/parser/JsonDocumentParser.ts:17
+Defined in: [infrastructure/parser/JsonDocumentParser.ts:78](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/ed0c1332f6f848335ce1461339913a2fab0f194d/src/infrastructure/parser/JsonDocumentParser.ts#L78)
 
 指定された拡張子が JSON であるかを判定します。
 

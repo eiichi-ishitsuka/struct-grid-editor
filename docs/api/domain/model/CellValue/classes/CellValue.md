@@ -6,7 +6,7 @@
 
 # Class: CellValue
 
-Defined in: domain/model/CellValue.ts:9
+Defined in: [domain/model/CellValue.ts:9](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/ed0c1332f6f848335ce1461339913a2fab0f194d/src/domain/model/CellValue.ts#L9)
 
 型情報を保持するセル値を表現する値オブジェクト（Value Object）。
 
@@ -16,7 +16,7 @@ Defined in: domain/model/CellValue.ts:9
 
 > **new CellValue**(`value`, `type?`): `CellValue`
 
-Defined in: domain/model/CellValue.ts:15
+Defined in: [domain/model/CellValue.ts:15](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/ed0c1332f6f848335ce1461339913a2fab0f194d/src/domain/model/CellValue.ts#L15)
 
 #### Parameters
 
@@ -38,7 +38,7 @@ Defined in: domain/model/CellValue.ts:15
 
 > `readonly` **type**: [`CellValueType`](../type-aliases/CellValueType.md)
 
-Defined in: domain/model/CellValue.ts:13
+Defined in: [domain/model/CellValue.ts:13](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/ed0c1332f6f848335ce1461339913a2fab0f194d/src/domain/model/CellValue.ts#L13)
 
 判定・指定されたデータ型
 
@@ -48,7 +48,7 @@ Defined in: domain/model/CellValue.ts:13
 
 > `readonly` **value**: `any`
 
-Defined in: domain/model/CellValue.ts:11
+Defined in: [domain/model/CellValue.ts:11](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/ed0c1332f6f848335ce1461339913a2fab0f194d/src/domain/model/CellValue.ts#L11)
 
 実際の生データ値
 
@@ -58,7 +58,7 @@ Defined in: domain/model/CellValue.ts:11
 
 > **equals**(`other`): `boolean`
 
-Defined in: domain/model/CellValue.ts:106
+Defined in: [domain/model/CellValue.ts:106](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/ed0c1332f6f848335ce1461339913a2fab0f194d/src/domain/model/CellValue.ts#L106)
 
 別の CellValue と型および値が等価であるかを判定します。
 
@@ -82,7 +82,7 @@ Defined in: domain/model/CellValue.ts:106
 
 > **toDisplayString**(): `string`
 
-Defined in: domain/model/CellValue.ts:91
+Defined in: [domain/model/CellValue.ts:91](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/ed0c1332f6f848335ce1461339913a2fab0f194d/src/domain/model/CellValue.ts#L91)
 
 グリッドUI上に表示するための文字列形式に変換します。
 
@@ -98,7 +98,7 @@ Defined in: domain/model/CellValue.ts:91
 
 > `static` **detectType**(`value`): [`CellValueType`](../type-aliases/CellValueType.md)
 
-Defined in: domain/model/CellValue.ts:25
+Defined in: [domain/model/CellValue.ts:25](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/ed0c1332f6f848335ce1461339913a2fab0f194d/src/domain/model/CellValue.ts#L25)
 
 与えられた値の型を自動判別します。
 
@@ -122,7 +122,7 @@ Defined in: domain/model/CellValue.ts:25
 
 > `static` **fromInputString**(`input`, `originalType?`): `CellValue`
 
-Defined in: domain/model/CellValue.ts:51
+Defined in: [domain/model/CellValue.ts:51](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/ed0c1332f6f848335ce1461339913a2fab0f194d/src/domain/model/CellValue.ts#L51)
 
 ユーザーが入力した文字列から、型を推定して CellValue を生成します。
 元の型ヒントが指定されている場合は可能な限り尊重します。
