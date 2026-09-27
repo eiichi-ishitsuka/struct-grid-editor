@@ -12,4 +12,3 @@ storage/
 
 # 整備中
 .agents/skills/**
-docs/adr/*

@@ -6,7 +6,7 @@
 
 # Interface: IDocumentParser
 
-Defined in: domain/port/IDocumentParser.ts:7
+Defined in: [domain/port/IDocumentParser.ts:7](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/ed0c1332f6f848335ce1461339913a2fab0f194d/src/domain/port/IDocumentParser.ts#L7)
 
 ドキュメントパーサーおよびシリアライザー（JSON、YAMLなど）のポートインターフェース。
 依存性逆転の原則（DIP）に準拠します。
@@ -17,7 +17,7 @@ Defined in: domain/port/IDocumentParser.ts:7
 
 > **parse**(`text`): [`StructuredDocument`](../../../model/StructuredDocument/classes/StructuredDocument.md)
 
-Defined in: domain/port/IDocumentParser.ts:13
+Defined in: [domain/port/IDocumentParser.ts:13](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/ed0c1332f6f848335ce1461339913a2fab0f194d/src/domain/port/IDocumentParser.ts#L13)
 
 ソーステキストを解析し、ドメインの StructuredDocument 集約ルートを生成します。
 
@@ -41,7 +41,7 @@ Defined in: domain/port/IDocumentParser.ts:13
 
 > **serialize**(`document`): `string`
 
-Defined in: domain/port/IDocumentParser.ts:20
+Defined in: [domain/port/IDocumentParser.ts:20](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/ed0c1332f6f848335ce1461339913a2fab0f194d/src/domain/port/IDocumentParser.ts#L20)
 
 ドメインの StructuredDocument を、書式やコメントを保持しながらテキスト形式にシリアライズします。
 
@@ -65,7 +65,7 @@ Defined in: domain/port/IDocumentParser.ts:20
 
 > **supports**(`fileExtension`): `boolean`
 
-Defined in: domain/port/IDocumentParser.ts:27
+Defined in: [domain/port/IDocumentParser.ts:27](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/ed0c1332f6f848335ce1461339913a2fab0f194d/src/domain/port/IDocumentParser.ts#L27)
 
 指定されたファイル拡張子（例: "json", "yaml", "yml"）を本パーサーがサポートしているかを判定します。
 

@@ -14,7 +14,8 @@ import {
     ClearTableColumnUseCase,
     ClearTableDataUseCase,
 } from '../../application/usecase/RowModificationUseCases';
-import { WebviewRenderer } from '../webview/WebviewRenderer';
+import { WebviewRenderer } from './WebviewRenderer';
+import { isWebviewMessage } from '../../webview/protocol';
 
 /**
  * VS Code の CustomTextEditorProvider アダプター。
@@ -107,6 +108,19 @@ export class StructGridEditorProvider implements vscode.CustomTextEditorProvider
     ): Promise<void> {
         webviewPanel.webview.options = {
             enableScripts: true,
+            localResourceRoots: [
+                vscode.Uri.joinPath(this.context.extensionUri, 'dist', 'webview'),
+            ],
+        };
+        const webviewAssetRoot = vscode.Uri.joinPath(this.context.extensionUri, 'dist', 'webview');
+        const webviewAssets = {
+            cspSource: webviewPanel.webview.cspSource,
+            styleUri: webviewPanel.webview.asWebviewUri(
+                vscode.Uri.joinPath(webviewAssetRoot, 'main.css')
+            ).toString(),
+            scriptUri: webviewPanel.webview.asWebviewUri(
+                vscode.Uri.joinPath(webviewAssetRoot, 'main.js')
+            ).toString(),
         };
 
         const getFileExtension = () => {
@@ -118,11 +132,15 @@ export class StructGridEditorProvider implements vscode.CustomTextEditorProvider
             const text = document.getText();
             const ext = getFileExtension();
             const result = this.parseUseCase.execute(text, ext);
-            webviewPanel.webview.html = this.renderer.render(result.dto);
+            webviewPanel.webview.html = this.renderer.render(result.dto, webviewAssets);
         };
 
         // Webview からの操作メッセージを受信して対応するユースケースを実行
-        webviewPanel.webview.onDidReceiveMessage(async (message) => {
+        webviewPanel.webview.onDidReceiveMessage(async (message: unknown) => {
+            if (!isWebviewMessage(message)) {
+                return;
+            }
+
             const ext = getFileExtension();
             const text = document.getText();
 
@@ -161,7 +179,7 @@ export class StructGridEditorProvider implements vscode.CustomTextEditorProvider
                         newText = this.addTableRowUseCase.execute(
                             text,
                             ext,
-                            message.arrayPath || '',
+                            message.arrayPath,
                             message.rowData
                         );
                         break;
@@ -170,7 +188,7 @@ export class StructGridEditorProvider implements vscode.CustomTextEditorProvider
                         newText = this.addTableColumnUseCase.execute(
                             text,
                             ext,
-                            message.arrayPath || '',
+                            message.arrayPath,
                             message.columnKey
                         );
                         break;
@@ -179,7 +197,7 @@ export class StructGridEditorProvider implements vscode.CustomTextEditorProvider
                         newText = this.renameTableColumnUseCase.execute(
                             text,
                             ext,
-                            message.arrayPath || '',
+                            message.arrayPath,
                             message.oldKey,
                             message.newKey
                         );
@@ -198,7 +216,7 @@ export class StructGridEditorProvider implements vscode.CustomTextEditorProvider
                         newText = this.moveTableRowUseCase.execute(
                             text,
                             ext,
-                            message.arrayPath || '',
+                            message.arrayPath,
                             message.fromIndex,
                             message.toIndex
                         );
@@ -208,7 +226,7 @@ export class StructGridEditorProvider implements vscode.CustomTextEditorProvider
                         newText = this.moveTableColumnUseCase.execute(
                             text,
                             ext,
-                            message.arrayPath || '',
+                            message.arrayPath,
                             message.fromIndex,
                             message.toIndex
                         );
@@ -219,7 +237,7 @@ export class StructGridEditorProvider implements vscode.CustomTextEditorProvider
                             newText = this.clearTableColumnUseCase.execute(
                                 text,
                                 ext,
-                                message.arrayPath || '',
+                                message.arrayPath,
                                 message.columnKey
                             );
                         }
@@ -230,7 +248,7 @@ export class StructGridEditorProvider implements vscode.CustomTextEditorProvider
                             newText = this.clearTableDataUseCase.execute(
                                 text,
                                 ext,
-                                message.arrayPath || ''
+                                message.arrayPath
                             );
                         }
                         break;

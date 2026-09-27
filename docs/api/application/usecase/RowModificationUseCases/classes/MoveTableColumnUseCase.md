@@ -6,7 +6,7 @@
 
 # Class: MoveTableColumnUseCase
 
-Defined in: application/usecase/RowModificationUseCases.ts:224
+Defined in: [application/usecase/RowModificationUseCases.ts:224](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/ed0c1332f6f848335ce1461339913a2fab0f194d/src/application/usecase/RowModificationUseCases.ts#L224)
 
 テーブルビュー内のカラム順序を並び替えるユースケース。
 
@@ -16,7 +16,7 @@ Defined in: application/usecase/RowModificationUseCases.ts:224
 
 > **new MoveTableColumnUseCase**(`parsers`): `MoveTableColumnUseCase`
 
-Defined in: application/usecase/RowModificationUseCases.ts:225
+Defined in: [application/usecase/RowModificationUseCases.ts:225](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/ed0c1332f6f848335ce1461339913a2fab0f194d/src/application/usecase/RowModificationUseCases.ts#L225)
 
 #### Parameters
 
@@ -34,7 +34,7 @@ Defined in: application/usecase/RowModificationUseCases.ts:225
 
 > **execute**(`text`, `fileExtension`, `arrayPathStr`, `fromIndex`, `toIndex`): `string`
 
-Defined in: application/usecase/RowModificationUseCases.ts:236
+Defined in: [application/usecase/RowModificationUseCases.ts:236](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/ed0c1332f6f848335ce1461339913a2fab0f194d/src/application/usecase/RowModificationUseCases.ts#L236)
 
 カラムの並び替えを実行します。
 

@@ -6,7 +6,7 @@
 
 # Class: AddTableColumnUseCase
 
-Defined in: application/usecase/RowModificationUseCases.ts:66
+Defined in: [application/usecase/RowModificationUseCases.ts:66](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/ed0c1332f6f848335ce1461339913a2fab0f194d/src/application/usecase/RowModificationUseCases.ts#L66)
 
 テーブルビュー（オブジェクト配列）に新しいカラム（プロパティ）を追加するユースケース。
 
@@ -16,7 +16,7 @@ Defined in: application/usecase/RowModificationUseCases.ts:66
 
 > **new AddTableColumnUseCase**(`parsers`): `AddTableColumnUseCase`
 
-Defined in: application/usecase/RowModificationUseCases.ts:67
+Defined in: [application/usecase/RowModificationUseCases.ts:67](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/ed0c1332f6f848335ce1461339913a2fab0f194d/src/application/usecase/RowModificationUseCases.ts#L67)
 
 #### Parameters
 
@@ -34,7 +34,7 @@ Defined in: application/usecase/RowModificationUseCases.ts:67
 
 > **execute**(`text`, `fileExtension`, `arrayPathStr?`, `columnKey?`): `string`
 
-Defined in: application/usecase/RowModificationUseCases.ts:77
+Defined in: [application/usecase/RowModificationUseCases.ts:77](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/ed0c1332f6f848335ce1461339913a2fab0f194d/src/application/usecase/RowModificationUseCases.ts#L77)
 
 テーブルカラムの追加を実行します。
 

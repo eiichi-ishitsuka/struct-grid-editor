@@ -33,6 +33,30 @@ export function createTempFixture(relativeSamplePath: string): string {
 }
 
 /**
+ * サンプルファイルをテスト用一時ディレクトリ配下のサブディレクトリにコピーし、その絶対パスを返します。
+ * @param relativeSamplePath プロジェクトルートからのサンプルファイル相対パス
+ * @param subDirName サブディレクトリ名（デフォルト: 'nested'）
+ * @returns コピー先の一時ファイル絶対パス
+ */
+export function createNestedTempFixture(relativeSamplePath: string, subDirName: string = 'nested'): string {
+    const sourcePath = path.resolve(process.cwd(), relativeSamplePath);
+    if (!fs.existsSync(sourcePath)) {
+        throw new Error(`Fixture file not found: ${sourcePath}`);
+    }
+
+    const targetDir = path.join(getTestTempDir(), subDirName);
+    if (!fs.existsSync(targetDir)) {
+        fs.mkdirSync(targetDir, { recursive: true });
+    }
+
+    const fileName = `${Date.now()}-${path.basename(relativeSamplePath)}`;
+    const destPath = path.join(targetDir, fileName);
+
+    fs.copyFileSync(sourcePath, destPath);
+    return destPath;
+}
+
+/**
  * 一時ファイルを削除します。
  * @param filePath 削除するファイルパス
  */

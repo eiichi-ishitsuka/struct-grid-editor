@@ -11,6 +11,8 @@
 - [AddRowUseCase](classes/AddRowUseCase.md)
 - [AddTableColumnUseCase](classes/AddTableColumnUseCase.md)
 - [AddTableRowUseCase](classes/AddTableRowUseCase.md)
+- [ClearTableColumnUseCase](classes/ClearTableColumnUseCase.md)
+- [ClearTableDataUseCase](classes/ClearTableDataUseCase.md)
 - [DeleteRowUseCase](classes/DeleteRowUseCase.md)
 - [MoveTableColumnUseCase](classes/MoveTableColumnUseCase.md)
 - [MoveTableRowUseCase](classes/MoveTableRowUseCase.md)

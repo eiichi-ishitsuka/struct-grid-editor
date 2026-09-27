@@ -9,3 +9,7 @@
 ## Classes
 
 - [JsonDocumentParser](classes/JsonDocumentParser.md)
+
+## Functions
+
+- [stripJsonComments](functions/stripJsonComments.md)

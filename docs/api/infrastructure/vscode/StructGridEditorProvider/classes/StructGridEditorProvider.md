@@ -6,7 +6,7 @@
 
 # Class: StructGridEditorProvider
 
-Defined in: infrastructure/vscode/StructGridEditorProvider.ts:21
+Defined in: [infrastructure/vscode/StructGridEditorProvider.ts:24](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/ed0c1332f6f848335ce1461339913a2fab0f194d/src/infrastructure/vscode/StructGridEditorProvider.ts#L24)
 
 VS Code の CustomTextEditorProvider アダプター。
 すべてのビジネス操作を Application 層のユースケースに委譲する薄いプレゼンテーション層です。
@@ -19,9 +19,9 @@ VS Code の CustomTextEditorProvider アダプター。
 
 ### Constructor
 
-> **new StructGridEditorProvider**(`context`, `parseUseCase`, `updateCellUseCase`, `addRowUseCase`, `deleteRowUseCase`, `addTableRowUseCase`, `addTableColumnUseCase`, `renameTableColumnUseCase`, `renameKeyUseCase`, `moveTableRowUseCase`, `moveTableColumnUseCase`, `renderer`): `StructGridEditorProvider`
+> **new StructGridEditorProvider**(`context`, `parseUseCase`, `updateCellUseCase`, `addRowUseCase`, `deleteRowUseCase`, `addTableRowUseCase`, `addTableColumnUseCase`, `renameTableColumnUseCase`, `renameKeyUseCase`, `moveTableRowUseCase`, `moveTableColumnUseCase`, `renderer`, `clearTableColumnUseCase?`, `clearTableDataUseCase?`): `StructGridEditorProvider`
 
-Defined in: infrastructure/vscode/StructGridEditorProvider.ts:74
+Defined in: [infrastructure/vscode/StructGridEditorProvider.ts:81](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/ed0c1332f6f848335ce1461339913a2fab0f194d/src/infrastructure/vscode/StructGridEditorProvider.ts#L81)
 
 #### Parameters
 
@@ -71,7 +71,15 @@ Defined in: infrastructure/vscode/StructGridEditorProvider.ts:74
 
 ##### renderer
 
-[`WebviewRenderer`](../../../webview/WebviewRenderer/classes/WebviewRenderer.md)
+[`WebviewRenderer`](../../WebviewRenderer/classes/WebviewRenderer.md)
+
+##### clearTableColumnUseCase?
+
+[`ClearTableColumnUseCase`](../../../../application/usecase/RowModificationUseCases/classes/ClearTableColumnUseCase.md)
+
+##### clearTableDataUseCase?
+
+[`ClearTableDataUseCase`](../../../../application/usecase/RowModificationUseCases/classes/ClearTableDataUseCase.md)
 
 #### Returns
 
@@ -83,7 +91,7 @@ Defined in: infrastructure/vscode/StructGridEditorProvider.ts:74
 
 > `readonly` `static` **viewType**: `"struct-grid-editor.jsonEditor"` = `'struct-grid-editor.jsonEditor'`
 
-Defined in: infrastructure/vscode/StructGridEditorProvider.ts:22
+Defined in: [infrastructure/vscode/StructGridEditorProvider.ts:25](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/ed0c1332f6f848335ce1461339913a2fab0f194d/src/infrastructure/vscode/StructGridEditorProvider.ts#L25)
 
 ## Methods
 
@@ -91,7 +99,7 @@ Defined in: infrastructure/vscode/StructGridEditorProvider.ts:22
 
 > **resolveCustomTextEditor**(`document`, `webviewPanel`, `_token`): `Promise`\<`void`\>
 
-Defined in: infrastructure/vscode/StructGridEditorProvider.ts:95
+Defined in: [infrastructure/vscode/StructGridEditorProvider.ts:104](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/ed0c1332f6f848335ce1461339913a2fab0f194d/src/infrastructure/vscode/StructGridEditorProvider.ts#L104)
 
 カスタムテキストエディタの Webview を初期化・バインドします。
 
@@ -127,9 +135,9 @@ Defined in: infrastructure/vscode/StructGridEditorProvider.ts:95
 
 ### register()
 
-> `static` **register**(`context`, `parseUseCase`, `updateCellUseCase`, `addRowUseCase`, `deleteRowUseCase`, `addTableRowUseCase`, `addTableColumnUseCase`, `renameTableColumnUseCase`, `renameKeyUseCase`, `moveTableRowUseCase`, `moveTableColumnUseCase`, `renderer`): `Disposable`
+> `static` **register**(`context`, `parseUseCase`, `updateCellUseCase`, `addRowUseCase`, `deleteRowUseCase`, `addTableRowUseCase`, `addTableColumnUseCase`, `renameTableColumnUseCase`, `renameKeyUseCase`, `moveTableRowUseCase`, `moveTableColumnUseCase`, `renderer`, `clearTableColumnUseCase?`, `clearTableDataUseCase?`): `Disposable`
 
-Defined in: infrastructure/vscode/StructGridEditorProvider.ts:40
+Defined in: [infrastructure/vscode/StructGridEditorProvider.ts:43](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/ed0c1332f6f848335ce1461339913a2fab0f194d/src/infrastructure/vscode/StructGridEditorProvider.ts#L43)
 
 VS Code のカスタムエディタプロバイダーとして本クラスを登録します。
 
@@ -203,9 +211,17 @@ VS Code のカスタムエディタプロバイダーとして本クラスを登
 
 ##### renderer
 
-[`WebviewRenderer`](../../../webview/WebviewRenderer/classes/WebviewRenderer.md)
+[`WebviewRenderer`](../../WebviewRenderer/classes/WebviewRenderer.md)
 
 Webview HTML レンダラー
+
+##### clearTableColumnUseCase?
+
+[`ClearTableColumnUseCase`](../../../../application/usecase/RowModificationUseCases/classes/ClearTableColumnUseCase.md)
+
+##### clearTableDataUseCase?
+
+[`ClearTableDataUseCase`](../../../../application/usecase/RowModificationUseCases/classes/ClearTableDataUseCase.md)
 
 #### Returns
 

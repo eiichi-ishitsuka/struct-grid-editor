@@ -3,7 +3,8 @@
   "entryPoints": [
     "src/domain",
     "src/application",
-    "src/infrastructure"
+    "src/infrastructure",
+    "src/webview"
   ],
   "entryPointStrategy": "expand",
   "out": "docs/api",

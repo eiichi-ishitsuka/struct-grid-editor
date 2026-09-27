@@ -6,7 +6,7 @@
 
 # Class: TreeNode
 
-Defined in: domain/model/TreeNode.ts:13
+Defined in: [domain/model/TreeNode.ts:13](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/ed0c1332f6f848335ce1461339913a2fab0f194d/src/domain/model/TreeNode.ts#L13)
 
 構造化ドキュメントのツリーを構成する各ノード。
 キーの出現順序と階層構造を正確に保持します。
@@ -17,7 +17,7 @@ Defined in: domain/model/TreeNode.ts:13
 
 > **new TreeNode**(`path`, `key`, `type`, `value?`, `children?`): `TreeNode`
 
-Defined in: domain/model/TreeNode.ts:25
+Defined in: [domain/model/TreeNode.ts:25](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/ed0c1332f6f848335ce1461339913a2fab0f194d/src/domain/model/TreeNode.ts#L25)
 
 #### Parameters
 
@@ -51,7 +51,7 @@ Defined in: domain/model/TreeNode.ts:25
 
 > `readonly` **children**: readonly `TreeNode`[]
 
-Defined in: domain/model/TreeNode.ts:23
+Defined in: [domain/model/TreeNode.ts:23](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/ed0c1332f6f848335ce1461339913a2fab0f194d/src/domain/model/TreeNode.ts#L23)
 
 子ノードのリスト（オブジェクトまたは配列の場合）
 
@@ -61,7 +61,7 @@ Defined in: domain/model/TreeNode.ts:23
 
 > `readonly` **key**: `string` \| `number`
 
-Defined in: domain/model/TreeNode.ts:17
+Defined in: [domain/model/TreeNode.ts:17](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/ed0c1332f6f848335ce1461339913a2fab0f194d/src/domain/model/TreeNode.ts#L17)
 
 ノードのプロパティ名または配列インデックス
 
@@ -71,7 +71,7 @@ Defined in: domain/model/TreeNode.ts:17
 
 > `readonly` **path**: [`CellPath`](../../CellPath/classes/CellPath.md)
 
-Defined in: domain/model/TreeNode.ts:15
+Defined in: [domain/model/TreeNode.ts:15](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/ed0c1332f6f848335ce1461339913a2fab0f194d/src/domain/model/TreeNode.ts#L15)
 
 ルートからの絶対アクセスパス
 
@@ -81,7 +81,7 @@ Defined in: domain/model/TreeNode.ts:15
 
 > `readonly` **type**: [`TreeNodeType`](../type-aliases/TreeNodeType.md)
 
-Defined in: domain/model/TreeNode.ts:19
+Defined in: [domain/model/TreeNode.ts:19](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/ed0c1332f6f848335ce1461339913a2fab0f194d/src/domain/model/TreeNode.ts#L19)
 
 ノードの種類 ('object' | 'array' | 'primitive')
 
@@ -91,7 +91,7 @@ Defined in: domain/model/TreeNode.ts:19
 
 > `readonly` `optional` **value?**: [`CellValue`](../../CellValue/classes/CellValue.md)
 
-Defined in: domain/model/TreeNode.ts:21
+Defined in: [domain/model/TreeNode.ts:21](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/ed0c1332f6f848335ce1461339913a2fab0f194d/src/domain/model/TreeNode.ts#L21)
 
 プリミティブノードの場合の値
 
@@ -103,7 +103,7 @@ Defined in: domain/model/TreeNode.ts:21
 
 > **get** **isLeaf**(): `boolean`
 
-Defined in: domain/model/TreeNode.ts:75
+Defined in: [domain/model/TreeNode.ts:75](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/ed0c1332f6f848335ce1461339913a2fab0f194d/src/domain/model/TreeNode.ts#L75)
 
 ノードが末端（プリミティブ値）であるかを判定します。
 
@@ -117,7 +117,7 @@ Defined in: domain/model/TreeNode.ts:75
 
 > **toJS**(): `any`
 
-Defined in: domain/model/TreeNode.ts:83
+Defined in: [domain/model/TreeNode.ts:83](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/ed0c1332f6f848335ce1461339913a2fab0f194d/src/domain/model/TreeNode.ts#L83)
 
 TreeNode 階層を標準的な JavaScript のオブジェクト・配列・プリミティブ値に変換します。
 
@@ -133,7 +133,7 @@ TreeNode 階層を標準的な JavaScript のオブジェクト・配列・プ�
 
 > **withUpdatedValue**(`targetPath`, `newValue`): `TreeNode`
 
-Defined in: domain/model/TreeNode.ts:103
+Defined in: [domain/model/TreeNode.ts:103](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/ed0c1332f6f848335ce1461339913a2fab0f194d/src/domain/model/TreeNode.ts#L103)
 
 指定されたパスの値を更新した新しい TreeNode インスタンスを生成して返します（イミュータブル更新）。
 
@@ -163,7 +163,7 @@ Defined in: domain/model/TreeNode.ts:103
 
 > `static` **array**(`path`, `key`, `children?`): `TreeNode`
 
-Defined in: domain/model/TreeNode.ts:68
+Defined in: [domain/model/TreeNode.ts:68](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/ed0c1332f6f848335ce1461339913a2fab0f194d/src/domain/model/TreeNode.ts#L68)
 
 配列を表すノードを生成します。
 
@@ -199,7 +199,7 @@ Defined in: domain/model/TreeNode.ts:68
 
 > `static` **fromJS**(`data`, `path?`, `key?`): `TreeNode`
 
-Defined in: domain/model/TreeNode.ts:129
+Defined in: [domain/model/TreeNode.ts:129](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/ed0c1332f6f848335ce1461339913a2fab0f194d/src/domain/model/TreeNode.ts#L129)
 
 標準的な JavaScript データから TreeNode 構文木を再帰的に構築します。
 
@@ -235,7 +235,7 @@ Defined in: domain/model/TreeNode.ts:129
 
 > `static` **object**(`path`, `key`, `children?`): `TreeNode`
 
-Defined in: domain/model/TreeNode.ts:57
+Defined in: [domain/model/TreeNode.ts:57](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/ed0c1332f6f848335ce1461339913a2fab0f194d/src/domain/model/TreeNode.ts#L57)
 
 オブジェクト（辞書構造）を表すノードを生成します。
 
@@ -271,7 +271,7 @@ Defined in: domain/model/TreeNode.ts:57
 
 > `static` **primitive**(`path`, `key`, `value`): `TreeNode`
 
-Defined in: domain/model/TreeNode.ts:46
+Defined in: [domain/model/TreeNode.ts:46](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/ed0c1332f6f848335ce1461339913a2fab0f194d/src/domain/model/TreeNode.ts#L46)
 
 プリミティブ値（文字列、数値、真偽値等）を表すノードを生成します。
 

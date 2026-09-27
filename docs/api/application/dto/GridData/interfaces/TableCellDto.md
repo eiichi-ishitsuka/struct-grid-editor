@@ -6,7 +6,7 @@
 
 # Interface: TableCellDto
 
-Defined in: application/dto/GridData.ts:18
+Defined in: [application/dto/GridData.ts:18](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/ed0c1332f6f848335ce1461339913a2fab0f194d/src/application/dto/GridData.ts#L18)
 
 テーブルビューの個別セル DTO。
 
@@ -16,7 +16,7 @@ Defined in: application/dto/GridData.ts:18
 
 > **displayValue**: `string`
 
-Defined in: application/dto/GridData.ts:24
+Defined in: [application/dto/GridData.ts:24](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/ed0c1332f6f848335ce1461339913a2fab0f194d/src/application/dto/GridData.ts#L24)
 
 UI表示用の整形済み文字列
 
@@ -26,7 +26,7 @@ UI表示用の整形済み文字列
 
 > **path**: `string`
 
-Defined in: application/dto/GridData.ts:20
+Defined in: [application/dto/GridData.ts:20](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/ed0c1332f6f848335ce1461339913a2fab0f194d/src/application/dto/GridData.ts#L20)
 
 セルの絶対アクセスパス
 
@@ -36,7 +36,7 @@ Defined in: application/dto/GridData.ts:20
 
 > **type**: `string`
 
-Defined in: application/dto/GridData.ts:26
+Defined in: [application/dto/GridData.ts:26](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/ed0c1332f6f848335ce1461339913a2fab0f194d/src/application/dto/GridData.ts#L26)
 
 セルのデータ型
 
@@ -46,6 +46,6 @@ Defined in: application/dto/GridData.ts:26
 
 > **value**: `any`
 
-Defined in: application/dto/GridData.ts:22
+Defined in: [application/dto/GridData.ts:22](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/ed0c1332f6f848335ce1461339913a2fab0f194d/src/application/dto/GridData.ts#L22)
 
 セルの生の値

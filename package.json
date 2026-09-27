@@ -5,10 +5,10 @@
   "icon": "assets/img/icon.jpg",
   "publisher": "eiichi-ishitsuka",
   "repository": {
-      "type": "git",
-      "url": "https://github.com/eiichi-ishitsuka/struct-grid-editor"
+    "type": "git",
+    "url": "https://github.com/eiichi-ishitsuka/struct-grid-editor"
   },
-  "version": "0.0.1",
+  "version": "1.0.0",
   "license": "MIT",
   "engines": {
     "vscode": "^1.107.0"
@@ -81,13 +81,25 @@
             "filenamePattern": "*.json"
           },
           {
+            "filenamePattern": "**/*.json"
+          },
+          {
             "filenamePattern": "*.yaml"
+          },
+          {
+            "filenamePattern": "**/*.yaml"
           },
           {
             "filenamePattern": "*.yml"
           },
           {
+            "filenamePattern": "**/*.yml"
+          },
+          {
             "filenamePattern": "*.jsonl"
+          },
+          {
+            "filenamePattern": "**/*.jsonl"
           }
         ],
         "priority": "option"
@@ -119,8 +131,12 @@
     "test:ui-e2e": "npm run compile:ui-test && extest setup-and-run"
   },
   "devDependencies": {
+    "@testing-library/react": "^16.3.3",
+    "@testing-library/user-event": "^14.6.7",
     "@types/mocha": "^10.0.10",
     "@types/node": "24.x",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
     "@types/vscode": "^1.107.0",
     "@vitest/ui": "^5.0.1",
     "@vscode/test-cli": "^0.0.15",
@@ -128,7 +144,10 @@
     "@vscode/vsce": "^4.0.0",
     "esbuild": "^0.28.1",
     "eslint": "^10.5.0",
+    "jsdom": "^30.1.1",
     "npm-run-all": "^4.1.5",
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0",
     "typedoc": "^0.28.20",
     "typedoc-plugin-markdown": "^4.13.1",
     "typescript": "^6.0.3",

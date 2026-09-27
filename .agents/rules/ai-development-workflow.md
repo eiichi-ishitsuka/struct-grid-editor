@@ -1,6 +1,6 @@
 # AI開発ワークフロールール (AI Development Workflow Rules)
 
-本リポジトリにおいて、AIエージェントおよび開発者が機能開発・改修・リファクタリングを行う際は、以下の6つのステップを標準開発プロセスとして厳守してください。
+本リポジトリにおいて、AIエージェントおよび開発者が機能開発・改修・リファクタリングを行う際は、以下の7つのステップを標準開発プロセスとして厳守してください。
 
 ---
 
@@ -18,6 +18,8 @@
 [5. テスト・静的解析のパス確認]
        ↓
 [6. ドキュメントの一括自動生成]
+       ↓
+[7. バージョン更新とCHANGELOG追記 (PR準備)]
 ```
 
 ---
@@ -95,4 +97,13 @@
     2. **テスト仕様書**: [`docs/test-specifications.md`](../test-specifications.md)（各テストの【観点】【テスト内容】一覧）
   - **Markdown 統一原則**: すべてのドキュメント出力は Markdown（.md）形式とし、HTML などの非 Markdown アセットを出力・コミットしないこと。
   - **Git管理の徹底**: 生成された `docs/api/` および `docs/test-specifications.md` はコード本体と同期させて Git 管理（コミット対象）に含めること。
+
+---
+
+## 7. バージョン更新とCHANGELOGを追記する (Versioning & PR Preparation)
+- **目的**: セマンティックバージョニングとリリース履歴の整合性を担保し、PRマージ時の自動リリースを可能にする。
+- **実施事項**:
+  - 変更内容（破壊的変更: MAJOR / 新機能: MINOR / バグ修正: PATCH）に応じて SemVer に基づき `package.json` の `"version"` をインクリメントする。
+  - `CHANGELOG.md` の最上部に新バージョン、日付、および変更内容を追記する。
+  - 作業ブランチの命名規則（`feature/<name>`, `fix/<name>` 等）およびリリースフローの詳細は [.agents/rules/branch-and-release.md](branch-and-release.md) および [docs/branch-and-release-strategy.md](../../docs/branch-and-release-strategy.md) を厳守すること。
 

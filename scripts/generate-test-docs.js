@@ -12,7 +12,7 @@ function findTestFiles(dir) {
         const fullPath = path.join(dir, item.name);
         if (item.isDirectory()) {
             results = results.concat(findTestFiles(fullPath));
-        } else if (item.isFile() && item.name.endsWith('.test.ts')) {
+        } else if (item.isFile() && (item.name.endsWith('.test.ts') || item.name.endsWith('.test.tsx'))) {
             results.push(fullPath);
         }
     }
@@ -25,7 +25,7 @@ function parseTestFile(filePath) {
 
     // Extract suite title
     const suiteMatch = content.match(/(?:describe|suite)\s*\(\s*['"`](.*?)['"`]/);
-    const suiteTitle = suiteMatch ? suiteMatch[1] : path.basename(filePath, '.test.ts');
+    const suiteTitle = suiteMatch ? suiteMatch[1] : path.basename(filePath).replace(/\.test\.tsx?$/, '');
 
     // Extract test cases with JSDoc
     // Pattern matches: /** ... */ followed by it(...) or test(...)

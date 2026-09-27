@@ -2,27 +2,37 @@
 
 本ドキュメントは、`src/test/` 配下のテストコード（JSDoc / docstring）から自動抽出・生成されたテスト仕様一覧です。
 
-- **総テストスイート数**: 8
-- **総テストケース数**: 36
+- **総テストスイート数**: 18
+- **総テストケース数**: 92
 - **生成スクリプト**: `scripts/generate-test-docs.js` (`npm run doc` にて自動更新)
 
 ## 目次
 
-1. [ParseDocumentUseCase with Table View & Drill-down (11件)](#parsedocumentusecase-with-table-view-drill-down)
+1. [ParseDocumentUseCase with Table View & Drill-down (13件)](#parsedocumentusecase-with-table-view-drill-down)
 2. [CellPath (5件)](#cellpath)
 3. [StructuredDocument Operations (8件)](#structureddocument-operations)
 4. [TableView Domain Model (4件)](#tableview-domain-model)
 5. [TreeFlattener (4件)](#treeflattener)
 6. [Extension Test Suite (1件)](#extension-test-suite)
-7. [JsonDocumentParser (3件)](#jsondocumentparser)
-8. [WebviewRenderer (0件)](#webviewrenderer)
+7. [JsonDocumentParser (9件)](#jsondocumentparser)
+8. [WebviewRenderer (3件)](#webviewrenderer)
+9. [React Webview App (9件)](#react-webview-app)
+10. [Breadcrumbs Component (2件)](#breadcrumbs-component)
+11. [ColumnVisibilityMenu Component (3件)](#columnvisibilitymenu-component)
+12. [EditableCell Component (4件)](#editablecell-component)
+13. [Pagination Component (4件)](#pagination-component)
+14. [Webview UI hooks (6件)](#webview-ui-hooks)
+15. [Webview message protocol (1件)](#webview-message-protocol)
+16. [table view model (8件)](#table-view-model)
+17. [TSV Generation Utilities (5件)](#tsv-generation-utilities)
+18. [vscodeApi wrapper (3件)](#vscodeapi-wrapper)
 
 ---
 
 ## 1. ParseDocumentUseCase with Table View & Drill-down
 
 - **テストファイル**: [`src/test/application/ParseDocumentUseCase.test.ts`](../src/test/application/ParseDocumentUseCase.test.ts)
-- **ケース数**: 11
+- **ケース数**: 13
 
 | # | テストケース名 | 観点 | テスト内容（検証内容） |
 | :--- | :--- | :--- | :--- |
@@ -37,6 +47,8 @@
 | 9 | `should rename a column in an object array and replace keys across all objects` | RenameTableColumnUseCase によるテーブル列名リネームと全オブジェクトへの置換反映確認 | オブジェクト配列の列名（'name' -> 'fullName'）を変更した際、配列内の全要素の旧キーが新キーへと一括置換されることを検証する。 |
 | 10 | `should convert a primitive array inside an object to an array of objects when renaming column` | プリミティブ配列の列名リネームに伴うオブジェクト配列への自動構造変換確認 | ネストされたプリミティブ配列（単一列 `[ ]`）の列名を 'host' に変更した際、各要素が `{ host: "..." }` というオブジェクトに変換され、以降オブジェクト配列として認識されることを検証する。 |
 | 11 | `should rename column in YAML document` | YAMLドキュメントにおける列名リネームとYAMLシリアライズの整合性確認 | YAML形式のドキュメント内のネストされたプリミティブ配列に対して列名変更を実行した際、YAMLのインデント構造を維持したままオブジェクトリスト形式へ変換・保存されることを検証する。 |
+| 12 | `should parse JSONL into table mode with columns and rows` | JSONLドキュメントのスプレッドシート（table）モード判定と列・行のDTOマッピング確認 | 未記載 |
+| 13 | `should add table row in JSONL document through use case` | JSONLドキュメントに対するテーブル行追加ユースケースの動作検証 | 未記載 |
 
 ## 2. CellPath
 
@@ -103,18 +115,153 @@
 ## 7. JsonDocumentParser
 
 - **テストファイル**: [`src/test/infrastructure/Parsers.test.ts`](../src/test/infrastructure/Parsers.test.ts)
-- **ケース数**: 3
+- **ケース数**: 9
 
 | # | テストケース名 | 観点 | テスト内容（検証内容） |
 | :--- | :--- | :--- | :--- |
 | 1 | `parses and serializes JSON with 2-space indentation` | JSONのフォーマット保全（2スペースインデント、末尾改行）を伴うパースおよびシリアライズの確認 | 2スペースインデントと末尾改行を持つJSON文字列をパースし、特定セル値を更新した後にシリアライズした際、元のインデントおよび改行形式が正確に保たれることを検証する。 |
 | 2 | `handles nested objects in JSON` | 深くネストされたJSONオブジェクトの構造解析と平坦化確認 | 多重ネストされたJSON（a.b.c）をパースし、toFlatRows() を介してドット区切りの正しいパスと値が抽出されることを検証する。 |
-| 3 | `parses and serializes YAML` | YAMLドキュメントのパース、セル値更新、および再シリアライズの確認 | ネストを含むYAML文字列をパースして構造を抽出し、ブール値セル（settings.enabled: true -> false）を更新してシリアライズした際、正しくYAML形式のまま値が更新出力されることを検証する。 |
+| 3 | `parses JSON with comments (JSONC)` | コメント付きJSON（JSONC: settings.jsonやtsconfig.jsonなど）のパース確認 | 行コメント（//）およびブロックコメント（/* ... *\/）が含まれるJSON文字列をエラーなくパースできることを検証する。 |
+| 4 | `parses and serializes YAML` | YAMLドキュメントのパース、セル値更新、および再シリアライズの確認 | ネストを含むYAML文字列をパースして構造を抽出し、ブール値セル（settings.enabled: true -> false）を更新してシリアライズした際、正しくYAML形式のまま値が更新出力されることを検証する。 |
+| 5 | `supports jsonl and ndjson extensions` | 拡張子サポート判定（jsonl, ndjson）の確認 | 未記載 |
+| 6 | `parses JSONL into array root, updates cell and serializes correctly` | JSONLのパース、トップレベル配列としての認識、セル値更新、および再シリアライズの確認 | 未記載 |
+| 7 | `handles empty lines and comments in JSONL` | 空行スキップおよびコメント付きJSONL（JSONC対応）の検証 | 未記載 |
+| 8 | `supports adding and deleting table rows in JSONL` | 行追加・行削除の操作とシリアライズ確認 | 未記載 |
+| 9 | `handles empty text gracefully` | 空ドキュメントの安全なパースとシリアライズ | 未記載 |
 
 ## 8. WebviewRenderer
 
 - **テストファイル**: [`src/test/infrastructure/WebviewRenderer.test.ts`](../src/test/infrastructure/WebviewRenderer.test.ts)
-- **ケース数**: 0
+- **ケース数**: 3
 
-*テストケースが検出されませんでした。*
+| # | テストケース名 | 観点 | テスト内容（検証内容） |
+| :--- | :--- | :--- | :--- |
+| 1 | `renders a CSP-protected HTML shell with local assets` | Webview の実行に必要な最小 HTML shell とローカル bundle を出力すること | 未記載 |
+| 2 | `escapes HTML-like initial data before embedding it in the shell` | 初期データ内のタグをスクリプトとして解釈させないこと | 未記載 |
+| 3 | `renders the error view with the same CSP protections` | 構文エラー画面にも同じ CSP と nonce を適用すること | 未記載 |
+
+## 9. React Webview App
+
+- **テストファイル**: [`src/test/webview/App.test.tsx`](../src/test/webview/App.test.tsx)
+- **ケース数**: 9
+
+| # | テストケース名 | 観点 | テスト内容（検証内容） |
+| :--- | :--- | :--- | :--- |
+| 1 | `renders and filters the spreadsheet view` | 表ビューを既存セレクタとともに表示し、検索と列の表示切替ができること | 未記載 |
+| 2 | `renders and filters the key-value view` | KV ビューでも検索結果だけを表示できること | 未記載 |
+| 3 | `sends update_cell message on cell edit blur` | セル編集で blur または Enter 時に update_cell メッセージを送信すること | 未記載 |
+| 4 | `sends add_table_row, add_table_column, and open_text_editor commands` | 行追加・列追加・テキストエディタ切替ボタンのクリックで対応するメッセージを送信すること | 未記載 |
+| 5 | `sends rename_table_column on column header label blur` | 列名編集で Enter または blur 時に rename_table_column メッセージを送信すること | 未記載 |
+| 6 | `opens context menu and deletes row` | 行ヘッダーのコンテキストメニューから行削除を実行できること | 未記載 |
+| 7 | `navigates to sub-array and back via breadcrumbs` | サブ配列ボタンのクリックで配列を展開し、パンくずでルートへ戻れること | 未記載 |
+| 8 | `applies saved column widths from state` | 保存された列幅（customColWidths）を初期描画に反映すること | 未記載 |
+| 9 | `reorders columns on drag and drop` | 列のドラッグ＆ドロップで列の並び順が更新されること | 未記載 |
+
+## 10. Breadcrumbs Component
+
+- **テストファイル**: [`src/test/webview/Breadcrumbs.test.tsx`](../src/test/webview/Breadcrumbs.test.tsx)
+- **ケース数**: 2
+
+| # | テストケース名 | 観点 | テスト内容（検証内容） |
+| :--- | :--- | :--- | :--- |
+| 1 | `renders root as current when path is empty or null` | ルートパス時は root/ のみをカレント表示すること | 未記載 |
+| 2 | `renders nested path segments and triggers navigation on click` | ネストしたパスでパンくずリンクを階層順に生成し、クリックでナビゲートできること | 未記載 |
+
+## 11. ColumnVisibilityMenu Component
+
+- **テストファイル**: [`src/test/webview/ColumnVisibilityMenu.test.tsx`](../src/test/webview/ColumnVisibilityMenu.test.tsx)
+- **ケース数**: 3
+
+| # | テストケース名 | 観点 | テスト内容（検証内容） |
+| :--- | :--- | :--- | :--- |
+| 1 | `toggles dropdown visibility on button click` | 初期状態ではメニューが閉じており、ボタンクリックで開閉すること | 未記載 |
+| 2 | `toggles column visibility via checkbox` | チェックボックスの操作で列の非表示・再表示が切り替わること | 未記載 |
+| 3 | `restores all columns on ` | 「すべて表示」リンクをクリックすると全列が表示状態になること | 未記載 |
+
+## 12. EditableCell Component
+
+- **テストファイル**: [`src/test/webview/EditableCell.test.tsx`](../src/test/webview/EditableCell.test.tsx)
+- **ケース数**: 4
+
+| # | テストケース名 | 観点 | テスト内容（検証内容） |
+| :--- | :--- | :--- | :--- |
+| 1 | `renders displayValue with data attributes` | 初期値を正しく描画し、data 属性を設定すること | 未記載 |
+| 2 | `preserves user typed text during focus even when displayValue prop updates` | 編集中のユーザー入力を React の再描画（props 更新）で上書きしないこと | 未記載 |
+| 3 | `commits value and triggers navigation on Enter` | Enter キーで値を確定し、下方向セルへ移動を通知すること | 未記載 |
+| 4 | `commits value and triggers navigation on Shift + Tab` | Shift + Tab キーで値を確定し、左方向セルへ移動を通知すること | 未記載 |
+
+## 13. Pagination Component
+
+- **テストファイル**: [`src/test/webview/Pagination.test.tsx`](../src/test/webview/Pagination.test.tsx)
+- **ケース数**: 4
+
+| # | テストケース名 | 観点 | テスト内容（検証内容） |
+| :--- | :--- | :--- | :--- |
+| 1 | `returns null when totalRows is 100 or less` | 総件数が100件以下の場合は何も表示しないこと | 未記載 |
+| 2 | `disables previous and first buttons on page 1` | 1ページ目では前へ・最初ボタンが無効化されること | 未記載 |
+| 3 | `calls onPageChange on next and last button clicks` | 次へ・最後のページボタンクリックで onPageChange が呼ばれること | 未記載 |
+| 4 | `jumps to a valid page number on Enter in jump input` | 入力欄にページ番号を入力して Enter でジャンプできること | 未記載 |
+
+## 14. Webview UI hooks
+
+- **テストファイル**: [`src/test/webview/hooks.test.tsx`](../src/test/webview/hooks.test.tsx)
+- **ケース数**: 6
+
+| # | テストケース名 | 観点 | テスト内容（検証内容） |
+| :--- | :--- | :--- | :--- |
+| 1 | `restores and persists state through the VS Code API` | VS Code state を復元し、React state の変更を同じ API へ保存すること | 未記載 |
+| 2 | `sets and clears grid selection` | 選択状態を一箇所で設定・解除できること | 未記載 |
+| 3 | `restores pending focus after a render` | 保存済みのフォーカス情報を選択状態へ復元してから消費すること | 未記載 |
+| 4 | `finds the adjacent visible cell including horizontal wrapping` | Tab の行末折返しと矢印移動の次セルを DTO だけから求められること | 未記載 |
+| 5 | `returns the correct CSS class for cell/row/col/all selection` | 選択状態に応じた CSS クラスを正しく返すこと | 未記載 |
+| 6 | `provides selectRow, selectCol, and selectAll helpers` | 行選択・列選択・全選択のヘルパーが正しい selection を設定すること | 未記載 |
+
+## 15. Webview message protocol
+
+- **テストファイル**: [`src/test/webview/protocol.test.ts`](../src/test/webview/protocol.test.ts)
+- **ケース数**: 1
+
+| # | テストケース名 | 観点 | テスト内容（検証内容） |
+| :--- | :--- | :--- | :--- |
+| 1 | `accepts every supported command and its payload` | 定義済みの全コマンドを受信できること | 未記載 |
+
+## 16. table view model
+
+- **テストファイル**: [`src/test/webview/tableView.test.ts`](../src/test/webview/tableView.test.ts)
+- **ケース数**: 8
+
+| # | テストケース名 | 観点 | テスト内容（検証内容） |
+| :--- | :--- | :--- | :--- |
+| 1 | `returns the correct table path key` | getTablePathKey がパスに応じたキーまたは __root__ を返すこと | 未記載 |
+| 2 | `selects the active root or nested table without mutating DTOs` | ルートとネスト配列のテーブルを選択できること | 未記載 |
+| 3 | `applies visibility and custom ordering without mutating its inputs` | 非表示列と局所的な列・行順を表示モデルにだけ反映すること | 未記載 |
+| 4 | `sorts typed values while preserving empty values at the end` | 数値・真偽値のソートでは空セルを常に末尾に置くこと | 未記載 |
+| 5 | `sorts strings with natural alphanumeric comparison` | 文字列の自然順ソート（大文字小文字や数値混じり文字列）が正しく機能すること | 未記載 |
+| 6 | `filters rows across all column cell values` | 検索語が空の場合は全件を返し、検索時は全列を横断して絞り込むこと | 未記載 |
+| 7 | `filters case-insensitively and clamps pagination to the final page` | 検索結果に表示順の行番号を付け、検索後の最終ページへ補正すること | 未記載 |
+| 8 | `clamps negative page numbers and throws on invalid page sizes` | ページ番号が1未満のときは1に補正され、pageSizeが不正な場合は例外を投げること | 未記載 |
+
+## 17. TSV Generation Utilities
+
+- **テストファイル**: [`src/test/webview/tsv.test.ts`](../src/test/webview/tsv.test.ts)
+- **ケース数**: 5
+
+| # | テストケース名 | 観点 | テスト内容（検証内容） |
+| :--- | :--- | :--- | :--- |
+| 1 | `escapes special characters with quotes and doubles inner quotes` | 特殊文字（タブ、改行、引用符）のエスケープおよび null/undefined の空文字変換 | formatTsvValue に特殊文字を含む文字列や null/undefined を渡した際、タブや改行が二重引用符で囲まれ、二重引用符が二重化され、null/undefined が空文字へ変換されることを検証する。 |
+| 2 | `generates TSV for all selection` | 全選択（all）時のTSV文字列生成 | 全選択状態で generateTsv を呼び出した際、ヘッダー行を含み全行・全列のデータがタブ・改行区切りのTSVとして出力されることを検証する。 |
+| 3 | `generates TSV for row selection` | 行選択（row）時のTSV文字列生成 | 行選択状態で generateTsv を呼び出した際、指定した単一行の全列値がタブ区切りで出力されることを検証する。 |
+| 4 | `generates TSV for column selection` | 列選択（col）時のTSV文字列生成 | 列選択状態で generateTsv を呼び出した際、指定したカラムの全行の値が改行区切りで出力されることを検証する。 |
+| 5 | `generates TSV for cell selection` | 単一セル選択（cell）時のTSV文字列生成 | セル選択状態で generateTsv を呼び出した際、対象セルの値のみが出力されることを検証する。 |
+
+## 18. vscodeApi wrapper
+
+- **テストファイル**: [`src/test/webview/vscodeApi.test.ts`](../src/test/webview/vscodeApi.test.ts)
+- **ケース数**: 3
+
+| # | テストケース名 | 観点 | テスト内容（検証内容） |
+| :--- | :--- | :--- | :--- |
+| 1 | `acquires the VS Code API once and returns the cached singleton` | acquireVsCodeApi を複数回呼ばず、同一のインスタンスをキャッシュして返すこと | 未記載 |
+| 2 | `returns undefined from tryGetVsCodeApi when outside VS Code webview` | acquireVsCodeApi が未定義の環境で tryGetVsCodeApi が undefined を返すこと | 未記載 |
+| 3 | `throws from getVsCodeApi when outside VS Code webview` | acquireVsCodeApi が未定義の環境で getVsCodeApi がエラーをスローすること | 未記載 |
 

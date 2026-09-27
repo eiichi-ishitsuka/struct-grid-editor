@@ -6,7 +6,7 @@
 
 # Class: DeleteRowUseCase
 
-Defined in: application/usecase/RowModificationUseCases.ts:94
+Defined in: [application/usecase/RowModificationUseCases.ts:94](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/ed0c1332f6f848335ce1461339913a2fab0f194d/src/application/usecase/RowModificationUseCases.ts#L94)
 
 指定されたパスのノード（行／要素）を削除するユースケース。
 
@@ -16,7 +16,7 @@ Defined in: application/usecase/RowModificationUseCases.ts:94
 
 > **new DeleteRowUseCase**(`parsers`): `DeleteRowUseCase`
 
-Defined in: application/usecase/RowModificationUseCases.ts:95
+Defined in: [application/usecase/RowModificationUseCases.ts:95](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/ed0c1332f6f848335ce1461339913a2fab0f194d/src/application/usecase/RowModificationUseCases.ts#L95)
 
 #### Parameters
 
@@ -34,7 +34,7 @@ Defined in: application/usecase/RowModificationUseCases.ts:95
 
 > **execute**(`text`, `fileExtension`, `pathStr`): `string`
 
-Defined in: application/usecase/RowModificationUseCases.ts:104
+Defined in: [application/usecase/RowModificationUseCases.ts:104](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/ed0c1332f6f848335ce1461339913a2fab0f194d/src/application/usecase/RowModificationUseCases.ts#L104)
 
 行の削除を実行します。
 
