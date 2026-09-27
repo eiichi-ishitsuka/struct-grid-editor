@@ -1,0 +1,59 @@
+name: Release & Tag on Merge
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: write
+
+jobs:
+  tag-and-release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Git user
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Check version and create tag
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          # package.json からバージョンを取得
+          VERSION=$(node -p "require('./package.json').version")
+          echo "Current version in package.json: $VERSION"
+
+          # 既に同名のタグが存在するか確認
+          if git rev-parse "$VERSION" >/dev/null 2>&1; then
+            echo "Tag $VERSION already exists. Skipping release creation."
+            exit 0
+          fi
+
+          echo "Tag $VERSION does not exist. Creating tag and GitHub Release..."
+
+          # CHANGELOG.md から該当バージョンの変更履歴を抽出
+          node -e '
+            const fs = require("fs");
+            const ver = require("./package.json").version;
+            const changelog = fs.existsSync("CHANGELOG.md") ? fs.readFileSync("CHANGELOG.md", "utf8") : "";
+            const regex = new RegExp(`## \\\\b${ver}\\\\b[^\\\\n]*\\\\n([\\\\s\\\\S]*?)(?=\\\\n## |$)`);
+            const match = changelog.match(regex);
+            const notes = match ? match[1].trim() : `Release ${ver}`;
+            fs.writeFileSync("RELEASE_NOTES.tmp", notes);
+          '
+
+          # Git タグの作成とプッシュ
+          git tag "$VERSION"
+          git push origin "$VERSION"
+
+          # GitHub Release の発行
+          gh release create "$VERSION" \
+            --title "$VERSION" \
+            --notes-file RELEASE_NOTES.tmp
