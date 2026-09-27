@@ -5,10 +5,18 @@ interface ToolbarProps {
     itemCount: string;
     searchQuery: string;
     onSearchQueryChange: (query: string) => void;
+    onOpenTextEditor?: () => void;
     children?: ReactNode;
 }
 
-export function Toolbar({ documentType, itemCount, searchQuery, onSearchQueryChange, children }: ToolbarProps) {
+export function Toolbar({
+    documentType,
+    itemCount,
+    searchQuery,
+    onSearchQueryChange,
+    onOpenTextEditor,
+    children,
+}: ToolbarProps) {
     return (
         <div className="header">
             <div className="header-title">
@@ -26,6 +34,15 @@ export function Toolbar({ documentType, itemCount, searchQuery, onSearchQueryCha
                     onChange={event => onSearchQueryChange(event.target.value)}
                 />
                 {children}
+                <button
+                    className="btn btn-secondary"
+                    id="openTextEditorBtn"
+                    title="通常のテキストエディタで開く"
+                    type="button"
+                    onClick={onOpenTextEditor}
+                >
+                    テキストで開く
+                </button>
             </div>
         </div>
     );

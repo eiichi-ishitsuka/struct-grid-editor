@@ -21,6 +21,7 @@ describe('WebviewRenderer', () => {
 
         expect(html).toContain('<!DOCTYPE html>');
         expect(html).toContain('id="app"');
+        expect(html).toContain('data-react-ui="true"');
         expect(html).toContain('data-initial-data=');
         expect(html).toContain(`<link rel="stylesheet" href="${assets.styleUri}">`);
         expect(html).toContain(`<script nonce=`);

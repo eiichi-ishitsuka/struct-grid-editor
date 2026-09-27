@@ -667,11 +667,12 @@ export class WebviewRenderer {
     </style>
 </head>
 <body>
-    <div id="app" data-initial-data="${initialData}"></div>
+    <div id="app" data-react-ui="true" data-initial-data="${initialData}"></div>
     <div id="contextMenu" class="context-menu"></div>
     <div id="toastNotification" class="toast-notification"></div>
 
     <script nonce="${nonce}">
+        if (document.getElementById('app')?.dataset?.reactUi !== 'true') {
         const vscode = acquireVsCodeApi();
         const initialData = ${jsonData};
 
@@ -2434,6 +2435,7 @@ export class WebviewRenderer {
 
         // Initialize Render
         renderApp();
+        }
     </script>
     <script nonce="${nonce}" src="${this.escapeHtml(assets.scriptUri)}"></script>
 </body>

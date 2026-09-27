@@ -1,7 +1,7 @@
 // @vitest-environment jsdom
-import { cleanup, render, screen } from '@testing-library/react';
+import { cleanup, fireEvent, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { afterEach, describe, expect, it } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import type { GridDataDto } from '../../../application/dto/GridData';
 import { App } from '../../../infrastructure/webview/ui/App';
 
@@ -27,8 +27,20 @@ const tableData: GridDataDto = {
 };
 
 describe('React Webview App', () => {
+    const postMessageMock = vi.fn();
+
+    beforeEach(() => {
+        postMessageMock.mockClear();
+        (globalThis as unknown as { acquireVsCodeApi: unknown }).acquireVsCodeApi = () => ({
+            getState: () => undefined,
+            setState: vi.fn(),
+            postMessage: postMessageMock,
+        });
+    });
+
     afterEach(() => {
         cleanup();
+        delete (globalThis as unknown as { acquireVsCodeApi?: unknown }).acquireVsCodeApi;
     });
 
     /** 【観点】表ビューを既存セレクタとともに表示し、検索と列の表示切替ができること */
@@ -67,5 +79,96 @@ describe('React Webview App', () => {
         await user.type(screen.getByRole('searchbox'), 'enabled');
         expect(screen.queryByText('Alice')).toBeNull();
         expect(screen.getByText('true')).not.toBeNull();
+    });
+
+    /** 【観点】セル編集で blur または Enter 時に update_cell メッセージを送信すること */
+    it('sends update_cell message on cell edit blur', () => {
+        render(<App initialData={tableData} />);
+
+        const aliceCell = document.querySelector('td.col-val[data-col-key="name"][data-row-index="0"]');
+        expect(aliceCell).not.toBeNull();
+
+        if (aliceCell) {
+            (aliceCell as HTMLElement).innerText = 'Alicia';
+            fireEvent.blur(aliceCell);
+
+            expect(postMessageMock).toHaveBeenCalledWith({
+                command: 'update_cell',
+                path: '[0].name',
+                value: 'Alicia',
+            });
+        }
+    });
+
+    /** 【観点】行追加・列追加・テキストエディタ切替ボタンのクリックで対応するメッセージを送信すること */
+    it('sends add_table_row, add_table_column, and open_text_editor commands', async () => {
+        const user = userEvent.setup();
+        render(<App initialData={tableData} />);
+
+        // 行追加
+        const addRowBtn = document.getElementById('addTableRowBtn');
+        expect(addRowBtn).not.toBeNull();
+        await user.click(addRowBtn!);
+        expect(postMessageMock).toHaveBeenCalledWith({
+            command: 'add_table_row',
+            arrayPath: '',
+        });
+
+        // 列追加
+        const addColBtn = document.getElementById('addColBtn');
+        expect(addColBtn).not.toBeNull();
+        await user.click(addColBtn!);
+        expect(postMessageMock).toHaveBeenCalledWith({
+            command: 'add_table_column',
+            arrayPath: '',
+            columnKey: 'col1',
+        });
+
+        // テキストで開く
+        const openTextBtn = document.getElementById('openTextEditorBtn');
+        expect(openTextBtn).not.toBeNull();
+        await user.click(openTextBtn!);
+        expect(postMessageMock).toHaveBeenCalledWith({
+            command: 'open_text_editor',
+        });
+    });
+
+    /** 【観点】列名編集で Enter または blur 時に rename_table_column メッセージを送信すること */
+    it('sends rename_table_column on column header label blur', () => {
+        render(<App initialData={tableData} />);
+
+        const labelSpan = document.querySelector('.col-header-label[data-col-key="name"]');
+        expect(labelSpan).not.toBeNull();
+
+        if (labelSpan) {
+            (labelSpan as HTMLElement).innerText = 'fullName';
+            fireEvent.blur(labelSpan);
+
+            expect(postMessageMock).toHaveBeenCalledWith({
+                command: 'rename_table_column',
+                arrayPath: '',
+                oldKey: 'name',
+                newKey: 'fullName',
+            });
+        }
+    });
+
+    /** 【観点】行ヘッダーのコンテキストメニューから行削除を実行できること */
+    it('opens context menu and deletes row', async () => {
+        const user = userEvent.setup();
+        render(<App initialData={tableData} />);
+
+        const rowHeader = document.querySelector('td.row-header[data-row-index="0"]');
+        expect(rowHeader).not.toBeNull();
+
+        fireEvent.contextMenu(rowHeader!);
+        const deleteItem = screen.getByText('行 1 を削除');
+        expect(deleteItem).not.toBeNull();
+
+        await user.click(deleteItem);
+        expect(postMessageMock).toHaveBeenCalledWith({
+            command: 'delete_row',
+            path: '[0]',
+        });
     });
 });
