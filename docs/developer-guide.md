@@ -160,3 +160,9 @@ samples/
 5. **テスト・静的解析のパス確認**: `npm run test:unit`, `npm run check-types`, `npm run lint` の全通過を確認。
 6. **ドキュメント生成**: `npm run doc` を実行し、API仕様書およびテスト仕様書（Markdown）を自動更新。
 
+---
+
+## 7. ブランチ戦略とリリースマネジメント
+
+Gitブランチの命名規則、セマンティックバージョニング、PR作成時の変更ルール、およびタグ付け・リリース自動化の詳細は [docs/branch-and-release-strategy.md](branch-and-release-strategy.md) を参照してください。
+
