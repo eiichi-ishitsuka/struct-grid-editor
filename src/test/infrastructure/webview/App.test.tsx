@@ -171,4 +171,97 @@ describe('React Webview App', () => {
             path: '[0]',
         });
     });
+
+    /** 【観点】サブ配列ボタンのクリックで配列を展開し、パンくずでルートへ戻れること */
+    it('navigates to sub-array and back via breadcrumbs', async () => {
+        const user = userEvent.setup();
+        const dataWithSubArray: GridDataDto = {
+            ...tableData,
+            tableData: {
+                ...tableData.tableData!,
+                columns: [
+                    ...tableData.tableData!.columns,
+                    { key: 'tags', label: 'Tags', type: 'array' },
+                ],
+                rows: [
+                    {
+                        index: 0,
+                        path: '[0]',
+                        cells: {
+                            ...tableData.tableData!.rows[0].cells,
+                            tags: { path: '[0].tags', value: ['tag1'], displayValue: 'tag1', type: 'array' },
+                        },
+                    },
+                ],
+            },
+            subArrays: [
+                {
+                    path: '[0].tags',
+                    label: 'tags',
+                    length: 1,
+                    isObjectArray: false,
+                    tableData: {
+                        path: '[0].tags',
+                        columns: [{ key: 'value', label: 'Value', type: 'string' }],
+                        rows: [{ index: 0, path: '[0].tags[0]', cells: { value: { path: '[0].tags[0]', value: 'tag1', displayValue: 'tag1', type: 'string' } } }],
+                        totalRows: 1,
+                        totalColumns: 1,
+                        isObjectArray: false,
+                    },
+                },
+            ],
+        };
+
+        render(<App initialData={dataWithSubArray} />);
+
+        // サブ配列編集ボタンをクリック
+        const editArrayBtn = screen.getByRole('button', { name: '編集する' });
+        expect(editArrayBtn).not.toBeNull();
+        await user.click(editArrayBtn);
+
+        // パンくずが更新され、サブ配列の列名 'Value' が表示される
+        expect(screen.getByText('tags')).not.toBeNull();
+        expect(screen.getByRole('columnheader', { name: /Value/ })).not.toBeNull();
+
+        // パンくずの 'root/' をクリックしてルートに戻る
+        const rootLink = screen.getByRole('button', { name: 'root/' });
+        await user.click(rootLink);
+
+        expect(screen.getByRole('columnheader', { name: /Name/ })).not.toBeNull();
+    });
+
+    /** 【観点】保存された列幅（customColWidths）を初期描画に反映すること */
+    it('applies saved column widths from state', () => {
+        (globalThis as unknown as { acquireVsCodeApi: unknown }).acquireVsCodeApi = () => ({
+            getState: () => ({
+                customColWidths: {
+                    __root__: { name: 250 },
+                },
+            }),
+            setState: vi.fn(),
+            postMessage: postMessageMock,
+        });
+
+        render(<App initialData={tableData} />);
+
+        const nameHeader = document.querySelector('th.col-header-cell[data-col-key="name"]') as HTMLElement;
+        expect(nameHeader).not.toBeNull();
+        expect(nameHeader.style.width).toBe('250px');
+    });
+
+    /** 【観点】列のドラッグ＆ドロップで列の並び順が更新されること */
+    it('reorders columns on drag and drop', () => {
+        render(<App initialData={tableData} />);
+
+        const idHeader = document.querySelector('th.col-header-cell[data-col-key="id"]') as HTMLElement;
+        const nameHeader = document.querySelector('th.col-header-cell[data-col-key="name"]') as HTMLElement;
+
+        // dragstart on id, drop on name
+        fireEvent.dragStart(idHeader, { dataTransfer: { effectAllowed: 'move' } });
+        fireEvent.dragOver(nameHeader, { clientX: 200, currentTarget: nameHeader, dataTransfer: { dropEffect: 'move' } });
+        fireEvent.drop(nameHeader, { dataTransfer: {} });
+
+        const headers = Array.from(document.querySelectorAll('th.col-header-cell')).map(th => th.getAttribute('data-col-key'));
+        expect(headers).toEqual(['name', 'id']);
+    });
 });

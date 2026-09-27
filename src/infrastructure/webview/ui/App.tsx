@@ -80,6 +80,10 @@ export function App({ initialData }: AppProps) {
         if (nextCell) {
             selectCell(nextCell.rowIndex, nextCell.colKey, nextCell.path);
             savePendingFocus(nextCell);
+            const target = document.querySelector<HTMLElement>(
+                `td.col-val[data-row-index="${nextCell.rowIndex}"][data-col-key="${nextCell.colKey}"]`
+            );
+            target?.focus();
         }
     }, [savePendingFocus, selectCell, table.page.rows, tableView]);
 
