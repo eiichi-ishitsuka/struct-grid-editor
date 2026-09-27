@@ -515,7 +515,7 @@ export function App({ initialData }: AppProps) {
         return <div className="error-card"><h3>構文エラー</h3><p>{initialData.error}</p></div>;
     }
 
-    const isTableMode = initialData.viewMode === 'table' && tableView !== null;
+    const isTableMode = tableView !== null;
     const itemCount = isTableMode
         ? `${tableView.totalRows} 行 (${tableView.totalColumns} 列)`
         : `${initialData.totalRows} 項目`;

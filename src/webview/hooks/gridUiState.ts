@@ -18,6 +18,7 @@ export interface GridUiState extends TableViewPreferences {
     customColWidths: Record<string, Record<string, number>>;
     currentPage: number;
     pendingFocus?: PendingFocus;
+    activeArrayPath?: string | null;
 }
 
 export const defaultGridUiState: GridUiState = {
@@ -27,6 +28,7 @@ export const defaultGridUiState: GridUiState = {
     hiddenCols: {},
     sortState: {},
     currentPage: 1,
+    activeArrayPath: undefined,
 };
 
 /** 過去の Webview state を、現在の完全な state 形式へ補完する。 */
@@ -40,5 +42,6 @@ export function normalizeGridUiState(state: Partial<GridUiState> | undefined): G
         hiddenCols: state?.hiddenCols ?? {},
         sortState: state?.sortState ?? {},
         currentPage: state?.currentPage || 1,
+        activeArrayPath: state?.activeArrayPath,
     };
 }

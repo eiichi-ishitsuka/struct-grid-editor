@@ -267,4 +267,79 @@ describe('React Webview App', () => {
         const headers = Array.from(document.querySelectorAll('th.col-header-cell')).map(th => th.getAttribute('data-col-key'));
         expect(headers).toEqual(['name', 'id']);
     });
+
+    /** 【観点】KVモードの配列を「編集する」で開いた後、Webview再読み込み（編集・行追加）が発生しても配列画面を維持すること */
+    it('navigates sub-array in KV mode and preserves array view across state restoration', async () => {
+        const user = userEvent.setup();
+        let persistedState: Record<string, unknown> | undefined;
+
+        (globalThis as unknown as { acquireVsCodeApi: unknown }).acquireVsCodeApi = () => ({
+            getState: () => persistedState,
+            setState: vi.fn((next: Record<string, unknown>) => {
+                persistedState = next;
+            }),
+            postMessage: postMessageMock,
+        });
+
+        const kvDataWithArray: GridDataDto = {
+            documentType: 'yaml',
+            viewMode: 'kv',
+            totalRows: 2,
+            rows: [
+                { id: 'title', path: 'title', key: 'title', value: 'My Document', displayValue: 'My Document', type: 'string', depth: 1, isLeaf: true },
+                { id: 'items', path: 'items', key: 'items', value: ['item1'], displayValue: '[1 items]', type: 'array', depth: 1, isArray: true, isLeaf: false },
+            ],
+            subArrays: [
+                {
+                    path: 'items',
+                    label: 'items',
+                    length: 1,
+                    isObjectArray: false,
+                    tableData: {
+                        path: 'items',
+                        columns: [{ key: 'value', label: 'Value', type: 'string' }],
+                        rows: [{ index: 0, path: 'items[0]', cells: { value: { path: 'items[0]', value: 'item1', displayValue: 'item1', type: 'string' } } }],
+                        totalRows: 1,
+                        totalColumns: 1,
+                        isObjectArray: false,
+                    },
+                },
+            ],
+        };
+
+        const { unmount } = render(<App initialData={kvDataWithArray} />);
+
+        // 初期は KV モードで「編集する」ボタンが表示されている
+        const editArrayBtn = screen.getByRole('button', { name: '編集する' });
+        expect(editArrayBtn).not.toBeNull();
+        expect(screen.getByText('My Document')).not.toBeNull();
+
+        // 「編集する」をクリックして配列ビューへ移動
+        await user.click(editArrayBtn);
+
+        // 表形式ビュー（SpreadsheetGrid）へ切り替わり、列名 'Value' が表示される
+        expect(screen.getByRole('columnheader', { name: /Value/ })).not.toBeNull();
+        expect(screen.getByText('item1')).not.toBeNull();
+        expect(screen.getByText('items')).not.toBeNull();
+
+        // state に activeArrayPath が保存されていることを検証
+        expect(persistedState?.activeArrayPath).toBe('items');
+
+        // 行追加・セル編集等でドキュメントが更新され、Webview が再読み込みされた状況をシミュレート
+        unmount();
+        render(<App initialData={kvDataWithArray} />);
+
+        // 再読み込み後も前の画面に戻らず、配列ビューが維持されていること！
+        expect(screen.getByRole('columnheader', { name: /Value/ })).not.toBeNull();
+        expect(screen.getByText('item1')).not.toBeNull();
+
+        // パンくずの 'root/' をクリックすると KV 画面（前の画面）へ戻ること
+        const rootLink = screen.getByRole('button', { name: 'root/' });
+        await user.click(rootLink);
+
+        // KV 画面へ復元され、「編集する」ボタンが表示されていること
+        expect(screen.getByRole('button', { name: '編集する' })).not.toBeNull();
+        expect(screen.getByText('My Document')).not.toBeNull();
+        expect(screen.queryByRole('columnheader', { name: /Value/ })).toBeNull();
+    });
 });
