@@ -13,3 +13,8 @@ declare const acquireVsCodeApi: <TState = unknown>() => VsCodeWebviewApi<TState>
 export function getVsCodeApi<TState = unknown>(): VsCodeWebviewApi<TState> {
     return acquireVsCodeApi<TState>();
 }
+
+/** VS Code 外のコンポーネントテストでは API を持たない状態を許容する。 */
+export function tryGetVsCodeApi<TState = unknown>(): VsCodeWebviewApi<TState> | undefined {
+    return typeof acquireVsCodeApi === 'function' ? acquireVsCodeApi<TState>() : undefined;
+}
