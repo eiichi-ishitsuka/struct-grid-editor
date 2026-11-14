@@ -8,7 +8,7 @@
 
 > **paginateTableRows**(`rows`, `currentPage`, `pageSize?`): [`TablePage`](../interfaces/TablePage.md)
 
-Defined in: [webview/model/tableView.ts:138](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/ed0c1332f6f848335ce1461339913a2fab0f194d/src/webview/model/tableView.ts#L138)
+Defined in: [webview/model/tableView.ts:138](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/e20beb86538f08849d50b688bca0eb17506d34aa/src/webview/model/tableView.ts#L138)
 
 現在ページを有効な範囲に補正し、ページに含める行を返す。
 

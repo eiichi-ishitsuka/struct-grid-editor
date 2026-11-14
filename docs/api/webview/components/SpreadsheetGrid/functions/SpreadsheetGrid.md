@@ -8,7 +8,7 @@
 
 > **SpreadsheetGrid**(`__namedParameters`): `Element`
 
-Defined in: [webview/components/SpreadsheetGrid.tsx:45](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/ed0c1332f6f848335ce1461339913a2fab0f194d/src/webview/components/SpreadsheetGrid.tsx#L45)
+Defined in: [webview/components/SpreadsheetGrid.tsx:45](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/e20beb86538f08849d50b688bca0eb17506d34aa/src/webview/components/SpreadsheetGrid.tsx#L45)
 
 ## Parameters
 

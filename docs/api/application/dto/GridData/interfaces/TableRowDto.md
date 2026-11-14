@@ -6,7 +6,7 @@
 
 # Interface: TableRowDto
 
-Defined in: [application/dto/GridData.ts:32](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/ed0c1332f6f848335ce1461339913a2fab0f194d/src/application/dto/GridData.ts#L32)
+Defined in: [application/dto/GridData.ts:32](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/e20beb86538f08849d50b688bca0eb17506d34aa/src/application/dto/GridData.ts#L32)
 
 テーブルビューの1行データ DTO。
 
@@ -16,7 +16,7 @@ Defined in: [application/dto/GridData.ts:32](https://github.com/eiichi-ishitsuka
 
 > **cells**: `Record`\<`string`, [`TableCellDto`](TableCellDto.md)\>
 
-Defined in: [application/dto/GridData.ts:38](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/ed0c1332f6f848335ce1461339913a2fab0f194d/src/application/dto/GridData.ts#L38)
+Defined in: [application/dto/GridData.ts:38](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/e20beb86538f08849d50b688bca0eb17506d34aa/src/application/dto/GridData.ts#L38)
 
 カラムキーをキーとするセルデータのマップ
 
@@ -26,7 +26,7 @@ Defined in: [application/dto/GridData.ts:38](https://github.com/eiichi-ishitsuka
 
 > **index**: `number`
 
-Defined in: [application/dto/GridData.ts:34](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/ed0c1332f6f848335ce1461339913a2fab0f194d/src/application/dto/GridData.ts#L34)
+Defined in: [application/dto/GridData.ts:34](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/e20beb86538f08849d50b688bca0eb17506d34aa/src/application/dto/GridData.ts#L34)
 
 行インデックス
 
@@ -36,6 +36,6 @@ Defined in: [application/dto/GridData.ts:34](https://github.com/eiichi-ishitsuka
 
 > **path**: `string`
 
-Defined in: [application/dto/GridData.ts:36](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/ed0c1332f6f848335ce1461339913a2fab0f194d/src/application/dto/GridData.ts#L36)
+Defined in: [application/dto/GridData.ts:36](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/e20beb86538f08849d50b688bca0eb17506d34aa/src/application/dto/GridData.ts#L36)
 
 行のパス

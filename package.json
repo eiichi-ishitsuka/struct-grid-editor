@@ -1,14 +1,14 @@
 {
   "name": "struct-grid-editor",
   "displayName": "StructGridEditor",
-  "description": "Edit JSON, YAML, and JSONL files in a spreadsheet-like grid view.",
+  "description": "Edit JSON, YAML, JSONL, and Markdown files in a rich visual grid or live preview editor.",
   "icon": "assets/img/icon.jpg",
   "publisher": "eiichi-ishitsuka",
   "repository": {
     "type": "git",
     "url": "https://github.com/eiichi-ishitsuka/struct-grid-editor"
   },
-  "version": "0.0.2",
+  "version": "0.1.0",
   "license": "MIT",
   "engines": {
     "vscode": "^1.107.0"
@@ -21,9 +21,14 @@
     "json",
     "yaml",
     "jsonl",
+    "markdown",
+    "wysiwyg",
     "editor"
   ],
   "preview": true,
+  "activationEvents": [
+    "onStartupFinished"
+  ],
   "main": "./dist/extension.js",
   "contributes": {
     "problemMatchers": [
@@ -47,6 +52,16 @@
         "command": "struct-grid-editor.openInGrid",
         "title": "StructGridEditor で開く",
         "category": "StructGridEditor"
+      },
+      {
+        "command": "struct-grid-editor.openInMarkdownEditor",
+        "title": "Markdown Live Preview で開く (見たまま編集)",
+        "category": "StructGridEditor"
+      },
+      {
+        "command": "struct-grid-editor.openMarkdownAsText",
+        "title": "標準テキストエディタで開く (ソース表示)",
+        "category": "StructGridEditor"
       }
     ],
     "menus": {
@@ -55,6 +70,11 @@
           "command": "struct-grid-editor.openInGrid",
           "when": "resourceExtname == .json || resourceExtname == .yaml || resourceExtname == .yml || resourceExtname == .jsonl",
           "group": "navigation"
+        },
+        {
+          "command": "struct-grid-editor.openInMarkdownEditor",
+          "when": "resourceExtname == .md || resourceExtname == .markdown",
+          "group": "navigation"
         }
       ],
       "editor/title/context": [
@@ -62,12 +82,27 @@
           "command": "struct-grid-editor.openInGrid",
           "when": "resourceExtname == .json || resourceExtname == .yaml || resourceExtname == .yml || resourceExtname == .jsonl",
           "group": "navigation"
+        },
+        {
+          "command": "struct-grid-editor.openInMarkdownEditor",
+          "when": "resourceExtname == .md || resourceExtname == .markdown",
+          "group": "navigation"
         }
       ],
       "editor/title": [
         {
           "command": "struct-grid-editor.openInGrid",
           "when": "resourceExtname == .json || resourceExtname == .yaml || resourceExtname == .yml || resourceExtname == .jsonl",
+          "group": "navigation"
+        },
+        {
+          "command": "struct-grid-editor.openInMarkdownEditor",
+          "when": "(resourceExtname == .md || resourceExtname == .markdown) && activeCustomEditorId != 'struct-grid-editor.markdownEditor'",
+          "group": "navigation"
+        },
+        {
+          "command": "struct-grid-editor.openMarkdownAsText",
+          "when": "activeCustomEditorId == 'struct-grid-editor.markdownEditor'",
           "group": "navigation"
         }
       ]
@@ -103,8 +138,57 @@
           }
         ],
         "priority": "option"
+      },
+      {
+        "viewType": "struct-grid-editor.markdownEditor",
+        "displayName": "Markdown Live Preview Editor",
+        "selector": [
+          {
+            "filenamePattern": "*.md"
+          },
+          {
+            "filenamePattern": "**/*.md"
+          },
+          {
+            "filenamePattern": "*.markdown"
+          },
+          {
+            "filenamePattern": "**/*.markdown"
+          }
+        ],
+        "priority": "option"
       }
-    ]
+    ],
+    "configuration": {
+      "title": "StructGridEditor",
+      "properties": {
+        "struct-grid-editor.openByDefault.markdown": {
+          "type": "boolean",
+          "default": true,
+          "description": "Markdownファイル (*.md, *.markdown) をデフォルトで Markdown Live Preview Editor で開く"
+        },
+        "struct-grid-editor.openByDefault.jsonl": {
+          "type": "boolean",
+          "default": true,
+          "description": "JSONLファイル (*.jsonl) をデフォルトで StructGridEditor で開く"
+        },
+        "struct-grid-editor.openByDefault.json": {
+          "type": "boolean",
+          "default": false,
+          "description": "JSONファイル (*.json) をデフォルトで StructGridEditor で開く"
+        },
+        "struct-grid-editor.openByDefault.yaml": {
+          "type": "boolean",
+          "default": false,
+          "description": "YAMLファイル (*.yaml, *.yml) をデフォルトで StructGridEditor で開く"
+        },
+        "struct-grid-editor.markdownAssetsFolder": {
+          "type": "string",
+          "default": "assets",
+          "description": "Markdownエディタでクリップボードから貼り付けた画像を保存する相対フォルダ名"
+        }
+      }
+    }
   },
   "scripts": {
     "vscode:prepublish": "npm run package",
@@ -116,7 +200,7 @@
     "compile-tests": "tsc -p . --outDir out",
     "watch-tests": "tsc -p . -w --outDir out",
     "pretest": "npm run compile-tests && npm run compile && npm run lint",
-    "check-types": "tsc --noEmit",
+    "check-types": "tsc --noEmit && tsc --noEmit -p tsconfig.md-webview.json",
     "lint": "eslint src",
     "test": "vscode-test",
     "test:unit": "vitest run",
@@ -133,10 +217,12 @@
   "devDependencies": {
     "@testing-library/react": "^16.3.3",
     "@testing-library/user-event": "^14.6.7",
+    "@types/katex": "^0.16.7",
     "@types/mocha": "^10.0.10",
     "@types/node": "24.x",
     "@types/react": "^19.3.0",
     "@types/react-dom": "^19.3.0",
+    "@types/turndown": "^5.0.5",
     "@types/vscode": "^1.107.0",
     "@vitest/ui": "^5.0.1",
     "@vscode/test-cli": "^0.0.15",
@@ -160,6 +246,24 @@
     "serialize-javascript": "^7.0.6"
   },
   "dependencies": {
+    "@tiptap/core": "^2.11.5",
+    "@tiptap/extension-highlight": "^2.11.5",
+    "@tiptap/extension-image": "^2.11.5",
+    "@tiptap/extension-link": "^2.11.5",
+    "@tiptap/extension-placeholder": "^2.11.5",
+    "@tiptap/extension-table": "^2.11.5",
+    "@tiptap/extension-table-cell": "^2.11.5",
+    "@tiptap/extension-table-header": "^2.11.5",
+    "@tiptap/extension-table-row": "^2.11.5",
+    "@tiptap/extension-task-item": "^2.11.5",
+    "@tiptap/extension-task-list": "^2.11.5",
+    "@tiptap/pm": "^2.11.5",
+    "@tiptap/starter-kit": "^2.11.5",
+    "katex": "^0.16.11",
+    "marked": "^12.0.2",
+    "mermaid": "^10.9.1",
+    "turndown": "^7.2.0",
+    "turndown-plugin-gfm": "^1.0.2",
     "yaml": "^2.9.1"
   }
 }

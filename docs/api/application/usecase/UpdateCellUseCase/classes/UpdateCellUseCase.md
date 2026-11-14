@@ -6,7 +6,7 @@
 
 # Class: UpdateCellUseCase
 
-Defined in: [application/usecase/UpdateCellUseCase.ts:8](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/ed0c1332f6f848335ce1461339913a2fab0f194d/src/application/usecase/UpdateCellUseCase.ts#L8)
+Defined in: [application/usecase/UpdateCellUseCase.ts:8](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/e20beb86538f08849d50b688bca0eb17506d34aa/src/application/usecase/UpdateCellUseCase.ts#L8)
 
 指定されたパスのセル値を更新し、元の書式を保持したままシリアライズされたテキストを生成するユースケース。
 
@@ -16,7 +16,7 @@ Defined in: [application/usecase/UpdateCellUseCase.ts:8](https://github.com/eiic
 
 > **new UpdateCellUseCase**(`parsers`): `UpdateCellUseCase`
 
-Defined in: [application/usecase/UpdateCellUseCase.ts:9](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/ed0c1332f6f848335ce1461339913a2fab0f194d/src/application/usecase/UpdateCellUseCase.ts#L9)
+Defined in: [application/usecase/UpdateCellUseCase.ts:9](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/e20beb86538f08849d50b688bca0eb17506d34aa/src/application/usecase/UpdateCellUseCase.ts#L9)
 
 #### Parameters
 
@@ -34,7 +34,7 @@ Defined in: [application/usecase/UpdateCellUseCase.ts:9](https://github.com/eiic
 
 > **execute**(`text`, `fileExtension`, `pathStr`, `rawValue`): `string`
 
-Defined in: [application/usecase/UpdateCellUseCase.ts:19](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/ed0c1332f6f848335ce1461339913a2fab0f194d/src/application/usecase/UpdateCellUseCase.ts#L19)
+Defined in: [application/usecase/UpdateCellUseCase.ts:19](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/e20beb86538f08849d50b688bca0eb17506d34aa/src/application/usecase/UpdateCellUseCase.ts#L19)
 
 セル値の更新を実行します。
 

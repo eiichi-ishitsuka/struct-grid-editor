@@ -6,7 +6,7 @@
 
 # Interface: KeyboardNavigationOptions
 
-Defined in: [webview/hooks/useKeyboardNavigation.ts:64](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/ed0c1332f6f848335ce1461339913a2fab0f194d/src/webview/hooks/useKeyboardNavigation.ts#L64)
+Defined in: [webview/hooks/useKeyboardNavigation.ts:64](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/e20beb86538f08849d50b688bca0eb17506d34aa/src/webview/hooks/useKeyboardNavigation.ts#L64)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [webview/hooks/useKeyboardNavigation.ts:64](https://github.com/eiich
 
 > **activeArrayPath**: `string` \| `null`
 
-Defined in: [webview/hooks/useKeyboardNavigation.ts:67](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/ed0c1332f6f848335ce1461339913a2fab0f194d/src/webview/hooks/useKeyboardNavigation.ts#L67)
+Defined in: [webview/hooks/useKeyboardNavigation.ts:67](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/e20beb86538f08849d50b688bca0eb17506d34aa/src/webview/hooks/useKeyboardNavigation.ts#L67)
 
 ***
 
@@ -22,7 +22,7 @@ Defined in: [webview/hooks/useKeyboardNavigation.ts:67](https://github.com/eiich
 
 > **onNavigate**: (`cell`) => `void`
 
-Defined in: [webview/hooks/useKeyboardNavigation.ts:68](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/ed0c1332f6f848335ce1461339913a2fab0f194d/src/webview/hooks/useKeyboardNavigation.ts#L68)
+Defined in: [webview/hooks/useKeyboardNavigation.ts:68](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/e20beb86538f08849d50b688bca0eb17506d34aa/src/webview/hooks/useKeyboardNavigation.ts#L68)
 
 #### Parameters
 
@@ -40,7 +40,7 @@ Defined in: [webview/hooks/useKeyboardNavigation.ts:68](https://github.com/eiich
 
 > **onSelectAll**: () => `void`
 
-Defined in: [webview/hooks/useKeyboardNavigation.ts:69](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/ed0c1332f6f848335ce1461339913a2fab0f194d/src/webview/hooks/useKeyboardNavigation.ts#L69)
+Defined in: [webview/hooks/useKeyboardNavigation.ts:69](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/e20beb86538f08849d50b688bca0eb17506d34aa/src/webview/hooks/useKeyboardNavigation.ts#L69)
 
 #### Returns
 
@@ -52,7 +52,7 @@ Defined in: [webview/hooks/useKeyboardNavigation.ts:69](https://github.com/eiich
 
 > **postMessage**: (`message`) => `void`
 
-Defined in: [webview/hooks/useKeyboardNavigation.ts:70](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/ed0c1332f6f848335ce1461339913a2fab0f194d/src/webview/hooks/useKeyboardNavigation.ts#L70)
+Defined in: [webview/hooks/useKeyboardNavigation.ts:70](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/e20beb86538f08849d50b688bca0eb17506d34aa/src/webview/hooks/useKeyboardNavigation.ts#L70)
 
 #### Parameters
 
@@ -70,7 +70,7 @@ Defined in: [webview/hooks/useKeyboardNavigation.ts:70](https://github.com/eiich
 
 > **rows**: [`IndexedTableRow`](../../../model/tableView/interfaces/IndexedTableRow.md)[]
 
-Defined in: [webview/hooks/useKeyboardNavigation.ts:65](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/ed0c1332f6f848335ce1461339913a2fab0f194d/src/webview/hooks/useKeyboardNavigation.ts#L65)
+Defined in: [webview/hooks/useKeyboardNavigation.ts:65](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/e20beb86538f08849d50b688bca0eb17506d34aa/src/webview/hooks/useKeyboardNavigation.ts#L65)
 
 ***
 
@@ -78,4 +78,4 @@ Defined in: [webview/hooks/useKeyboardNavigation.ts:65](https://github.com/eiich
 
 > **tableView**: [`OrderedTableView`](../../../model/tableView/interfaces/OrderedTableView.md)
 
-Defined in: [webview/hooks/useKeyboardNavigation.ts:66](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/ed0c1332f6f848335ce1461339913a2fab0f194d/src/webview/hooks/useKeyboardNavigation.ts#L66)
+Defined in: [webview/hooks/useKeyboardNavigation.ts:66](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/e20beb86538f08849d50b688bca0eb17506d34aa/src/webview/hooks/useKeyboardNavigation.ts#L66)

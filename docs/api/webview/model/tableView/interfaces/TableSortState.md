@@ -6,7 +6,7 @@
 
 # Interface: TableSortState
 
-Defined in: [webview/model/tableView.ts:8](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/ed0c1332f6f848335ce1461339913a2fab0f194d/src/webview/model/tableView.ts#L8)
+Defined in: [webview/model/tableView.ts:8](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/e20beb86538f08849d50b688bca0eb17506d34aa/src/webview/model/tableView.ts#L8)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [webview/model/tableView.ts:8](https://github.com/eiichi-ishitsuka/s
 
 > **colKey**: `string`
 
-Defined in: [webview/model/tableView.ts:9](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/ed0c1332f6f848335ce1461339913a2fab0f194d/src/webview/model/tableView.ts#L9)
+Defined in: [webview/model/tableView.ts:9](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/e20beb86538f08849d50b688bca0eb17506d34aa/src/webview/model/tableView.ts#L9)
 
 ***
 
@@ -22,4 +22,4 @@ Defined in: [webview/model/tableView.ts:9](https://github.com/eiichi-ishitsuka/s
 
 > **direction**: [`TableSortDirection`](../type-aliases/TableSortDirection.md)
 
-Defined in: [webview/model/tableView.ts:10](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/ed0c1332f6f848335ce1461339913a2fab0f194d/src/webview/model/tableView.ts#L10)
+Defined in: [webview/model/tableView.ts:10](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/e20beb86538f08849d50b688bca0eb17506d34aa/src/webview/model/tableView.ts#L10)

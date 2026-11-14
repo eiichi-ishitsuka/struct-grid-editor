@@ -19,8 +19,8 @@ src/
 │   └── dto/                 # GridDataDto, GridRowDto, TableViewDto
 ├── infrastructure/          # インフラ層（外部ライブラリ・VS Code API）
 │   ├── parser/              # JsonDocumentParser, YamlDocumentParser, JsonlDocumentParser
-│   └── vscode/              # StructGridEditorProvider, WebviewRenderer
-├── webview/                 # Webview UI層（React 18 + Vanilla CSS）
+│   └── vscode/              # StructGridEditorProvider, MarkdownEditorProvider, WebviewRenderer
+├── webview/                 # グリッド用 Webview UI層（React 19 + Vanilla CSS）
 │   ├── main.tsx             # Webview エントリーポイント
 │   ├── App.tsx              # ルートコンポーネント & 操作ハンドリング
 │   ├── protocol.ts          # Webview 通信メッセージの型定義・バリデーション
@@ -29,6 +29,16 @@ src/
 │   ├── hooks/               # useTableView, useGridSelection, useKeyboardNavigation, etc.
 │   ├── model/               # 純粋関数表示モデル (tableView.ts, tsv.ts)
 │   └── styles/              # Vanilla CSS (webview.css)
+├── md-webview/              # Markdown 用 Webview UI層（Tiptap + Marked/Turndown + KaTeX/Mermaid）
+│   ├── index.ts             # Markdown Webview エントリーポイント・VS Code 同期
+│   ├── markdownCodec.ts     # Markdown <-> HTML 双方向変換・Frontmatter/Admonition 処理
+│   ├── livePreviewExtension.ts # カーソル位置の Markdown 記法動的表示拡張
+│   ├── admonitionExtension.ts # Admonition (!!! / ???) 拡張 NodeView
+│   ├── mermaidExtension.ts  # コードブロック・Mermaid ライブプレビュー拡張
+│   ├── mathExtension.ts     # KaTeX インライン・ブロック数式拡張
+│   ├── toolbar.ts           # ミニマルヘッダー・テーマ切替・テーブル操作バー
+│   ├── slashMenu.ts         # スラッシュコマンドメニュー (/)
+│   └── styles.css           # Light (default) / Dark (slate) テーマ対応スタイル
 └── extension.ts             # エントリーポイント & DI（依存性注入）コンテナ
 ```
 
@@ -122,8 +132,10 @@ samples/
 ├── json/
 │   ├── simple-list.json       # オブジェクト配列（フラット）
 │   └── nested-config.json     # 多階層ネストの JSON 設定
-└── yaml/
-    └── nested-service.yaml    # コメント付きのネスト YAML
+├── yaml/
+│   └── nested-service.yaml    # コメント付きのネスト YAML
+└── markdown/
+    └── sample.md              # Admonition・Mermaid・数式・表を含む Markdown サンプル
 ```
 
 ### デバッグ実行方法

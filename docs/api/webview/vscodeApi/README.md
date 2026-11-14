@@ -13,4 +13,5 @@
 ## Functions
 
 - [getVsCodeApi](functions/getVsCodeApi.md)
+- [resetVsCodeApiForTesting](functions/resetVsCodeApiForTesting.md)
 - [tryGetVsCodeApi](functions/tryGetVsCodeApi.md)

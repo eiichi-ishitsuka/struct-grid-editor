@@ -22,6 +22,7 @@ typedoc.json
 vitest.config.ts
 extester.config.json
 tsconfig.ui-test.json
+tsconfig.md-webview.json
 .test-resources/**
 screenshots/**
 storage/**

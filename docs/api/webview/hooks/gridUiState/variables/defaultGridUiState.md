@@ -8,4 +8,4 @@
 
 > `const` **defaultGridUiState**: [`GridUiState`](../interfaces/GridUiState.md)
 
-Defined in: [webview/hooks/gridUiState.ts:23](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/ed0c1332f6f848335ce1461339913a2fab0f194d/src/webview/hooks/gridUiState.ts#L23)
+Defined in: [webview/hooks/gridUiState.ts:24](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/e20beb86538f08849d50b688bca0eb17506d34aa/src/webview/hooks/gridUiState.ts#L24)
