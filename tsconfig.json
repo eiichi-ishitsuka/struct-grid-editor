@@ -24,6 +24,8 @@
         "dist",
         "out",
         "vitest.config.ts",
-        "src/ui-test/**/*"
+        "src/ui-test/**/*",
+        "src/md-webview/**/*",
+        "src/test/md-webview/**/*"
     ]
 }

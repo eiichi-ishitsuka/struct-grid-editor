@@ -6,7 +6,7 @@
 
 # Interface: TableCellDto
 
-Defined in: [application/dto/GridData.ts:18](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/ed0c1332f6f848335ce1461339913a2fab0f194d/src/application/dto/GridData.ts#L18)
+Defined in: [application/dto/GridData.ts:18](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/e20beb86538f08849d50b688bca0eb17506d34aa/src/application/dto/GridData.ts#L18)
 
 テーブルビューの個別セル DTO。
 
@@ -16,7 +16,7 @@ Defined in: [application/dto/GridData.ts:18](https://github.com/eiichi-ishitsuka
 
 > **displayValue**: `string`
 
-Defined in: [application/dto/GridData.ts:24](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/ed0c1332f6f848335ce1461339913a2fab0f194d/src/application/dto/GridData.ts#L24)
+Defined in: [application/dto/GridData.ts:24](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/e20beb86538f08849d50b688bca0eb17506d34aa/src/application/dto/GridData.ts#L24)
 
 UI表示用の整形済み文字列
 
@@ -26,7 +26,7 @@ UI表示用の整形済み文字列
 
 > **path**: `string`
 
-Defined in: [application/dto/GridData.ts:20](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/ed0c1332f6f848335ce1461339913a2fab0f194d/src/application/dto/GridData.ts#L20)
+Defined in: [application/dto/GridData.ts:20](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/e20beb86538f08849d50b688bca0eb17506d34aa/src/application/dto/GridData.ts#L20)
 
 セルの絶対アクセスパス
 
@@ -36,7 +36,7 @@ Defined in: [application/dto/GridData.ts:20](https://github.com/eiichi-ishitsuka
 
 > **type**: `string`
 
-Defined in: [application/dto/GridData.ts:26](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/ed0c1332f6f848335ce1461339913a2fab0f194d/src/application/dto/GridData.ts#L26)
+Defined in: [application/dto/GridData.ts:26](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/e20beb86538f08849d50b688bca0eb17506d34aa/src/application/dto/GridData.ts#L26)
 
 セルのデータ型
 
@@ -46,6 +46,6 @@ Defined in: [application/dto/GridData.ts:26](https://github.com/eiichi-ishitsuka
 
 > **value**: `any`
 
-Defined in: [application/dto/GridData.ts:22](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/ed0c1332f6f848335ce1461339913a2fab0f194d/src/application/dto/GridData.ts#L22)
+Defined in: [application/dto/GridData.ts:22](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/e20beb86538f08849d50b688bca0eb17506d34aa/src/application/dto/GridData.ts#L22)
 
 セルの生の値

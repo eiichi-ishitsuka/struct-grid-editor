@@ -1,0 +1,416 @@
+import { Editor } from '@tiptap/core';
+import StarterKit from '@tiptap/starter-kit';
+import Placeholder from '@tiptap/extension-placeholder';
+import Link from '@tiptap/extension-link';
+import Image from '@tiptap/extension-image';
+import Highlight from '@tiptap/extension-highlight';
+import TaskList from '@tiptap/extension-task-list';
+import TaskItem from '@tiptap/extension-task-item';
+import Table from '@tiptap/extension-table';
+import TableRow from '@tiptap/extension-table-row';
+import TableHeader from '@tiptap/extension-table-header';
+import TableCell from '@tiptap/extension-table-cell';
+
+import { CustomCodeBlock } from './mermaidExtension';
+import { InlineMath, BlockMath } from './mathExtension';
+import { AdmonitionBlock } from './admonitionExtension';
+import { LivePreviewExtension } from './livePreviewExtension';
+import {
+  setMarkdownBaseUri,
+  markdownToHtml,
+  htmlToMarkdown,
+  getFrontmatter,
+  setFrontmatter,
+} from './markdownCodec';
+import { createToolbar } from './toolbar';
+import { setupSlashMenu } from './slashMenu';
+
+declare function acquireVsCodeApi(): {
+  postMessage: (msg: unknown) => void;
+  getState: () => unknown;
+  setState: (state: unknown) => void;
+};
+
+const vscode = acquireVsCodeApi();
+
+/**
+ * ローカル画像の相対パス（`data-raw-src`）を保持するカスタム Image 拡張。
+ */
+const CustomImage = Image.extend({
+  addAttributes() {
+    return {
+      ...this.parent?.(),
+      'data-raw-src': {
+        default: null,
+        parseHTML: (element) =>
+          element.getAttribute('data-raw-src') || element.getAttribute('src'),
+        renderHTML: (attributes) => {
+          if (!attributes['data-raw-src']) {
+            return {};
+          }
+          return {
+            'data-raw-src': attributes['data-raw-src'],
+          };
+        },
+      },
+    };
+  },
+});
+
+let isProgrammaticUpdate = false;
+let syncDebounceTimer: number | undefined;
+
+const editorWrapper = document.getElementById('editor-wrapper') as HTMLElement;
+const editorElement = document.getElementById('editor') as HTMLElement;
+const toolbarContainer = document.getElementById('toolbar-container') as HTMLElement;
+const tableBannerContainer = document.getElementById('table-Banner-container') as HTMLElement;
+const slashMenuEl = document.getElementById('slash-menu') as HTMLElement;
+const statusStatsEl = document.getElementById('status-stats') as HTMLElement;
+
+// エディタ上部に YAML Frontmatter 編集パネルを配置する
+const frontmatterContainer = document.createElement('div');
+frontmatterContainer.className = 'frontmatter-container hidden';
+editorWrapper.insertBefore(frontmatterContainer, editorElement);
+
+/**
+ * YAML Frontmatter パネルの表示・非表示および入力欄を再描画します。
+ */
+function renderFrontmatterPanel(): void {
+  const fm = getFrontmatter();
+  if (fm === null) {
+    frontmatterContainer.classList.add('hidden');
+    frontmatterContainer.innerHTML = '';
+    return;
+  }
+
+  frontmatterContainer.classList.remove('hidden');
+  frontmatterContainer.innerHTML = '';
+
+  const header = document.createElement('div');
+  header.className = 'frontmatter-header';
+
+  const title = document.createElement('span');
+  title.className = 'frontmatter-title';
+  title.textContent = 'YAML Frontmatter';
+
+  const removeBtn = document.createElement('button');
+  removeBtn.type = 'button';
+  removeBtn.className = 'admonition-remove-btn';
+  removeBtn.textContent = '削除';
+  removeBtn.addEventListener('click', () => {
+    setFrontmatter(null);
+    renderFrontmatterPanel();
+    scheduleDocumentSync();
+  });
+
+  header.appendChild(title);
+  header.appendChild(removeBtn);
+
+  const textarea = document.createElement('textarea');
+  textarea.className = 'frontmatter-textarea';
+  textarea.value = fm;
+  textarea.placeholder = 'title: ドキュメントタイトル\ndescription: 説明';
+  textarea.rows = Math.max(2, Math.min(8, fm.split('\n').length));
+
+  textarea.addEventListener('input', () => {
+    setFrontmatter(textarea.value);
+    scheduleDocumentSync();
+  });
+
+  frontmatterContainer.appendChild(header);
+  frontmatterContainer.appendChild(textarea);
+}
+
+// HTML に埋め込まれた初期ドキュメントデータを同期的に読み込み、初回フレームで即座に描画する
+let initialHtml = '<p></p>';
+const initialDataEl = document.getElementById('initial-data');
+if (initialDataEl && initialDataEl.textContent) {
+  try {
+    const parsed = JSON.parse(initialDataEl.textContent) as {
+      text?: string;
+      baseUri?: string;
+    };
+    if (parsed.baseUri) {
+      setMarkdownBaseUri(parsed.baseUri);
+    }
+    if (typeof parsed.text === 'string') {
+      initialHtml = markdownToHtml(parsed.text);
+    }
+  } catch {
+    // 初期データのパースに失敗した場合は init メッセージ到着まで空ドキュメントで待機する
+  }
+}
+
+const editor = new Editor({
+  element: editorElement,
+  extensions: [
+    StarterKit.configure({
+      codeBlock: false,
+    }),
+    CustomCodeBlock,
+    AdmonitionBlock,
+    LivePreviewExtension,
+    InlineMath,
+    BlockMath,
+    Highlight,
+    Link.configure({
+      openOnClick: false,
+      autolink: true,
+    }),
+    CustomImage.configure({
+      inline: false,
+      allowBase64: true,
+    }),
+    TaskList,
+    TaskItem.configure({
+      nested: true,
+    }),
+    Table.configure({
+      resizable: true,
+    }),
+    TableRow,
+    TableHeader,
+    TableCell,
+    Placeholder.configure({
+      placeholder:
+        'テキストを入力、または「/」でブロック挿入（見出し・Admonition・表・Mermaid・数式など）...',
+    }),
+  ],
+  content: initialHtml,
+  autofocus: false,
+  onUpdate: ({ editor: ed }) => {
+    updateStats(ed);
+    if (isProgrammaticUpdate) {
+      return;
+    }
+    scheduleDocumentSync();
+  },
+});
+
+// 初回ロード直後に Frontmatter パネルと文字数統計を反映する
+renderFrontmatterPanel();
+updateStats(editor);
+
+/**
+ * エディタの変更内容をデバウンスして Markdown へ変換し、VS Code 拡張ホストへ送信します。
+ */
+function scheduleDocumentSync(): void {
+  if (syncDebounceTimer) {
+    window.clearTimeout(syncDebounceTimer);
+  }
+  syncDebounceTimer = window.setTimeout(() => {
+    const html = editor.getHTML();
+    const markdown = htmlToMarkdown(html);
+    vscode.postMessage({
+      type: 'edit',
+      text: markdown,
+    });
+  }, 150);
+}
+
+/**
+ * ステータスバーの文字数およびパラグラフ数の表示を更新します。
+ * @param ed Tiptap Editor インスタンス
+ */
+function updateStats(ed: Editor): void {
+  const text = ed.state.doc.textContent || '';
+  const chars = text.length;
+  const lines = text ? text.split(/\n/).length : 0;
+  if (statusStatsEl) {
+    statusStatsEl.textContent = `${chars} 文字`;
+    statusStatsEl.title = `文字数: ${chars} / パラグラフ数: ${lines}`;
+  }
+}
+
+// カラースキーム（Light: 'default', Dark: 'slate'）の初期化と VS Code テーマ連動
+let manualThemeOverride = false;
+
+/**
+ * VS Code の body クラスから対応するカラースキーム（`'default'` または `'slate'`）を判定します。
+ * @returns 判定されたスキーム名
+ */
+function detectVsCodeScheme(): 'default' | 'slate' {
+  return document.body.classList.contains('vscode-light') ||
+    document.body.classList.contains('vscode-high-contrast-light')
+    ? 'default'
+    : 'slate';
+}
+
+/**
+ * ドキュメントルートにカラースキーム属性を設定し、Mermaid 等へ変更イベントを通知します。
+ * @param scheme 適用するスキーム名（`'default'` または `'slate'`）
+ */
+function applyColorScheme(scheme: 'default' | 'slate'): void {
+  document.documentElement.setAttribute('data-md-color-scheme', scheme);
+  window.dispatchEvent(new CustomEvent('md-theme-change', { detail: { scheme } }));
+}
+
+applyColorScheme(detectVsCodeScheme());
+
+const bodyClassObserver = new MutationObserver(() => {
+  if (!manualThemeOverride) {
+    applyColorScheme(detectVsCodeScheme());
+  }
+});
+bodyClassObserver.observe(document.body, {
+  attributes: true,
+  attributeFilter: ['class'],
+});
+
+createToolbar(toolbarContainer, tableBannerContainer, editor, {
+  onSwitchToText: () => {
+    vscode.postMessage({ type: 'switchToText' });
+  },
+  getCurrentTheme: () => {
+    return (
+      (document.documentElement.getAttribute('data-md-color-scheme') as 'default' | 'slate') ||
+      detectVsCodeScheme()
+    );
+  },
+  onToggleTheme: () => {
+    manualThemeOverride = true;
+    const current =
+      document.documentElement.getAttribute('data-md-color-scheme') || detectVsCodeScheme();
+    const next: 'default' | 'slate' = current === 'slate' ? 'default' : 'slate';
+    applyColorScheme(next);
+    return next;
+  },
+});
+
+setupSlashMenu(
+  slashMenuEl,
+  editor,
+  () => {
+    vscode.postMessage({ type: 'pickImage' });
+  },
+  () => {
+    if (getFrontmatter() === null) {
+      setFrontmatter('title: ドキュメントタイトル');
+    } else {
+      setFrontmatter(null);
+    }
+    renderFrontmatterPanel();
+    scheduleDocumentSync();
+  }
+);
+
+// エディタ内リンクの Ctrl/Cmd + クリック時に外部ブラウザまたは対象ファイルを開く
+editorElement.addEventListener('click', (e) => {
+  const target = e.target as HTMLElement;
+  const anchor = target.closest('a');
+  if (anchor && (e.ctrlKey || e.metaKey)) {
+    e.preventDefault();
+    const href = anchor.getAttribute('href');
+    if (href) {
+      vscode.postMessage({ type: 'openLink', href });
+    }
+  }
+});
+
+// クリップボードからの画像貼り付けハンドリング
+window.addEventListener('paste', (event: ClipboardEvent) => {
+  const items = event.clipboardData?.items;
+  if (!items) {
+    return;
+  }
+
+  for (const item of Array.from(items)) {
+    if (item.type.startsWith('image/')) {
+      event.preventDefault();
+      const file = item.getAsFile();
+      if (file) {
+        uploadImageFile(file);
+      }
+      return;
+    }
+  }
+});
+
+// 画像ファイルのドラッグ＆ドロップハンドリング
+window.addEventListener('drop', (event: DragEvent) => {
+  const files = event.dataTransfer?.files;
+  if (!files || files.length === 0) {
+    return;
+  }
+
+  for (const file of Array.from(files)) {
+    if (file.type.startsWith('image/')) {
+      event.preventDefault();
+      uploadImageFile(file);
+      return;
+    }
+  }
+});
+
+/**
+ * 画像ファイルを Base64 文字列に変換し、VS Code 拡張ホストへ保存リクエストを送信します。
+ * @param file 貼り付けまたはドロップされた画像ファイル
+ */
+function uploadImageFile(file: File): void {
+  const reader = new FileReader();
+  reader.onload = () => {
+    const result = reader.result as string;
+    const base64 = result.split(',')[1];
+    const ext = file.type.split('/')[1] || 'png';
+    if (base64) {
+      vscode.postMessage({
+        type: 'saveImage',
+        base64,
+        ext,
+      });
+    }
+  };
+  reader.readAsDataURL(file);
+}
+
+// VS Code 拡張ホストからのメッセージ受信処理
+window.addEventListener('message', (event) => {
+  const message = event.data;
+  switch (message.type) {
+    case 'init':
+    case 'update': {
+      if (message.baseUri) {
+        setMarkdownBaseUri(message.baseUri);
+      }
+      const incomingMd: string = message.text ?? '';
+      const currentMd = htmlToMarkdown(editor.getHTML());
+      if (incomingMd.trim() === currentMd.trim()) {
+        return;
+      }
+      isProgrammaticUpdate = true;
+      try {
+        const html = markdownToHtml(incomingMd);
+        renderFrontmatterPanel();
+        editor.commands.setContent(html, false);
+        updateStats(editor);
+      } finally {
+        isProgrammaticUpdate = false;
+      }
+      break;
+    }
+
+    case 'imageSaved': {
+      const { relativePath, webviewUri, alt } = message as {
+        relativePath: string;
+        webviewUri: string;
+        alt: string;
+      };
+      editor
+        .chain()
+        .focus()
+        .insertContent({
+          type: 'image',
+          attrs: {
+            src: webviewUri,
+            alt: alt || 'image',
+            'data-raw-src': relativePath,
+          },
+        })
+        .run();
+      break;
+    }
+  }
+});
+
+// Webview 準備完了を拡張ホストへ通知する
+vscode.postMessage({ type: 'ready' });

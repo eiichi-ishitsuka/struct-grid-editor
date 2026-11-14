@@ -8,7 +8,7 @@
 
 > **useTableView**(`data`, `uiState`, `setUiState`): [`UseTableViewResult`](../interfaces/UseTableViewResult.md)
 
-Defined in: [webview/hooks/useTableView.ts:28](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/ed0c1332f6f848335ce1461339913a2fab0f194d/src/webview/hooks/useTableView.ts#L28)
+Defined in: [webview/hooks/useTableView.ts:44](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/e20beb86538f08849d50b688bca0eb17506d34aa/src/webview/hooks/useTableView.ts#L44)
 
 表示パス、検索、ページングと永続設定から、現在の表表示モデルを組み立てる。
 

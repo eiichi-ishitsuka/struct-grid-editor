@@ -6,7 +6,7 @@
 
 # Class: TableView
 
-Defined in: [domain/model/TableView.ts:46](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/ed0c1332f6f848335ce1461339913a2fab0f194d/src/domain/model/TableView.ts#L46)
+Defined in: [domain/model/TableView.ts:46](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/e20beb86538f08849d50b688bca0eb17506d34aa/src/domain/model/TableView.ts#L46)
 
 配列データを2次元のスプレッドシート／テーブル形式として表現するドメインモデル。
 
@@ -16,7 +16,7 @@ Defined in: [domain/model/TableView.ts:46](https://github.com/eiichi-ishitsuka/s
 
 > **new TableView**(`path`, `columns`, `rows`, `isObjectArray`): `TableView`
 
-Defined in: [domain/model/TableView.ts:56](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/ed0c1332f6f848335ce1461339913a2fab0f194d/src/domain/model/TableView.ts#L56)
+Defined in: [domain/model/TableView.ts:56](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/e20beb86538f08849d50b688bca0eb17506d34aa/src/domain/model/TableView.ts#L56)
 
 #### Parameters
 
@@ -46,7 +46,7 @@ Defined in: [domain/model/TableView.ts:56](https://github.com/eiichi-ishitsuka/s
 
 > `readonly` **columns**: readonly [`TableColumn`](../interfaces/TableColumn.md)[]
 
-Defined in: [domain/model/TableView.ts:50](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/ed0c1332f6f848335ce1461339913a2fab0f194d/src/domain/model/TableView.ts#L50)
+Defined in: [domain/model/TableView.ts:50](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/e20beb86538f08849d50b688bca0eb17506d34aa/src/domain/model/TableView.ts#L50)
 
 カラム一覧
 
@@ -56,7 +56,7 @@ Defined in: [domain/model/TableView.ts:50](https://github.com/eiichi-ishitsuka/s
 
 > `readonly` **isObjectArray**: `boolean`
 
-Defined in: [domain/model/TableView.ts:54](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/ed0c1332f6f848335ce1461339913a2fab0f194d/src/domain/model/TableView.ts#L54)
+Defined in: [domain/model/TableView.ts:54](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/e20beb86538f08849d50b688bca0eb17506d34aa/src/domain/model/TableView.ts#L54)
 
 オブジェクト配列であるか（false の場合はプリミティブ配列）
 
@@ -66,7 +66,7 @@ Defined in: [domain/model/TableView.ts:54](https://github.com/eiichi-ishitsuka/s
 
 > `readonly` **path**: [`CellPath`](../../CellPath/classes/CellPath.md)
 
-Defined in: [domain/model/TableView.ts:48](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/ed0c1332f6f848335ce1461339913a2fab0f194d/src/domain/model/TableView.ts#L48)
+Defined in: [domain/model/TableView.ts:48](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/e20beb86538f08849d50b688bca0eb17506d34aa/src/domain/model/TableView.ts#L48)
 
 テーブルの基点となる配列のパス
 
@@ -76,7 +76,7 @@ Defined in: [domain/model/TableView.ts:48](https://github.com/eiichi-ishitsuka/s
 
 > `readonly` **rows**: readonly [`TableRow`](../interfaces/TableRow.md)[]
 
-Defined in: [domain/model/TableView.ts:52](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/ed0c1332f6f848335ce1461339913a2fab0f194d/src/domain/model/TableView.ts#L52)
+Defined in: [domain/model/TableView.ts:52](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/e20beb86538f08849d50b688bca0eb17506d34aa/src/domain/model/TableView.ts#L52)
 
 行データ一覧
 
@@ -88,7 +88,7 @@ Defined in: [domain/model/TableView.ts:52](https://github.com/eiichi-ishitsuka/s
 
 > **get** **totalColumns**(): `number`
 
-Defined in: [domain/model/TableView.ts:78](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/ed0c1332f6f848335ce1461339913a2fab0f194d/src/domain/model/TableView.ts#L78)
+Defined in: [domain/model/TableView.ts:78](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/e20beb86538f08849d50b688bca0eb17506d34aa/src/domain/model/TableView.ts#L78)
 
 総カラム数を取得します。
 
@@ -104,7 +104,7 @@ Defined in: [domain/model/TableView.ts:78](https://github.com/eiichi-ishitsuka/s
 
 > **get** **totalRows**(): `number`
 
-Defined in: [domain/model/TableView.ts:71](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/ed0c1332f6f848335ce1461339913a2fab0f194d/src/domain/model/TableView.ts#L71)
+Defined in: [domain/model/TableView.ts:71](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/e20beb86538f08849d50b688bca0eb17506d34aa/src/domain/model/TableView.ts#L71)
 
 総行数を取得します。
 
@@ -118,7 +118,7 @@ Defined in: [domain/model/TableView.ts:71](https://github.com/eiichi-ishitsuka/s
 
 > `static` **detectColumnType**(`sampleNodes`): `"string"` \| `"number"` \| `"boolean"` \| `"object"` \| `"array"` \| `"other"`
 
-Defined in: [domain/model/TableView.ts:240](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/ed0c1332f6f848335ce1461339913a2fab0f194d/src/domain/model/TableView.ts#L240)
+Defined in: [domain/model/TableView.ts:240](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/e20beb86538f08849d50b688bca0eb17506d34aa/src/domain/model/TableView.ts#L240)
 
 サンプルノード群からカラム全体のデータ型を推定します。
 
@@ -142,7 +142,7 @@ Defined in: [domain/model/TableView.ts:240](https://github.com/eiichi-ishitsuka/
 
 > `static` **fromArrayNode**(`node`): `TableView`
 
-Defined in: [domain/model/TableView.ts:87](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/ed0c1332f6f848335ce1461339913a2fab0f194d/src/domain/model/TableView.ts#L87)
+Defined in: [domain/model/TableView.ts:87](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/e20beb86538f08849d50b688bca0eb17506d34aa/src/domain/model/TableView.ts#L87)
 
 配列を表す TreeNode から TableView インスタンスを構築します。
 
@@ -166,7 +166,7 @@ Defined in: [domain/model/TableView.ts:87](https://github.com/eiichi-ishitsuka/s
 
 > `static` **getTypeSymbol**(`type`): `string`
 
-Defined in: [domain/model/TableView.ts:225](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/ed0c1332f6f848335ce1461339913a2fab0f194d/src/domain/model/TableView.ts#L225)
+Defined in: [domain/model/TableView.ts:225](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/e20beb86538f08849d50b688bca0eb17506d34aa/src/domain/model/TableView.ts#L225)
 
 データ型に応じた表示用シンボル文字を取得します。
 

@@ -8,4 +8,4 @@
 
 > **GridNavigationDirection** = `"up"` \| `"down"` \| `"left"` \| `"right"`
 
-Defined in: [webview/hooks/useKeyboardNavigation.ts:6](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/ed0c1332f6f848335ce1461339913a2fab0f194d/src/webview/hooks/useKeyboardNavigation.ts#L6)
+Defined in: [webview/hooks/useKeyboardNavigation.ts:6](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/e20beb86538f08849d50b688bca0eb17506d34aa/src/webview/hooks/useKeyboardNavigation.ts#L6)

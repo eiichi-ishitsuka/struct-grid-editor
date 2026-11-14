@@ -6,7 +6,7 @@
 
 # Interface: PendingFocus
 
-Defined in: [webview/hooks/gridUiState.ts:10](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/ed0c1332f6f848335ce1461339913a2fab0f194d/src/webview/hooks/gridUiState.ts#L10)
+Defined in: [webview/hooks/gridUiState.ts:10](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/e20beb86538f08849d50b688bca0eb17506d34aa/src/webview/hooks/gridUiState.ts#L10)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [webview/hooks/gridUiState.ts:10](https://github.com/eiichi-ishitsuk
 
 > `optional` **colKey?**: `string`
 
-Defined in: [webview/hooks/gridUiState.ts:13](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/ed0c1332f6f848335ce1461339913a2fab0f194d/src/webview/hooks/gridUiState.ts#L13)
+Defined in: [webview/hooks/gridUiState.ts:13](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/e20beb86538f08849d50b688bca0eb17506d34aa/src/webview/hooks/gridUiState.ts#L13)
 
 ***
 
@@ -22,7 +22,7 @@ Defined in: [webview/hooks/gridUiState.ts:13](https://github.com/eiichi-ishitsuk
 
 > `optional` **path?**: `string`
 
-Defined in: [webview/hooks/gridUiState.ts:11](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/ed0c1332f6f848335ce1461339913a2fab0f194d/src/webview/hooks/gridUiState.ts#L11)
+Defined in: [webview/hooks/gridUiState.ts:11](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/e20beb86538f08849d50b688bca0eb17506d34aa/src/webview/hooks/gridUiState.ts#L11)
 
 ***
 
@@ -30,4 +30,4 @@ Defined in: [webview/hooks/gridUiState.ts:11](https://github.com/eiichi-ishitsuk
 
 > `optional` **rowIndex?**: `number`
 
-Defined in: [webview/hooks/gridUiState.ts:12](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/ed0c1332f6f848335ce1461339913a2fab0f194d/src/webview/hooks/gridUiState.ts#L12)
+Defined in: [webview/hooks/gridUiState.ts:12](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/e20beb86538f08849d50b688bca0eb17506d34aa/src/webview/hooks/gridUiState.ts#L12)

@@ -2,8 +2,8 @@
 
 本ドキュメントは、`src/test/` 配下のテストコード（JSDoc / docstring）から自動抽出・生成されたテスト仕様一覧です。
 
-- **総テストスイート数**: 18
-- **総テストケース数**: 94
+- **総テストスイート数**: 20
+- **総テストケース数**: 112
 - **生成スクリプト**: `scripts/generate-test-docs.js` (`npm run doc` にて自動更新)
 
 ## 目次
@@ -16,16 +16,18 @@
 6. [Extension Test Suite (1件)](#extension-test-suite)
 7. [JsonDocumentParser (9件)](#jsondocumentparser)
 8. [WebviewRenderer (3件)](#webviewrenderer)
-9. [React Webview App (10件)](#react-webview-app)
-10. [Breadcrumbs Component (2件)](#breadcrumbs-component)
-11. [ColumnVisibilityMenu Component (3件)](#columnvisibilitymenu-component)
-12. [EditableCell Component (4件)](#editablecell-component)
-13. [Pagination Component (4件)](#pagination-component)
-14. [Webview UI hooks (7件)](#webview-ui-hooks)
-15. [Webview message protocol (1件)](#webview-message-protocol)
-16. [table view model (8件)](#table-view-model)
-17. [TSV Generation Utilities (5件)](#tsv-generation-utilities)
-18. [vscodeApi wrapper (3件)](#vscodeapi-wrapper)
+9. [Tiptap Editor Extensions Integration (6件)](#tiptap-editor-extensions-integration)
+10. [markdownCodec - Markdown <-> HTML Codec (12件)](#markdowncodec---markdown---html-codec)
+11. [React Webview App (10件)](#react-webview-app)
+12. [Breadcrumbs Component (2件)](#breadcrumbs-component)
+13. [ColumnVisibilityMenu Component (3件)](#columnvisibilitymenu-component)
+14. [EditableCell Component (4件)](#editablecell-component)
+15. [Pagination Component (4件)](#pagination-component)
+16. [Webview UI hooks (7件)](#webview-ui-hooks)
+17. [Webview message protocol (1件)](#webview-message-protocol)
+18. [table view model (8件)](#table-view-model)
+19. [TSV Generation Utilities (5件)](#tsv-generation-utilities)
+20. [vscodeApi wrapper (3件)](#vscodeapi-wrapper)
 
 ---
 
@@ -140,7 +142,41 @@
 | 2 | `escapes HTML-like initial data before embedding it in the shell` | 初期データ内のタグをスクリプトとして解釈させないこと | 未記載 |
 | 3 | `renders the error view with the same CSP protections` | 構文エラー画面にも同じ CSP と nonce を適用すること | 未記載 |
 
-## 9. React Webview App
+## 9. Tiptap Editor Extensions Integration
+
+- **テストファイル**: [`src/test/md-webview/editorExtensions.test.ts`](../src/test/md-webview/editorExtensions.test.ts)
+- **ケース数**: 6
+
+| # | テストケース名 | 観点 | テスト内容（検証内容） |
+| :--- | :--- | :--- | :--- |
+| 1 | `toggles Mermaid source editor visibility when clicking the edit source button without resetting NodeView` | Mermaidコードブロックのソース編集表示切り替え動作 | Mermaid言語指定のコードブロックで「ソースを編集」ボタンをクリックした際、NodeViewがリセットされることなくコード領域の表示・非表示が切り替わることを検証する。 |
+| 2 | `keeps Python code block source always visible and hides Mermaid toggle button` | 通常言語（Python）コードブロックの常時ソース表示 | Python言語のコードブロックではソースコード領域が常時表示され、Mermaid用のソース切り替えボタンが非表示になることを検証する。 |
+| 3 | `renders Admonition NodeView and updates attributes via header controls` | Admonition拡張NodeViewのヘッダーUIによる属性更新とシリアライズ反映 | Admonitionブロックのモード・タイプ・タイトル入力欄を変更した際、ノード属性が更新され、対応するMarkdown記法（??? warning "タイトル"）として出力されることを検証する。 |
+| 4 | `renders KaTeX inline and block math nodes with katex output` | KaTeX数式ノードのDOM描画とMarkdownシリアライズ保持 | インライン数式とブロック数式がKaTeXによってDOM描画され、かつエディタからHTML経由でMarkdownへ変換した際に数式が欠落せず保持されることを検証する。 |
+| 5 | `reveals Markdown syntax markers (#, **) only on the active cursor line/mark` | カーソル位置に応じたMarkdown記法マーカーの動的表示（Live Preview） | 見出しや太字箇所にカーソルが当たっている時のみ ## や ** の構文マーカーが表示され、カーソルが外れると非表示になることを検証する。 |
+| 6 | `switches color scheme between Light (default) and Dark (slate) via toolbar` | ツールバーによるライト（default）・ダーク（slate）テーマ切り替え | 上部ツールバーのテーマ切り替えボタンを押下した際、data-md-color-scheme属性とボタンラベルがLight/Dark間で正しく切り替わることを検証する。 |
+
+## 10. markdownCodec - Markdown <-> HTML Codec
+
+- **テストファイル**: [`src/test/md-webview/markdownCodec.test.ts`](../src/test/md-webview/markdownCodec.test.ts)
+- **ケース数**: 12
+
+| # | テストケース名 | 観点 | テスト内容（検証内容） |
+| :--- | :--- | :--- | :--- |
+| 1 | `extracts YAML frontmatter and body accurately` | YAML Frontmatterと本文の分離抽出 | 先頭に --- で囲まれたYAMLメタデータを持つMarkdownから、Frontmatter部分と本文部分が正確に分離されることを検証する。 |
+| 2 | `preserves YAML frontmatter through markdownToHtml and htmlToMarkdown round-trip` | YAML Frontmatterのラウンドトリップ保持 | markdownToHtmlおよびhtmlToMarkdownの双方向変換を経ても、先頭のYAML Frontmatterが水平線に変換されず完全に保持されることを検証する。 |
+| 3 | `converts !!! note with custom title to HTML and back to 4-space indented Markdown` | 標準Admonitionブロックの双方向変換 | !!! note "タイトル" と4スペースインデント本文からなるAdmonition記法がHTML属性付き要素へ変換され、再シリアライズ時に元の4スペースインデント記法へ復元されることを検証する。 |
+| 4 | `converts collapsible ??? warning and ???+ tip blocks accurately` | 折りたたみAdmonition（??? / ???+）およびタイトル省略記法の双方向変換 | ??? warning と ???+ tip（タイトル省略）の記法がそれぞれ正しいモード・タイプ属性としてパースされ、元のMarkdownへ正確に復元されることを検証する。 |
+| 5 | `serializes nested bullet lists with 4-space indentation` | ネストされた箇条書きリストの4スペースインデント出力 | 親子構造を持つ箇条書きリストが、Python-Markdown規約に準拠した4スペースインデントで再シリアライズされることを検証する。 |
+| 6 | `enforces a blank line before top-level lists following a paragraph` | 段落直後のトップレベルリスト前の空行強制 | 段落の直後に配置されたリスト要素が、Markdown出力時に必ず空行（2つの改行）を挟んで出力されることを検証する。 |
+| 7 | `preserves GFM task list checked and unchecked states` | GFMタスクリストのチェック状態保持 | チェック済み（- [x]）および未チェック（- [ ]）のタスクリスト項目がTiptap形式のHTMLに変換され、再シリアライズ時に元の状態が保持されることを検証する。 |
+| 8 | `preserves Python and Mermaid fenced code blocks without mangling $ or !!! inside code` | コードブロック内の特殊記号（$・!!!）の誤変換防止と言語属性保持 | Python等のフェンス付きコードブロック内に含まれる $ 記号や !!! 文字列が数式やAdmonitionに誤変換されず、そのまま保持されることを検証する。 |
+| 9 | `converts inline math $...$ and block math $$...$$ and round-trips cleanly` | インライン数式とブロック数式の双方向変換 | 文中の $...$ および独立ブロックの $$...$$ 数式が専用のHTML要素に変換され、消失することなく元のLaTeX記法へ再シリアライズされることを検証する。 |
+| 10 | `parses and serializes GFM tables cleanly` | GFMテーブルのパースと再シリアライズ | MarkdownテーブルがHTMLのtable要素へ変換され、編集後もパイプ区切りのGFMテーブル形式に正しく復元されることを検証する。 |
+| 11 | `resolves relative image paths to webview URIs while keeping original path in Markdown` | ローカル相対画像パスのWebview URI変換と元パスの保持 | 相対パスの画像記法が表示用のWebview URIに変換されつつ、data-raw-src属性によって保存時には元の相対パスへ復元されることを検証する。 |
+| 12 | `leaves external https image URLs untouched` | 外部URL画像のパス無変換維持 | https:// で始まる外部画像URLはベースURIの付与を行わず、そのままのURLが返されることを検証する。 |
+
+## 11. React Webview App
 
 - **テストファイル**: [`src/test/webview/App.test.tsx`](../src/test/webview/App.test.tsx)
 - **ケース数**: 10
@@ -158,7 +194,7 @@
 | 9 | `reorders columns on drag and drop` | 列のドラッグ＆ドロップで列の並び順が更新されること | 未記載 |
 | 10 | `navigates sub-array in KV mode and preserves array view across state restoration` | KVモードの配列を「編集する」で開いた後、Webview再読み込み（編集・行追加）が発生しても配列画面を維持すること | 未記載 |
 
-## 10. Breadcrumbs Component
+## 12. Breadcrumbs Component
 
 - **テストファイル**: [`src/test/webview/Breadcrumbs.test.tsx`](../src/test/webview/Breadcrumbs.test.tsx)
 - **ケース数**: 2
@@ -168,7 +204,7 @@
 | 1 | `renders root as current when path is empty or null` | ルートパス時は root/ のみをカレント表示すること | 未記載 |
 | 2 | `renders nested path segments and triggers navigation on click` | ネストしたパスでパンくずリンクを階層順に生成し、クリックでナビゲートできること | 未記載 |
 
-## 11. ColumnVisibilityMenu Component
+## 13. ColumnVisibilityMenu Component
 
 - **テストファイル**: [`src/test/webview/ColumnVisibilityMenu.test.tsx`](../src/test/webview/ColumnVisibilityMenu.test.tsx)
 - **ケース数**: 3
@@ -179,7 +215,7 @@
 | 2 | `toggles column visibility via checkbox` | チェックボックスの操作で列の非表示・再表示が切り替わること | 未記載 |
 | 3 | `restores all columns on ` | 「すべて表示」リンクをクリックすると全列が表示状態になること | 未記載 |
 
-## 12. EditableCell Component
+## 14. EditableCell Component
 
 - **テストファイル**: [`src/test/webview/EditableCell.test.tsx`](../src/test/webview/EditableCell.test.tsx)
 - **ケース数**: 4
@@ -191,7 +227,7 @@
 | 3 | `commits value and triggers navigation on Enter` | Enter キーで値を確定し、下方向セルへ移動を通知すること | 未記載 |
 | 4 | `commits value and triggers navigation on Shift + Tab` | Shift + Tab キーで値を確定し、左方向セルへ移動を通知すること | 未記載 |
 
-## 13. Pagination Component
+## 15. Pagination Component
 
 - **テストファイル**: [`src/test/webview/Pagination.test.tsx`](../src/test/webview/Pagination.test.tsx)
 - **ケース数**: 4
@@ -203,7 +239,7 @@
 | 3 | `calls onPageChange on next and last button clicks` | 次へ・最後のページボタンクリックで onPageChange が呼ばれること | 未記載 |
 | 4 | `jumps to a valid page number on Enter in jump input` | 入力欄にページ番号を入力して Enter でジャンプできること | 未記載 |
 
-## 14. Webview UI hooks
+## 16. Webview UI hooks
 
 - **テストファイル**: [`src/test/webview/hooks.test.tsx`](../src/test/webview/hooks.test.tsx)
 - **ケース数**: 7
@@ -218,7 +254,7 @@
 | 6 | `provides selectRow, selectCol, and selectAll helpers` | 行選択・列選択・全選択のヘルパーが正しい selection を設定すること | 未記載 |
 | 7 | `persists activeArrayPath into uiState on navigation` | 配列パスの解決とフォールバックが正しく行われること | 未記載 |
 
-## 15. Webview message protocol
+## 17. Webview message protocol
 
 - **テストファイル**: [`src/test/webview/protocol.test.ts`](../src/test/webview/protocol.test.ts)
 - **ケース数**: 1
@@ -227,7 +263,7 @@
 | :--- | :--- | :--- | :--- |
 | 1 | `accepts every supported command and its payload` | 定義済みの全コマンドを受信できること | 未記載 |
 
-## 16. table view model
+## 18. table view model
 
 - **テストファイル**: [`src/test/webview/tableView.test.ts`](../src/test/webview/tableView.test.ts)
 - **ケース数**: 8
@@ -243,7 +279,7 @@
 | 7 | `filters case-insensitively and clamps pagination to the final page` | 検索結果に表示順の行番号を付け、検索後の最終ページへ補正すること | 未記載 |
 | 8 | `clamps negative page numbers and throws on invalid page sizes` | ページ番号が1未満のときは1に補正され、pageSizeが不正な場合は例外を投げること | 未記載 |
 
-## 17. TSV Generation Utilities
+## 19. TSV Generation Utilities
 
 - **テストファイル**: [`src/test/webview/tsv.test.ts`](../src/test/webview/tsv.test.ts)
 - **ケース数**: 5
@@ -256,7 +292,7 @@
 | 4 | `generates TSV for column selection` | 列選択（col）時のTSV文字列生成 | 列選択状態で generateTsv を呼び出した際、指定したカラムの全行の値が改行区切りで出力されることを検証する。 |
 | 5 | `generates TSV for cell selection` | 単一セル選択（cell）時のTSV文字列生成 | セル選択状態で generateTsv を呼び出した際、対象セルの値のみが出力されることを検証する。 |
 
-## 18. vscodeApi wrapper
+## 20. vscodeApi wrapper
 
 - **テストファイル**: [`src/test/webview/vscodeApi.test.ts`](../src/test/webview/vscodeApi.test.ts)
 - **ケース数**: 3

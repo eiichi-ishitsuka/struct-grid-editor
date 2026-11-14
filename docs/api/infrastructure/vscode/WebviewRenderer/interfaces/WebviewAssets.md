@@ -6,7 +6,7 @@
 
 # Interface: WebviewAssets
 
-Defined in: [infrastructure/vscode/WebviewRenderer.ts:5](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/ed0c1332f6f848335ce1461339913a2fab0f194d/src/infrastructure/vscode/WebviewRenderer.ts#L5)
+Defined in: [infrastructure/vscode/WebviewRenderer.ts:5](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/e20beb86538f08849d50b688bca0eb17506d34aa/src/infrastructure/vscode/WebviewRenderer.ts#L5)
 
 Webview 内で許可する拡張機能リソース。
 
@@ -16,7 +16,7 @@ Webview 内で許可する拡張機能リソース。
 
 > **cspSource**: `string`
 
-Defined in: [infrastructure/vscode/WebviewRenderer.ts:6](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/ed0c1332f6f848335ce1461339913a2fab0f194d/src/infrastructure/vscode/WebviewRenderer.ts#L6)
+Defined in: [infrastructure/vscode/WebviewRenderer.ts:6](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/e20beb86538f08849d50b688bca0eb17506d34aa/src/infrastructure/vscode/WebviewRenderer.ts#L6)
 
 ***
 
@@ -24,7 +24,7 @@ Defined in: [infrastructure/vscode/WebviewRenderer.ts:6](https://github.com/eiic
 
 > **scriptUri**: `string`
 
-Defined in: [infrastructure/vscode/WebviewRenderer.ts:8](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/ed0c1332f6f848335ce1461339913a2fab0f194d/src/infrastructure/vscode/WebviewRenderer.ts#L8)
+Defined in: [infrastructure/vscode/WebviewRenderer.ts:8](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/e20beb86538f08849d50b688bca0eb17506d34aa/src/infrastructure/vscode/WebviewRenderer.ts#L8)
 
 ***
 
@@ -32,4 +32,4 @@ Defined in: [infrastructure/vscode/WebviewRenderer.ts:8](https://github.com/eiic
 
 > **styleUri**: `string`
 
-Defined in: [infrastructure/vscode/WebviewRenderer.ts:7](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/ed0c1332f6f848335ce1461339913a2fab0f194d/src/infrastructure/vscode/WebviewRenderer.ts#L7)
+Defined in: [infrastructure/vscode/WebviewRenderer.ts:7](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/e20beb86538f08849d50b688bca0eb17506d34aa/src/infrastructure/vscode/WebviewRenderer.ts#L7)

@@ -6,7 +6,7 @@
 
 # Interface: ToolbarProps
 
-Defined in: [webview/components/Toolbar.tsx:3](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/ed0c1332f6f848335ce1461339913a2fab0f194d/src/webview/components/Toolbar.tsx#L3)
+Defined in: [webview/components/Toolbar.tsx:3](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/e20beb86538f08849d50b688bca0eb17506d34aa/src/webview/components/Toolbar.tsx#L3)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [webview/components/Toolbar.tsx:3](https://github.com/eiichi-ishitsu
 
 > `optional` **children?**: `ReactNode`
 
-Defined in: [webview/components/Toolbar.tsx:9](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/ed0c1332f6f848335ce1461339913a2fab0f194d/src/webview/components/Toolbar.tsx#L9)
+Defined in: [webview/components/Toolbar.tsx:9](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/e20beb86538f08849d50b688bca0eb17506d34aa/src/webview/components/Toolbar.tsx#L9)
 
 ***
 
@@ -22,7 +22,7 @@ Defined in: [webview/components/Toolbar.tsx:9](https://github.com/eiichi-ishitsu
 
 > **documentType**: `string`
 
-Defined in: [webview/components/Toolbar.tsx:4](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/ed0c1332f6f848335ce1461339913a2fab0f194d/src/webview/components/Toolbar.tsx#L4)
+Defined in: [webview/components/Toolbar.tsx:4](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/e20beb86538f08849d50b688bca0eb17506d34aa/src/webview/components/Toolbar.tsx#L4)
 
 ***
 
@@ -30,7 +30,7 @@ Defined in: [webview/components/Toolbar.tsx:4](https://github.com/eiichi-ishitsu
 
 > **itemCount**: `string`
 
-Defined in: [webview/components/Toolbar.tsx:5](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/ed0c1332f6f848335ce1461339913a2fab0f194d/src/webview/components/Toolbar.tsx#L5)
+Defined in: [webview/components/Toolbar.tsx:5](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/e20beb86538f08849d50b688bca0eb17506d34aa/src/webview/components/Toolbar.tsx#L5)
 
 ***
 
@@ -38,7 +38,7 @@ Defined in: [webview/components/Toolbar.tsx:5](https://github.com/eiichi-ishitsu
 
 > `optional` **onOpenTextEditor?**: () => `void`
 
-Defined in: [webview/components/Toolbar.tsx:8](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/ed0c1332f6f848335ce1461339913a2fab0f194d/src/webview/components/Toolbar.tsx#L8)
+Defined in: [webview/components/Toolbar.tsx:8](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/e20beb86538f08849d50b688bca0eb17506d34aa/src/webview/components/Toolbar.tsx#L8)
 
 #### Returns
 
@@ -50,7 +50,7 @@ Defined in: [webview/components/Toolbar.tsx:8](https://github.com/eiichi-ishitsu
 
 > **onSearchQueryChange**: (`query`) => `void`
 
-Defined in: [webview/components/Toolbar.tsx:7](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/ed0c1332f6f848335ce1461339913a2fab0f194d/src/webview/components/Toolbar.tsx#L7)
+Defined in: [webview/components/Toolbar.tsx:7](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/e20beb86538f08849d50b688bca0eb17506d34aa/src/webview/components/Toolbar.tsx#L7)
 
 #### Parameters
 
@@ -68,4 +68,4 @@ Defined in: [webview/components/Toolbar.tsx:7](https://github.com/eiichi-ishitsu
 
 > **searchQuery**: `string`
 
-Defined in: [webview/components/Toolbar.tsx:6](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/ed0c1332f6f848335ce1461339913a2fab0f194d/src/webview/components/Toolbar.tsx#L6)
+Defined in: [webview/components/Toolbar.tsx:6](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/e20beb86538f08849d50b688bca0eb17506d34aa/src/webview/components/Toolbar.tsx#L6)

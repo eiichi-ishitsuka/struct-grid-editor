@@ -8,7 +8,7 @@
 
 > **useVsCodeState**\<`TState`\>(`initialState`): readonly \[`TState`, (`updater`) => `void`\]
 
-Defined in: [webview/hooks/useVsCodeState.ts:7](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/ed0c1332f6f848335ce1461339913a2fab0f194d/src/webview/hooks/useVsCodeState.ts#L7)
+Defined in: [webview/hooks/useVsCodeState.ts:7](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/e20beb86538f08849d50b688bca0eb17506d34aa/src/webview/hooks/useVsCodeState.ts#L7)
 
 VS Code Webview state と React state を同期する。
 

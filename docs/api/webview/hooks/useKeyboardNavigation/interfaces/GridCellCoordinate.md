@@ -6,7 +6,7 @@
 
 # Interface: GridCellCoordinate
 
-Defined in: [webview/hooks/useKeyboardNavigation.ts:8](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/ed0c1332f6f848335ce1461339913a2fab0f194d/src/webview/hooks/useKeyboardNavigation.ts#L8)
+Defined in: [webview/hooks/useKeyboardNavigation.ts:8](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/e20beb86538f08849d50b688bca0eb17506d34aa/src/webview/hooks/useKeyboardNavigation.ts#L8)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [webview/hooks/useKeyboardNavigation.ts:8](https://github.com/eiichi
 
 > **colKey**: `string`
 
-Defined in: [webview/hooks/useKeyboardNavigation.ts:10](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/ed0c1332f6f848335ce1461339913a2fab0f194d/src/webview/hooks/useKeyboardNavigation.ts#L10)
+Defined in: [webview/hooks/useKeyboardNavigation.ts:10](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/e20beb86538f08849d50b688bca0eb17506d34aa/src/webview/hooks/useKeyboardNavigation.ts#L10)
 
 ***
 
@@ -22,7 +22,7 @@ Defined in: [webview/hooks/useKeyboardNavigation.ts:10](https://github.com/eiich
 
 > **path**: `string`
 
-Defined in: [webview/hooks/useKeyboardNavigation.ts:11](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/ed0c1332f6f848335ce1461339913a2fab0f194d/src/webview/hooks/useKeyboardNavigation.ts#L11)
+Defined in: [webview/hooks/useKeyboardNavigation.ts:11](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/e20beb86538f08849d50b688bca0eb17506d34aa/src/webview/hooks/useKeyboardNavigation.ts#L11)
 
 ***
 
@@ -30,4 +30,4 @@ Defined in: [webview/hooks/useKeyboardNavigation.ts:11](https://github.com/eiich
 
 > **rowIndex**: `number`
 
-Defined in: [webview/hooks/useKeyboardNavigation.ts:9](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/ed0c1332f6f848335ce1461339913a2fab0f194d/src/webview/hooks/useKeyboardNavigation.ts#L9)
+Defined in: [webview/hooks/useKeyboardNavigation.ts:9](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/e20beb86538f08849d50b688bca0eb17506d34aa/src/webview/hooks/useKeyboardNavigation.ts#L9)

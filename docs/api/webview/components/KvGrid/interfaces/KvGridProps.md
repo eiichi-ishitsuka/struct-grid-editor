@@ -6,7 +6,7 @@
 
 # Interface: KvGridProps
 
-Defined in: [webview/components/KvGrid.tsx:6](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/ed0c1332f6f848335ce1461339913a2fab0f194d/src/webview/components/KvGrid.tsx#L6)
+Defined in: [webview/components/KvGrid.tsx:6](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/e20beb86538f08849d50b688bca0eb17506d34aa/src/webview/components/KvGrid.tsx#L6)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [webview/components/KvGrid.tsx:6](https://github.com/eiichi-ishitsuk
 
 > `optional` **onAddKvRow?**: () => `void`
 
-Defined in: [webview/components/KvGrid.tsx:11](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/ed0c1332f6f848335ce1461339913a2fab0f194d/src/webview/components/KvGrid.tsx#L11)
+Defined in: [webview/components/KvGrid.tsx:11](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/e20beb86538f08849d50b688bca0eb17506d34aa/src/webview/components/KvGrid.tsx#L11)
 
 #### Returns
 
@@ -26,7 +26,7 @@ Defined in: [webview/components/KvGrid.tsx:11](https://github.com/eiichi-ishitsu
 
 > `optional` **onCellContextMenu?**: (`event`, `path`) => `void`
 
-Defined in: [webview/components/KvGrid.tsx:14](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/ed0c1332f6f848335ce1461339913a2fab0f194d/src/webview/components/KvGrid.tsx#L14)
+Defined in: [webview/components/KvGrid.tsx:14](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/e20beb86538f08849d50b688bca0eb17506d34aa/src/webview/components/KvGrid.tsx#L14)
 
 #### Parameters
 
@@ -48,7 +48,7 @@ Defined in: [webview/components/KvGrid.tsx:14](https://github.com/eiichi-ishitsu
 
 > `optional` **onKeyContextMenu?**: (`event`, `row`) => `void`
 
-Defined in: [webview/components/KvGrid.tsx:13](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/ed0c1332f6f848335ce1461339913a2fab0f194d/src/webview/components/KvGrid.tsx#L13)
+Defined in: [webview/components/KvGrid.tsx:13](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/e20beb86538f08849d50b688bca0eb17506d34aa/src/webview/components/KvGrid.tsx#L13)
 
 #### Parameters
 
@@ -70,7 +70,7 @@ Defined in: [webview/components/KvGrid.tsx:13](https://github.com/eiichi-ishitsu
 
 > `optional` **onNavigateArray?**: (`arrayPath`) => `void`
 
-Defined in: [webview/components/KvGrid.tsx:12](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/ed0c1332f6f848335ce1461339913a2fab0f194d/src/webview/components/KvGrid.tsx#L12)
+Defined in: [webview/components/KvGrid.tsx:12](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/e20beb86538f08849d50b688bca0eb17506d34aa/src/webview/components/KvGrid.tsx#L12)
 
 #### Parameters
 
@@ -88,7 +88,7 @@ Defined in: [webview/components/KvGrid.tsx:12](https://github.com/eiichi-ishitsu
 
 > `optional` **onRenameKey?**: (`path`, `oldKey`, `newKey`) => `void`
 
-Defined in: [webview/components/KvGrid.tsx:10](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/ed0c1332f6f848335ce1461339913a2fab0f194d/src/webview/components/KvGrid.tsx#L10)
+Defined in: [webview/components/KvGrid.tsx:10](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/e20beb86538f08849d50b688bca0eb17506d34aa/src/webview/components/KvGrid.tsx#L10)
 
 #### Parameters
 
@@ -114,7 +114,7 @@ Defined in: [webview/components/KvGrid.tsx:10](https://github.com/eiichi-ishitsu
 
 > `optional` **onUpdateCell?**: (`path`, `value`) => `void`
 
-Defined in: [webview/components/KvGrid.tsx:9](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/ed0c1332f6f848335ce1461339913a2fab0f194d/src/webview/components/KvGrid.tsx#L9)
+Defined in: [webview/components/KvGrid.tsx:9](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/e20beb86538f08849d50b688bca0eb17506d34aa/src/webview/components/KvGrid.tsx#L9)
 
 #### Parameters
 
@@ -136,7 +136,7 @@ Defined in: [webview/components/KvGrid.tsx:9](https://github.com/eiichi-ishitsuk
 
 > **rows**: [`GridRowDto`](../../../../application/dto/GridData/interfaces/GridRowDto.md)[]
 
-Defined in: [webview/components/KvGrid.tsx:7](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/ed0c1332f6f848335ce1461339913a2fab0f194d/src/webview/components/KvGrid.tsx#L7)
+Defined in: [webview/components/KvGrid.tsx:7](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/e20beb86538f08849d50b688bca0eb17506d34aa/src/webview/components/KvGrid.tsx#L7)
 
 ***
 
@@ -144,4 +144,4 @@ Defined in: [webview/components/KvGrid.tsx:7](https://github.com/eiichi-ishitsuk
 
 > **searchQuery**: `string`
 
-Defined in: [webview/components/KvGrid.tsx:8](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/ed0c1332f6f848335ce1461339913a2fab0f194d/src/webview/components/KvGrid.tsx#L8)
+Defined in: [webview/components/KvGrid.tsx:8](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/e20beb86538f08849d50b688bca0eb17506d34aa/src/webview/components/KvGrid.tsx#L8)

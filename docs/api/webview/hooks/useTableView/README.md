@@ -12,4 +12,5 @@
 
 ## Functions
 
+- [resolveActiveArrayPath](functions/resolveActiveArrayPath.md)
 - [useTableView](functions/useTableView.md)
