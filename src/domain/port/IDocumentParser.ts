@@ -1,16 +1,25 @@
 import { StructuredDocument } from '../model/StructuredDocument';
 
 /**
- * ドキュメントパーサーおよびシリアライザー（JSON、YAMLなど）のポートインターフェース。
+ * ドキュメント解析時のオプション。
+ */
+export interface DocumentParseOptions {
+    /** CSV/TSV において1行目をヘッダー行として扱うかどうか（デフォルト: true） */
+    hasHeader?: boolean;
+}
+
+/**
+ * ドキュメントパーサーおよびシリアライザー（JSON、YAML、CSV、TSVなど）のポートインターフェース。
  * 依存性逆転の原則（DIP）に準拠します。
  */
 export interface IDocumentParser {
     /**
      * ソーステキストを解析し、ドメインの StructuredDocument 集約ルートを生成します。
      * @param text 解析対象の文字列
+     * @param options 解析オプション（任意）
      * @returns 解析された StructuredDocument インスタンス
      */
-    parse(text: string): StructuredDocument;
+    parse(text: string, options?: DocumentParseOptions): StructuredDocument;
 
     /**
      * ドメインの StructuredDocument を、書式やコメントを保持しながらテキスト形式にシリアライズします。

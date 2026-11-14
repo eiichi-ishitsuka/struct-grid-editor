@@ -1,13 +1,13 @@
 /**
  * サポートされているドキュメントファイル形式。
  */
-export type DocumentFileType = 'json' | 'yaml' | 'jsonl';
+export type DocumentFileType = 'json' | 'yaml' | 'jsonl' | 'csv' | 'tsv';
 
 /**
  * ドキュメントの書式オプション。
  */
 export interface DocumentFormatOptions {
-    /** ファイル形式 ('json', 'yaml' または 'jsonl') */
+    /** ファイル形式 ('json', 'yaml', 'jsonl', 'csv' または 'tsv') */
     fileType: DocumentFileType;
     /** インデント幅またはインデント文字列 */
     indent: number | string;
@@ -71,6 +71,40 @@ export class DocumentFormat {
             fileType: 'jsonl',
             indent: 0,
             hasTrailingNewline: true,
+        });
+    }
+
+    /**
+     * デフォルトのCSV書式を生成します。
+     * @returns デフォルトCSV書式
+     */
+    public static defaultCsv(): DocumentFormat {
+        return new DocumentFormat({
+            fileType: 'csv',
+            indent: 0,
+            hasTrailingNewline: true,
+            metadata: {
+                delimiter: ',',
+                hasHeader: true,
+                newline: '\n',
+            },
+        });
+    }
+
+    /**
+     * デフォルトのTSV書式を生成します。
+     * @returns デフォルトTSV書式
+     */
+    public static defaultTsv(): DocumentFormat {
+        return new DocumentFormat({
+            fileType: 'tsv',
+            indent: 0,
+            hasTrailingNewline: true,
+            metadata: {
+                delimiter: '\t',
+                hasHeader: true,
+                newline: '\n',
+            },
         });
     }
 }

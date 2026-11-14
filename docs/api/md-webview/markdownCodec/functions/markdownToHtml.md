@@ -8,7 +8,7 @@
 
 > **markdownToHtml**(`md`): `string`
 
-Defined in: md-webview/markdownCodec.ts:259
+Defined in: [md-webview/markdownCodec.ts:259](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/md-webview/markdownCodec.ts#L259)
 
 YAML Frontmatter を含む Markdown ドキュメント全文を Tiptap 用の HTML 文字列へ変換します。
 

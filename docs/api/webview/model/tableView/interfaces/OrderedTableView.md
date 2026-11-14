@@ -6,7 +6,7 @@
 
 # Interface: OrderedTableView
 
-Defined in: [webview/model/tableView.ts:21](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/e20beb86538f08849d50b688bca0eb17506d34aa/src/webview/model/tableView.ts#L21)
+Defined in: [webview/model/tableView.ts:21](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/webview/model/tableView.ts#L21)
 
 ## Extends
 
@@ -18,7 +18,7 @@ Defined in: [webview/model/tableView.ts:21](https://github.com/eiichi-ishitsuka/
 
 > **allColumns**: [`TableColumnDto`](../../../../application/dto/GridData/interfaces/TableColumnDto.md)[]
 
-Defined in: [webview/model/tableView.ts:23](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/e20beb86538f08849d50b688bca0eb17506d34aa/src/webview/model/tableView.ts#L23)
+Defined in: [webview/model/tableView.ts:23](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/webview/model/tableView.ts#L23)
 
 ***
 
@@ -26,7 +26,7 @@ Defined in: [webview/model/tableView.ts:23](https://github.com/eiichi-ishitsuka/
 
 > **columns**: [`TableColumnDto`](../../../../application/dto/GridData/interfaces/TableColumnDto.md)[]
 
-Defined in: [webview/model/tableView.ts:22](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/e20beb86538f08849d50b688bca0eb17506d34aa/src/webview/model/tableView.ts#L22)
+Defined in: [webview/model/tableView.ts:22](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/webview/model/tableView.ts#L22)
 
 ***
 
@@ -34,7 +34,7 @@ Defined in: [webview/model/tableView.ts:22](https://github.com/eiichi-ishitsuka/
 
 > **isObjectArray**: `boolean`
 
-Defined in: [application/dto/GridData.ts:56](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/e20beb86538f08849d50b688bca0eb17506d34aa/src/application/dto/GridData.ts#L56)
+Defined in: [application/dto/GridData.ts:56](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/application/dto/GridData.ts#L56)
 
 オブジェクト配列であるか（false の場合はプリミティブ配列）
 
@@ -48,7 +48,7 @@ Defined in: [application/dto/GridData.ts:56](https://github.com/eiichi-ishitsuka
 
 > **path**: `string`
 
-Defined in: [application/dto/GridData.ts:46](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/e20beb86538f08849d50b688bca0eb17506d34aa/src/application/dto/GridData.ts#L46)
+Defined in: [application/dto/GridData.ts:46](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/application/dto/GridData.ts#L46)
 
 テーブルの基点となる配列のパス
 
@@ -62,7 +62,7 @@ Defined in: [application/dto/GridData.ts:46](https://github.com/eiichi-ishitsuka
 
 > **rows**: [`TableRowDto`](../../../../application/dto/GridData/interfaces/TableRowDto.md)[]
 
-Defined in: [webview/model/tableView.ts:24](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/e20beb86538f08849d50b688bca0eb17506d34aa/src/webview/model/tableView.ts#L24)
+Defined in: [webview/model/tableView.ts:24](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/webview/model/tableView.ts#L24)
 
 ***
 
@@ -70,7 +70,7 @@ Defined in: [webview/model/tableView.ts:24](https://github.com/eiichi-ishitsuka/
 
 > **totalColumns**: `number`
 
-Defined in: [application/dto/GridData.ts:54](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/e20beb86538f08849d50b688bca0eb17506d34aa/src/application/dto/GridData.ts#L54)
+Defined in: [application/dto/GridData.ts:54](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/application/dto/GridData.ts#L54)
 
 総カラム数
 
@@ -84,7 +84,7 @@ Defined in: [application/dto/GridData.ts:54](https://github.com/eiichi-ishitsuka
 
 > **totalRows**: `number`
 
-Defined in: [application/dto/GridData.ts:52](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/e20beb86538f08849d50b688bca0eb17506d34aa/src/application/dto/GridData.ts#L52)
+Defined in: [application/dto/GridData.ts:52](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/application/dto/GridData.ts#L52)
 
 総行数
 

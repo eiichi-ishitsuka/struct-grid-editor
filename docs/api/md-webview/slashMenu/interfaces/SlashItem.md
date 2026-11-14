@@ -6,7 +6,7 @@
 
 # Interface: SlashItem
 
-Defined in: md-webview/slashMenu.ts:6
+Defined in: [md-webview/slashMenu.ts:6](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/md-webview/slashMenu.ts#L6)
 
 スラッシュコマンドメニュー（`/`）の各項目定義。
 
@@ -16,7 +16,7 @@ Defined in: md-webview/slashMenu.ts:6
 
 > **desc**: `string`
 
-Defined in: md-webview/slashMenu.ts:12
+Defined in: [md-webview/slashMenu.ts:12](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/md-webview/slashMenu.ts#L12)
 
 メニューに表示する補足説明
 
@@ -26,7 +26,7 @@ Defined in: md-webview/slashMenu.ts:12
 
 > **icon**: `string`
 
-Defined in: md-webview/slashMenu.ts:14
+Defined in: [md-webview/slashMenu.ts:14](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/md-webview/slashMenu.ts#L14)
 
 アイコンバッジに表示する短い記号ラベル
 
@@ -36,7 +36,7 @@ Defined in: md-webview/slashMenu.ts:14
 
 > **id**: `string`
 
-Defined in: md-webview/slashMenu.ts:8
+Defined in: [md-webview/slashMenu.ts:8](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/md-webview/slashMenu.ts#L8)
 
 項目の識別子
 
@@ -46,7 +46,7 @@ Defined in: md-webview/slashMenu.ts:8
 
 > **keywords**: `string`[]
 
-Defined in: md-webview/slashMenu.ts:16
+Defined in: [md-webview/slashMenu.ts:16](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/md-webview/slashMenu.ts#L16)
 
 絞り込み検索用のキーワード一覧
 
@@ -56,7 +56,7 @@ Defined in: md-webview/slashMenu.ts:16
 
 > **run**: (`editor`) => `void`
 
-Defined in: md-webview/slashMenu.ts:18
+Defined in: [md-webview/slashMenu.ts:18](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/md-webview/slashMenu.ts#L18)
 
 項目選択時に実行されるアクション
 
@@ -76,6 +76,6 @@ Defined in: md-webview/slashMenu.ts:18
 
 > **title**: `string`
 
-Defined in: md-webview/slashMenu.ts:10
+Defined in: [md-webview/slashMenu.ts:10](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/md-webview/slashMenu.ts#L10)
 
 メニューに表示するタイトル

@@ -6,7 +6,7 @@
 
 # Interface: ToolbarCallbacks
 
-Defined in: md-webview/toolbar.ts:6
+Defined in: [md-webview/toolbar.ts:6](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/md-webview/toolbar.ts#L6)
 
 ツールバーのボタン操作時に呼び出されるコールバック群。
 
@@ -16,7 +16,7 @@ Defined in: md-webview/toolbar.ts:6
 
 > **getCurrentTheme**: () => `"default"` \| `"slate"`
 
-Defined in: md-webview/toolbar.ts:12
+Defined in: [md-webview/toolbar.ts:12](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/md-webview/toolbar.ts#L12)
 
 現在の表示テーマスキーム名（`'default'` または `'slate'`）を取得します。
 
@@ -30,7 +30,7 @@ Defined in: md-webview/toolbar.ts:12
 
 > **onSwitchToText**: () => `void`
 
-Defined in: md-webview/toolbar.ts:8
+Defined in: [md-webview/toolbar.ts:8](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/md-webview/toolbar.ts#L8)
 
 標準テキストエディタ（ソース表示）への切り替え時に呼び出されます。
 
@@ -44,7 +44,7 @@ Defined in: md-webview/toolbar.ts:8
 
 > **onToggleTheme**: () => `"default"` \| `"slate"`
 
-Defined in: md-webview/toolbar.ts:10
+Defined in: [md-webview/toolbar.ts:10](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/md-webview/toolbar.ts#L10)
 
 テーマ（Light / Dark）切り替え時に呼び出され、切り替え後のスキーム名を返します。
 

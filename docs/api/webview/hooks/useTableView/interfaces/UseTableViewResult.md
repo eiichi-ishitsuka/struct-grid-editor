@@ -6,7 +6,7 @@
 
 # Interface: UseTableViewResult
 
-Defined in: [webview/hooks/useTableView.ts:13](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/e20beb86538f08849d50b688bca0eb17506d34aa/src/webview/hooks/useTableView.ts#L13)
+Defined in: [webview/hooks/useTableView.ts:13](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/webview/hooks/useTableView.ts#L13)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [webview/hooks/useTableView.ts:13](https://github.com/eiichi-ishitsu
 
 > **activeArrayPath**: `string` \| `null`
 
-Defined in: [webview/hooks/useTableView.ts:14](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/e20beb86538f08849d50b688bca0eb17506d34aa/src/webview/hooks/useTableView.ts#L14)
+Defined in: [webview/hooks/useTableView.ts:14](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/webview/hooks/useTableView.ts#L14)
 
 ***
 
@@ -22,7 +22,7 @@ Defined in: [webview/hooks/useTableView.ts:14](https://github.com/eiichi-ishitsu
 
 > **page**: [`TablePage`](../../../model/tableView/interfaces/TablePage.md)
 
-Defined in: [webview/hooks/useTableView.ts:17](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/e20beb86538f08849d50b688bca0eb17506d34aa/src/webview/hooks/useTableView.ts#L17)
+Defined in: [webview/hooks/useTableView.ts:17](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/webview/hooks/useTableView.ts#L17)
 
 ***
 
@@ -30,7 +30,7 @@ Defined in: [webview/hooks/useTableView.ts:17](https://github.com/eiichi-ishitsu
 
 > **pathKey**: `string`
 
-Defined in: [webview/hooks/useTableView.ts:18](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/e20beb86538f08849d50b688bca0eb17506d34aa/src/webview/hooks/useTableView.ts#L18)
+Defined in: [webview/hooks/useTableView.ts:18](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/webview/hooks/useTableView.ts#L18)
 
 ***
 
@@ -38,7 +38,7 @@ Defined in: [webview/hooks/useTableView.ts:18](https://github.com/eiichi-ishitsu
 
 > **searchQuery**: `string`
 
-Defined in: [webview/hooks/useTableView.ts:15](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/e20beb86538f08849d50b688bca0eb17506d34aa/src/webview/hooks/useTableView.ts#L15)
+Defined in: [webview/hooks/useTableView.ts:15](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/webview/hooks/useTableView.ts#L15)
 
 ***
 
@@ -46,7 +46,7 @@ Defined in: [webview/hooks/useTableView.ts:15](https://github.com/eiichi-ishitsu
 
 > **setActiveArrayPath**: (`path`) => `void`
 
-Defined in: [webview/hooks/useTableView.ts:21](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/e20beb86538f08849d50b688bca0eb17506d34aa/src/webview/hooks/useTableView.ts#L21)
+Defined in: [webview/hooks/useTableView.ts:21](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/webview/hooks/useTableView.ts#L21)
 
 #### Parameters
 
@@ -64,7 +64,7 @@ Defined in: [webview/hooks/useTableView.ts:21](https://github.com/eiichi-ishitsu
 
 > **setCurrentPage**: (`page`) => `void`
 
-Defined in: [webview/hooks/useTableView.ts:22](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/e20beb86538f08849d50b688bca0eb17506d34aa/src/webview/hooks/useTableView.ts#L22)
+Defined in: [webview/hooks/useTableView.ts:22](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/webview/hooks/useTableView.ts#L22)
 
 #### Parameters
 
@@ -82,7 +82,7 @@ Defined in: [webview/hooks/useTableView.ts:22](https://github.com/eiichi-ishitsu
 
 > **setHiddenColumns**: (`columnKeys`) => `void`
 
-Defined in: [webview/hooks/useTableView.ts:23](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/e20beb86538f08849d50b688bca0eb17506d34aa/src/webview/hooks/useTableView.ts#L23)
+Defined in: [webview/hooks/useTableView.ts:23](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/webview/hooks/useTableView.ts#L23)
 
 #### Parameters
 
@@ -100,7 +100,7 @@ Defined in: [webview/hooks/useTableView.ts:23](https://github.com/eiichi-ishitsu
 
 > **setSearchQuery**: (`query`) => `void`
 
-Defined in: [webview/hooks/useTableView.ts:20](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/e20beb86538f08849d50b688bca0eb17506d34aa/src/webview/hooks/useTableView.ts#L20)
+Defined in: [webview/hooks/useTableView.ts:20](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/webview/hooks/useTableView.ts#L20)
 
 #### Parameters
 
@@ -118,7 +118,7 @@ Defined in: [webview/hooks/useTableView.ts:20](https://github.com/eiichi-ishitsu
 
 > **sortState**: [`TableSortState`](../../../model/tableView/interfaces/TableSortState.md) \| `undefined`
 
-Defined in: [webview/hooks/useTableView.ts:19](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/e20beb86538f08849d50b688bca0eb17506d34aa/src/webview/hooks/useTableView.ts#L19)
+Defined in: [webview/hooks/useTableView.ts:19](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/webview/hooks/useTableView.ts#L19)
 
 ***
 
@@ -126,7 +126,7 @@ Defined in: [webview/hooks/useTableView.ts:19](https://github.com/eiichi-ishitsu
 
 > **tableView**: [`OrderedTableView`](../../../model/tableView/interfaces/OrderedTableView.md) \| `null`
 
-Defined in: [webview/hooks/useTableView.ts:16](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/e20beb86538f08849d50b688bca0eb17506d34aa/src/webview/hooks/useTableView.ts#L16)
+Defined in: [webview/hooks/useTableView.ts:16](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/webview/hooks/useTableView.ts#L16)
 
 ***
 
@@ -134,7 +134,7 @@ Defined in: [webview/hooks/useTableView.ts:16](https://github.com/eiichi-ishitsu
 
 > **toggleSort**: (`colKey`) => `void`
 
-Defined in: [webview/hooks/useTableView.ts:24](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/e20beb86538f08849d50b688bca0eb17506d34aa/src/webview/hooks/useTableView.ts#L24)
+Defined in: [webview/hooks/useTableView.ts:24](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/webview/hooks/useTableView.ts#L24)
 
 #### Parameters
 

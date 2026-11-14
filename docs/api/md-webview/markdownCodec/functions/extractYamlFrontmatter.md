@@ -8,7 +8,7 @@
 
 > **extractYamlFrontmatter**(`md`): `object`
 
-Defined in: md-webview/markdownCodec.ts:76
+Defined in: [md-webview/markdownCodec.ts:76](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/md-webview/markdownCodec.ts#L76)
 
 Markdown 文字列の先頭から YAML Frontmatter（`---` で囲まれた領域）と本文を分離抽出します。
 

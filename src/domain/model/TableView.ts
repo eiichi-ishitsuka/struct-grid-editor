@@ -82,14 +82,26 @@ export class TableView {
     /**
      * 配列を表す TreeNode から TableView インスタンスを構築します。
      * @param node 配列型の TreeNode
+     * @param headerColumns データ行が0件の場合にフォールバックとして使用するカラム名リスト（CSVヘッダー等）
      * @returns 構築された TableView インスタンス
      */
-    public static fromArrayNode(node: TreeNode): TableView {
+    public static fromArrayNode(node: TreeNode, headerColumns?: string[]): TableView {
         if (node.type !== 'array') {
             throw new Error(`Expected array node, got ${node.type}`);
         }
 
         const children = node.children;
+        // データ行が0件でもヘッダーカラム定義が存在する場合（ヘッダー行のみのCSV/TSV等）
+        if (children.length === 0 && headerColumns && headerColumns.length > 0) {
+            const columns: TableColumn[] = headerColumns.map(k => ({
+                key: k,
+                label: k,
+                type: 'other',
+                typeSymbol: TableView.getTypeSymbol('other'),
+            }));
+            return new TableView(node.path, columns, [], true);
+        }
+
         // 子要素にオブジェクトが含まれるか判定
         const hasObjectItems = children.some(c => c.type === 'object');
 

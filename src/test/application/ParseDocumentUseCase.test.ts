@@ -2,12 +2,21 @@ import { describe, it, expect } from 'vitest';
 import { JsonDocumentParser } from '../../infrastructure/parser/JsonDocumentParser';
 import { YamlDocumentParser } from '../../infrastructure/parser/YamlDocumentParser';
 import { JsonlDocumentParser } from '../../infrastructure/parser/JsonlDocumentParser';
+import { CsvDocumentParser, TsvDocumentParser } from '../../infrastructure/parser/DelimitedDocumentParser';
 import { ParseDocumentUseCase } from '../../application/usecase/ParseDocumentUseCase';
+import { UpdateCellUseCase } from '../../application/usecase/UpdateCellUseCase';
 import { AddTableRowUseCase, AddTableColumnUseCase, RenameTableColumnUseCase } from '../../application/usecase/RowModificationUseCases';
 
 describe('ParseDocumentUseCase with Table View & Drill-down', () => {
-    const parsers = [new JsonDocumentParser(), new YamlDocumentParser(), new JsonlDocumentParser()];
+    const parsers = [
+        new JsonDocumentParser(),
+        new YamlDocumentParser(),
+        new JsonlDocumentParser(),
+        new CsvDocumentParser(),
+        new TsvDocumentParser(),
+    ];
     const parseUseCase = new ParseDocumentUseCase(parsers);
+    const updateCellUseCase = new UpdateCellUseCase(parsers);
     const addTableRowUseCase = new AddTableRowUseCase(parsers);
     const addTableColumnUseCase = new AddTableColumnUseCase(parsers);
     const renameTableColumnUseCase = new RenameTableColumnUseCase(parsers);
@@ -316,5 +325,43 @@ network:
         expect(dto.totalRows).toBe(2);
         expect(dto.tableData?.rows[1].cells['name'].value).toBe('Bob');
         expect(updated).toBe(`{"id":1,"name":"Alice"}\n{"id":2,"name":"Bob"}\n`);
+    });
+
+    /**
+     * 【観点】CSVおよびTSVドキュメントのヘッダー有無（hasHeader）切り替えと型バッジ判定の確認
+     * 【テスト内容】CSVをhasHeader: trueおよびfalseで解析した際の列定義・型シンボル推論・ドット入り列名更新、およびヘッダーのみのTSVへの行追加動作を検証する。
+     */
+    it('should parse CSV/TSV in both header and headerless modes and preserve header-only CSV columns', () => {
+        const csvText = `id,user.name,active\n1,Alice,true\n2,Bob,false\n`;
+        const withHeader = parseUseCase.execute(csvText, 'csv', { hasHeader: true });
+
+        expect(withHeader.dto.documentType).toBe('csv');
+        expect(withHeader.dto.viewMode).toBe('table');
+        expect(withHeader.dto.hasHeader).toBe(true);
+        expect(withHeader.dto.totalRows).toBe(2);
+        expect(withHeader.dto.tableData?.columns.map(c => ({ key: c.key, type: c.type, symbol: c.typeSymbol }))).toEqual([
+            { key: 'id', type: 'number', symbol: '1234' },
+            { key: 'user.name', type: 'string', symbol: 'Aa' },
+            { key: 'active', type: 'boolean', symbol: 'T/F' },
+        ]);
+
+        // ドットを含むカラム名（user.name）でもセル更新可能であることを検証
+        const updatedCsv = updateCellUseCase.execute(csvText, 'csv', '[0].user.name', 'Charlie', { hasHeader: true });
+        expect(updatedCsv).toBe(`id,user.name,active\n1,Charlie,true\n2,Bob,false\n`);
+
+        // ヘッダーなしモードで同じCSVを解析すると3行すべてデータ行になることを検証
+        const withoutHeader = parseUseCase.execute(csvText, 'csv', { hasHeader: false });
+        expect(withoutHeader.dto.hasHeader).toBe(false);
+        expect(withoutHeader.dto.totalRows).toBe(3);
+        expect(withoutHeader.dto.tableData?.columns.map(c => c.key)).toEqual(['col1', 'col2', 'col3']);
+
+        // ヘッダー行のみ（データ0行）のTSVでもカラム定義が保持され、行追加できることを検証
+        const headerOnlyTsv = `colA\tcolB\n`;
+        const parsedHeaderOnly = parseUseCase.execute(headerOnlyTsv, 'tsv', { hasHeader: true });
+        expect(parsedHeaderOnly.dto.tableData?.columns.map(c => c.key)).toEqual(['colA', 'colB']);
+        expect(parsedHeaderOnly.dto.totalRows).toBe(0);
+
+        const afterAddRow = addTableRowUseCase.execute(headerOnlyTsv, 'tsv', '', undefined, { hasHeader: true });
+        expect(afterAddRow).toBe(`colA\tcolB\n\t\n`);
     });
 });

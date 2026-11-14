@@ -2,6 +2,7 @@ import { describe, it, expect } from 'vitest';
 import { JsonDocumentParser } from '../../infrastructure/parser/JsonDocumentParser';
 import { YamlDocumentParser } from '../../infrastructure/parser/YamlDocumentParser';
 import { JsonlDocumentParser } from '../../infrastructure/parser/JsonlDocumentParser';
+import { CsvDocumentParser, TsvDocumentParser } from '../../infrastructure/parser/DelimitedDocumentParser';
 import { CellPath } from '../../domain/model/CellPath';
 import { CellValue } from '../../domain/model/CellValue';
 
@@ -146,5 +147,95 @@ describe('JsonlDocumentParser', () => {
         expect(doc.isArrayRoot()).toBe(true);
         expect(doc.toJS()).toEqual([]);
         expect(parser.serialize(doc)).toBe('');
+    });
+});
+
+describe('CsvDocumentParser & TsvDocumentParser', () => {
+    const csvParser = new CsvDocumentParser();
+    const tsvParser = new TsvDocumentParser();
+
+    /**
+     * 【観点】拡張子サポート判定（csv, tsv）の確認
+     * 【テスト内容】CsvDocumentParser が csv/.csv のみをサポートし、TsvDocumentParser が tsv/.tsv のみをサポートすることを検証する。
+     */
+    it('supports csv and tsv extensions respectively', () => {
+        expect(csvParser.supports('csv')).toBe(true);
+        expect(csvParser.supports('.csv')).toBe(true);
+        expect(csvParser.supports('tsv')).toBe(false);
+
+        expect(tsvParser.supports('tsv')).toBe(true);
+        expect(tsvParser.supports('.tsv')).toBe(true);
+        expect(tsvParser.supports('csv')).toBe(false);
+    });
+
+    /**
+     * 【観点】ヘッダー付きCSVのパース、型自動推論（数値・真偽値・先頭ゼロ文字列維持）、セル更新・シリアライズの確認
+     * 【テスト内容】1行目をヘッダーとしてCSVを解析し、数値・真偽値・先頭ゼロ文字列（0012）の型が正しく推論され、カンマを含む値へのセル更新後にクォート付きでシリアライズされることを検証する。
+     */
+    it('parses CSV with header, infers primitive types, updates cell, and serializes', () => {
+        const csv = `id,name,active,code\n1,Alice,true,0012\n2,"Bob, Jr.",false,0099\n`;
+        const doc = csvParser.parse(csv);
+
+        expect(doc.isArrayRoot()).toBe(true);
+        expect(doc.format.fileType).toBe('csv');
+        expect(doc.format.hasTrailingNewline).toBe(true);
+        expect(doc.toJS()).toEqual([
+            { id: 1, name: 'Alice', active: true, code: '0012' },
+            { id: 2, name: 'Bob, Jr.', active: false, code: '0099' },
+        ]);
+
+        const updated = doc.updateCell(CellPath.fromString('[0].name'), new CellValue('Alice, PhD'));
+        const serialized = csvParser.serialize(updated);
+        expect(serialized).toBe(`id,name,active,code\n1,"Alice, PhD",true,0012\n2,"Bob, Jr.",false,0099\n`);
+    });
+
+    /**
+     * 【観点】ヘッダーなし（hasHeader: false）モードでのCSVパースとシリアライズの確認
+     * 【テスト内容】hasHeader: false 指定時に1行目からデータ行（col1, col2, col3）として解析され、シリアライズ時もヘッダー行を出力せずデータ行のみ出力されることを検証する。
+     */
+    it('parses and serializes CSV without header when hasHeader is false', () => {
+        const csv = `100,Apple,true\n200,Orange,false\n`;
+        const doc = csvParser.parse(csv, { hasHeader: false });
+
+        expect(doc.toJS()).toEqual([
+            { col1: 100, col2: 'Apple', col3: true },
+            { col1: 200, col2: 'Orange', col3: false },
+        ]);
+
+        const updated = doc.updateCell(CellPath.fromString('[1].col2'), new CellValue('Banana'));
+        const serialized = csvParser.serialize(updated);
+        expect(serialized).toBe(`100,Apple,true\n200,Banana,false\n`);
+    });
+
+    /**
+     * 【観点】RFC 4180 ダブルクォートエスケープ（""）およびセル内改行のパース・シリアライズ確認
+     * 【テスト内容】ダブルクォートの二重エスケープや改行を含むCSVセルが1つのセル文字列として正確に解析され、再シリアライズで元のRFC 4180表現に戻ることを検証する。
+     */
+    it('handles escaped quotes and multiline cells in CSV', () => {
+        const csv = `id,note\n1,"Hello ""World""\nLine 2"\n`;
+        const doc = csvParser.parse(csv);
+
+        expect(doc.toJS()).toEqual([
+            { id: 1, note: 'Hello "World"\nLine 2' },
+        ]);
+        expect(csvParser.serialize(doc)).toBe(csv);
+    });
+
+    /**
+     * 【観点】TSVドキュメントのパースおよびシリアライズ確認
+     * 【テスト内容】CRLF改行およびタブ区切りを持つTSV文字列をパースし、セル値更新後もCRLF改行とタブ区切りを維持してシリアライズされることを検証する。
+     */
+    it('parses and serializes TSV correctly', () => {
+        const tsv = `id\tname\tscore\r\n1\tAlice\t95.5\r\n2\tBob\t80\r\n`;
+        const doc = tsvParser.parse(tsv);
+
+        expect(doc.format.fileType).toBe('tsv');
+        expect(doc.toJS()).toEqual([
+            { id: 1, name: 'Alice', score: 95.5 },
+            { id: 2, name: 'Bob', score: 80 },
+        ]);
+
+        const updated = doc.updateCell(CellPath.fromString('[1].score'), new CellValue(88));
+        expect(tsvParser.serialize(updated)).toBe(`id\tname\tscore\r\n1\tAlice\t95.5\r\n2\tBob\t88\r\n`);
     });
 });

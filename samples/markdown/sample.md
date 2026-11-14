@@ -22,9 +22,20 @@ Python-Markdown 形式の `!!!` および `???`（折りたたみ）記法に対
 
 ---
 
-## 2. 基本的な装飾とリスト（4スペースインデント対応）
+## 2. 基本的な装飾・リンク遷移・リスト（4スペースインデント対応）
 
-テキストは **太字 (Bold)**、*斜体 (Italic)*、~~取り消し線~~、`インラインコード`、[外部リンク](https://example.com/) に対応しています。
+テキストは **太字 (Bold)**、*斜体 (Italic)*、~~取り消し線~~、`インラインコード`、および [外部Webリンク](https://github.com/eiichi-ishitsuka/struct-grid-editor) や [ローカルファイルへの相対パスリンク](../../README.md) に対応しています。
+
+### リンクの Ctrl + クリック（Mac: Cmd + クリック）サンプル
+
+- **外部 HTTP/HTTPS リンク（確認ダイアログ後にブラウザで開く）**:
+    - サンプル（本リポジトリ）: [StructGridEditor (GitHub)](https://github.com/eiichi-ishitsuka/struct-grid-editor)
+- **ローカル相対パスリンク（新しいタブで開く）**:
+    - プロジェクト README: [../../README.md](../../README.md)
+    - AI開発ワークフロールール: [.agents/rules/ai-development-workflow.md](../../.agents/rules/ai-development-workflow.md)
+    - CSV サンプルデータ（グリッドで開く）: [../csv/simple-list.csv](../csv/simple-list.csv)
+    - TSV サンプルデータ（グリッドで開く）: [../tsv/simple-list.tsv](../tsv/simple-list.tsv)
+- **存在しないファイルへのリンク（スキップされる）**: [../non-existent-file.md](../non-existent-file.md)
 
 - 親リスト項目 1
     - ネストされた子項目 1.1（4スペースインデント）

@@ -1,5 +1,12 @@
 # Change Log
 
+## 0.2.0 - 2026-11-14
+
+- CSV（`*.csv`）および TSV（`*.tsv`）ファイルをスプレッドシート形式で閲覧・編集できる機能を追加（RFC 4180 準拠、セル内改行・クォートエスケープ・数値/真偽値の自動型推論に対応）
+- CSV / TSV 表示時にツールバーの「1行目をヘッダーにする」チェックボックスからヘッダー行あり・なしを即座に切り替えられる機能を追加
+- デフォルトでカスタムエディタを起動する設定に `struct-grid-editor.openByDefault.csv` および `struct-grid-editor.openByDefault.tsv`（初期値: `true`）を追加
+- Markdown Live Preview Editor においてリンクの `Ctrl + クリック`（Mac: `Cmd + クリック`）による遷移機能を強化（ローカル相対パスリンクは存在確認のうえ新規タブで開き、外部 HTTP/HTTPS リンクは確認ダイアログ表示後にブラウザで開くよう改善）
+
 ## 0.1.0 - 2026-11-14
 
 - Markdown ファイルを見たまま編集できる Live Preview / WYSIWYG カスタムエディタ機能（`Markdown Live Preview Editor`）を追加

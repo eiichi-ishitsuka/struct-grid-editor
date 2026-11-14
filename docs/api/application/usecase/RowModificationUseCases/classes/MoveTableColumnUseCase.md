@@ -6,7 +6,7 @@
 
 # Class: MoveTableColumnUseCase
 
-Defined in: [application/usecase/RowModificationUseCases.ts:224](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/e20beb86538f08849d50b688bca0eb17506d34aa/src/application/usecase/RowModificationUseCases.ts#L224)
+Defined in: [application/usecase/RowModificationUseCases.ts:258](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/application/usecase/RowModificationUseCases.ts#L258)
 
 テーブルビュー内のカラム順序を並び替えるユースケース。
 
@@ -16,7 +16,7 @@ Defined in: [application/usecase/RowModificationUseCases.ts:224](https://github.
 
 > **new MoveTableColumnUseCase**(`parsers`): `MoveTableColumnUseCase`
 
-Defined in: [application/usecase/RowModificationUseCases.ts:225](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/e20beb86538f08849d50b688bca0eb17506d34aa/src/application/usecase/RowModificationUseCases.ts#L225)
+Defined in: [application/usecase/RowModificationUseCases.ts:259](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/application/usecase/RowModificationUseCases.ts#L259)
 
 #### Parameters
 
@@ -32,9 +32,9 @@ Defined in: [application/usecase/RowModificationUseCases.ts:225](https://github.
 
 ### execute()
 
-> **execute**(`text`, `fileExtension`, `arrayPathStr`, `fromIndex`, `toIndex`): `string`
+> **execute**(`text`, `fileExtension`, `arrayPathStr`, `fromIndex`, `toIndex`, `options?`): `string`
 
-Defined in: [application/usecase/RowModificationUseCases.ts:236](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/e20beb86538f08849d50b688bca0eb17506d34aa/src/application/usecase/RowModificationUseCases.ts#L236)
+Defined in: [application/usecase/RowModificationUseCases.ts:271](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/application/usecase/RowModificationUseCases.ts#L271)
 
 カラムの並び替えを実行します。
 
@@ -69,6 +69,12 @@ Defined in: [application/usecase/RowModificationUseCases.ts:236](https://github.
 `number`
 
 移動先カラムインデックス
+
+##### options?
+
+[`DocumentParseOptions`](../../../../domain/port/IDocumentParser/interfaces/DocumentParseOptions.md)
+
+解析オプション
 
 #### Returns
 

@@ -156,6 +156,10 @@ const editor = new Editor({
     Link.configure({
       openOnClick: false,
       autolink: true,
+      isAllowedUri: () => true,
+      HTMLAttributes: {
+        title: 'Ctrl+クリック (Mac: Cmd+クリック) でリンク先を開く',
+      },
     }),
     CustomImage.configure({
       inline: false,
@@ -294,18 +298,46 @@ setupSlashMenu(
   }
 );
 
-// エディタ内リンクの Ctrl/Cmd + クリック時に外部ブラウザまたは対象ファイルを開く
-editorElement.addEventListener('click', (e) => {
-  const target = e.target as HTMLElement;
+// エディタ内リンクの Ctrl/Cmd + クリック時にカーソル移動を抑止し、外部ブラウザまたは対象ファイルを開く
+function resolveClickedLinkHref(target: HTMLElement | null): string | null {
+  if (!target) {
+    return null;
+  }
   const anchor = target.closest('a');
-  if (anchor && (e.ctrlKey || e.metaKey)) {
-    e.preventDefault();
-    const href = anchor.getAttribute('href');
-    if (href) {
+  if (anchor) {
+    return anchor.getAttribute('href');
+  }
+  const linkWidget = target.closest('[data-link-href]');
+  if (linkWidget) {
+    return linkWidget.getAttribute('data-link-href');
+  }
+  return null;
+}
+
+editorElement.addEventListener(
+  'mousedown',
+  (e) => {
+    const href = resolveClickedLinkHref(e.target as HTMLElement | null);
+    if (href && (e.ctrlKey || e.metaKey)) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
+  },
+  true
+);
+
+editorElement.addEventListener(
+  'click',
+  (e) => {
+    const href = resolveClickedLinkHref(e.target as HTMLElement | null);
+    if (href && (e.ctrlKey || e.metaKey)) {
+      e.preventDefault();
+      e.stopPropagation();
       vscode.postMessage({ type: 'openLink', href });
     }
-  }
-});
+  },
+  true
+);
 
 // クリップボードからの画像貼り付けハンドリング
 window.addEventListener('paste', (event: ClipboardEvent) => {

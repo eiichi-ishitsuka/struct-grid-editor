@@ -157,6 +157,11 @@ export function App({ initialData }: AppProps) {
         postMessage({ command: 'open_text_editor' });
     }, [postMessage]);
 
+    // CSV/TSV のヘッダー有無切り替え
+    const handleToggleCsvHeader = useCallback((hasHeader: boolean) => {
+        postMessage({ command: 'set_csv_header', hasHeader });
+    }, [postMessage]);
+
     // 列 DnD
     const handleMoveColumn = useCallback((fromIndex: number, toIndex: number) => {
         if (!tableView || fromIndex === toIndex) {
@@ -537,6 +542,8 @@ export function App({ initialData }: AppProps) {
                 searchQuery={table.searchQuery}
                 onSearchQueryChange={table.setSearchQuery}
                 onOpenTextEditor={handleOpenTextEditor}
+                hasHeader={initialData.hasHeader}
+                onToggleHeader={handleToggleCsvHeader}
             >
                 {isTableMode && (
                     <ColumnVisibilityMenu

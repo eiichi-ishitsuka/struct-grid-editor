@@ -6,7 +6,7 @@
 
 # Interface: ColumnVisibilityMenuProps
 
-Defined in: [webview/components/ColumnVisibilityMenu.tsx:4](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/e20beb86538f08849d50b688bca0eb17506d34aa/src/webview/components/ColumnVisibilityMenu.tsx#L4)
+Defined in: [webview/components/ColumnVisibilityMenu.tsx:4](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/webview/components/ColumnVisibilityMenu.tsx#L4)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [webview/components/ColumnVisibilityMenu.tsx:4](https://github.com/e
 
 > **columns**: [`TableColumnDto`](../../../../application/dto/GridData/interfaces/TableColumnDto.md)[]
 
-Defined in: [webview/components/ColumnVisibilityMenu.tsx:5](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/e20beb86538f08849d50b688bca0eb17506d34aa/src/webview/components/ColumnVisibilityMenu.tsx#L5)
+Defined in: [webview/components/ColumnVisibilityMenu.tsx:5](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/webview/components/ColumnVisibilityMenu.tsx#L5)
 
 ***
 
@@ -22,7 +22,7 @@ Defined in: [webview/components/ColumnVisibilityMenu.tsx:5](https://github.com/e
 
 > **hiddenColumns**: `string`[]
 
-Defined in: [webview/components/ColumnVisibilityMenu.tsx:6](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/e20beb86538f08849d50b688bca0eb17506d34aa/src/webview/components/ColumnVisibilityMenu.tsx#L6)
+Defined in: [webview/components/ColumnVisibilityMenu.tsx:6](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/webview/components/ColumnVisibilityMenu.tsx#L6)
 
 ***
 
@@ -30,7 +30,7 @@ Defined in: [webview/components/ColumnVisibilityMenu.tsx:6](https://github.com/e
 
 > **onHiddenColumnsChange**: (`columnKeys`) => `void`
 
-Defined in: [webview/components/ColumnVisibilityMenu.tsx:7](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/e20beb86538f08849d50b688bca0eb17506d34aa/src/webview/components/ColumnVisibilityMenu.tsx#L7)
+Defined in: [webview/components/ColumnVisibilityMenu.tsx:7](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/webview/components/ColumnVisibilityMenu.tsx#L7)
 
 #### Parameters
 

@@ -1,0 +1,6 @@
+id,name,role,active,score,note
+1,Alice Smith,Admin,true,95.5,"システム管理者（東京本社）"
+2,Bob Johnson,Developer,true,88.0,"バックエンド担当, リードエンジニア"
+3,Charlie Brown,Designer,false,72.4,"UI/UX デザイン"
+4,Diana Prince,Manager,true,99.1,"プロダクトマネージャー"
+5,Evan Wright,QA Engineer,false,83.2,"品質保証・自動テスト"

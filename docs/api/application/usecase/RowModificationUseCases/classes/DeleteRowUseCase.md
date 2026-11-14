@@ -6,7 +6,7 @@
 
 # Class: DeleteRowUseCase
 
-Defined in: [application/usecase/RowModificationUseCases.ts:94](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/e20beb86538f08849d50b688bca0eb17506d34aa/src/application/usecase/RowModificationUseCases.ts#L94)
+Defined in: [application/usecase/RowModificationUseCases.ts:116](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/application/usecase/RowModificationUseCases.ts#L116)
 
 指定されたパスのノード（行／要素）を削除するユースケース。
 
@@ -16,7 +16,7 @@ Defined in: [application/usecase/RowModificationUseCases.ts:94](https://github.c
 
 > **new DeleteRowUseCase**(`parsers`): `DeleteRowUseCase`
 
-Defined in: [application/usecase/RowModificationUseCases.ts:95](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/e20beb86538f08849d50b688bca0eb17506d34aa/src/application/usecase/RowModificationUseCases.ts#L95)
+Defined in: [application/usecase/RowModificationUseCases.ts:117](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/application/usecase/RowModificationUseCases.ts#L117)
 
 #### Parameters
 
@@ -32,9 +32,9 @@ Defined in: [application/usecase/RowModificationUseCases.ts:95](https://github.c
 
 ### execute()
 
-> **execute**(`text`, `fileExtension`, `pathStr`): `string`
+> **execute**(`text`, `fileExtension`, `pathStr`, `options?`): `string`
 
-Defined in: [application/usecase/RowModificationUseCases.ts:104](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/e20beb86538f08849d50b688bca0eb17506d34aa/src/application/usecase/RowModificationUseCases.ts#L104)
+Defined in: [application/usecase/RowModificationUseCases.ts:127](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/application/usecase/RowModificationUseCases.ts#L127)
 
 行の削除を実行します。
 
@@ -57,6 +57,12 @@ Defined in: [application/usecase/RowModificationUseCases.ts:104](https://github.
 `string`
 
 削除対象ノードのパス文字列
+
+##### options?
+
+[`DocumentParseOptions`](../../../../domain/port/IDocumentParser/interfaces/DocumentParseOptions.md)
+
+解析オプション
 
 #### Returns
 

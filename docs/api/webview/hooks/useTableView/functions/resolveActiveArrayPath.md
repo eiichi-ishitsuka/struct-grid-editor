@@ -8,7 +8,7 @@
 
 > **resolveActiveArrayPath**(`data`, `candidate`): `string` \| `null`
 
-Defined in: [webview/hooks/useTableView.ts:28](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/e20beb86538f08849d50b688bca0eb17506d34aa/src/webview/hooks/useTableView.ts#L28)
+Defined in: [webview/hooks/useTableView.ts:28](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/webview/hooks/useTableView.ts#L28)
 
 有効な配列パスを検証・解決する。対象が存在しない場合はデフォルトパスへフォールバックする。
 

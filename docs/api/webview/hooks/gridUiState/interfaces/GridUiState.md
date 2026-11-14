@@ -6,7 +6,7 @@
 
 # Interface: GridUiState
 
-Defined in: [webview/hooks/gridUiState.ts:17](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/e20beb86538f08849d50b688bca0eb17506d34aa/src/webview/hooks/gridUiState.ts#L17)
+Defined in: [webview/hooks/gridUiState.ts:17](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/webview/hooks/gridUiState.ts#L17)
 
 既存 Webview state と互換性のある、React 側の永続 UI state。
 
@@ -20,7 +20,7 @@ Defined in: [webview/hooks/gridUiState.ts:17](https://github.com/eiichi-ishitsuk
 
 > `optional` **activeArrayPath?**: `string` \| `null`
 
-Defined in: [webview/hooks/gridUiState.ts:21](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/e20beb86538f08849d50b688bca0eb17506d34aa/src/webview/hooks/gridUiState.ts#L21)
+Defined in: [webview/hooks/gridUiState.ts:21](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/webview/hooks/gridUiState.ts#L21)
 
 ***
 
@@ -28,7 +28,7 @@ Defined in: [webview/hooks/gridUiState.ts:21](https://github.com/eiichi-ishitsuk
 
 > **currentPage**: `number`
 
-Defined in: [webview/hooks/gridUiState.ts:19](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/e20beb86538f08849d50b688bca0eb17506d34aa/src/webview/hooks/gridUiState.ts#L19)
+Defined in: [webview/hooks/gridUiState.ts:19](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/webview/hooks/gridUiState.ts#L19)
 
 ***
 
@@ -36,7 +36,7 @@ Defined in: [webview/hooks/gridUiState.ts:19](https://github.com/eiichi-ishitsuk
 
 > **customColOrders**: `Record`\<`string`, `string`[]\>
 
-Defined in: [webview/model/tableView.ts:15](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/e20beb86538f08849d50b688bca0eb17506d34aa/src/webview/model/tableView.ts#L15)
+Defined in: [webview/model/tableView.ts:15](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/webview/model/tableView.ts#L15)
 
 #### Inherited from
 
@@ -48,7 +48,7 @@ Defined in: [webview/model/tableView.ts:15](https://github.com/eiichi-ishitsuka/
 
 > **customColWidths**: `Record`\<`string`, `Record`\<`string`, `number`\>\>
 
-Defined in: [webview/hooks/gridUiState.ts:18](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/e20beb86538f08849d50b688bca0eb17506d34aa/src/webview/hooks/gridUiState.ts#L18)
+Defined in: [webview/hooks/gridUiState.ts:18](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/webview/hooks/gridUiState.ts#L18)
 
 ***
 
@@ -56,7 +56,7 @@ Defined in: [webview/hooks/gridUiState.ts:18](https://github.com/eiichi-ishitsuk
 
 > **customRowOrders**: `Record`\<`string`, `string`[]\>
 
-Defined in: [webview/model/tableView.ts:16](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/e20beb86538f08849d50b688bca0eb17506d34aa/src/webview/model/tableView.ts#L16)
+Defined in: [webview/model/tableView.ts:16](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/webview/model/tableView.ts#L16)
 
 #### Inherited from
 
@@ -68,7 +68,7 @@ Defined in: [webview/model/tableView.ts:16](https://github.com/eiichi-ishitsuka/
 
 > **hiddenCols**: `Record`\<`string`, `string`[]\>
 
-Defined in: [webview/model/tableView.ts:17](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/e20beb86538f08849d50b688bca0eb17506d34aa/src/webview/model/tableView.ts#L17)
+Defined in: [webview/model/tableView.ts:17](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/webview/model/tableView.ts#L17)
 
 #### Inherited from
 
@@ -80,7 +80,7 @@ Defined in: [webview/model/tableView.ts:17](https://github.com/eiichi-ishitsuka/
 
 > `optional` **pendingFocus?**: [`PendingFocus`](PendingFocus.md)
 
-Defined in: [webview/hooks/gridUiState.ts:20](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/e20beb86538f08849d50b688bca0eb17506d34aa/src/webview/hooks/gridUiState.ts#L20)
+Defined in: [webview/hooks/gridUiState.ts:20](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/webview/hooks/gridUiState.ts#L20)
 
 ***
 
@@ -88,7 +88,7 @@ Defined in: [webview/hooks/gridUiState.ts:20](https://github.com/eiichi-ishitsuk
 
 > **sortState**: `Record`\<`string`, [`TableSortState`](../../../model/tableView/interfaces/TableSortState.md) \| `undefined`\>
 
-Defined in: [webview/model/tableView.ts:18](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/e20beb86538f08849d50b688bca0eb17506d34aa/src/webview/model/tableView.ts#L18)
+Defined in: [webview/model/tableView.ts:18](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/webview/model/tableView.ts#L18)
 
 #### Inherited from
 

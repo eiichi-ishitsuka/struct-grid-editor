@@ -1,4 +1,4 @@
-import { IDocumentParser } from '../../domain/port/IDocumentParser';
+import { IDocumentParser, DocumentParseOptions } from '../../domain/port/IDocumentParser';
 import { CellPath } from '../../domain/model/CellPath';
 import { CellValue } from '../../domain/model/CellValue';
 
@@ -15,15 +15,23 @@ export class AddRowUseCase {
      * @param parentPathStr 追加先親ノードのパス文字列
      * @param key 新しいキー名
      * @param initialVal 初期値
+     * @param options 解析オプション
      * @returns 更新・シリアライズされたテキスト
      */
-    public execute(text: string, fileExtension: string, parentPathStr: string = '', key: string = 'newKey', initialVal: any = ''): string {
+    public execute(
+        text: string,
+        fileExtension: string,
+        parentPathStr: string = '',
+        key: string = 'newKey',
+        initialVal: any = '',
+        options?: DocumentParseOptions
+    ): string {
         const parser = this.parsers.find(p => p.supports(fileExtension));
         if (!parser) {
             throw new Error(`サポートされていないファイル拡張子です: .${fileExtension}`);
         }
 
-        const document = parser.parse(text);
+        const document = parser.parse(text, options);
         const parentPath = CellPath.fromString(parentPathStr);
         const cellValue = new CellValue(initialVal);
 
@@ -44,15 +52,22 @@ export class AddTableRowUseCase {
      * @param fileExtension ファイル拡張子
      * @param arrayPathStr 対象配列のパス文字列
      * @param newRowData 追加する行データ（省略時は自動推論）
+     * @param options 解析オプション
      * @returns 更新・シリアライズされたテキスト
      */
-    public execute(text: string, fileExtension: string, arrayPathStr: string = '', newRowData?: any): string {
+    public execute(
+        text: string,
+        fileExtension: string,
+        arrayPathStr: string = '',
+        newRowData?: any,
+        options?: DocumentParseOptions
+    ): string {
         const parser = this.parsers.find(p => p.supports(fileExtension));
         if (!parser) {
             throw new Error(`サポートされていないファイル拡張子です: .${fileExtension}`);
         }
 
-        const document = parser.parse(text);
+        const document = parser.parse(text, options);
         const arrayPath = CellPath.fromString(arrayPathStr);
 
         const updatedDoc = document.addTableRow(arrayPath, newRowData);
@@ -72,15 +87,22 @@ export class AddTableColumnUseCase {
      * @param fileExtension ファイル拡張子
      * @param arrayPathStr 対象配列のパス文字列
      * @param columnKey 追加するカラムキー名
+     * @param options 解析オプション
      * @returns 更新・シリアライズされたテキスト
      */
-    public execute(text: string, fileExtension: string, arrayPathStr: string = '', columnKey: string = 'newColumn'): string {
+    public execute(
+        text: string,
+        fileExtension: string,
+        arrayPathStr: string = '',
+        columnKey: string = 'newColumn',
+        options?: DocumentParseOptions
+    ): string {
         const parser = this.parsers.find(p => p.supports(fileExtension));
         if (!parser) {
             throw new Error(`サポートされていないファイル拡張子です: .${fileExtension}`);
         }
 
-        const document = parser.parse(text);
+        const document = parser.parse(text, options);
         const arrayPath = CellPath.fromString(arrayPathStr);
 
         const updatedDoc = document.addTableColumn(arrayPath, columnKey);
@@ -99,15 +121,21 @@ export class DeleteRowUseCase {
      * @param text 元のファイルテキスト
      * @param fileExtension ファイル拡張子
      * @param pathStr 削除対象ノードのパス文字列
+     * @param options 解析オプション
      * @returns 更新・シリアライズされたテキスト
      */
-    public execute(text: string, fileExtension: string, pathStr: string): string {
+    public execute(
+        text: string,
+        fileExtension: string,
+        pathStr: string,
+        options?: DocumentParseOptions
+    ): string {
         const parser = this.parsers.find(p => p.supports(fileExtension));
         if (!parser) {
             throw new Error(`サポートされていないファイル拡張子です: .${fileExtension}`);
         }
 
-        const document = parser.parse(text);
+        const document = parser.parse(text, options);
         const path = CellPath.fromString(pathStr);
 
         const updatedDoc = document.deleteNode(path);
@@ -128,6 +156,7 @@ export class RenameTableColumnUseCase {
      * @param arrayPathStr 対象配列のパス文字列
      * @param oldKey 変更元のカラム名
      * @param newKey 変更後の新しいカラム名
+     * @param options 解析オプション
      * @returns 更新・シリアライズされたテキスト
      */
     public execute(
@@ -135,14 +164,15 @@ export class RenameTableColumnUseCase {
         fileExtension: string,
         arrayPathStr: string,
         oldKey: string,
-        newKey: string
+        newKey: string,
+        options?: DocumentParseOptions
     ): string {
         const parser = this.parsers.find(p => p.supports(fileExtension));
         if (!parser) {
             throw new Error(`サポートされていないファイル拡張子です: .${fileExtension}`);
         }
 
-        const document = parser.parse(text);
+        const document = parser.parse(text, options);
         const arrayPath = CellPath.fromString(arrayPathStr);
 
         const updatedDoc = document.renameTableColumn(arrayPath, oldKey, newKey);
@@ -162,20 +192,22 @@ export class RenameKeyUseCase {
      * @param fileExtension ファイル拡張子
      * @param pathStr 対象ノードのパス文字列
      * @param newKey 新しいキー名
+     * @param options 解析オプション
      * @returns 更新・シリアライズされたテキスト
      */
     public execute(
         text: string,
         fileExtension: string,
         pathStr: string,
-        newKey: string
+        newKey: string,
+        options?: DocumentParseOptions
     ): string {
         const parser = this.parsers.find(p => p.supports(fileExtension));
         if (!parser) {
             throw new Error(`サポートされていないファイル拡張子です: .${fileExtension}`);
         }
 
-        const document = parser.parse(text);
+        const document = parser.parse(text, options);
         const path = CellPath.fromString(pathStr);
 
         const updatedDoc = document.renameNodeKey(path, newKey);
@@ -196,6 +228,7 @@ export class MoveTableRowUseCase {
      * @param arrayPathStr 対象配列のパス文字列
      * @param fromIndex 移動元インデックス
      * @param toIndex 移動先インデックス
+     * @param options 解析オプション
      * @returns 更新・シリアライズされたテキスト
      */
     public execute(
@@ -203,14 +236,15 @@ export class MoveTableRowUseCase {
         fileExtension: string,
         arrayPathStr: string,
         fromIndex: number,
-        toIndex: number
+        toIndex: number,
+        options?: DocumentParseOptions
     ): string {
         const parser = this.parsers.find(p => p.supports(fileExtension));
         if (!parser) {
             throw new Error(`サポートされていないファイル拡張子です: .${fileExtension}`);
         }
 
-        const document = parser.parse(text);
+        const document = parser.parse(text, options);
         const arrayPath = CellPath.fromString(arrayPathStr);
 
         const updatedDoc = document.moveTableRow(arrayPath, fromIndex, toIndex);
@@ -231,6 +265,7 @@ export class MoveTableColumnUseCase {
      * @param arrayPathStr 対象配列のパス文字列
      * @param fromIndex 移動元カラムインデックス
      * @param toIndex 移動先カラムインデックス
+     * @param options 解析オプション
      * @returns 更新・シリアライズされたテキスト
      */
     public execute(
@@ -238,14 +273,15 @@ export class MoveTableColumnUseCase {
         fileExtension: string,
         arrayPathStr: string,
         fromIndex: number,
-        toIndex: number
+        toIndex: number,
+        options?: DocumentParseOptions
     ): string {
         const parser = this.parsers.find(p => p.supports(fileExtension));
         if (!parser) {
             throw new Error(`サポートされていないファイル拡張子です: .${fileExtension}`);
         }
 
-        const document = parser.parse(text);
+        const document = parser.parse(text, options);
         const arrayPath = CellPath.fromString(arrayPathStr);
 
         const updatedDoc = document.moveTableColumn(arrayPath, fromIndex, toIndex);
@@ -265,20 +301,22 @@ export class ClearTableColumnUseCase {
      * @param fileExtension ファイル拡張子
      * @param arrayPathStr 対象配列のパス文字列
      * @param columnKey 対象のカラムキー名
+     * @param options 解析オプション
      * @returns 更新・シリアライズされたテキスト
      */
     public execute(
         text: string,
         fileExtension: string,
         arrayPathStr: string,
-        columnKey: string
+        columnKey: string,
+        options?: DocumentParseOptions
     ): string {
         const parser = this.parsers.find(p => p.supports(fileExtension));
         if (!parser) {
             throw new Error(`サポートされていないファイル拡張子です: .${fileExtension}`);
         }
 
-        const document = parser.parse(text);
+        const document = parser.parse(text, options);
         const arrayPath = CellPath.fromString(arrayPathStr);
 
         const updatedDoc = document.clearTableColumn(arrayPath, columnKey);
@@ -297,19 +335,21 @@ export class ClearTableDataUseCase {
      * @param text 元のファイルテキスト
      * @param fileExtension ファイル拡張子
      * @param arrayPathStr 対象配列のパス文字列
+     * @param options 解析オプション
      * @returns 更新・シリアライズされたテキスト
      */
     public execute(
         text: string,
         fileExtension: string,
-        arrayPathStr: string
+        arrayPathStr: string,
+        options?: DocumentParseOptions
     ): string {
         const parser = this.parsers.find(p => p.supports(fileExtension));
         if (!parser) {
             throw new Error(`サポートされていないファイル拡張子です: .${fileExtension}`);
         }
 
-        const document = parser.parse(text);
+        const document = parser.parse(text, options);
         const arrayPath = CellPath.fromString(arrayPathStr);
 
         const updatedDoc = document.clearTableData(arrayPath);

@@ -6,7 +6,7 @@
 
 # Class: RenameTableColumnUseCase
 
-Defined in: [application/usecase/RowModificationUseCases.ts:121](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/e20beb86538f08849d50b688bca0eb17506d34aa/src/application/usecase/RowModificationUseCases.ts#L121)
+Defined in: [application/usecase/RowModificationUseCases.ts:149](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/application/usecase/RowModificationUseCases.ts#L149)
 
 テーブルビューのカラム名を変更するユースケース。
 
@@ -16,7 +16,7 @@ Defined in: [application/usecase/RowModificationUseCases.ts:121](https://github.
 
 > **new RenameTableColumnUseCase**(`parsers`): `RenameTableColumnUseCase`
 
-Defined in: [application/usecase/RowModificationUseCases.ts:122](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/e20beb86538f08849d50b688bca0eb17506d34aa/src/application/usecase/RowModificationUseCases.ts#L122)
+Defined in: [application/usecase/RowModificationUseCases.ts:150](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/application/usecase/RowModificationUseCases.ts#L150)
 
 #### Parameters
 
@@ -32,9 +32,9 @@ Defined in: [application/usecase/RowModificationUseCases.ts:122](https://github.
 
 ### execute()
 
-> **execute**(`text`, `fileExtension`, `arrayPathStr`, `oldKey`, `newKey`): `string`
+> **execute**(`text`, `fileExtension`, `arrayPathStr`, `oldKey`, `newKey`, `options?`): `string`
 
-Defined in: [application/usecase/RowModificationUseCases.ts:133](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/e20beb86538f08849d50b688bca0eb17506d34aa/src/application/usecase/RowModificationUseCases.ts#L133)
+Defined in: [application/usecase/RowModificationUseCases.ts:162](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/application/usecase/RowModificationUseCases.ts#L162)
 
 カラム名の変更を実行します。
 
@@ -69,6 +69,12 @@ Defined in: [application/usecase/RowModificationUseCases.ts:133](https://github.
 `string`
 
 変更後の新しいカラム名
+
+##### options?
+
+[`DocumentParseOptions`](../../../../domain/port/IDocumentParser/interfaces/DocumentParseOptions.md)
+
+解析オプション
 
 #### Returns
 

@@ -3,22 +3,22 @@
 本ドキュメントは、`src/test/` 配下のテストコード（JSDoc / docstring）から自動抽出・生成されたテスト仕様一覧です。
 
 - **総テストスイート数**: 20
-- **総テストケース数**: 112
+- **総テストケース数**: 120
 - **生成スクリプト**: `scripts/generate-test-docs.js` (`npm run doc` にて自動更新)
 
 ## 目次
 
-1. [ParseDocumentUseCase with Table View & Drill-down (13件)](#parsedocumentusecase-with-table-view-drill-down)
+1. [ParseDocumentUseCase with Table View & Drill-down (14件)](#parsedocumentusecase-with-table-view-drill-down)
 2. [CellPath (5件)](#cellpath)
 3. [StructuredDocument Operations (8件)](#structureddocument-operations)
 4. [TableView Domain Model (4件)](#tableview-domain-model)
 5. [TreeFlattener (4件)](#treeflattener)
 6. [Extension Test Suite (1件)](#extension-test-suite)
-7. [JsonDocumentParser (9件)](#jsondocumentparser)
+7. [JsonDocumentParser (14件)](#jsondocumentparser)
 8. [WebviewRenderer (3件)](#webviewrenderer)
-9. [Tiptap Editor Extensions Integration (6件)](#tiptap-editor-extensions-integration)
+9. [Tiptap Editor Extensions Integration (7件)](#tiptap-editor-extensions-integration)
 10. [markdownCodec - Markdown <-> HTML Codec (12件)](#markdowncodec---markdown---html-codec)
-11. [React Webview App (10件)](#react-webview-app)
+11. [React Webview App (11件)](#react-webview-app)
 12. [Breadcrumbs Component (2件)](#breadcrumbs-component)
 13. [ColumnVisibilityMenu Component (3件)](#columnvisibilitymenu-component)
 14. [EditableCell Component (4件)](#editablecell-component)
@@ -34,7 +34,7 @@
 ## 1. ParseDocumentUseCase with Table View & Drill-down
 
 - **テストファイル**: [`src/test/application/ParseDocumentUseCase.test.ts`](../src/test/application/ParseDocumentUseCase.test.ts)
-- **ケース数**: 13
+- **ケース数**: 14
 
 | # | テストケース名 | 観点 | テスト内容（検証内容） |
 | :--- | :--- | :--- | :--- |
@@ -51,6 +51,7 @@
 | 11 | `should rename column in YAML document` | YAMLドキュメントにおける列名リネームとYAMLシリアライズの整合性確認 | YAML形式のドキュメント内のネストされたプリミティブ配列に対して列名変更を実行した際、YAMLのインデント構造を維持したままオブジェクトリスト形式へ変換・保存されることを検証する。 |
 | 12 | `should parse JSONL into table mode with columns and rows` | JSONLドキュメントのスプレッドシート（table）モード判定と列・行のDTOマッピング確認 | 未記載 |
 | 13 | `should add table row in JSONL document through use case` | JSONLドキュメントに対するテーブル行追加ユースケースの動作検証 | 未記載 |
+| 14 | `should parse CSV/TSV in both header and headerless modes and preserve header-only CSV columns` | CSVおよびTSVドキュメントのヘッダー有無（hasHeader）切り替えと型バッジ判定の確認 | CSVをhasHeader: trueおよびfalseで解析した際の列定義・型シンボル推論・ドット入り列名更新、およびヘッダーのみのTSVへの行追加動作を検証する。 |
 
 ## 2. CellPath
 
@@ -117,7 +118,7 @@
 ## 7. JsonDocumentParser
 
 - **テストファイル**: [`src/test/infrastructure/Parsers.test.ts`](../src/test/infrastructure/Parsers.test.ts)
-- **ケース数**: 9
+- **ケース数**: 14
 
 | # | テストケース名 | 観点 | テスト内容（検証内容） |
 | :--- | :--- | :--- | :--- |
@@ -130,6 +131,11 @@
 | 7 | `handles empty lines and comments in JSONL` | 空行スキップおよびコメント付きJSONL（JSONC対応）の検証 | 未記載 |
 | 8 | `supports adding and deleting table rows in JSONL` | 行追加・行削除の操作とシリアライズ確認 | 未記載 |
 | 9 | `handles empty text gracefully` | 空ドキュメントの安全なパースとシリアライズ | 未記載 |
+| 10 | `supports csv and tsv extensions respectively` | 拡張子サポート判定（csv, tsv）の確認 | CsvDocumentParser が csv/.csv のみをサポートし、TsvDocumentParser が tsv/.tsv のみをサポートすることを検証する。 |
+| 11 | `parses CSV with header, infers primitive types, updates cell, and serializes` | ヘッダー付きCSVのパース、型自動推論（数値・真偽値・先頭ゼロ文字列維持）、セル更新・シリアライズの確認 | 1行目をヘッダーとしてCSVを解析し、数値・真偽値・先頭ゼロ文字列（0012）の型が正しく推論され、カンマを含む値へのセル更新後にクォート付きでシリアライズされることを検証する。 |
+| 12 | `parses and serializes CSV without header when hasHeader is false` | ヘッダーなし（hasHeader: false）モードでのCSVパースとシリアライズの確認 | hasHeader: false 指定時に1行目からデータ行（col1, col2, col3）として解析され、シリアライズ時もヘッダー行を出力せずデータ行のみ出力されることを検証する。 |
+| 13 | `handles escaped quotes and multiline cells in CSV` | RFC 4180 ダブルクォートエスケープ（""）およびセル内改行のパース・シリアライズ確認 | ダブルクォートの二重エスケープや改行を含むCSVセルが1つのセル文字列として正確に解析され、再シリアライズで元のRFC 4180表現に戻ることを検証する。 |
+| 14 | `parses and serializes TSV correctly` | TSVドキュメントのパースおよびシリアライズ確認 | CRLF改行およびタブ区切りを持つTSV文字列をパースし、セル値更新後もCRLF改行とタブ区切りを維持してシリアライズされることを検証する。 |
 
 ## 8. WebviewRenderer
 
@@ -145,7 +151,7 @@
 ## 9. Tiptap Editor Extensions Integration
 
 - **テストファイル**: [`src/test/md-webview/editorExtensions.test.ts`](../src/test/md-webview/editorExtensions.test.ts)
-- **ケース数**: 6
+- **ケース数**: 7
 
 | # | テストケース名 | 観点 | テスト内容（検証内容） |
 | :--- | :--- | :--- | :--- |
@@ -155,6 +161,7 @@
 | 4 | `renders KaTeX inline and block math nodes with katex output` | KaTeX数式ノードのDOM描画とMarkdownシリアライズ保持 | インライン数式とブロック数式がKaTeXによってDOM描画され、かつエディタからHTML経由でMarkdownへ変換した際に数式が欠落せず保持されることを検証する。 |
 | 5 | `reveals Markdown syntax markers (#, **) only on the active cursor line/mark` | カーソル位置に応じたMarkdown記法マーカーの動的表示（Live Preview） | 見出しや太字箇所にカーソルが当たっている時のみ ## や ** の構文マーカーが表示され、カーソルが外れると非表示になることを検証する。 |
 | 6 | `switches color scheme between Light (default) and Dark (slate) via toolbar` | ツールバーによるライト（default）・ダーク（slate）テーマ切り替え | 上部ツールバーのテーマ切り替えボタンを押下した際、data-md-color-scheme属性とボタンラベルがLight/Dark間で正しく切り替わることを検証する。 |
+| 7 | `preserves relative file links and attaches data-link-href to link syntax markers` | 相対パスリンク（../.agents/...）の href 属性保持と Live Preview マーカーへの data-link-href 付与 | ドット始まりや親ディレクトリ参照を含む相対パスリンクが Tiptap Link 拡張によって欠落せず保持され、カーソル接触時の構文マーカーにも data-link-href 属性が付与されることを検証する。 |
 
 ## 10. markdownCodec - Markdown <-> HTML Codec
 
@@ -179,7 +186,7 @@
 ## 11. React Webview App
 
 - **テストファイル**: [`src/test/webview/App.test.tsx`](../src/test/webview/App.test.tsx)
-- **ケース数**: 10
+- **ケース数**: 11
 
 | # | テストケース名 | 観点 | テスト内容（検証内容） |
 | :--- | :--- | :--- | :--- |
@@ -193,6 +200,7 @@
 | 8 | `applies saved column widths from state` | 保存された列幅（customColWidths）を初期描画に反映すること | 未記載 |
 | 9 | `reorders columns on drag and drop` | 列のドラッグ＆ドロップで列の並び順が更新されること | 未記載 |
 | 10 | `navigates sub-array in KV mode and preserves array view across state restoration` | KVモードの配列を「編集する」で開いた後、Webview再読み込み（編集・行追加）が発生しても配列画面を維持すること | 未記載 |
+| 11 | `renders CSV header toggle and sends set_csv_header message when toggled` | CSV/TSV ドキュメント表示時に「1行目をヘッダーにする」チェックボックスが表示され、切り替え時に set_csv_header メッセージを送信すること | documentTypeがcsvのデータでAppを描画し、ツールバーのヘッダートグルをクリックした際にset_csv_headerメッセージがpostMessageされることを検証する。 |
 
 ## 12. Breadcrumbs Component
 

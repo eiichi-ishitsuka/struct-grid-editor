@@ -8,4 +8,5 @@
 
 ## Interfaces
 
+- [DocumentParseOptions](interfaces/DocumentParseOptions.md)
 - [IDocumentParser](interfaces/IDocumentParser.md)

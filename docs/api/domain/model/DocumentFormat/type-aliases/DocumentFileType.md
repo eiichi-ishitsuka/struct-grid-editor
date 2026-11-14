@@ -6,8 +6,8 @@
 
 # Type Alias: DocumentFileType
 
-> **DocumentFileType** = `"json"` \| `"yaml"` \| `"jsonl"`
+> **DocumentFileType** = `"json"` \| `"yaml"` \| `"jsonl"` \| `"csv"` \| `"tsv"`
 
-Defined in: [domain/model/DocumentFormat.ts:4](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/e20beb86538f08849d50b688bca0eb17506d34aa/src/domain/model/DocumentFormat.ts#L4)
+Defined in: [domain/model/DocumentFormat.ts:4](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/domain/model/DocumentFormat.ts#L4)
 
 サポートされているドキュメントファイル形式。

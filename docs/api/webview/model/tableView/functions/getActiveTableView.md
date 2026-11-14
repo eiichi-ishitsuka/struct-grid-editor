@@ -8,7 +8,7 @@
 
 > **getActiveTableView**(`data`, `activeArrayPath`): [`TableViewDto`](../../../../application/dto/GridData/interfaces/TableViewDto.md) \| `null`
 
-Defined in: [webview/model/tableView.ts:42](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/e20beb86538f08849d50b688bca0eb17506d34aa/src/webview/model/tableView.ts#L42)
+Defined in: [webview/model/tableView.ts:42](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/webview/model/tableView.ts#L42)
 
 指定パスに対応するテーブルを取得する。null は KV 表示中を表す。
 

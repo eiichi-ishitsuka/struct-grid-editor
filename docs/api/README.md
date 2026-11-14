@@ -20,6 +20,7 @@
 - [domain/port/IDocumentParser](domain/port/IDocumentParser/README.md)
 - [domain/service/FormatPreserver](domain/service/FormatPreserver/README.md)
 - [domain/service/TreeFlattener](domain/service/TreeFlattener/README.md)
+- [infrastructure/parser/DelimitedDocumentParser](infrastructure/parser/DelimitedDocumentParser/README.md)
 - [infrastructure/parser/JsonDocumentParser](infrastructure/parser/JsonDocumentParser/README.md)
 - [infrastructure/parser/JsonlDocumentParser](infrastructure/parser/JsonlDocumentParser/README.md)
 - [infrastructure/parser/YamlDocumentParser](infrastructure/parser/YamlDocumentParser/README.md)

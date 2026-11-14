@@ -1,14 +1,14 @@
 {
   "name": "struct-grid-editor",
   "displayName": "StructGridEditor",
-  "description": "Edit JSON, YAML, JSONL, and Markdown files in a rich visual grid or live preview editor.",
+  "description": "Edit JSON, YAML, JSONL, CSV, TSV, and Markdown files in a rich visual grid or live preview editor.",
   "icon": "assets/img/icon.jpg",
   "publisher": "eiichi-ishitsuka",
   "repository": {
     "type": "git",
     "url": "https://github.com/eiichi-ishitsuka/struct-grid-editor"
   },
-  "version": "0.1.0",
+  "version": "0.2.0",
   "license": "MIT",
   "engines": {
     "vscode": "^1.107.0"
@@ -21,6 +21,8 @@
     "json",
     "yaml",
     "jsonl",
+    "csv",
+    "tsv",
     "markdown",
     "wysiwyg",
     "editor"
@@ -68,7 +70,7 @@
       "explorer/context": [
         {
           "command": "struct-grid-editor.openInGrid",
-          "when": "resourceExtname == .json || resourceExtname == .yaml || resourceExtname == .yml || resourceExtname == .jsonl",
+          "when": "resourceExtname == .json || resourceExtname == .yaml || resourceExtname == .yml || resourceExtname == .jsonl || resourceExtname == .csv || resourceExtname == .tsv",
           "group": "navigation"
         },
         {
@@ -80,7 +82,7 @@
       "editor/title/context": [
         {
           "command": "struct-grid-editor.openInGrid",
-          "when": "resourceExtname == .json || resourceExtname == .yaml || resourceExtname == .yml || resourceExtname == .jsonl",
+          "when": "resourceExtname == .json || resourceExtname == .yaml || resourceExtname == .yml || resourceExtname == .jsonl || resourceExtname == .csv || resourceExtname == .tsv",
           "group": "navigation"
         },
         {
@@ -92,7 +94,7 @@
       "editor/title": [
         {
           "command": "struct-grid-editor.openInGrid",
-          "when": "resourceExtname == .json || resourceExtname == .yaml || resourceExtname == .yml || resourceExtname == .jsonl",
+          "when": "resourceExtname == .json || resourceExtname == .yaml || resourceExtname == .yml || resourceExtname == .jsonl || resourceExtname == .csv || resourceExtname == .tsv",
           "group": "navigation"
         },
         {
@@ -135,6 +137,18 @@
           },
           {
             "filenamePattern": "**/*.jsonl"
+          },
+          {
+            "filenamePattern": "*.csv"
+          },
+          {
+            "filenamePattern": "**/*.csv"
+          },
+          {
+            "filenamePattern": "*.tsv"
+          },
+          {
+            "filenamePattern": "**/*.tsv"
           }
         ],
         "priority": "option"
@@ -171,6 +185,16 @@
           "type": "boolean",
           "default": true,
           "description": "JSONLファイル (*.jsonl) をデフォルトで StructGridEditor で開く"
+        },
+        "struct-grid-editor.openByDefault.csv": {
+          "type": "boolean",
+          "default": true,
+          "description": "CSVファイル (*.csv) をデフォルトで StructGridEditor で開く"
+        },
+        "struct-grid-editor.openByDefault.tsv": {
+          "type": "boolean",
+          "default": true,
+          "description": "TSVファイル (*.tsv) をデフォルトで StructGridEditor で開く"
         },
         "struct-grid-editor.openByDefault.json": {
           "type": "boolean",
