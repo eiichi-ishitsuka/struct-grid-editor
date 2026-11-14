@@ -6,7 +6,7 @@
 
 # Class: StructuredDocument
 
-Defined in: [domain/model/StructuredDocument.ts:13](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/e20beb86538f08849d50b688bca0eb17506d34aa/src/domain/model/StructuredDocument.ts#L13)
+Defined in: [domain/model/StructuredDocument.ts:13](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/domain/model/StructuredDocument.ts#L13)
 
 構造化ドキュメントを表現する集約ルート（Aggregate Root）。
 ドキュメント構文木、書式メタデータ、およびドメイン操作をカプセル化します。
@@ -17,7 +17,7 @@ Defined in: [domain/model/StructuredDocument.ts:13](https://github.com/eiichi-is
 
 > **new StructuredDocument**(`root`, `format`, `treeFlattener?`): `StructuredDocument`
 
-Defined in: [domain/model/StructuredDocument.ts:16](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/e20beb86538f08849d50b688bca0eb17506d34aa/src/domain/model/StructuredDocument.ts#L16)
+Defined in: [domain/model/StructuredDocument.ts:16](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/domain/model/StructuredDocument.ts#L16)
 
 #### Parameters
 
@@ -47,7 +47,7 @@ Defined in: [domain/model/StructuredDocument.ts:16](https://github.com/eiichi-is
 
 > `readonly` **format**: [`DocumentFormat`](../../DocumentFormat/classes/DocumentFormat.md)
 
-Defined in: [domain/model/StructuredDocument.ts:20](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/e20beb86538f08849d50b688bca0eb17506d34aa/src/domain/model/StructuredDocument.ts#L20)
+Defined in: [domain/model/StructuredDocument.ts:20](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/domain/model/StructuredDocument.ts#L20)
 
 ドキュメントの書式メタデータ
 
@@ -57,7 +57,7 @@ Defined in: [domain/model/StructuredDocument.ts:20](https://github.com/eiichi-is
 
 > `readonly` **root**: [`TreeNode`](../../TreeNode/classes/TreeNode.md)
 
-Defined in: [domain/model/StructuredDocument.ts:18](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/e20beb86538f08849d50b688bca0eb17506d34aa/src/domain/model/StructuredDocument.ts#L18)
+Defined in: [domain/model/StructuredDocument.ts:18](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/domain/model/StructuredDocument.ts#L18)
 
 ドキュメントのルート構文木ノード
 
@@ -67,7 +67,7 @@ Defined in: [domain/model/StructuredDocument.ts:18](https://github.com/eiichi-is
 
 > **addNode**(`parentPath`, `key`, `initialValue`): `StructuredDocument`
 
-Defined in: [domain/model/StructuredDocument.ts:44](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/e20beb86538f08849d50b688bca0eb17506d34aa/src/domain/model/StructuredDocument.ts#L44)
+Defined in: [domain/model/StructuredDocument.ts:44](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/domain/model/StructuredDocument.ts#L44)
 
 指定された親パスの下に新しいノード／要素を追加します。
 
@@ -103,7 +103,7 @@ Defined in: [domain/model/StructuredDocument.ts:44](https://github.com/eiichi-is
 
 > **addTableColumn**(`arrayPath`, `columnKey`, `defaultValue?`): `StructuredDocument`
 
-Defined in: [domain/model/StructuredDocument.ts:192](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/e20beb86538f08849d50b688bca0eb17506d34aa/src/domain/model/StructuredDocument.ts#L192)
+Defined in: [domain/model/StructuredDocument.ts:203](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/domain/model/StructuredDocument.ts#L203)
 
 指定された配列パス（arrayPath）の全オブジェクト要素に新しいカラム（プロパティ）を追加します。
 
@@ -139,7 +139,7 @@ Defined in: [domain/model/StructuredDocument.ts:192](https://github.com/eiichi-i
 
 > **addTableRow**(`arrayPath`, `newRowData?`): `StructuredDocument`
 
-Defined in: [domain/model/StructuredDocument.ts:152](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/e20beb86538f08849d50b688bca0eb17506d34aa/src/domain/model/StructuredDocument.ts#L152)
+Defined in: [domain/model/StructuredDocument.ts:155](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/domain/model/StructuredDocument.ts#L155)
 
 指定された配列パス（arrayPath）に新しい行（要素）を追加します。
 
@@ -169,7 +169,7 @@ Defined in: [domain/model/StructuredDocument.ts:152](https://github.com/eiichi-i
 
 > **clearTableColumn**(`arrayPath`, `columnKey`): `StructuredDocument`
 
-Defined in: [domain/model/StructuredDocument.ts:449](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/e20beb86538f08849d50b688bca0eb17506d34aa/src/domain/model/StructuredDocument.ts#L449)
+Defined in: [domain/model/StructuredDocument.ts:487](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/domain/model/StructuredDocument.ts#L487)
 
 指定された配列パス内の全行から指定カラムの値をクリア（空文字列に設定）します。
 
@@ -199,7 +199,7 @@ Defined in: [domain/model/StructuredDocument.ts:449](https://github.com/eiichi-i
 
 > **clearTableData**(`arrayPath`): `StructuredDocument`
 
-Defined in: [domain/model/StructuredDocument.ts:483](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/e20beb86538f08849d50b688bca0eb17506d34aa/src/domain/model/StructuredDocument.ts#L483)
+Defined in: [domain/model/StructuredDocument.ts:521](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/domain/model/StructuredDocument.ts#L521)
 
 指定された配列パス内の全行のデータセルの値をクリア（空文字列に設定）します。
 
@@ -223,7 +223,7 @@ Defined in: [domain/model/StructuredDocument.ts:483](https://github.com/eiichi-i
 
 > **deleteNode**(`path`): `StructuredDocument`
 
-Defined in: [domain/model/StructuredDocument.ts:74](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/e20beb86538f08849d50b688bca0eb17506d34aa/src/domain/model/StructuredDocument.ts#L74)
+Defined in: [domain/model/StructuredDocument.ts:74](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/domain/model/StructuredDocument.ts#L74)
 
 指定されたパスのノードを削除します。
 
@@ -247,7 +247,7 @@ Defined in: [domain/model/StructuredDocument.ts:74](https://github.com/eiichi-is
 
 > **findNode**(`path`): [`TreeNode`](../../TreeNode/classes/TreeNode.md) \| `null`
 
-Defined in: [domain/model/StructuredDocument.ts:117](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/e20beb86538f08849d50b688bca0eb17506d34aa/src/domain/model/StructuredDocument.ts#L117)
+Defined in: [domain/model/StructuredDocument.ts:117](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/domain/model/StructuredDocument.ts#L117)
 
 指定されたパスの TreeNode を探索して取得します。
 
@@ -271,7 +271,7 @@ Defined in: [domain/model/StructuredDocument.ts:117](https://github.com/eiichi-i
 
 > **findSubArrays**(): `object`[]
 
-Defined in: [domain/model/StructuredDocument.ts:516](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/e20beb86538f08849d50b688bca0eb17506d34aa/src/domain/model/StructuredDocument.ts#L516)
+Defined in: [domain/model/StructuredDocument.ts:554](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/domain/model/StructuredDocument.ts#L554)
 
 ドキュメントツリー内に存在するすべての配列ノードを探索して一覧を返します。
 
@@ -287,7 +287,7 @@ Defined in: [domain/model/StructuredDocument.ts:516](https://github.com/eiichi-i
 
 > **isArrayRoot**(): `boolean`
 
-Defined in: [domain/model/StructuredDocument.ts:108](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/e20beb86538f08849d50b688bca0eb17506d34aa/src/domain/model/StructuredDocument.ts#L108)
+Defined in: [domain/model/StructuredDocument.ts:108](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/domain/model/StructuredDocument.ts#L108)
 
 ドキュメントのルートが配列形式であるかを判定します。
 
@@ -303,7 +303,7 @@ Defined in: [domain/model/StructuredDocument.ts:108](https://github.com/eiichi-i
 
 > **moveTableColumn**(`arrayPath`, `fromIndex`, `toIndex`): `StructuredDocument`
 
-Defined in: [domain/model/StructuredDocument.ts:389](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/e20beb86538f08849d50b688bca0eb17506d34aa/src/domain/model/StructuredDocument.ts#L389)
+Defined in: [domain/model/StructuredDocument.ts:427](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/domain/model/StructuredDocument.ts#L427)
 
 テーブルビューにおいて、オブジェクトプロパティの順序を再配置することでカラムを移動します。
 
@@ -339,7 +339,7 @@ Defined in: [domain/model/StructuredDocument.ts:389](https://github.com/eiichi-i
 
 > **moveTableRow**(`arrayPath`, `fromIndex`, `toIndex`): `StructuredDocument`
 
-Defined in: [domain/model/StructuredDocument.ts:357](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/e20beb86538f08849d50b688bca0eb17506d34aa/src/domain/model/StructuredDocument.ts#L357)
+Defined in: [domain/model/StructuredDocument.ts:395](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/domain/model/StructuredDocument.ts#L395)
 
 指定された配列パス（arrayPath）内の行を fromIndex から toIndex へ移動（並び替え）します。
 
@@ -375,7 +375,7 @@ Defined in: [domain/model/StructuredDocument.ts:357](https://github.com/eiichi-i
 
 > **renameNodeKey**(`path`, `newKey`): `StructuredDocument`
 
-Defined in: [domain/model/StructuredDocument.ts:296](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/e20beb86538f08849d50b688bca0eb17506d34aa/src/domain/model/StructuredDocument.ts#L296)
+Defined in: [domain/model/StructuredDocument.ts:334](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/domain/model/StructuredDocument.ts#L334)
 
 指定されたパスにあるオブジェクト内のプロパティキー名を変更します。
 
@@ -405,7 +405,7 @@ Defined in: [domain/model/StructuredDocument.ts:296](https://github.com/eiichi-i
 
 > **renameTableColumn**(`arrayPath`, `oldKey`, `newKey`): `StructuredDocument`
 
-Defined in: [domain/model/StructuredDocument.ts:242](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/e20beb86538f08849d50b688bca0eb17506d34aa/src/domain/model/StructuredDocument.ts#L242)
+Defined in: [domain/model/StructuredDocument.ts:263](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/domain/model/StructuredDocument.ts#L263)
 
 指定された配列パス（arrayPath）内のカラム名を変更します。
 オブジェクト配列の場合は全要素の oldKey を newKey に置換します。
@@ -443,7 +443,7 @@ Defined in: [domain/model/StructuredDocument.ts:242](https://github.com/eiichi-i
 
 > **toFlatRows**(`options?`): [`FlatRow`](../../FlatRow/classes/FlatRow.md)[]
 
-Defined in: [domain/model/StructuredDocument.ts:544](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/e20beb86538f08849d50b688bca0eb17506d34aa/src/domain/model/StructuredDocument.ts#L544)
+Defined in: [domain/model/StructuredDocument.ts:582](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/domain/model/StructuredDocument.ts#L582)
 
 スプレッドシートテーブル描画に適したフラットな行リストを取得します。
 デフォルトでは、ネスト配列は折りたたまれて1行として表現されます。
@@ -468,7 +468,7 @@ Defined in: [domain/model/StructuredDocument.ts:544](https://github.com/eiichi-i
 
 > **toJS**(): `any`
 
-Defined in: [domain/model/StructuredDocument.ts:556](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/e20beb86538f08849d50b688bca0eb17506d34aa/src/domain/model/StructuredDocument.ts#L556)
+Defined in: [domain/model/StructuredDocument.ts:594](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/domain/model/StructuredDocument.ts#L594)
 
 標準的な JavaScript 表現（オブジェクト／配列）に変換します。
 
@@ -484,7 +484,7 @@ JavaScript データ
 
 > **toTableView**(`targetPath?`): [`TableView`](../../TableView/classes/TableView.md) \| `null`
 
-Defined in: [domain/model/StructuredDocument.ts:137](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/e20beb86538f08849d50b688bca0eb17506d34aa/src/domain/model/StructuredDocument.ts#L137)
+Defined in: [domain/model/StructuredDocument.ts:137](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/domain/model/StructuredDocument.ts#L137)
 
 ルート配列または指定された targetPath のネスト配列から TableView を生成します。
 
@@ -508,7 +508,7 @@ TableView インスタンス、対象が配列でない場合は null
 
 > **updateCell**(`path`, `newValue`): `StructuredDocument`
 
-Defined in: [domain/model/StructuredDocument.ts:32](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/e20beb86538f08849d50b688bca0eb17506d34aa/src/domain/model/StructuredDocument.ts#L32)
+Defined in: [domain/model/StructuredDocument.ts:32](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/domain/model/StructuredDocument.ts#L32)
 
 指定されたパスのセル値を更新した新しい StructuredDocument インスタンスを生成して返します（イミュータブル更新）。
 

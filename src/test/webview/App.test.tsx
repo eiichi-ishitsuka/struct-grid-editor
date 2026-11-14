@@ -342,4 +342,27 @@ describe('React Webview App', () => {
         expect(screen.getByText('My Document')).not.toBeNull();
         expect(screen.queryByRole('columnheader', { name: /Value/ })).toBeNull();
     });
+
+    /**
+     * 【観点】CSV/TSV ドキュメント表示時に「1行目をヘッダーにする」チェックボックスが表示され、切り替え時に set_csv_header メッセージを送信すること
+     * 【テスト内容】documentTypeがcsvのデータでAppを描画し、ツールバーのヘッダートグルをクリックした際にset_csv_headerメッセージがpostMessageされることを検証する。
+     */
+    it('renders CSV header toggle and sends set_csv_header message when toggled', async () => {
+        const user = userEvent.setup();
+        render(<App initialData={{
+            ...tableData,
+            documentType: 'csv',
+            hasHeader: true,
+        }} />);
+
+        const headerCheckbox = document.getElementById('csvHeaderToggle') as HTMLInputElement | null;
+        expect(headerCheckbox).not.toBeNull();
+        expect(headerCheckbox?.checked).toBe(true);
+
+        await user.click(headerCheckbox!);
+        expect(postMessageMock).toHaveBeenCalledWith({
+            command: 'set_csv_header',
+            hasHeader: false,
+        });
+    });
 });

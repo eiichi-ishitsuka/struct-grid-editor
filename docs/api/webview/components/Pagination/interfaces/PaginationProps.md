@@ -6,7 +6,7 @@
 
 # Interface: PaginationProps
 
-Defined in: [webview/components/Pagination.tsx:4](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/e20beb86538f08849d50b688bca0eb17506d34aa/src/webview/components/Pagination.tsx#L4)
+Defined in: [webview/components/Pagination.tsx:4](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/webview/components/Pagination.tsx#L4)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [webview/components/Pagination.tsx:4](https://github.com/eiichi-ishi
 
 > **onPageChange**: (`page`) => `void`
 
-Defined in: [webview/components/Pagination.tsx:6](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/e20beb86538f08849d50b688bca0eb17506d34aa/src/webview/components/Pagination.tsx#L6)
+Defined in: [webview/components/Pagination.tsx:6](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/webview/components/Pagination.tsx#L6)
 
 #### Parameters
 
@@ -32,4 +32,4 @@ Defined in: [webview/components/Pagination.tsx:6](https://github.com/eiichi-ishi
 
 > **page**: [`TablePage`](../../../model/tableView/interfaces/TablePage.md)
 
-Defined in: [webview/components/Pagination.tsx:5](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/e20beb86538f08849d50b688bca0eb17506d34aa/src/webview/components/Pagination.tsx#L5)
+Defined in: [webview/components/Pagination.tsx:5](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/webview/components/Pagination.tsx#L5)

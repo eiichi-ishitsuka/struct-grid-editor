@@ -6,7 +6,7 @@
 
 # Class: RenameKeyUseCase
 
-Defined in: [application/usecase/RowModificationUseCases.ts:156](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/e20beb86538f08849d50b688bca0eb17506d34aa/src/application/usecase/RowModificationUseCases.ts#L156)
+Defined in: [application/usecase/RowModificationUseCases.ts:186](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/application/usecase/RowModificationUseCases.ts#L186)
 
 オブジェクト内のプロパティキー名を変更するユースケース。
 
@@ -16,7 +16,7 @@ Defined in: [application/usecase/RowModificationUseCases.ts:156](https://github.
 
 > **new RenameKeyUseCase**(`parsers`): `RenameKeyUseCase`
 
-Defined in: [application/usecase/RowModificationUseCases.ts:157](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/e20beb86538f08849d50b688bca0eb17506d34aa/src/application/usecase/RowModificationUseCases.ts#L157)
+Defined in: [application/usecase/RowModificationUseCases.ts:187](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/application/usecase/RowModificationUseCases.ts#L187)
 
 #### Parameters
 
@@ -32,9 +32,9 @@ Defined in: [application/usecase/RowModificationUseCases.ts:157](https://github.
 
 ### execute()
 
-> **execute**(`text`, `fileExtension`, `pathStr`, `newKey`): `string`
+> **execute**(`text`, `fileExtension`, `pathStr`, `newKey`, `options?`): `string`
 
-Defined in: [application/usecase/RowModificationUseCases.ts:167](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/e20beb86538f08849d50b688bca0eb17506d34aa/src/application/usecase/RowModificationUseCases.ts#L167)
+Defined in: [application/usecase/RowModificationUseCases.ts:198](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/application/usecase/RowModificationUseCases.ts#L198)
 
 キー名の変更を実行します。
 
@@ -63,6 +63,12 @@ Defined in: [application/usecase/RowModificationUseCases.ts:167](https://github.
 `string`
 
 新しいキー名
+
+##### options?
+
+[`DocumentParseOptions`](../../../../domain/port/IDocumentParser/interfaces/DocumentParseOptions.md)
+
+解析オプション
 
 #### Returns
 

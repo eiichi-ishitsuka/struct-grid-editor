@@ -208,21 +208,36 @@ export const LivePreviewExtension = Extension.create({
 
                   if (!addedMarkKeys.has(openKey)) {
                     addedMarkKeys.add(openKey);
+                    const linkHref =
+                      mark.type.name === 'link' && typeof mark.attrs?.href === 'string'
+                        ? mark.attrs.href
+                        : '';
                     decorations.push(
                       Decoration.widget(
                         spanStart,
-                        () => createSyntaxWidget(syntax.open, `md-syntax-${mark.type.name}`),
+                        () => {
+                          const w = createSyntaxWidget(syntax.open, `md-syntax-${mark.type.name}`);
+                          if (linkHref) {
+                            w.setAttribute('data-link-href', linkHref);
+                          }
+                          return w;
+                        },
                         { side: -1, key: openKey }
                       )
                     );
                     decorations.push(
                       Decoration.widget(
                         spanEnd,
-                        () =>
-                          createSyntaxWidget(
+                        () => {
+                          const w = createSyntaxWidget(
                             syntax.close(mark.attrs as Record<string, unknown>),
                             `md-syntax-${mark.type.name}`
-                          ),
+                          );
+                          if (linkHref) {
+                            w.setAttribute('data-link-href', linkHref);
+                          }
+                          return w;
+                        },
                         { side: 1, key: closeKey }
                       )
                     );

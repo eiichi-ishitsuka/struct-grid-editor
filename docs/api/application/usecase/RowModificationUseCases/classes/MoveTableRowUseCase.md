@@ -6,7 +6,7 @@
 
 # Class: MoveTableRowUseCase
 
-Defined in: [application/usecase/RowModificationUseCases.ts:189](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/e20beb86538f08849d50b688bca0eb17506d34aa/src/application/usecase/RowModificationUseCases.ts#L189)
+Defined in: [application/usecase/RowModificationUseCases.ts:221](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/application/usecase/RowModificationUseCases.ts#L221)
 
 テーブルビュー内の行を並び替えるユースケース。
 
@@ -16,7 +16,7 @@ Defined in: [application/usecase/RowModificationUseCases.ts:189](https://github.
 
 > **new MoveTableRowUseCase**(`parsers`): `MoveTableRowUseCase`
 
-Defined in: [application/usecase/RowModificationUseCases.ts:190](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/e20beb86538f08849d50b688bca0eb17506d34aa/src/application/usecase/RowModificationUseCases.ts#L190)
+Defined in: [application/usecase/RowModificationUseCases.ts:222](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/application/usecase/RowModificationUseCases.ts#L222)
 
 #### Parameters
 
@@ -32,9 +32,9 @@ Defined in: [application/usecase/RowModificationUseCases.ts:190](https://github.
 
 ### execute()
 
-> **execute**(`text`, `fileExtension`, `arrayPathStr`, `fromIndex`, `toIndex`): `string`
+> **execute**(`text`, `fileExtension`, `arrayPathStr`, `fromIndex`, `toIndex`, `options?`): `string`
 
-Defined in: [application/usecase/RowModificationUseCases.ts:201](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/e20beb86538f08849d50b688bca0eb17506d34aa/src/application/usecase/RowModificationUseCases.ts#L201)
+Defined in: [application/usecase/RowModificationUseCases.ts:234](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/application/usecase/RowModificationUseCases.ts#L234)
 
 行の並び替えを実行します。
 
@@ -69,6 +69,12 @@ Defined in: [application/usecase/RowModificationUseCases.ts:201](https://github.
 `number`
 
 移動先インデックス
+
+##### options?
+
+[`DocumentParseOptions`](../../../../domain/port/IDocumentParser/interfaces/DocumentParseOptions.md)
+
+解析オプション
 
 #### Returns
 

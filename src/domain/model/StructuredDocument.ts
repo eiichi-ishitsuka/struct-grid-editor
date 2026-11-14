@@ -140,7 +140,10 @@ export class StructuredDocument {
         if (!node || node.type !== 'array') {
             return null;
         }
-        return TableView.fromArrayNode(node);
+        const headerColumns = path.length === 0
+            ? (this.format.metadata?.headerColumns as string[] | undefined)
+            : undefined;
+        return TableView.fromArrayNode(node, headerColumns);
     }
 
     /**
@@ -163,14 +166,22 @@ export class StructuredDocument {
             throw new Error(`Target at path "${arrayPath.toString()}" is not an array`);
         }
 
-        // newRowData が指定されていない場合、既存行の形状から自動補完
+        // newRowData が指定されていない場合、既存行またはヘッダー定義の形状から自動補完
         let itemToAdd = newRowData;
         if (itemToAdd === undefined) {
+            const headerColumns = arrayPath.length === 0
+                ? (this.format.metadata?.headerColumns as string[] | undefined)
+                : undefined;
             if (target.length > 0 && typeof target[0] === 'object' && target[0] !== null) {
                 const template = target[0];
                 itemToAdd = {};
                 for (const k of Object.keys(template)) {
                     itemToAdd[k] = typeof template[k] === 'number' ? 0 : typeof template[k] === 'boolean' ? false : '';
+                }
+            } else if (headerColumns && headerColumns.length > 0) {
+                itemToAdd = {};
+                for (const k of headerColumns) {
+                    itemToAdd[k] = '';
                 }
             } else {
                 itemToAdd = '';
@@ -204,6 +215,9 @@ export class StructuredDocument {
         }
 
         const hasObjectItems = target.some(item => typeof item === 'object' && item !== null && !Array.isArray(item));
+        const headerColumns = arrayPath.length === 0
+            ? (this.format.metadata?.headerColumns as string[] | undefined)
+            : undefined;
 
         if (!hasObjectItems && target.length > 0) {
             // プリミティブ配列の場合: 各プリミティブ要素をオブジェクト化し、既存値を col1、新しいキーを追加
@@ -215,7 +229,14 @@ export class StructuredDocument {
                 };
             }
         } else if (target.length === 0) {
-            target.push({ [columnKey]: defaultValue });
+            const newObj: Record<string, any> = {};
+            if (headerColumns && headerColumns.length > 0) {
+                for (const k of headerColumns) {
+                    newObj[k] = defaultValue;
+                }
+            }
+            newObj[columnKey] = defaultValue;
+            target.push(newObj);
         } else {
             for (const item of target) {
                 if (typeof item === 'object' && item !== null && !Array.isArray(item)) {
@@ -259,13 +280,16 @@ export class StructuredDocument {
         }
 
         const hasObjectItems = target.some(item => typeof item === 'object' && item !== null && !Array.isArray(item));
+        const headerColumns = arrayPath.length === 0
+            ? (this.format.metadata?.headerColumns as string[] | undefined)
+            : undefined;
 
-        if (!hasObjectItems) {
+        if (!hasObjectItems && target.length > 0) {
             // プリミティブ配列: 各プリミティブ要素を cleanNewKey を持つオブジェクトに変換
             for (let i = 0; i < target.length; i++) {
                 target[i] = { [cleanNewKey]: target[i] };
             }
-        } else {
+        } else if (target.length > 0) {
             // オブジェクト配列: キーの出現順序を維持しながら oldKey を cleanNewKey に置換
             for (let i = 0; i < target.length; i++) {
                 const item = target[i];
@@ -283,8 +307,22 @@ export class StructuredDocument {
             }
         }
 
+        let updatedFormat = this.format;
+        if (headerColumns && headerColumns.includes(oldKey)) {
+            const updatedHeaders = headerColumns.map(h => (h === oldKey ? cleanNewKey : h));
+            updatedFormat = new DocumentFormat({
+                fileType: this.format.fileType,
+                indent: this.format.indent,
+                hasTrailingNewline: this.format.hasTrailingNewline,
+                metadata: {
+                    ...this.format.metadata,
+                    headerColumns: updatedHeaders,
+                },
+            });
+        }
+
         const newRoot = TreeNode.fromJS(js);
-        return new StructuredDocument(newRoot, this.format, this.treeFlattener);
+        return new StructuredDocument(newRoot, updatedFormat, this.treeFlattener);
     }
 
     /**

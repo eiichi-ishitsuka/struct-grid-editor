@@ -6,7 +6,7 @@
 
 # Class: StructGridEditorProvider
 
-Defined in: [infrastructure/vscode/StructGridEditorProvider.ts:24](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/e20beb86538f08849d50b688bca0eb17506d34aa/src/infrastructure/vscode/StructGridEditorProvider.ts#L24)
+Defined in: [infrastructure/vscode/StructGridEditorProvider.ts:24](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/infrastructure/vscode/StructGridEditorProvider.ts#L24)
 
 VS Code の CustomTextEditorProvider アダプター。
 すべてのビジネス操作を Application 層のユースケースに委譲する薄いプレゼンテーション層です。
@@ -21,7 +21,7 @@ VS Code の CustomTextEditorProvider アダプター。
 
 > **new StructGridEditorProvider**(`context`, `parseUseCase`, `updateCellUseCase`, `addRowUseCase`, `deleteRowUseCase`, `addTableRowUseCase`, `addTableColumnUseCase`, `renameTableColumnUseCase`, `renameKeyUseCase`, `moveTableRowUseCase`, `moveTableColumnUseCase`, `renderer`, `clearTableColumnUseCase?`, `clearTableDataUseCase?`): `StructGridEditorProvider`
 
-Defined in: [infrastructure/vscode/StructGridEditorProvider.ts:81](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/e20beb86538f08849d50b688bca0eb17506d34aa/src/infrastructure/vscode/StructGridEditorProvider.ts#L81)
+Defined in: [infrastructure/vscode/StructGridEditorProvider.ts:81](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/infrastructure/vscode/StructGridEditorProvider.ts#L81)
 
 #### Parameters
 
@@ -91,7 +91,7 @@ Defined in: [infrastructure/vscode/StructGridEditorProvider.ts:81](https://githu
 
 > `readonly` `static` **viewType**: `"struct-grid-editor.jsonEditor"` = `'struct-grid-editor.jsonEditor'`
 
-Defined in: [infrastructure/vscode/StructGridEditorProvider.ts:25](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/e20beb86538f08849d50b688bca0eb17506d34aa/src/infrastructure/vscode/StructGridEditorProvider.ts#L25)
+Defined in: [infrastructure/vscode/StructGridEditorProvider.ts:25](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/infrastructure/vscode/StructGridEditorProvider.ts#L25)
 
 ## Methods
 
@@ -99,7 +99,7 @@ Defined in: [infrastructure/vscode/StructGridEditorProvider.ts:25](https://githu
 
 > **resolveCustomTextEditor**(`document`, `webviewPanel`, `_token`): `Promise`\<`void`\>
 
-Defined in: [infrastructure/vscode/StructGridEditorProvider.ts:104](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/e20beb86538f08849d50b688bca0eb17506d34aa/src/infrastructure/vscode/StructGridEditorProvider.ts#L104)
+Defined in: [infrastructure/vscode/StructGridEditorProvider.ts:104](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/infrastructure/vscode/StructGridEditorProvider.ts#L104)
 
 カスタムテキストエディタの Webview を初期化・バインドします。
 
@@ -137,7 +137,7 @@ Defined in: [infrastructure/vscode/StructGridEditorProvider.ts:104](https://gith
 
 > `static` **register**(`context`, `parseUseCase`, `updateCellUseCase`, `addRowUseCase`, `deleteRowUseCase`, `addTableRowUseCase`, `addTableColumnUseCase`, `renameTableColumnUseCase`, `renameKeyUseCase`, `moveTableRowUseCase`, `moveTableColumnUseCase`, `renderer`, `clearTableColumnUseCase?`, `clearTableDataUseCase?`): `Disposable`
 
-Defined in: [infrastructure/vscode/StructGridEditorProvider.ts:43](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/e20beb86538f08849d50b688bca0eb17506d34aa/src/infrastructure/vscode/StructGridEditorProvider.ts#L43)
+Defined in: [infrastructure/vscode/StructGridEditorProvider.ts:43](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/infrastructure/vscode/StructGridEditorProvider.ts#L43)
 
 VS Code のカスタムエディタプロバイダーとして本クラスを登録します。
 

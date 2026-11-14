@@ -1,0 +1,6 @@
+id	name	role	active	score	department
+1	Alice Smith	Admin	true	95.5	Platform
+2	Bob Johnson	Developer	true	88.0	Core Engine
+3	Charlie Brown	Designer	false	72.4	Design System
+4	Diana Prince	Manager	true	99.1	Product Management
+5	Evan Wright	QA Engineer	false	83.2	Quality Assurance

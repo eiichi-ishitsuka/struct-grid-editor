@@ -109,12 +109,26 @@ export class TreeNode {
             return this;
         }
 
+        let matchedAny = false;
         const updatedChildren = this.children.map(child => {
             if (targetPath.equals(child.path) || targetPath.isChildOf(child.path)) {
+                matchedAny = true;
                 return child.withUpdatedValue(targetPath, newValue);
             }
             return child;
         });
+
+        // カラム名にドット（"."）等が含まれる場合（例: CSVヘッダー "No." や "a.b"）のフォールバック一致
+        if (!matchedAny && this.type === 'object' && targetPath.length > this.path.length) {
+            const remainingKey = targetPath.segments.slice(this.path.length).join('.');
+            const fallbackChildren = this.children.map(child => {
+                if (String(child.key) === remainingKey) {
+                    return new TreeNode(child.path, child.key, 'primitive', newValue, []);
+                }
+                return child;
+            });
+            return new TreeNode(this.path, this.key, this.type, undefined, fallbackChildren);
+        }
 
         return new TreeNode(this.path, this.key, this.type, undefined, updatedChildren);
     }

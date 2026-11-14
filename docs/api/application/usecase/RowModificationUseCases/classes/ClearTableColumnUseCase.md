@@ -6,7 +6,7 @@
 
 # Class: ClearTableColumnUseCase
 
-Defined in: [application/usecase/RowModificationUseCases.ts:259](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/e20beb86538f08849d50b688bca0eb17506d34aa/src/application/usecase/RowModificationUseCases.ts#L259)
+Defined in: [application/usecase/RowModificationUseCases.ts:295](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/application/usecase/RowModificationUseCases.ts#L295)
 
 テーブルビュー内の指定カラムの値を全行クリア（空文字化）するユースケース。
 
@@ -16,7 +16,7 @@ Defined in: [application/usecase/RowModificationUseCases.ts:259](https://github.
 
 > **new ClearTableColumnUseCase**(`parsers`): `ClearTableColumnUseCase`
 
-Defined in: [application/usecase/RowModificationUseCases.ts:260](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/e20beb86538f08849d50b688bca0eb17506d34aa/src/application/usecase/RowModificationUseCases.ts#L260)
+Defined in: [application/usecase/RowModificationUseCases.ts:296](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/application/usecase/RowModificationUseCases.ts#L296)
 
 #### Parameters
 
@@ -32,9 +32,9 @@ Defined in: [application/usecase/RowModificationUseCases.ts:260](https://github.
 
 ### execute()
 
-> **execute**(`text`, `fileExtension`, `arrayPathStr`, `columnKey`): `string`
+> **execute**(`text`, `fileExtension`, `arrayPathStr`, `columnKey`, `options?`): `string`
 
-Defined in: [application/usecase/RowModificationUseCases.ts:270](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/e20beb86538f08849d50b688bca0eb17506d34aa/src/application/usecase/RowModificationUseCases.ts#L270)
+Defined in: [application/usecase/RowModificationUseCases.ts:307](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/application/usecase/RowModificationUseCases.ts#L307)
 
 カラム値のクリアを実行します。
 
@@ -63,6 +63,12 @@ Defined in: [application/usecase/RowModificationUseCases.ts:270](https://github.
 `string`
 
 対象のカラムキー名
+
+##### options?
+
+[`DocumentParseOptions`](../../../../domain/port/IDocumentParser/interfaces/DocumentParseOptions.md)
+
+解析オプション
 
 #### Returns
 

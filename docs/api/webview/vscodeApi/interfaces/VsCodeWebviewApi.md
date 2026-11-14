@@ -6,7 +6,7 @@
 
 # Interface: VsCodeWebviewApi\<TState\>
 
-Defined in: [webview/vscodeApi.ts:4](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/e20beb86538f08849d50b688bca0eb17506d34aa/src/webview/vscodeApi.ts#L4)
+Defined in: [webview/vscodeApi.ts:4](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/webview/vscodeApi.ts#L4)
 
 VS Code が Webview に公開する状態・通信 API。
 
@@ -22,7 +22,7 @@ VS Code が Webview に公開する状態・通信 API。
 
 > **getState**(): `TState` \| `undefined`
 
-Defined in: [webview/vscodeApi.ts:5](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/e20beb86538f08849d50b688bca0eb17506d34aa/src/webview/vscodeApi.ts#L5)
+Defined in: [webview/vscodeApi.ts:5](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/webview/vscodeApi.ts#L5)
 
 #### Returns
 
@@ -34,7 +34,7 @@ Defined in: [webview/vscodeApi.ts:5](https://github.com/eiichi-ishitsuka/struct-
 
 > **postMessage**(`message`): `void`
 
-Defined in: [webview/vscodeApi.ts:7](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/e20beb86538f08849d50b688bca0eb17506d34aa/src/webview/vscodeApi.ts#L7)
+Defined in: [webview/vscodeApi.ts:7](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/webview/vscodeApi.ts#L7)
 
 #### Parameters
 
@@ -52,7 +52,7 @@ Defined in: [webview/vscodeApi.ts:7](https://github.com/eiichi-ishitsuka/struct-
 
 > **setState**(`newState`): `void`
 
-Defined in: [webview/vscodeApi.ts:6](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/e20beb86538f08849d50b688bca0eb17506d34aa/src/webview/vscodeApi.ts#L6)
+Defined in: [webview/vscodeApi.ts:6](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/webview/vscodeApi.ts#L6)
 
 #### Parameters
 

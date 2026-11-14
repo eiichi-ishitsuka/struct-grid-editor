@@ -6,7 +6,7 @@
 
 # Class: JsonlDocumentParser
 
-Defined in: [infrastructure/parser/JsonlDocumentParser.ts:11](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/e20beb86538f08849d50b688bca0eb17506d34aa/src/infrastructure/parser/JsonlDocumentParser.ts#L11)
+Defined in: [infrastructure/parser/JsonlDocumentParser.ts:11](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/infrastructure/parser/JsonlDocumentParser.ts#L11)
 
 JSONL（JSON Lines: 改行区切りJSON）ドキュメントの解析およびシリアライズを担うパーサー。
 ファイル全体をトップレベル配列としてモデル化し、スプレッドシート形式での閲覧・編集を可能にします。
@@ -31,7 +31,7 @@ JSONL（JSON Lines: 改行区切りJSON）ドキュメントの解析および�
 
 > **parse**(`text`): [`StructuredDocument`](../../../../domain/model/StructuredDocument/classes/StructuredDocument.md)
 
-Defined in: [infrastructure/parser/JsonlDocumentParser.ts:28](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/e20beb86538f08849d50b688bca0eb17506d34aa/src/infrastructure/parser/JsonlDocumentParser.ts#L28)
+Defined in: [infrastructure/parser/JsonlDocumentParser.ts:28](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/infrastructure/parser/JsonlDocumentParser.ts#L28)
 
 JSONL 文字列を各行ごとに解析し、配列をルートとする StructuredDocument ドメインモデルを生成します。
 空行のスキップや JSONC コメント（//, /* ... */）の除去にも対応しています。
@@ -60,7 +60,7 @@ JSONL 文字列を各行ごとに解析し、配列をルートとする Structu
 
 > **serialize**(`document`): `string`
 
-Defined in: [infrastructure/parser/JsonlDocumentParser.ts:68](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/e20beb86538f08849d50b688bca0eb17506d34aa/src/infrastructure/parser/JsonlDocumentParser.ts#L68)
+Defined in: [infrastructure/parser/JsonlDocumentParser.ts:68](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/infrastructure/parser/JsonlDocumentParser.ts#L68)
 
 StructuredDocument を1行1JSON形式（JSON Lines）の文字列にシリアライズします。
 
@@ -88,7 +88,7 @@ StructuredDocument を1行1JSON形式（JSON Lines）の文字列にシリアラ
 
 > **supports**(`fileExtension`): `boolean`
 
-Defined in: [infrastructure/parser/JsonlDocumentParser.ts:17](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/e20beb86538f08849d50b688bca0eb17506d34aa/src/infrastructure/parser/JsonlDocumentParser.ts#L17)
+Defined in: [infrastructure/parser/JsonlDocumentParser.ts:17](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/infrastructure/parser/JsonlDocumentParser.ts#L17)
 
 指定された拡張子が JSONL であるかを判定します。
 

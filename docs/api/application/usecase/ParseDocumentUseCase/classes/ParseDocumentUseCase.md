@@ -6,7 +6,7 @@
 
 # Class: ParseDocumentUseCase
 
-Defined in: [application/usecase/ParseDocumentUseCase.ts:10](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/e20beb86538f08849d50b688bca0eb17506d34aa/src/application/usecase/ParseDocumentUseCase.ts#L10)
+Defined in: [application/usecase/ParseDocumentUseCase.ts:28](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/application/usecase/ParseDocumentUseCase.ts#L28)
 
 ソーステキストを解析し、Webview描画用のデータ構造（DTO）に変換するユースケース。
 
@@ -16,7 +16,7 @@ Defined in: [application/usecase/ParseDocumentUseCase.ts:10](https://github.com/
 
 > **new ParseDocumentUseCase**(`parsers`): `ParseDocumentUseCase`
 
-Defined in: [application/usecase/ParseDocumentUseCase.ts:11](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/e20beb86538f08849d50b688bca0eb17506d34aa/src/application/usecase/ParseDocumentUseCase.ts#L11)
+Defined in: [application/usecase/ParseDocumentUseCase.ts:29](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/application/usecase/ParseDocumentUseCase.ts#L29)
 
 #### Parameters
 
@@ -32,9 +32,9 @@ Defined in: [application/usecase/ParseDocumentUseCase.ts:11](https://github.com/
 
 ### execute()
 
-> **execute**(`text`, `fileExtension`): `object`
+> **execute**(`text`, `fileExtension`, `options?`): `object`
 
-Defined in: [application/usecase/ParseDocumentUseCase.ts:19](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/e20beb86538f08849d50b688bca0eb17506d34aa/src/application/usecase/ParseDocumentUseCase.ts#L19)
+Defined in: [application/usecase/ParseDocumentUseCase.ts:38](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/application/usecase/ParseDocumentUseCase.ts#L38)
 
 ソーステキストとファイル拡張子からドキュメントを解析し、GridDataDto を生成します。
 
@@ -50,7 +50,13 @@ Defined in: [application/usecase/ParseDocumentUseCase.ts:19](https://github.com/
 
 `string`
 
-ファイル拡張子（例: "json", "yaml"）
+ファイル拡張子（例: "json", "yaml", "csv", "tsv"）
+
+##### options?
+
+[`DocumentParseOptions`](../../../../domain/port/IDocumentParser/interfaces/DocumentParseOptions.md)
+
+解析オプション（CSV/TSV のヘッダー有無等）
 
 #### Returns
 

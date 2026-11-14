@@ -6,7 +6,7 @@
 
 # Class: AddRowUseCase
 
-Defined in: [application/usecase/RowModificationUseCases.ts:8](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/e20beb86538f08849d50b688bca0eb17506d34aa/src/application/usecase/RowModificationUseCases.ts#L8)
+Defined in: [application/usecase/RowModificationUseCases.ts:8](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/application/usecase/RowModificationUseCases.ts#L8)
 
 オブジェクトまたは配列の指定親パス下に新規ノード（行／要素）を追加するユースケース。
 
@@ -16,7 +16,7 @@ Defined in: [application/usecase/RowModificationUseCases.ts:8](https://github.co
 
 > **new AddRowUseCase**(`parsers`): `AddRowUseCase`
 
-Defined in: [application/usecase/RowModificationUseCases.ts:9](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/e20beb86538f08849d50b688bca0eb17506d34aa/src/application/usecase/RowModificationUseCases.ts#L9)
+Defined in: [application/usecase/RowModificationUseCases.ts:9](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/application/usecase/RowModificationUseCases.ts#L9)
 
 #### Parameters
 
@@ -32,9 +32,9 @@ Defined in: [application/usecase/RowModificationUseCases.ts:9](https://github.co
 
 ### execute()
 
-> **execute**(`text`, `fileExtension`, `parentPathStr?`, `key?`, `initialVal?`): `string`
+> **execute**(`text`, `fileExtension`, `parentPathStr?`, `key?`, `initialVal?`, `options?`): `string`
 
-Defined in: [application/usecase/RowModificationUseCases.ts:20](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/e20beb86538f08849d50b688bca0eb17506d34aa/src/application/usecase/RowModificationUseCases.ts#L20)
+Defined in: [application/usecase/RowModificationUseCases.ts:21](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/application/usecase/RowModificationUseCases.ts#L21)
 
 新規行の追加を実行します。
 
@@ -69,6 +69,12 @@ Defined in: [application/usecase/RowModificationUseCases.ts:20](https://github.c
 `any` = `''`
 
 初期値
+
+##### options?
+
+[`DocumentParseOptions`](../../../../domain/port/IDocumentParser/interfaces/DocumentParseOptions.md)
+
+解析オプション
 
 #### Returns
 

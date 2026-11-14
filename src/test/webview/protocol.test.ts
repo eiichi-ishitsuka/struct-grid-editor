@@ -16,6 +16,7 @@ describe('Webview message protocol', () => {
             { command: 'move_table_column', arrayPath: 'users', fromIndex: 0, toIndex: 1 },
             { command: 'clear_table_column', arrayPath: 'users', columnKey: 'age' },
             { command: 'clear_table_data', arrayPath: 'users' },
+            { command: 'set_csv_header', hasHeader: false },
             { command: 'open_text_editor' },
         ];
 

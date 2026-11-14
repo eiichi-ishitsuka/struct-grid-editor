@@ -65,6 +65,25 @@ body {
     color: var(--vscode-badge-foreground);
 }
 
+.csv-header-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 8px;
+    font-size: 12px;
+    border: 1px solid var(--vscode-input-border, var(--vscode-panel-border));
+    border-radius: 3px;
+    background: var(--vscode-input-background);
+    color: var(--vscode-input-foreground);
+    cursor: pointer;
+    user-select: none;
+}
+
+.csv-header-toggle input[type="checkbox"] {
+    margin: 0;
+    cursor: pointer;
+}
+
 .search-box,
 .pagination-input {
     border: 1px solid var(--vscode-input-border, transparent);

@@ -8,7 +8,7 @@
 
 > **formatTsvValue**(`val`): `string`
 
-Defined in: [webview/model/tsv.ts:8](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/e20beb86538f08849d50b688bca0eb17506d34aa/src/webview/model/tsv.ts#L8)
+Defined in: [webview/model/tsv.ts:8](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/webview/model/tsv.ts#L8)
 
 TSV 用にセル値をエスケープする。
 タブ、改行、ダブルクォートを含む場合はダブルクォートで囲み、内部のクォートを二重化する。

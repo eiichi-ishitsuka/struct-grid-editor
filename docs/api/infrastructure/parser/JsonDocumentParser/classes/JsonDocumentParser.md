@@ -6,7 +6,7 @@
 
 # Class: JsonDocumentParser
 
-Defined in: [infrastructure/parser/JsonDocumentParser.ts:70](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/e20beb86538f08849d50b688bca0eb17506d34aa/src/infrastructure/parser/JsonDocumentParser.ts#L70)
+Defined in: [infrastructure/parser/JsonDocumentParser.ts:70](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/infrastructure/parser/JsonDocumentParser.ts#L70)
 
 JSONドキュメントの解析およびシリアライズを担うインフラストラクチャ層のアダプター。
 
@@ -20,7 +20,7 @@ JSONドキュメントの解析およびシリアライズを担うインフラ�
 
 > **new JsonDocumentParser**(`formatPreserver?`): `JsonDocumentParser`
 
-Defined in: [infrastructure/parser/JsonDocumentParser.ts:71](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/e20beb86538f08849d50b688bca0eb17506d34aa/src/infrastructure/parser/JsonDocumentParser.ts#L71)
+Defined in: [infrastructure/parser/JsonDocumentParser.ts:71](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/infrastructure/parser/JsonDocumentParser.ts#L71)
 
 #### Parameters
 
@@ -38,7 +38,7 @@ Defined in: [infrastructure/parser/JsonDocumentParser.ts:71](https://github.com/
 
 > **parse**(`text`): [`StructuredDocument`](../../../../domain/model/StructuredDocument/classes/StructuredDocument.md)
 
-Defined in: [infrastructure/parser/JsonDocumentParser.ts:89](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/e20beb86538f08849d50b688bca0eb17506d34aa/src/infrastructure/parser/JsonDocumentParser.ts#L89)
+Defined in: [infrastructure/parser/JsonDocumentParser.ts:89](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/infrastructure/parser/JsonDocumentParser.ts#L89)
 
 JSON 文字列を解析し、StructuredDocument ドメインモデルを生成します。
 コメント付き JSON (JSONC) にも対応しています。
@@ -67,7 +67,7 @@ JSON 文字列を解析し、StructuredDocument ドメインモデルを生成�
 
 > **serialize**(`document`): `string`
 
-Defined in: [infrastructure/parser/JsonDocumentParser.ts:104](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/e20beb86538f08849d50b688bca0eb17506d34aa/src/infrastructure/parser/JsonDocumentParser.ts#L104)
+Defined in: [infrastructure/parser/JsonDocumentParser.ts:104](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/infrastructure/parser/JsonDocumentParser.ts#L104)
 
 StructuredDocument を元の書式（インデント幅や末尾改行）を保持しながら JSON 文字列にシリアライズします。
 
@@ -95,7 +95,7 @@ StructuredDocument を元の書式（インデント幅や末尾改行）を保�
 
 > **supports**(`fileExtension`): `boolean`
 
-Defined in: [infrastructure/parser/JsonDocumentParser.ts:78](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/e20beb86538f08849d50b688bca0eb17506d34aa/src/infrastructure/parser/JsonDocumentParser.ts#L78)
+Defined in: [infrastructure/parser/JsonDocumentParser.ts:78](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/infrastructure/parser/JsonDocumentParser.ts#L78)
 
 指定された拡張子が JSON であるかを判定します。
 

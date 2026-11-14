@@ -2,8 +2,8 @@
 
 <img src="/assets/img/icon.jpg" width="150">
 
-JSON, JSONL, YAML 形式の構造化データをスプレッドシート形式で閲覧・編集でき、さらに Markdown ドキュメント（`.md`, `.markdown`）を Live Preview / WYSIWYG 形式で見たまま編集できる VS Code 拡張機能です。
-任意の階層にネストされた構造化データや技術文書を、元の書式を損なうことなく直感的に編集できます。
+JSON, JSONL, YAML, CSV, TSV 形式の構造化データをスプレッドシート形式で閲覧・編集でき、さらに Markdown ドキュメント（`.md`, `.markdown`）を Live Preview / WYSIWYG 形式で見たまま編集できる VS Code 拡張機能です。
+任意の階層にネストされた構造化データや表データ、技術文書を、元の書式を損なうことなく直感的に編集できます。
 
 <img src="/assets/gif/demo.gif" width="50%">
 
@@ -16,19 +16,23 @@ JSON, JSONL, YAML 形式の構造化データをスプレッドシート形式�
 - **JSON**: `*.json`（スプレッドシート / ツリー表示）
 - **JSONL**: `*.jsonl`（スプレッドシート表示）
 - **YAML**: `*.yaml`, `*.yml`（スプレッドシート / ツリー表示）
+- **CSV**: `*.csv`（スプレッドシート表示、ヘッダー行あり / なし切り替え対応）
+- **TSV**: `*.tsv`（スプレッドシート表示、ヘッダー行あり / なし切り替え対応）
 - **Markdown**: `*.md`, `*.markdown`（Live Preview / WYSIWYG 表示）
 
 ### 2. 起動方法とデフォルトエディタ設定
 
 - **デフォルトでカスタムビューが起動する拡張子（初期設定）**:
   - **Markdown (`.md`, `.markdown`)**: ファイルを開くと標準で **Markdown Live Preview Editor** が起動します。右上の **「ソース表示」** ボタンでいつでも標準テキストエディタと切り替えられます。
-  - **JSONL (`.jsonl`)**: ファイルを開くと標準で **StructGridEditor** が起動します。
+  - **JSONL (`.jsonl`) / CSV (`.csv`) / TSV (`.tsv`)**: ファイルを開くと標準で **StructGridEditor** が起動します。
 - **右クリックメニューから起動する拡張子（初期設定）**:
   - **JSON (`.json`) / YAML (`.yaml`, `.yml`)**: エクスプローラーまたはエディタータブの右クリックメニューから **「StructGridEditor で開く」** を選択するとグリッドビューで開きます（右上の **「テキストで開く」** ボタンで通常のテキストエディタへ戻れます）。
 - **拡張子ごとのデフォルト起動 ON / OFF 設定**:
   - VS Code の設定画面（`StructGridEditor`）にある以下のチェックボックスで、拡張子ごとにシングルクリックでカスタムエディタを起動するかどうかをいつでも変更できます。
     - `struct-grid-editor.openByDefault.markdown`（初期値: `true`）
     - `struct-grid-editor.openByDefault.jsonl`（初期値: `true`）
+    - `struct-grid-editor.openByDefault.csv`（初期値: `true`）
+    - `struct-grid-editor.openByDefault.tsv`（初期値: `true`）
     - `struct-grid-editor.openByDefault.json`（初期値: `false`）
     - `struct-grid-editor.openByDefault.yaml`（初期値: `false`）
   - ※ Markdown Live Preview エディタで編集・保存した際は、標準の GFM / Admonition / 4スペースインデントリスト形式に正規化されます（`<img width="...">` 等の生 HTML タグ属性や HTML コメントをそのまま維持したいファイルは「ソース表示」で標準テキストエディタに切り替えて編集してください）。
@@ -51,18 +55,25 @@ JSON, JSONL, YAML 形式の構造化データをスプレッドシート形式�
 - **Mermaid ダイアグラム**: 言語が `mermaid` のコードブロックは自動的に SVG 図表として描画され、「ソースを編集」ボタン（または図のクリック）でコードを編集するとリアルタイムに図表が更新されます。
 - **KaTeX 数式**: インライン数式（`$...$`）およびブロック数式（`$$...$$`）を描画し、クリックするとポップオーバーで LaTeX 数式を編集できます。
 
-### 4. 画像貼り付け ＆ ライト/ダークテーマ切り替え
+### 4. 画像貼り付け・リンク遷移・テーマ切り替え
+- **Ctrl + クリック（Mac: Cmd + クリック）によるリンク遷移**:
+  - **ローカルファイルリンク**（例: `[ai-development-workflow.md](../.agents/rules/ai-development-workflow.md)`）を `Ctrl + クリック` すると、該当ファイルが存在する場合は新しいエディタタブで開きます（存在しないパスの場合はスキップします）。
+  - **外部 Web リンク**（`http://` / `https://`）を `Ctrl + クリック` すると、開いてよいかの確認ダイアログを表示した上で外部ブラウザで開きます。
 - **クリップボード画像貼り付け**: エディタ上に画像をペーストまたはドラッグ＆ドロップすると、ワークスペース内の `assets/` フォルダ（設定 `struct-grid-editor.markdownAssetsFolder` で変更可能）へ自動保存され、相対パスリンクとして挿入されます。
 - **テーマ切り替え**: VS Code のカラーテーマに自動追従するほか、右上の **「Theme: Dark (Slate) / Light (Default)」** ボタンでいつでもライト・ダーク表示を切り替えられます。
 
 ---
 
-## グリッドエディタの仕様（JSON / YAML / JSONL）
+## グリッドエディタの仕様（JSON / YAML / JSONL / CSV / TSV）
 
-### 1. 配列データ（トップレベル配列・JSONL）: スプレッドシート表示
+### 1. 配列・表データ（トップレベル配列・JSONL・CSV・TSV）: スプレッドシート表示
 
-- `samples/json/simple-list.json` や `samples/jsonl/simple-list.jsonl` のような**オブジェクトの配列**形式のデータ（JSON / YAML / JSONL）を開いた場合、各オブジェクトのプロパティを列とし、各要素を行とする**スプレッドシート形式**で表示されます。
-- セル編集、配列に対しての行追加、列追加などの編集ができます。
+- `samples/json/simple-list.json`、`samples/jsonl/simple-list.jsonl`、`samples/csv/simple-list.csv`、`samples/tsv/simple-list.tsv` のような表形式・配列データを開いた場合、各カラムを列とし、各レコードを行とする**スプレッドシート形式**で表示されます。
+- セル編集、行追加・削除、列追加・列名変更、列の並び替え・非表示・ソートなどの編集ができます。
+- **CSV / TSV のヘッダー有無切り替え**:
+  - デフォルトでは **1行目をヘッダー（カラム名）** として読み込みます。
+  - ヘッダー行がない CSV / TSV（例: `samples/csv/no-header-list.csv`）を開く場合は、画面上部ツールバーの **「1行目をヘッダーにする」** チェックボックスを OFF にすることで、1行目も含めた全行をデータ行（列名は `col1`, `col2`, ...）として表示・編集・保存できます。
+  - RFC 4180 に準拠し、カンマやタブ、改行、ダブルクォート（`""`）を含むセルも正確にエスケープ・保持されます。
 
 ### 2. オブジェクトデータ（K,V）: ツリー表示 ＆ 配列ドリルダウン機能
 

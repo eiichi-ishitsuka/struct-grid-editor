@@ -8,7 +8,7 @@
 
 > **createToolbar**(`container`, `tableBannerContainer`, `editor`, `callbacks`): `void`
 
-Defined in: md-webview/toolbar.ts:22
+Defined in: [md-webview/toolbar.ts:22](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/md-webview/toolbar.ts#L22)
 
 エディタ上部のミニマルヘッダーバーおよびテーブル選択時のコンテキスト操作バーを構築します。
 

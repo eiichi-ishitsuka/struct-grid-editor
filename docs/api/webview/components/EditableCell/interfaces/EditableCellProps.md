@@ -6,7 +6,7 @@
 
 # Interface: EditableCellProps
 
-Defined in: [webview/components/EditableCell.tsx:11](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/e20beb86538f08849d50b688bca0eb17506d34aa/src/webview/components/EditableCell.tsx#L11)
+Defined in: [webview/components/EditableCell.tsx:11](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/webview/components/EditableCell.tsx#L11)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [webview/components/EditableCell.tsx:11](https://github.com/eiichi-i
 
 > `optional` **className?**: `string`
 
-Defined in: [webview/components/EditableCell.tsx:17](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/e20beb86538f08849d50b688bca0eb17506d34aa/src/webview/components/EditableCell.tsx#L17)
+Defined in: [webview/components/EditableCell.tsx:17](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/webview/components/EditableCell.tsx#L17)
 
 ***
 
@@ -22,7 +22,7 @@ Defined in: [webview/components/EditableCell.tsx:17](https://github.com/eiichi-i
 
 > **colKey**: `string`
 
-Defined in: [webview/components/EditableCell.tsx:13](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/e20beb86538f08849d50b688bca0eb17506d34aa/src/webview/components/EditableCell.tsx#L13)
+Defined in: [webview/components/EditableCell.tsx:13](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/webview/components/EditableCell.tsx#L13)
 
 ***
 
@@ -30,7 +30,7 @@ Defined in: [webview/components/EditableCell.tsx:13](https://github.com/eiichi-i
 
 > **displayValue**: `string`
 
-Defined in: [webview/components/EditableCell.tsx:15](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/e20beb86538f08849d50b688bca0eb17506d34aa/src/webview/components/EditableCell.tsx#L15)
+Defined in: [webview/components/EditableCell.tsx:15](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/webview/components/EditableCell.tsx#L15)
 
 ***
 
@@ -38,7 +38,7 @@ Defined in: [webview/components/EditableCell.tsx:15](https://github.com/eiichi-i
 
 > `optional` **isSelected?**: `boolean`
 
-Defined in: [webview/components/EditableCell.tsx:19](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/e20beb86538f08849d50b688bca0eb17506d34aa/src/webview/components/EditableCell.tsx#L19)
+Defined in: [webview/components/EditableCell.tsx:19](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/webview/components/EditableCell.tsx#L19)
 
 ***
 
@@ -46,7 +46,7 @@ Defined in: [webview/components/EditableCell.tsx:19](https://github.com/eiichi-i
 
 > `optional` **onContextMenu?**: (`event`) => `void`
 
-Defined in: [webview/components/EditableCell.tsx:23](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/e20beb86538f08849d50b688bca0eb17506d34aa/src/webview/components/EditableCell.tsx#L23)
+Defined in: [webview/components/EditableCell.tsx:23](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/webview/components/EditableCell.tsx#L23)
 
 #### Parameters
 
@@ -64,7 +64,7 @@ Defined in: [webview/components/EditableCell.tsx:23](https://github.com/eiichi-i
 
 > `optional` **onNavigateAdjacent?**: (`direction`) => `void`
 
-Defined in: [webview/components/EditableCell.tsx:22](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/e20beb86538f08849d50b688bca0eb17506d34aa/src/webview/components/EditableCell.tsx#L22)
+Defined in: [webview/components/EditableCell.tsx:22](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/webview/components/EditableCell.tsx#L22)
 
 #### Parameters
 
@@ -82,7 +82,7 @@ Defined in: [webview/components/EditableCell.tsx:22](https://github.com/eiichi-i
 
 > **onSelectCell**: (`rowIndex`, `colKey`, `path`) => `void`
 
-Defined in: [webview/components/EditableCell.tsx:21](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/e20beb86538f08849d50b688bca0eb17506d34aa/src/webview/components/EditableCell.tsx#L21)
+Defined in: [webview/components/EditableCell.tsx:21](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/webview/components/EditableCell.tsx#L21)
 
 #### Parameters
 
@@ -108,7 +108,7 @@ Defined in: [webview/components/EditableCell.tsx:21](https://github.com/eiichi-i
 
 > **onUpdateCell**: (`path`, `value`) => `void`
 
-Defined in: [webview/components/EditableCell.tsx:20](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/e20beb86538f08849d50b688bca0eb17506d34aa/src/webview/components/EditableCell.tsx#L20)
+Defined in: [webview/components/EditableCell.tsx:20](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/webview/components/EditableCell.tsx#L20)
 
 #### Parameters
 
@@ -130,7 +130,7 @@ Defined in: [webview/components/EditableCell.tsx:20](https://github.com/eiichi-i
 
 > **path**: `string`
 
-Defined in: [webview/components/EditableCell.tsx:12](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/e20beb86538f08849d50b688bca0eb17506d34aa/src/webview/components/EditableCell.tsx#L12)
+Defined in: [webview/components/EditableCell.tsx:12](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/webview/components/EditableCell.tsx#L12)
 
 ***
 
@@ -138,7 +138,7 @@ Defined in: [webview/components/EditableCell.tsx:12](https://github.com/eiichi-i
 
 > **rowIndex**: `number`
 
-Defined in: [webview/components/EditableCell.tsx:14](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/e20beb86538f08849d50b688bca0eb17506d34aa/src/webview/components/EditableCell.tsx#L14)
+Defined in: [webview/components/EditableCell.tsx:14](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/webview/components/EditableCell.tsx#L14)
 
 ***
 
@@ -146,7 +146,7 @@ Defined in: [webview/components/EditableCell.tsx:14](https://github.com/eiichi-i
 
 > `optional` **style?**: `CSSProperties`
 
-Defined in: [webview/components/EditableCell.tsx:18](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/e20beb86538f08849d50b688bca0eb17506d34aa/src/webview/components/EditableCell.tsx#L18)
+Defined in: [webview/components/EditableCell.tsx:18](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/webview/components/EditableCell.tsx#L18)
 
 ***
 
@@ -154,4 +154,4 @@ Defined in: [webview/components/EditableCell.tsx:18](https://github.com/eiichi-i
 
 > `optional` **type?**: `string`
 
-Defined in: [webview/components/EditableCell.tsx:16](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/e20beb86538f08849d50b688bca0eb17506d34aa/src/webview/components/EditableCell.tsx#L16)
+Defined in: [webview/components/EditableCell.tsx:16](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/webview/components/EditableCell.tsx#L16)

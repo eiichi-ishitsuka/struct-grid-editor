@@ -1,8 +1,26 @@
-import { IDocumentParser } from '../../domain/port/IDocumentParser';
+import { IDocumentParser, DocumentParseOptions } from '../../domain/port/IDocumentParser';
 import { TableView } from '../../domain/model/TableView';
 import { CellPath } from '../../domain/model/CellPath';
 import { StructuredDocument } from '../../domain/model/StructuredDocument';
+import { DocumentFileType } from '../../domain/model/DocumentFormat';
 import { GridDataDto, GridRowDto, TableViewDto, TableCellDto, SubArrayInfoDto } from '../dto/GridData';
+
+function resolveFallbackDocType(fileExtension: string): DocumentFileType {
+    const cleanExt = fileExtension.toLowerCase().replace(/^\./, '');
+    if (cleanExt === 'csv') {
+        return 'csv';
+    }
+    if (cleanExt === 'tsv') {
+        return 'tsv';
+    }
+    if (cleanExt.includes('ya')) {
+        return 'yaml';
+    }
+    if (cleanExt === 'jsonl' || cleanExt === 'ndjson') {
+        return 'jsonl';
+    }
+    return 'json';
+}
 
 /**
  * ソーステキストを解析し、Webview描画用のデータ構造（DTO）に変換するユースケース。
@@ -13,14 +31,18 @@ export class ParseDocumentUseCase {
     /**
      * ソーステキストとファイル拡張子からドキュメントを解析し、GridDataDto を生成します。
      * @param text ソーステキスト文字列
-     * @param fileExtension ファイル拡張子（例: "json", "yaml"）
+     * @param fileExtension ファイル拡張子（例: "json", "yaml", "csv", "tsv"）
+     * @param options 解析オプション（CSV/TSV のヘッダー有無等）
      * @returns 生成された DTO と内部のドキュメントインスタンス
      */
-    public execute(text: string, fileExtension: string): { dto: GridDataDto; doc?: StructuredDocument } {
+    public execute(
+        text: string,
+        fileExtension: string,
+        options?: DocumentParseOptions
+    ): { dto: GridDataDto; doc?: StructuredDocument } {
         const parser = this.parsers.find(p => p.supports(fileExtension));
         if (!parser) {
-            const cleanExt = fileExtension.toLowerCase().replace(/^\./, '');
-            const docType = cleanExt.includes('ya') ? 'yaml' : (cleanExt === 'jsonl' || cleanExt === 'ndjson' ? 'jsonl' : 'json');
+            const docType = resolveFallbackDocType(fileExtension);
             return {
                 dto: {
                     documentType: docType,
@@ -33,7 +55,7 @@ export class ParseDocumentUseCase {
         }
 
         try {
-            const document = parser.parse(text);
+            const document = parser.parse(text, options);
             const isRootArray = document.isArrayRoot();
 
             let tableData: TableViewDto | undefined;
@@ -83,20 +105,25 @@ export class ParseDocumentUseCase {
                 };
             });
 
+            const fileType = document.format.fileType;
+            const hasHeader = (fileType === 'csv' || fileType === 'tsv')
+                ? (document.format.metadata?.hasHeader !== false)
+                : undefined;
+
             return {
                 dto: {
-                    documentType: document.format.fileType,
+                    documentType: fileType,
                     viewMode: isRootArray ? 'table' : 'kv',
                     rows,
                     totalRows: isRootArray && tableData ? tableData.totalRows : rows.length,
                     tableData,
                     subArrays: subArraysInfo,
+                    ...(hasHeader !== undefined ? { hasHeader } : {}),
                 },
                 doc: document,
             };
         } catch (e: any) {
-            const cleanExt = fileExtension.toLowerCase().replace(/^\./, '');
-            const docType = cleanExt.includes('ya') ? 'yaml' : (cleanExt === 'jsonl' || cleanExt === 'ndjson' ? 'jsonl' : 'json');
+            const docType = resolveFallbackDocType(fileExtension);
             return {
                 dto: {
                     documentType: docType,

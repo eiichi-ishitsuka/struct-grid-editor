@@ -6,7 +6,7 @@
 
 # Interface: ContextMenuProps
 
-Defined in: [webview/components/ContextMenu.tsx:10](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/e20beb86538f08849d50b688bca0eb17506d34aa/src/webview/components/ContextMenu.tsx#L10)
+Defined in: [webview/components/ContextMenu.tsx:10](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/webview/components/ContextMenu.tsx#L10)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [webview/components/ContextMenu.tsx:10](https://github.com/eiichi-is
 
 > **items**: [`ContextMenuItem`](ContextMenuItem.md)[]
 
-Defined in: [webview/components/ContextMenu.tsx:11](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/e20beb86538f08849d50b688bca0eb17506d34aa/src/webview/components/ContextMenu.tsx#L11)
+Defined in: [webview/components/ContextMenu.tsx:11](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/webview/components/ContextMenu.tsx#L11)
 
 ***
 
@@ -22,7 +22,7 @@ Defined in: [webview/components/ContextMenu.tsx:11](https://github.com/eiichi-is
 
 > **onClose**: () => `void`
 
-Defined in: [webview/components/ContextMenu.tsx:13](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/e20beb86538f08849d50b688bca0eb17506d34aa/src/webview/components/ContextMenu.tsx#L13)
+Defined in: [webview/components/ContextMenu.tsx:13](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/webview/components/ContextMenu.tsx#L13)
 
 #### Returns
 
@@ -34,4 +34,4 @@ Defined in: [webview/components/ContextMenu.tsx:13](https://github.com/eiichi-is
 
 > **position**: \{ `x`: `number`; `y`: `number`; \} \| `null`
 
-Defined in: [webview/components/ContextMenu.tsx:12](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/e20beb86538f08849d50b688bca0eb17506d34aa/src/webview/components/ContextMenu.tsx#L12)
+Defined in: [webview/components/ContextMenu.tsx:12](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/webview/components/ContextMenu.tsx#L12)

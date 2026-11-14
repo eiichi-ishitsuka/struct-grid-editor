@@ -200,7 +200,7 @@ export class MarkdownEditorProvider implements vscode.CustomTextEditorProvider {
 
         case 'openLink': {
           if (typeof message.href === 'string' && message.href) {
-            vscode.env.openExternal(vscode.Uri.parse(message.href));
+            await this.handleOpenLink(document, message.href);
           }
           break;
         }
@@ -212,6 +212,88 @@ export class MarkdownEditorProvider implements vscode.CustomTextEditorProvider {
       lastContentFromWebview,
       getBaseUriString()
     );
+  }
+
+  /**
+   * エディタ内のリンクが Ctrl/Cmd + クリックされた際の遷移処理を行います。
+   * - http / https 等の外部 URL: 確認ダイアログを表示し、承認された場合のみ外部ブラウザで開きます。
+   * - ローカルファイルパス（相対パス・絶対パス）: ドキュメント基準（またはワークスペース基準）で解決し、ファイルが存在する場合のみ新しいタブで開きます（存在しない場合はスキップ）。
+   * @param document 現在の Markdown ドキュメント
+   * @param rawHref クリックされたリンクの href 属性値
+   */
+  public async handleOpenLink(document: vscode.TextDocument, rawHref: string): Promise<void> {
+    const href = rawHref.trim();
+    if (!href || href.startsWith('#')) {
+      return;
+    }
+
+    // インターネット上の外部 URL (http / https / mailto)
+    if (/^(https?:\/\/|mailto:)/i.test(href)) {
+      const confirmOption = '開く';
+      const choice = await vscode.window.showInformationMessage(
+        `外部リンクをブラウザで開きますか？\n${href}`,
+        { modal: true },
+        confirmOption
+      );
+      if (choice === confirmOption) {
+        await vscode.env.openExternal(vscode.Uri.parse(href));
+      }
+      return;
+    }
+
+    // ローカルファイルパスの解決（#fragment や ?query を除去してファイル存在確認）
+    const pathWithoutHashOrQuery = href.split('#')[0].split('?')[0];
+    if (!pathWithoutHashOrQuery) {
+      return;
+    }
+
+    let decodedPath = pathWithoutHashOrQuery;
+    try {
+      decodedPath = decodeURIComponent(pathWithoutHashOrQuery);
+    } catch {
+      // デコード失敗時は元の文字列をそのまま使用
+    }
+
+    const docDirPath = path.dirname(document.uri.fsPath);
+    const candidatePaths: string[] = [];
+
+    if (decodedPath.startsWith('file://')) {
+      try {
+        candidatePaths.push(vscode.Uri.parse(decodedPath).fsPath);
+      } catch {
+        // 無視
+      }
+    } else if (path.isAbsolute(decodedPath)) {
+      // 先頭スラッシュの場合はワークスペースルート相対と絶対パスの両方を候補にする
+      const wsFolder = vscode.workspace.getWorkspaceFolder(document.uri);
+      if (wsFolder) {
+        candidatePaths.push(path.join(wsFolder.uri.fsPath, decodedPath.replace(/^\/+/, '')));
+      }
+      candidatePaths.push(decodedPath);
+    } else {
+      // 1. 現在の Markdown ファイルの親ディレクトリ基準で解決
+      candidatePaths.push(path.resolve(docDirPath, decodedPath));
+      // 2. ワークスペースルート基準のフォールバック
+      const wsFolder = vscode.workspace.getWorkspaceFolder(document.uri);
+      if (wsFolder) {
+        candidatePaths.push(path.resolve(wsFolder.uri.fsPath, decodedPath));
+      }
+    }
+
+    for (const candidate of candidatePaths) {
+      try {
+        const stat = await fs.promises.stat(candidate);
+        if (stat.isFile()) {
+          const targetUri = vscode.Uri.file(candidate);
+          await vscode.commands.executeCommand('vscode.open', targetUri, {
+            preview: false,
+          });
+          return;
+        }
+      } catch {
+        // 存在しない場合は次の候補へ（すべて存在しなければスキップ）
+      }
+    }
   }
 
   private getHtmlForWebview(

@@ -6,7 +6,7 @@
 
 # Interface: TableViewPreferences
 
-Defined in: [webview/model/tableView.ts:14](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/e20beb86538f08849d50b688bca0eb17506d34aa/src/webview/model/tableView.ts#L14)
+Defined in: [webview/model/tableView.ts:14](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/webview/model/tableView.ts#L14)
 
 Webview state に保存する、表表示に影響する設定。
 
@@ -20,7 +20,7 @@ Webview state に保存する、表表示に影響する設定。
 
 > **customColOrders**: `Record`\<`string`, `string`[]\>
 
-Defined in: [webview/model/tableView.ts:15](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/e20beb86538f08849d50b688bca0eb17506d34aa/src/webview/model/tableView.ts#L15)
+Defined in: [webview/model/tableView.ts:15](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/webview/model/tableView.ts#L15)
 
 ***
 
@@ -28,7 +28,7 @@ Defined in: [webview/model/tableView.ts:15](https://github.com/eiichi-ishitsuka/
 
 > **customRowOrders**: `Record`\<`string`, `string`[]\>
 
-Defined in: [webview/model/tableView.ts:16](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/e20beb86538f08849d50b688bca0eb17506d34aa/src/webview/model/tableView.ts#L16)
+Defined in: [webview/model/tableView.ts:16](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/webview/model/tableView.ts#L16)
 
 ***
 
@@ -36,7 +36,7 @@ Defined in: [webview/model/tableView.ts:16](https://github.com/eiichi-ishitsuka/
 
 > **hiddenCols**: `Record`\<`string`, `string`[]\>
 
-Defined in: [webview/model/tableView.ts:17](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/e20beb86538f08849d50b688bca0eb17506d34aa/src/webview/model/tableView.ts#L17)
+Defined in: [webview/model/tableView.ts:17](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/webview/model/tableView.ts#L17)
 
 ***
 
@@ -44,4 +44,4 @@ Defined in: [webview/model/tableView.ts:17](https://github.com/eiichi-ishitsuka/
 
 > **sortState**: `Record`\<`string`, [`TableSortState`](TableSortState.md) \| `undefined`\>
 
-Defined in: [webview/model/tableView.ts:18](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/e20beb86538f08849d50b688bca0eb17506d34aa/src/webview/model/tableView.ts#L18)
+Defined in: [webview/model/tableView.ts:18](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/webview/model/tableView.ts#L18)

@@ -2,6 +2,7 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { Editor } from '@tiptap/core';
 import StarterKit from '@tiptap/starter-kit';
+import Link from '@tiptap/extension-link';
 import { CustomCodeBlock } from '../../md-webview/mermaidExtension';
 import { AdmonitionBlock } from '../../md-webview/admonitionExtension';
 import { InlineMath, BlockMath } from '../../md-webview/mathExtension';
@@ -29,6 +30,11 @@ describe('Tiptap Editor Extensions Integration', () => {
       element: container,
       extensions: [
         StarterKit.configure({ codeBlock: false }),
+        Link.configure({
+          openOnClick: false,
+          autolink: true,
+          isAllowedUri: () => true,
+        }),
         CustomCodeBlock,
         AdmonitionBlock,
         LivePreviewExtension,
@@ -197,6 +203,28 @@ describe('Tiptap Editor Extensions Integration', () => {
     themeBtn.dispatchEvent(new MouseEvent('mousedown', { bubbles: true }));
     expect(document.documentElement.getAttribute('data-md-color-scheme')).toBe('default');
     expect(themeBtn.textContent).toBe('Theme: Light (Default)');
+
+    editor.destroy();
+  });
+
+  /**
+   * 【観点】相対パスリンク（../.agents/...）の href 属性保持と Live Preview マーカーへの data-link-href 付与
+   * 【テスト内容】ドット始まりや親ディレクトリ参照を含む相対パスリンクが Tiptap Link 拡張によって欠落せず保持され、カーソル接触時の構文マーカーにも data-link-href 属性が付与されることを検証する。
+   */
+  it('preserves relative file links and attaches data-link-href to link syntax markers', () => {
+    const md = '参照: [.agents/rules/ai-development-workflow.md](../.agents/rules/ai-development-workflow.md)\n';
+    const editor = createTestEditor(md);
+
+    const anchor = container.querySelector('a') as HTMLAnchorElement | null;
+    expect(anchor).not.toBeNull();
+    expect(anchor?.getAttribute('href')).toBe('../.agents/rules/ai-development-workflow.md');
+
+    editor.commands.setTextSelection(6);
+    const linkMarkers = container.querySelectorAll('.md-syntax-link');
+    expect(linkMarkers.length).toBe(2);
+    expect(linkMarkers[1].getAttribute('data-link-href')).toBe(
+      '../.agents/rules/ai-development-workflow.md'
+    );
 
     editor.destroy();
   });

@@ -6,7 +6,7 @@
 
 # Interface: TableRow
 
-Defined in: [domain/model/TableView.ts:34](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/e20beb86538f08849d50b688bca0eb17506d34aa/src/domain/model/TableView.ts#L34)
+Defined in: [domain/model/TableView.ts:34](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/domain/model/TableView.ts#L34)
 
 テーブルビュー内の1行分のデータ。
 
@@ -16,7 +16,7 @@ Defined in: [domain/model/TableView.ts:34](https://github.com/eiichi-ishitsuka/s
 
 > **cells**: `Record`\<`string`, [`TableCell`](TableCell.md)\>
 
-Defined in: [domain/model/TableView.ts:40](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/e20beb86538f08849d50b688bca0eb17506d34aa/src/domain/model/TableView.ts#L40)
+Defined in: [domain/model/TableView.ts:40](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/domain/model/TableView.ts#L40)
 
 カラムキーをキーとする各セルのマップ
 
@@ -26,7 +26,7 @@ Defined in: [domain/model/TableView.ts:40](https://github.com/eiichi-ishitsuka/s
 
 > **index**: `number`
 
-Defined in: [domain/model/TableView.ts:36](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/e20beb86538f08849d50b688bca0eb17506d34aa/src/domain/model/TableView.ts#L36)
+Defined in: [domain/model/TableView.ts:36](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/domain/model/TableView.ts#L36)
 
 行のインデックス（0起点）
 
@@ -36,6 +36,6 @@ Defined in: [domain/model/TableView.ts:36](https://github.com/eiichi-ishitsuka/s
 
 > **path**: [`CellPath`](../../CellPath/classes/CellPath.md)
 
-Defined in: [domain/model/TableView.ts:38](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/e20beb86538f08849d50b688bca0eb17506d34aa/src/domain/model/TableView.ts#L38)
+Defined in: [domain/model/TableView.ts:38](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/domain/model/TableView.ts#L38)
 
 行のアクセスパス

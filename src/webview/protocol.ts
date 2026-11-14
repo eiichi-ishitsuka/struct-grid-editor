@@ -15,6 +15,7 @@ export type WebviewMessage =
     | { command: 'move_table_column'; arrayPath: string; fromIndex: number; toIndex: number }
     | { command: 'clear_table_column'; arrayPath: string; columnKey: string }
     | { command: 'clear_table_data'; arrayPath: string }
+    | { command: 'set_csv_header'; hasHeader: boolean }
     | { command: 'open_text_editor' };
 
 function isRecord(value: unknown): value is Record<string, unknown> {
@@ -23,6 +24,10 @@ function isRecord(value: unknown): value is Record<string, unknown> {
 
 function hasString(value: Record<string, unknown>, key: string): boolean {
     return typeof value[key] === 'string';
+}
+
+function hasBoolean(value: Record<string, unknown>, key: string): boolean {
+    return typeof value[key] === 'boolean';
 }
 
 function hasFiniteNumber(value: Record<string, unknown>, key: string): boolean {
@@ -60,6 +65,8 @@ export function isWebviewMessage(value: unknown): value is WebviewMessage {
                 && hasFiniteNumber(value, 'toIndex');
         case 'clear_table_data':
             return hasString(value, 'arrayPath');
+        case 'set_csv_header':
+            return hasBoolean(value, 'hasHeader');
         case 'open_text_editor':
             return true;
         default:

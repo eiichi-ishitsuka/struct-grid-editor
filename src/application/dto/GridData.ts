@@ -104,8 +104,8 @@ export interface GridRowDto {
  * Webview に渡されるグリッド全体のデータ DTO。
  */
 export interface GridDataDto {
-    /** ドキュメント形式 ('json', 'yaml' または 'jsonl') */
-    documentType: 'json' | 'yaml' | 'jsonl';
+    /** ドキュメント形式 ('json', 'yaml', 'jsonl', 'csv' または 'tsv') */
+    documentType: 'json' | 'yaml' | 'jsonl' | 'csv' | 'tsv';
     /** 現在の表示モード ('table' または 'kv') */
     viewMode: 'table' | 'kv';
     /** Key-Value 表示時の行リスト */
@@ -116,6 +116,8 @@ export interface GridDataDto {
     tableData?: TableViewDto;
     /** ドキュメント内のサブ配列一覧 */
     subArrays?: SubArrayInfoDto[];
+    /** CSV/TSV の場合に1行目をヘッダーとして扱っているかどうか */
+    hasHeader?: boolean;
     /** 解析エラー等のメッセージ（存在する場合） */
     error?: string;
 }

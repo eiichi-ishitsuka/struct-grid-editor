@@ -6,7 +6,7 @@
 
 # Class: WebviewRenderer
 
-Defined in: [infrastructure/vscode/WebviewRenderer.ts:15](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/e20beb86538f08849d50b688bca0eb17506d34aa/src/infrastructure/vscode/WebviewRenderer.ts#L15)
+Defined in: [infrastructure/vscode/WebviewRenderer.ts:15](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/infrastructure/vscode/WebviewRenderer.ts#L15)
 
 GridDataDto を受け取り、React UI をホストする安全な HTML shell を生成するレンダラー。
 UI の描画・状態管理・イベント処理は React アプリケーション (main.js) が担当する。
@@ -27,7 +27,7 @@ UI の描画・状態管理・イベント処理は React アプリケーショ�
 
 > **render**(`data`, `assets`): `string`
 
-Defined in: [infrastructure/vscode/WebviewRenderer.ts:22](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/e20beb86538f08849d50b688bca0eb17506d34aa/src/infrastructure/vscode/WebviewRenderer.ts#L22)
+Defined in: [infrastructure/vscode/WebviewRenderer.ts:22](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/infrastructure/vscode/WebviewRenderer.ts#L22)
 
 グリッドデータ DTO から VS Code Webview 用の HTML shell 文字列を生成します。
 

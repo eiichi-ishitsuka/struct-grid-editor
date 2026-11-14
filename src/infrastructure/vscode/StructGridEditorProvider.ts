@@ -128,10 +128,12 @@ export class StructGridEditorProvider implements vscode.CustomTextEditorProvider
             return ext.toLowerCase();
         };
 
+        let hasHeader = true;
+
         const updateWebview = () => {
             const text = document.getText();
             const ext = getFileExtension();
-            const result = this.parseUseCase.execute(text, ext);
+            const result = this.parseUseCase.execute(text, ext, { hasHeader });
             webviewPanel.webview.html = this.renderer.render(result.dto, webviewAssets);
         };
 
@@ -143,6 +145,7 @@ export class StructGridEditorProvider implements vscode.CustomTextEditorProvider
 
             const ext = getFileExtension();
             const text = document.getText();
+            const parseOptions = { hasHeader };
 
             try {
                 let newText: string | undefined;
@@ -153,7 +156,8 @@ export class StructGridEditorProvider implements vscode.CustomTextEditorProvider
                             text,
                             ext,
                             message.path,
-                            message.value
+                            message.value,
+                            parseOptions
                         );
                         break;
                     }
@@ -163,7 +167,8 @@ export class StructGridEditorProvider implements vscode.CustomTextEditorProvider
                             ext,
                             message.parentPath,
                             message.key,
-                            message.value
+                            message.value,
+                            parseOptions
                         );
                         break;
                     }
@@ -171,7 +176,8 @@ export class StructGridEditorProvider implements vscode.CustomTextEditorProvider
                         newText = this.deleteRowUseCase.execute(
                             text,
                             ext,
-                            message.path
+                            message.path,
+                            parseOptions
                         );
                         break;
                     }
@@ -180,7 +186,8 @@ export class StructGridEditorProvider implements vscode.CustomTextEditorProvider
                             text,
                             ext,
                             message.arrayPath,
-                            message.rowData
+                            message.rowData,
+                            parseOptions
                         );
                         break;
                     }
@@ -189,7 +196,8 @@ export class StructGridEditorProvider implements vscode.CustomTextEditorProvider
                             text,
                             ext,
                             message.arrayPath,
-                            message.columnKey
+                            message.columnKey,
+                            parseOptions
                         );
                         break;
                     }
@@ -199,7 +207,8 @@ export class StructGridEditorProvider implements vscode.CustomTextEditorProvider
                             ext,
                             message.arrayPath,
                             message.oldKey,
-                            message.newKey
+                            message.newKey,
+                            parseOptions
                         );
                         break;
                     }
@@ -208,7 +217,8 @@ export class StructGridEditorProvider implements vscode.CustomTextEditorProvider
                             text,
                             ext,
                             message.path,
-                            message.newKey
+                            message.newKey,
+                            parseOptions
                         );
                         break;
                     }
@@ -218,7 +228,8 @@ export class StructGridEditorProvider implements vscode.CustomTextEditorProvider
                             ext,
                             message.arrayPath,
                             message.fromIndex,
-                            message.toIndex
+                            message.toIndex,
+                            parseOptions
                         );
                         break;
                     }
@@ -228,7 +239,8 @@ export class StructGridEditorProvider implements vscode.CustomTextEditorProvider
                             ext,
                             message.arrayPath,
                             message.fromIndex,
-                            message.toIndex
+                            message.toIndex,
+                            parseOptions
                         );
                         break;
                     }
@@ -238,7 +250,8 @@ export class StructGridEditorProvider implements vscode.CustomTextEditorProvider
                                 text,
                                 ext,
                                 message.arrayPath,
-                                message.columnKey
+                                message.columnKey,
+                                parseOptions
                             );
                         }
                         break;
@@ -248,10 +261,16 @@ export class StructGridEditorProvider implements vscode.CustomTextEditorProvider
                             newText = this.clearTableDataUseCase.execute(
                                 text,
                                 ext,
-                                message.arrayPath
+                                message.arrayPath,
+                                parseOptions
                             );
                         }
                         break;
+                    }
+                    case 'set_csv_header': {
+                        hasHeader = message.hasHeader;
+                        updateWebview();
+                        return;
                     }
                     case 'open_text_editor': {
                         await vscode.commands.executeCommand('vscode.openWith', document.uri, 'default');

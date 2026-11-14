@@ -6,7 +6,7 @@
 
 # Interface: ToastProps
 
-Defined in: [webview/components/Toast.tsx:1](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/e20beb86538f08849d50b688bca0eb17506d34aa/src/webview/components/Toast.tsx#L1)
+Defined in: [webview/components/Toast.tsx:1](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/webview/components/Toast.tsx#L1)
 
 ## Properties
 
@@ -14,4 +14,4 @@ Defined in: [webview/components/Toast.tsx:1](https://github.com/eiichi-ishitsuka
 
 > **message**: `string` \| `null`
 
-Defined in: [webview/components/Toast.tsx:2](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/e20beb86538f08849d50b688bca0eb17506d34aa/src/webview/components/Toast.tsx#L2)
+Defined in: [webview/components/Toast.tsx:2](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/webview/components/Toast.tsx#L2)

@@ -2,6 +2,7 @@ import * as vscode from 'vscode';
 import { JsonDocumentParser } from './infrastructure/parser/JsonDocumentParser';
 import { YamlDocumentParser } from './infrastructure/parser/YamlDocumentParser';
 import { JsonlDocumentParser } from './infrastructure/parser/JsonlDocumentParser';
+import { CsvDocumentParser, TsvDocumentParser } from './infrastructure/parser/DelimitedDocumentParser';
 import { ParseDocumentUseCase } from './application/usecase/ParseDocumentUseCase';
 import { UpdateCellUseCase } from './application/usecase/UpdateCellUseCase';
 import {
@@ -30,7 +31,9 @@ export function activate(context: vscode.ExtensionContext) {
     const jsonParser = new JsonDocumentParser();
     const yamlParser = new YamlDocumentParser();
     const jsonlParser = new JsonlDocumentParser();
-    const parsers = [jsonParser, yamlParser, jsonlParser];
+    const csvParser = new CsvDocumentParser();
+    const tsvParser = new TsvDocumentParser();
+    const parsers = [jsonParser, yamlParser, jsonlParser, csvParser, tsvParser];
 
     // 2. ユースケースの初期化
     const parseUseCase = new ParseDocumentUseCase(parsers);
@@ -136,6 +139,8 @@ async function ensureEditorAssociations(): Promise<void> {
         const extConfig = vscode.workspace.getConfiguration('struct-grid-editor');
         const openMarkdown = extConfig.get<boolean>('openByDefault.markdown', true);
         const openJsonl = extConfig.get<boolean>('openByDefault.jsonl', true);
+        const openCsv = extConfig.get<boolean>('openByDefault.csv', true);
+        const openTsv = extConfig.get<boolean>('openByDefault.tsv', true);
         const openJson = extConfig.get<boolean>('openByDefault.json', false);
         const openYaml = extConfig.get<boolean>('openByDefault.yaml', false);
 
@@ -148,6 +153,16 @@ async function ensureEditorAssociations(): Promise<void> {
             {
                 patterns: ['*.jsonl'],
                 enabled: openJsonl,
+                viewType: StructGridEditorProvider.viewType,
+            },
+            {
+                patterns: ['*.csv'],
+                enabled: openCsv,
+                viewType: StructGridEditorProvider.viewType,
+            },
+            {
+                patterns: ['*.tsv'],
+                enabled: openTsv,
                 viewType: StructGridEditorProvider.viewType,
             },
             {
@@ -207,12 +222,16 @@ async function ensureDiffEditorAssociations(): Promise<void> {
             '**/*.yaml': 'default',
             '**/*.yml': 'default',
             '**/*.jsonl': 'default',
+            '**/*.csv': 'default',
+            '**/*.tsv': 'default',
             '**/*.md': 'default',
             '**/*.markdown': 'default',
             '*.json': 'default',
             '*.yaml': 'default',
             '*.yml': 'default',
             '*.jsonl': 'default',
+            '*.csv': 'default',
+            '*.tsv': 'default',
             '*.md': 'default',
             '*.markdown': 'default',
         };
