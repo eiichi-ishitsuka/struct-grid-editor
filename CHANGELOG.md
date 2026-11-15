@@ -1,5 +1,12 @@
 # Change Log
 
+## 0.4.2 - 2026-11-16
+
+- Markdown Live Preview 関連の主要ライブラリをメジャーバージョンアップ
+  - `marked`: `^12.0.2` → `^18.2.0`
+  - `mermaid`: `^10.9.1` → `^12.3.0`
+  - `@tiptap/*`（13 パッケージ一式）: `^2.11.5` → `^3.34.0`（Tiptap v3 の `Table` 名前付きインポート、`setContent` オプション形式、`StarterKit` の `Link` 同梱に伴う重複無効化に対応）
+
 ## 0.4.1 - 2026-11-16
 
 - マイナー・パッチバージョンの依存パッケージを更新（`katex` `^0.19.1`、`vitest` `5.1.0`、`eslint` `10.15.0`、`typescript-eslint` `8.72.2`、`react` / `react-dom` `19.3.1`、`@types/vscode` `1.146.0`、`@vscode/vsce` `4.1.1` 等）
