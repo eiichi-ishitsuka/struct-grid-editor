@@ -8,7 +8,7 @@
     "type": "git",
     "url": "https://github.com/eiichi-ishitsuka/struct-grid-editor"
   },
-  "version": "0.4.0",
+  "version": "0.4.1",
   "license": "MIT",
   "engines": {
     "vscode": "^1.107.0"
@@ -313,7 +313,7 @@
     "avsc": "^5.7.9",
     "hyparquet": "^1.33.0",
     "hyparquet-compressors": "^1.1.3",
-    "katex": "^0.16.11",
+    "katex": "^0.19.1",
     "marked": "^12.0.2",
     "mermaid": "^10.9.1",
     "turndown": "^7.2.0",

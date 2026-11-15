@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.4.1 - 2026-11-16
+
+- マイナー・パッチバージョンの依存パッケージを更新（`katex` `^0.19.1`、`vitest` `5.1.0`、`eslint` `10.15.0`、`typescript-eslint` `8.72.2`、`react` / `react-dom` `19.3.1`、`@types/vscode` `1.146.0`、`@vscode/vsce` `4.1.1` 等）
+
 ## 0.4.0 - 2026-11-15
 
 - Apache Parquet（`*.parquet`）および Apache Avro（`*.avro`）ファイルを読み取り専用（Read-Only）でスプレッドシート／ツリー形式で閲覧できる機能を追加
