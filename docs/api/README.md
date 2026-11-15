@@ -33,6 +33,7 @@
 - [md-webview/markdownCodec](md-webview/markdownCodec/README.md)
 - [md-webview/mathExtension](md-webview/mathExtension/README.md)
 - [md-webview/mermaidExtension](md-webview/mermaidExtension/README.md)
+- [md-webview/outline](md-webview/outline/README.md)
 - [md-webview/slashMenu](md-webview/slashMenu/README.md)
 - [md-webview/toolbar](md-webview/toolbar/README.md)
 - [webview/App](webview/App/README.md)

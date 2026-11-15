@@ -6,7 +6,7 @@
 
 # Interface: ContextMenuItem
 
-Defined in: [webview/components/ContextMenu.tsx:3](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/webview/components/ContextMenu.tsx#L3)
+Defined in: [webview/components/ContextMenu.tsx:3](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/f2bc95f4d1b429803858e0f71617e0d396de529f/src/webview/components/ContextMenu.tsx#L3)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [webview/components/ContextMenu.tsx:3](https://github.com/eiichi-ish
 
 > `optional` **action?**: () => `void`
 
-Defined in: [webview/components/ContextMenu.tsx:5](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/webview/components/ContextMenu.tsx#L5)
+Defined in: [webview/components/ContextMenu.tsx:5](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/f2bc95f4d1b429803858e0f71617e0d396de529f/src/webview/components/ContextMenu.tsx#L5)
 
 #### Returns
 
@@ -26,7 +26,7 @@ Defined in: [webview/components/ContextMenu.tsx:5](https://github.com/eiichi-ish
 
 > `optional` **danger?**: `boolean`
 
-Defined in: [webview/components/ContextMenu.tsx:6](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/webview/components/ContextMenu.tsx#L6)
+Defined in: [webview/components/ContextMenu.tsx:6](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/f2bc95f4d1b429803858e0f71617e0d396de529f/src/webview/components/ContextMenu.tsx#L6)
 
 ***
 
@@ -34,7 +34,7 @@ Defined in: [webview/components/ContextMenu.tsx:6](https://github.com/eiichi-ish
 
 > `optional` **isSeparator?**: `boolean`
 
-Defined in: [webview/components/ContextMenu.tsx:7](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/webview/components/ContextMenu.tsx#L7)
+Defined in: [webview/components/ContextMenu.tsx:7](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/f2bc95f4d1b429803858e0f71617e0d396de529f/src/webview/components/ContextMenu.tsx#L7)
 
 ***
 
@@ -42,4 +42,4 @@ Defined in: [webview/components/ContextMenu.tsx:7](https://github.com/eiichi-ish
 
 > `optional` **label?**: `string`
 
-Defined in: [webview/components/ContextMenu.tsx:4](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/webview/components/ContextMenu.tsx#L4)
+Defined in: [webview/components/ContextMenu.tsx:4](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/f2bc95f4d1b429803858e0f71617e0d396de529f/src/webview/components/ContextMenu.tsx#L4)

@@ -6,7 +6,7 @@
 
 # Class: ParseDocumentUseCase
 
-Defined in: [application/usecase/ParseDocumentUseCase.ts:28](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/application/usecase/ParseDocumentUseCase.ts#L28)
+Defined in: [application/usecase/ParseDocumentUseCase.ts:28](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/f2bc95f4d1b429803858e0f71617e0d396de529f/src/application/usecase/ParseDocumentUseCase.ts#L28)
 
 ソーステキストを解析し、Webview描画用のデータ構造（DTO）に変換するユースケース。
 
@@ -16,7 +16,7 @@ Defined in: [application/usecase/ParseDocumentUseCase.ts:28](https://github.com/
 
 > **new ParseDocumentUseCase**(`parsers`): `ParseDocumentUseCase`
 
-Defined in: [application/usecase/ParseDocumentUseCase.ts:29](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/application/usecase/ParseDocumentUseCase.ts#L29)
+Defined in: [application/usecase/ParseDocumentUseCase.ts:29](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/f2bc95f4d1b429803858e0f71617e0d396de529f/src/application/usecase/ParseDocumentUseCase.ts#L29)
 
 #### Parameters
 
@@ -34,7 +34,7 @@ Defined in: [application/usecase/ParseDocumentUseCase.ts:29](https://github.com/
 
 > **execute**(`text`, `fileExtension`, `options?`): `object`
 
-Defined in: [application/usecase/ParseDocumentUseCase.ts:38](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/application/usecase/ParseDocumentUseCase.ts#L38)
+Defined in: [application/usecase/ParseDocumentUseCase.ts:38](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/f2bc95f4d1b429803858e0f71617e0d396de529f/src/application/usecase/ParseDocumentUseCase.ts#L38)
 
 ソーステキストとファイル拡張子からドキュメントを解析し、GridDataDto を生成します。
 

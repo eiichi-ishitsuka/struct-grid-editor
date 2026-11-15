@@ -8,7 +8,7 @@
 
 > **cellSelectionClass**(`selection`, `rowIndex`, `colKey`): `string`
 
-Defined in: [webview/hooks/useGridSelection.ts:29](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/webview/hooks/useGridSelection.ts#L29)
+Defined in: [webview/hooks/useGridSelection.ts:29](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/f2bc95f4d1b429803858e0f71617e0d396de529f/src/webview/hooks/useGridSelection.ts#L29)
 
 セルの選択状態に応じた CSS クラスを返す。
 

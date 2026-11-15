@@ -6,7 +6,7 @@
 
 # Interface: FocusRestorationOptions
 
-Defined in: [webview/hooks/useFocusRestoration.ts:7](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/webview/hooks/useFocusRestoration.ts#L7)
+Defined in: [webview/hooks/useFocusRestoration.ts:7](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/f2bc95f4d1b429803858e0f71617e0d396de529f/src/webview/hooks/useFocusRestoration.ts#L7)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [webview/hooks/useFocusRestoration.ts:7](https://github.com/eiichi-i
 
 > **pendingFocus**: [`PendingFocus`](../../gridUiState/interfaces/PendingFocus.md) \| `undefined`
 
-Defined in: [webview/hooks/useFocusRestoration.ts:8](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/webview/hooks/useFocusRestoration.ts#L8)
+Defined in: [webview/hooks/useFocusRestoration.ts:8](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/f2bc95f4d1b429803858e0f71617e0d396de529f/src/webview/hooks/useFocusRestoration.ts#L8)
 
 ***
 
@@ -22,7 +22,7 @@ Defined in: [webview/hooks/useFocusRestoration.ts:8](https://github.com/eiichi-i
 
 > **setSelection**: (`selection`) => `void`
 
-Defined in: [webview/hooks/useFocusRestoration.ts:10](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/webview/hooks/useFocusRestoration.ts#L10)
+Defined in: [webview/hooks/useFocusRestoration.ts:10](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/f2bc95f4d1b429803858e0f71617e0d396de529f/src/webview/hooks/useFocusRestoration.ts#L10)
 
 #### Parameters
 
@@ -40,7 +40,7 @@ Defined in: [webview/hooks/useFocusRestoration.ts:10](https://github.com/eiichi-
 
 > **setUiState**: (`updater`) => `void`
 
-Defined in: [webview/hooks/useFocusRestoration.ts:9](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/webview/hooks/useFocusRestoration.ts#L9)
+Defined in: [webview/hooks/useFocusRestoration.ts:9](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/f2bc95f4d1b429803858e0f71617e0d396de529f/src/webview/hooks/useFocusRestoration.ts#L9)
 
 #### Parameters
 

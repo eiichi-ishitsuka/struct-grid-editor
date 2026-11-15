@@ -24,6 +24,7 @@ import {
 } from './markdownCodec';
 import { createToolbar } from './toolbar';
 import { setupSlashMenu } from './slashMenu';
+import { renderOutline } from './outline';
 
 declare function acquireVsCodeApi(): {
   postMessage: (msg: unknown) => void;
@@ -59,12 +60,22 @@ const CustomImage = Image.extend({
 
 let isProgrammaticUpdate = false;
 let syncDebounceTimer: number | undefined;
+let rawSyncDebounceTimer: number | undefined;
+let isReadOnly = false;
+let isSplitView = false;
+let isOutlineVisible = true;
 
+const appEl = document.getElementById('app') as HTMLElement;
+const mainContainer = document.getElementById('main-container') as HTMLElement;
 const editorWrapper = document.getElementById('editor-wrapper') as HTMLElement;
 const editorElement = document.getElementById('editor') as HTMLElement;
+const outlinePanel = document.getElementById('outline-panel') as HTMLElement;
+const rawEditorPane = document.getElementById('raw-editor-pane') as HTMLElement;
+const rawEditorEl = document.getElementById('raw-editor') as HTMLTextAreaElement;
 const toolbarContainer = document.getElementById('toolbar-container') as HTMLElement;
 const tableBannerContainer = document.getElementById('table-Banner-container') as HTMLElement;
 const slashMenuEl = document.getElementById('slash-menu') as HTMLElement;
+const statusInfoEl = document.getElementById('status-info') as HTMLElement;
 const statusStatsEl = document.getElementById('status-stats') as HTMLElement;
 
 // エディタ上部に YAML Frontmatter 編集パネルを配置する
@@ -97,7 +108,11 @@ function renderFrontmatterPanel(): void {
   removeBtn.type = 'button';
   removeBtn.className = 'admonition-remove-btn';
   removeBtn.textContent = '削除';
+  removeBtn.disabled = isReadOnly;
   removeBtn.addEventListener('click', () => {
+    if (isReadOnly) {
+      return;
+    }
     setFrontmatter(null);
     renderFrontmatterPanel();
     scheduleDocumentSync();
@@ -109,10 +124,14 @@ function renderFrontmatterPanel(): void {
   const textarea = document.createElement('textarea');
   textarea.className = 'frontmatter-textarea';
   textarea.value = fm;
+  textarea.readOnly = isReadOnly;
   textarea.placeholder = 'title: ドキュメントタイトル\ndescription: 説明';
   textarea.rows = Math.max(2, Math.min(8, fm.split('\n').length));
 
   textarea.addEventListener('input', () => {
+    if (isReadOnly) {
+      return;
+    }
     setFrontmatter(textarea.value);
     scheduleDocumentSync();
   });
@@ -129,9 +148,25 @@ if (initialDataEl && initialDataEl.textContent) {
     const parsed = JSON.parse(initialDataEl.textContent) as {
       text?: string;
       baseUri?: string;
+      preferences?: {
+        readOnly?: boolean;
+        splitView?: boolean;
+        showIndex?: boolean;
+      };
     };
     if (parsed.baseUri) {
       setMarkdownBaseUri(parsed.baseUri);
+    }
+    if (parsed.preferences) {
+      if (typeof parsed.preferences.readOnly === 'boolean') {
+        isReadOnly = parsed.preferences.readOnly;
+      }
+      if (typeof parsed.preferences.splitView === 'boolean') {
+        isSplitView = parsed.preferences.splitView;
+      }
+      if (typeof parsed.preferences.showIndex === 'boolean') {
+        isOutlineVisible = parsed.preferences.showIndex;
+      }
     }
     if (typeof parsed.text === 'string') {
       initialHtml = markdownToHtml(parsed.text);
@@ -184,33 +219,150 @@ const editor = new Editor({
   autofocus: false,
   onUpdate: ({ editor: ed }) => {
     updateStats(ed);
-    if (isProgrammaticUpdate) {
+    updateOutline();
+    if (isProgrammaticUpdate || isReadOnly) {
       return;
     }
     scheduleDocumentSync();
   },
 });
 
-// 初回ロード直後に Frontmatter パネルと文字数統計を反映する
-renderFrontmatterPanel();
-updateStats(editor);
+/**
+ * 見出しインデックスパネルを再描画します。
+ */
+function updateOutline(): void {
+  if (outlinePanel) {
+    renderOutline(outlinePanel, editor);
+  }
+}
+
+/**
+ * 現在の表示設定を拡張ホストへ送信し、別ファイル間でも永続化します。
+ */
+function persistViewPreferences(): void {
+  vscode.postMessage({
+    type: 'updatePreferences',
+    preferences: {
+      readOnly: isReadOnly,
+      splitView: isSplitView,
+      showIndex: isOutlineVisible,
+    },
+  });
+}
+
+// 初回ロード直後に Frontmatter パネル・文字数統計・見出しインデックス・保存済み設定を反映する
+isProgrammaticUpdate = true;
+try {
+  setReadOnly(isReadOnly);
+  setSplitView(isSplitView);
+  setOutlineVisible(isOutlineVisible);
+  updateStats(editor);
+  updateOutline();
+} finally {
+  isProgrammaticUpdate = false;
+}
 
 /**
  * エディタの変更内容をデバウンスして Markdown へ変換し、VS Code 拡張ホストへ送信します。
  */
 function scheduleDocumentSync(): void {
+  if (isReadOnly) {
+    return;
+  }
   if (syncDebounceTimer) {
     window.clearTimeout(syncDebounceTimer);
   }
   syncDebounceTimer = window.setTimeout(() => {
     const html = editor.getHTML();
     const markdown = htmlToMarkdown(html);
+    if (isSplitView && rawEditorEl && document.activeElement !== rawEditorEl) {
+      rawEditorEl.value = markdown;
+    }
     vscode.postMessage({
       type: 'edit',
       text: markdown,
     });
   }, 150);
 }
+
+/**
+ * ReadOnly モードを切り替えます。
+ */
+function setReadOnly(next: boolean): boolean {
+  isReadOnly = next;
+  const prevProgrammatic = isProgrammaticUpdate;
+  isProgrammaticUpdate = true;
+  try {
+    editor.setEditable(!isReadOnly, false);
+    // 選択中の行にある LivePreview 装飾を即座に再評価させる
+    editor.view.dispatch(editor.state.tr);
+    appEl?.classList.toggle('is-readonly', isReadOnly);
+    if (rawEditorEl) {
+      rawEditorEl.readOnly = isReadOnly;
+    }
+    if (isReadOnly) {
+      slashMenuEl?.classList.add('hidden');
+    }
+    if (statusInfoEl) {
+      statusInfoEl.innerHTML = isReadOnly
+        ? 'ReadOnly Mode'
+        : 'WYSIWYG Mode — <code>/</code> でブロック挿入';
+    }
+    renderFrontmatterPanel();
+  } finally {
+    isProgrammaticUpdate = prevProgrammatic;
+  }
+  return isReadOnly;
+}
+
+/**
+ * 左右分割（左: プレビュー, 右: ローテキストエディタ）表示を切り替えます。
+ */
+function setSplitView(next: boolean): boolean {
+  isSplitView = next;
+  mainContainer?.classList.toggle('is-split', isSplitView);
+  rawEditorPane?.classList.toggle('hidden', !isSplitView);
+  if (isSplitView && rawEditorEl) {
+    rawEditorEl.value = htmlToMarkdown(editor.getHTML());
+    rawEditorEl.readOnly = isReadOnly;
+  }
+  return isSplitView;
+}
+
+/**
+ * 見出しインデックスパネルの表示・非表示を切り替えます。
+ */
+function setOutlineVisible(next: boolean): boolean {
+  isOutlineVisible = next;
+  outlinePanel?.classList.toggle('hidden', !isOutlineVisible);
+  return isOutlineVisible;
+}
+
+rawEditorEl?.addEventListener('input', () => {
+  if (isReadOnly) {
+    return;
+  }
+  if (rawSyncDebounceTimer) {
+    window.clearTimeout(rawSyncDebounceTimer);
+  }
+  rawSyncDebounceTimer = window.setTimeout(() => {
+    const rawText = rawEditorEl.value;
+    isProgrammaticUpdate = true;
+    try {
+      const html = markdownToHtml(rawText);
+      renderFrontmatterPanel();
+      editor.commands.setContent(html, false);
+      updateStats(editor);
+      updateOutline();
+    } finally {
+      isProgrammaticUpdate = false;
+    }
+    vscode.postMessage({
+      type: 'edit',
+      text: rawText,
+    });
+  }, 150);
+});
 
 /**
  * ステータスバーの文字数およびパラグラフ数の表示を更新します。
@@ -279,6 +431,24 @@ createToolbar(toolbarContainer, tableBannerContainer, editor, {
     applyColorScheme(next);
     return next;
   },
+  getReadOnly: () => isReadOnly,
+  onToggleReadOnly: () => {
+    const next = setReadOnly(!isReadOnly);
+    persistViewPreferences();
+    return next;
+  },
+  getSplitView: () => isSplitView,
+  onToggleSplitView: () => {
+    const next = setSplitView(!isSplitView);
+    persistViewPreferences();
+    return next;
+  },
+  getOutlineVisible: () => isOutlineVisible,
+  onToggleOutline: () => {
+    const next = setOutlineVisible(!isOutlineVisible);
+    persistViewPreferences();
+    return next;
+  },
 });
 
 setupSlashMenu(
@@ -341,6 +511,9 @@ editorElement.addEventListener(
 
 // クリップボードからの画像貼り付けハンドリング
 window.addEventListener('paste', (event: ClipboardEvent) => {
+  if (isReadOnly) {
+    return;
+  }
   const items = event.clipboardData?.items;
   if (!items) {
     return;
@@ -360,6 +533,9 @@ window.addEventListener('paste', (event: ClipboardEvent) => {
 
 // 画像ファイルのドラッグ＆ドロップハンドリング
 window.addEventListener('drop', (event: DragEvent) => {
+  if (isReadOnly) {
+    return;
+  }
   const files = event.dataTransfer?.files;
   if (!files || files.length === 0) {
     return;
@@ -415,6 +591,10 @@ window.addEventListener('message', (event) => {
         renderFrontmatterPanel();
         editor.commands.setContent(html, false);
         updateStats(editor);
+        updateOutline();
+        if (isSplitView && rawEditorEl && document.activeElement !== rawEditorEl) {
+          rawEditorEl.value = incomingMd;
+        }
       } finally {
         isProgrammaticUpdate = false;
       }

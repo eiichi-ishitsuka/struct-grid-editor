@@ -6,7 +6,7 @@
 
 # Class: YamlDocumentParser
 
-Defined in: [infrastructure/parser/YamlDocumentParser.ts:12](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/infrastructure/parser/YamlDocumentParser.ts#L12)
+Defined in: [infrastructure/parser/YamlDocumentParser.ts:12](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/f2bc95f4d1b429803858e0f71617e0d396de529f/src/infrastructure/parser/YamlDocumentParser.ts#L12)
 
 YAMLドキュメントの解析およびシリアライズを担うインフラストラクチャ層のアダプター。
 `yaml` ライブラリの AST を活用し、コメントや書式を最大限保持します。
@@ -21,7 +21,7 @@ YAMLドキュメントの解析およびシリアライズを担うインフラ�
 
 > **new YamlDocumentParser**(`formatPreserver?`): `YamlDocumentParser`
 
-Defined in: [infrastructure/parser/YamlDocumentParser.ts:13](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/infrastructure/parser/YamlDocumentParser.ts#L13)
+Defined in: [infrastructure/parser/YamlDocumentParser.ts:13](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/f2bc95f4d1b429803858e0f71617e0d396de529f/src/infrastructure/parser/YamlDocumentParser.ts#L13)
 
 #### Parameters
 
@@ -39,7 +39,7 @@ Defined in: [infrastructure/parser/YamlDocumentParser.ts:13](https://github.com/
 
 > **parse**(`text`): [`StructuredDocument`](../../../../domain/model/StructuredDocument/classes/StructuredDocument.md)
 
-Defined in: [infrastructure/parser/YamlDocumentParser.ts:30](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/infrastructure/parser/YamlDocumentParser.ts#L30)
+Defined in: [infrastructure/parser/YamlDocumentParser.ts:30](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/f2bc95f4d1b429803858e0f71617e0d396de529f/src/infrastructure/parser/YamlDocumentParser.ts#L30)
 
 YAML 文字列を解析し、StructuredDocument ドメインモデルを生成します。
 
@@ -67,7 +67,7 @@ YAML 文字列を解析し、StructuredDocument ドメインモデルを生成�
 
 > **serialize**(`document`): `string`
 
-Defined in: [infrastructure/parser/YamlDocumentParser.ts:60](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/infrastructure/parser/YamlDocumentParser.ts#L60)
+Defined in: [infrastructure/parser/YamlDocumentParser.ts:60](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/f2bc95f4d1b429803858e0f71617e0d396de529f/src/infrastructure/parser/YamlDocumentParser.ts#L60)
 
 StructuredDocument をコメントやインデントを保持しながら YAML 文字列にシリアライズします。
 
@@ -95,7 +95,7 @@ StructuredDocument をコメントやインデントを保持しながら YAML �
 
 > **supports**(`fileExtension`): `boolean`
 
-Defined in: [infrastructure/parser/YamlDocumentParser.ts:20](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/infrastructure/parser/YamlDocumentParser.ts#L20)
+Defined in: [infrastructure/parser/YamlDocumentParser.ts:20](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/f2bc95f4d1b429803858e0f71617e0d396de529f/src/infrastructure/parser/YamlDocumentParser.ts#L20)
 
 指定された拡張子が YAML であるかを判定します。
 

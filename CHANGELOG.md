@@ -1,5 +1,12 @@
 # Change Log
 
+## 0.3.0 - 2026-11-15
+
+- Markdown Live Preview Editor に **Read Mode**（上部ツールバー右側の `Read Mode` トグルで切り替え、デフォルト OFF）を追加し、有効時は行をクリックしても rawtext 記法マーカーが表示されないよう対応
+- Markdown Live Preview Editor に **Split View**（上部ツールバー右側の `Split View` トグルで切り替え、デフォルト OFF）を追加し、左側にプレビュー、右側にローテキストエディタを並べてリアルタイム同期編集できるよう対応
+- Markdown Live Preview Editor に **Show Index**（上部ツールバー右側の `Show Index` トグルで切り替え、デフォルト ON）を追加し、プレビュー画面右上に表示される見出し一覧からクリックで該当見出しへジャンプできるよう対応
+- `Read Mode` / `Split View` / `Show Index` のトグル設定を VS Code 拡張の `globalState` に永続化し、別ファイルを開いても設定が維持されるよう対応
+
 ## 0.2.0 - 2026-11-14
 
 - CSV（`*.csv`）および TSV（`*.tsv`）ファイルをスプレッドシート形式で閲覧・編集できる機能を追加（RFC 4180 準拠、セル内改行・クォートエスケープ・数値/真偽値の自動型推論に対応）

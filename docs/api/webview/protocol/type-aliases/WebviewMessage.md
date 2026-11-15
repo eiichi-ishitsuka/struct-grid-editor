@@ -8,7 +8,7 @@
 
 > **WebviewMessage** = \{ `command`: `"update_cell"`; `path`: `string`; `value`: `string`; \} \| \{ `command`: `"add_row"`; `key`: `string`; `parentPath`: `string`; `value`: `string`; \} \| \{ `command`: `"delete_row"`; `path`: `string`; \} \| \{ `arrayPath`: `string`; `command`: `"add_table_row"`; `rowData?`: `unknown`; \} \| \{ `arrayPath`: `string`; `columnKey`: `string`; `command`: `"add_table_column"`; \} \| \{ `arrayPath`: `string`; `command`: `"rename_table_column"`; `newKey`: `string`; `oldKey`: `string`; \} \| \{ `command`: `"rename_key"`; `newKey`: `string`; `path`: `string`; \} \| \{ `arrayPath`: `string`; `command`: `"move_table_row"`; `fromIndex`: `number`; `toIndex`: `number`; \} \| \{ `arrayPath`: `string`; `command`: `"move_table_column"`; `fromIndex`: `number`; `toIndex`: `number`; \} \| \{ `arrayPath`: `string`; `columnKey`: `string`; `command`: `"clear_table_column"`; \} \| \{ `arrayPath`: `string`; `command`: `"clear_table_data"`; \} \| \{ `command`: `"set_csv_header"`; `hasHeader`: `boolean`; \} \| \{ `command`: `"open_text_editor"`; \}
 
-Defined in: [webview/protocol.ts:6](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/webview/protocol.ts#L6)
+Defined in: [webview/protocol.ts:6](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/f2bc95f4d1b429803858e0f71617e0d396de529f/src/webview/protocol.ts#L6)
 
 Webview から拡張機能へ送る操作メッセージ。
 

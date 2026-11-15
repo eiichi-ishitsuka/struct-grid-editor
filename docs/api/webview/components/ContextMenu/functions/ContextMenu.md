@@ -8,7 +8,7 @@
 
 > **ContextMenu**(`__namedParameters`): `Element` \| `null`
 
-Defined in: [webview/components/ContextMenu.tsx:16](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/webview/components/ContextMenu.tsx#L16)
+Defined in: [webview/components/ContextMenu.tsx:16](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/f2bc95f4d1b429803858e0f71617e0d396de529f/src/webview/components/ContextMenu.tsx#L16)
 
 ## Parameters
 

@@ -6,7 +6,7 @@
 
 # Interface: SubArrayInfoDto
 
-Defined in: [application/dto/GridData.ts:62](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/application/dto/GridData.ts#L62)
+Defined in: [application/dto/GridData.ts:62](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/f2bc95f4d1b429803858e0f71617e0d396de529f/src/application/dto/GridData.ts#L62)
 
 ドキュメント内に存在するサブ配列情報 DTO。
 
@@ -16,7 +16,7 @@ Defined in: [application/dto/GridData.ts:62](https://github.com/eiichi-ishitsuka
 
 > **isObjectArray**: `boolean`
 
-Defined in: [application/dto/GridData.ts:70](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/application/dto/GridData.ts#L70)
+Defined in: [application/dto/GridData.ts:70](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/f2bc95f4d1b429803858e0f71617e0d396de529f/src/application/dto/GridData.ts#L70)
 
 オブジェクト配列であるか
 
@@ -26,7 +26,7 @@ Defined in: [application/dto/GridData.ts:70](https://github.com/eiichi-ishitsuka
 
 > **label**: `string`
 
-Defined in: [application/dto/GridData.ts:66](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/application/dto/GridData.ts#L66)
+Defined in: [application/dto/GridData.ts:66](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/f2bc95f4d1b429803858e0f71617e0d396de529f/src/application/dto/GridData.ts#L66)
 
 配列の表示ラベル
 
@@ -36,7 +36,7 @@ Defined in: [application/dto/GridData.ts:66](https://github.com/eiichi-ishitsuka
 
 > **length**: `number`
 
-Defined in: [application/dto/GridData.ts:68](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/application/dto/GridData.ts#L68)
+Defined in: [application/dto/GridData.ts:68](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/f2bc95f4d1b429803858e0f71617e0d396de529f/src/application/dto/GridData.ts#L68)
 
 配列の要素数
 
@@ -46,7 +46,7 @@ Defined in: [application/dto/GridData.ts:68](https://github.com/eiichi-ishitsuka
 
 > **path**: `string`
 
-Defined in: [application/dto/GridData.ts:64](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/application/dto/GridData.ts#L64)
+Defined in: [application/dto/GridData.ts:64](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/f2bc95f4d1b429803858e0f71617e0d396de529f/src/application/dto/GridData.ts#L64)
 
 配列のアクセスパス
 
@@ -56,6 +56,6 @@ Defined in: [application/dto/GridData.ts:64](https://github.com/eiichi-ishitsuka
 
 > `optional` **tableData?**: [`TableViewDto`](TableViewDto.md)
 
-Defined in: [application/dto/GridData.ts:72](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/application/dto/GridData.ts#L72)
+Defined in: [application/dto/GridData.ts:72](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/f2bc95f4d1b429803858e0f71617e0d396de529f/src/application/dto/GridData.ts#L72)
 
 テーブルデータ（任意）

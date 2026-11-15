@@ -8,7 +8,7 @@
 
 > **useGridSelection**(): `object`
 
-Defined in: [webview/hooks/useGridSelection.ts:5](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/webview/hooks/useGridSelection.ts#L5)
+Defined in: [webview/hooks/useGridSelection.ts:5](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/f2bc95f4d1b429803858e0f71617e0d396de529f/src/webview/hooks/useGridSelection.ts#L5)
 
 表の選択操作と、選択状態に基づく CSS クラスの付与を管理する。
 

@@ -6,7 +6,7 @@
 
 # Interface: DocumentFormatOptions
 
-Defined in: [domain/model/DocumentFormat.ts:9](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/domain/model/DocumentFormat.ts#L9)
+Defined in: [domain/model/DocumentFormat.ts:9](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/f2bc95f4d1b429803858e0f71617e0d396de529f/src/domain/model/DocumentFormat.ts#L9)
 
 ドキュメントの書式オプション。
 
@@ -16,7 +16,7 @@ Defined in: [domain/model/DocumentFormat.ts:9](https://github.com/eiichi-ishitsu
 
 > **fileType**: [`DocumentFileType`](../type-aliases/DocumentFileType.md)
 
-Defined in: [domain/model/DocumentFormat.ts:11](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/domain/model/DocumentFormat.ts#L11)
+Defined in: [domain/model/DocumentFormat.ts:11](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/f2bc95f4d1b429803858e0f71617e0d396de529f/src/domain/model/DocumentFormat.ts#L11)
 
 ファイル形式 ('json', 'yaml', 'jsonl', 'csv' または 'tsv')
 
@@ -26,7 +26,7 @@ Defined in: [domain/model/DocumentFormat.ts:11](https://github.com/eiichi-ishits
 
 > **hasTrailingNewline**: `boolean`
 
-Defined in: [domain/model/DocumentFormat.ts:15](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/domain/model/DocumentFormat.ts#L15)
+Defined in: [domain/model/DocumentFormat.ts:15](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/f2bc95f4d1b429803858e0f71617e0d396de529f/src/domain/model/DocumentFormat.ts#L15)
 
 末尾改行が存在するかどうか
 
@@ -36,7 +36,7 @@ Defined in: [domain/model/DocumentFormat.ts:15](https://github.com/eiichi-ishits
 
 > **indent**: `string` \| `number`
 
-Defined in: [domain/model/DocumentFormat.ts:13](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/domain/model/DocumentFormat.ts#L13)
+Defined in: [domain/model/DocumentFormat.ts:13](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/f2bc95f4d1b429803858e0f71617e0d396de529f/src/domain/model/DocumentFormat.ts#L13)
 
 インデント幅またはインデント文字列
 
@@ -46,6 +46,6 @@ Defined in: [domain/model/DocumentFormat.ts:13](https://github.com/eiichi-ishits
 
 > `optional` **metadata?**: `Record`\<`string`, `any`\>
 
-Defined in: [domain/model/DocumentFormat.ts:17](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/domain/model/DocumentFormat.ts#L17)
+Defined in: [domain/model/DocumentFormat.ts:17](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/f2bc95f4d1b429803858e0f71617e0d396de529f/src/domain/model/DocumentFormat.ts#L17)
 
 各フォーマット固有の追加メタデータ
