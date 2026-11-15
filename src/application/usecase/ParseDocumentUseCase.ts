@@ -56,70 +56,8 @@ export class ParseDocumentUseCase {
 
         try {
             const document = parser.parse(text, options);
-            const isRootArray = document.isArrayRoot();
-
-            let tableData: TableViewDto | undefined;
-            if (isRootArray) {
-                const rootTableView = document.toTableView();
-                if (rootTableView) {
-                    tableData = this.toTableViewDto(rootTableView);
-                }
-            }
-
-            // ドリルダウン表示をサポートするため、ドキュメント内の全サブ配列を探索
-            const subArraysInfo: SubArrayInfoDto[] = [];
-            const subArrays = document.findSubArrays();
-            for (const sub of subArrays) {
-                const tv = document.toTableView(CellPath.fromString(sub.path));
-                if (tv) {
-                    subArraysInfo.push({
-                        path: sub.path,
-                        label: sub.label,
-                        length: sub.length,
-                        isObjectArray: sub.isObjectArray,
-                        tableData: this.toTableViewDto(tv),
-                    });
-                }
-            }
-
-            // 中間ノードも含めて平坦化（KV表示時にオブジェクトノードをツリー行として表示）
-            const flatRows = document.toFlatRows({
-                includeIntermediateNodes: true,
-                collapseArrays: true,
-            });
-            const rows: GridRowDto[] = flatRows.map(row => {
-                const isArrayRow = row.value.type === 'array' || row.nodeType === 'array';
-                const isObjectRow = row.nodeType === 'object';
-
-                return {
-                    id: row.id,
-                    path: row.displayPath,
-                    key: String(row.key),
-                    value: row.value.value,
-                    displayValue: row.value.toDisplayString(),
-                    type: isArrayRow ? 'array' : (isObjectRow ? 'object' : row.value.type),
-                    depth: row.depth,
-                    isLeaf: row.isLeaf,
-                    isArray: isArrayRow,
-                    subArrayPath: isArrayRow ? row.displayPath : undefined,
-                };
-            });
-
-            const fileType = document.format.fileType;
-            const hasHeader = (fileType === 'csv' || fileType === 'tsv')
-                ? (document.format.metadata?.hasHeader !== false)
-                : undefined;
-
             return {
-                dto: {
-                    documentType: fileType,
-                    viewMode: isRootArray ? 'table' : 'kv',
-                    rows,
-                    totalRows: isRootArray && tableData ? tableData.totalRows : rows.length,
-                    tableData,
-                    subArrays: subArraysInfo,
-                    ...(hasHeader !== undefined ? { hasHeader } : {}),
-                },
+                dto: this.toGridDataDto(document),
                 doc: document,
             };
         } catch (e: any) {
@@ -134,6 +72,82 @@ export class ParseDocumentUseCase {
                 },
             };
         }
+    }
+
+    /**
+     * 解析済みの StructuredDocument を Webview 描画用の GridDataDto に変換します。
+     * @param document 解析済みの StructuredDocument
+     * @param extra 追加メタデータ（readOnly, isTruncated, totalSourceRows 等）
+     * @returns Webview 描画用の DTO
+     */
+    public toGridDataDto(
+        document: StructuredDocument,
+        extra?: Partial<Pick<GridDataDto, 'readOnly' | 'isTruncated' | 'totalSourceRows'>>
+    ): GridDataDto {
+        const isRootArray = document.isArrayRoot();
+
+        let tableData: TableViewDto | undefined;
+        if (isRootArray) {
+            const rootTableView = document.toTableView();
+            if (rootTableView) {
+                tableData = this.toTableViewDto(rootTableView);
+            }
+        }
+
+        // ドリルダウン表示をサポートするため、ドキュメント内の全サブ配列を探索
+        const subArraysInfo: SubArrayInfoDto[] = [];
+        const subArrays = document.findSubArrays();
+        for (const sub of subArrays) {
+            const tv = document.toTableView(CellPath.fromString(sub.path));
+            if (tv) {
+                subArraysInfo.push({
+                    path: sub.path,
+                    label: sub.label,
+                    length: sub.length,
+                    isObjectArray: sub.isObjectArray,
+                    tableData: this.toTableViewDto(tv),
+                });
+            }
+        }
+
+        // 中間ノードも含めて平坦化（KV表示時にオブジェクトノードをツリー行として表示）
+        const flatRows = document.toFlatRows({
+            includeIntermediateNodes: true,
+            collapseArrays: true,
+        });
+        const rows: GridRowDto[] = flatRows.map(row => {
+            const isArrayRow = row.value.type === 'array' || row.nodeType === 'array';
+            const isObjectRow = row.nodeType === 'object';
+
+            return {
+                id: row.id,
+                path: row.displayPath,
+                key: String(row.key),
+                value: row.value.value,
+                displayValue: row.value.toDisplayString(),
+                type: isArrayRow ? 'array' : (isObjectRow ? 'object' : row.value.type),
+                depth: row.depth,
+                isLeaf: row.isLeaf,
+                isArray: isArrayRow,
+                subArrayPath: isArrayRow ? row.displayPath : undefined,
+            };
+        });
+
+        const fileType = document.format.fileType;
+        const hasHeader = (fileType === 'csv' || fileType === 'tsv')
+            ? (document.format.metadata?.hasHeader !== false)
+            : undefined;
+
+        return {
+            documentType: fileType,
+            viewMode: isRootArray ? 'table' : 'kv',
+            rows,
+            totalRows: isRootArray && tableData ? tableData.totalRows : rows.length,
+            tableData,
+            subArrays: subArraysInfo,
+            ...(hasHeader !== undefined ? { hasHeader } : {}),
+            ...extra,
+        };
     }
 
     private toTableViewDto(tableView: TableView): TableViewDto {

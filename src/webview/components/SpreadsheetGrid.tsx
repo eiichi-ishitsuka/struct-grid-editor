@@ -20,6 +20,7 @@ export interface SpreadsheetGridProps {
     selection: GridSelection;
     sortState: TableSortState | undefined;
     colWidths?: Record<string, number>;
+    readOnly?: boolean;
     onPageChange: (page: number) => void;
     onCellClick: (rowIndex: number, colKey: string, path: string) => void;
     onRowClick: (rowIndex: number, path: string) => void;
@@ -48,6 +49,7 @@ export function SpreadsheetGrid({
     selection,
     sortState,
     colWidths = {},
+    readOnly = false,
     onPageChange,
     onCellClick,
     onRowClick,
@@ -229,7 +231,7 @@ export function SpreadsheetGrid({
                                     data-col-index={colIdx}
                                     data-col-key={column.key}
                                     key={column.key}
-                                    draggable={!resizingColKey}
+                                    draggable={!readOnly && !resizingColKey}
                                     onClick={() => onColClick(column.key)}
                                     onContextMenu={event => onColContextMenu?.(event, column.key, colIdx)}
                                     onDragStart={e => handleColDragStart(colIdx, e)}
@@ -241,11 +243,11 @@ export function SpreadsheetGrid({
                                     <div className="col-header-inner">
                                         <span
                                             className="col-header-label"
-                                            contentEditable={true}
+                                            contentEditable={!readOnly}
                                             suppressContentEditableWarning={true}
                                             data-col-key={column.key}
                                             data-old-label={column.label}
-                                            title="クリックして列名を編集"
+                                            title={readOnly ? column.label : 'クリックして列名を編集'}
                                             onClick={event => event.stopPropagation()}
                                             onBlur={event => handleColumnLabelBlur(column.key, column.label, event.currentTarget)}
                                             onKeyDown={event => handleColumnLabelKeyDown(event, column.label)}
@@ -278,17 +280,19 @@ export function SpreadsheetGrid({
                                 </th>
                             );
                         })}
-                        <th className="col-add-header">
-                            <button
-                                className="btn-add-col"
-                                id="addColBtn"
-                                title="一番右に列を挿入"
-                                type="button"
-                                onClick={onAddColumn}
-                            >
-                                ＋
-                            </button>
-                        </th>
+                        {!readOnly && (
+                            <th className="col-add-header">
+                                <button
+                                    className="btn-add-col"
+                                    id="addColBtn"
+                                    title="一番右に列を挿入"
+                                    type="button"
+                                    onClick={onAddColumn}
+                                >
+                                    ＋
+                                </button>
+                            </th>
+                        )}
                     </tr>
                 </thead>
                 <tbody>
@@ -309,7 +313,7 @@ export function SpreadsheetGrid({
                                 data-row-index={originalIndex}
                                 data-row-path={row.path}
                                 key={row.path}
-                                draggable={true}
+                                draggable={!readOnly}
                                 onDragStart={e => handleRowDragStart(originalIndex, e)}
                                 onDragOver={e => handleRowDragOver(originalIndex, e)}
                                 onDragLeave={() => setRowDragOver(null)}
@@ -358,7 +362,7 @@ export function SpreadsheetGrid({
                                                         onNavigateArray?.(cellPath);
                                                     }}
                                                 >
-                                                    編集する
+                                                    {readOnly ? '表示する' : '編集する'}
                                                 </button>
                                             </td>
                                         );
@@ -375,6 +379,7 @@ export function SpreadsheetGrid({
                                             className={`col-val${selClass ? ` ${selClass}` : ''}`}
                                             style={widthStyle}
                                             isSelected={!!selClass}
+                                            readOnly={readOnly}
                                             onUpdateCell={onUpdateCell}
                                             onSelectCell={onCellClick}
                                             onNavigateAdjacent={dir => onNavigateAdjacent({ rowIndex: originalIndex, colKey: column.key, path: cellPath }, dir)}
@@ -382,24 +387,26 @@ export function SpreadsheetGrid({
                                         />
                                     );
                                 })}
-                                <td className="col-add-cell" />
+                                {!readOnly && <td className="col-add-cell" />}
                             </tr>
                         );
                     })}
                 </tbody>
             </table>
             <Pagination page={page} onPageChange={onPageChange} />
-            <div className="add-row-bottom">
-                <button
-                    className="btn-add-plus"
-                    id="addTableRowBtn"
-                    title="行を追加"
-                    type="button"
-                    onClick={onAddRow}
-                >
-                    ＋
-                </button>
-            </div>
+            {!readOnly && (
+                <div className="add-row-bottom">
+                    <button
+                        className="btn-add-plus"
+                        id="addTableRowBtn"
+                        title="行を追加"
+                        type="button"
+                        onClick={onAddRow}
+                    >
+                        ＋
+                    </button>
+                </div>
+            )}
         </div>
     );
 }

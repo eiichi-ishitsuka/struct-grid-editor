@@ -8,6 +8,9 @@ export interface ToolbarProps {
     onOpenTextEditor?: () => void;
     hasHeader?: boolean;
     onToggleHeader?: (hasHeader: boolean) => void;
+    readOnly?: boolean;
+    isTruncated?: boolean;
+    totalSourceRows?: number;
     children?: ReactNode;
 }
 
@@ -19,6 +22,9 @@ export function Toolbar({
     onOpenTextEditor,
     hasHeader,
     onToggleHeader,
+    readOnly = false,
+    isTruncated = false,
+    totalSourceRows,
     children,
 }: ToolbarProps) {
     const isDelimited = documentType === 'csv' || documentType === 'tsv';
@@ -28,7 +34,15 @@ export function Toolbar({
             <div className="header-title">
                 <span>StructGridEditor</span>
                 <span className="badge-format">{documentType.toUpperCase()}</span>
-                <span className="item-count">{itemCount}</span>
+                {readOnly && <span className="badge-readonly">READ ONLY</span>}
+                <span className="item-count">
+                    {itemCount}
+                    {isTruncated && typeof totalSourceRows === 'number'
+                        ? ` (全 ${totalSourceRows.toLocaleString()} 行から先頭表示)`
+                        : isTruncated
+                            ? ' (先頭のみ表示)'
+                            : ''}
+                </span>
             </div>
             <div className="toolbar">
                 {isDelimited && onToggleHeader && (
@@ -54,15 +68,17 @@ export function Toolbar({
                     onChange={event => onSearchQueryChange(event.target.value)}
                 />
                 {children}
-                <button
-                    className="btn btn-secondary"
-                    id="openTextEditorBtn"
-                    title="通常のテキストエディタで開く"
-                    type="button"
-                    onClick={onOpenTextEditor}
-                >
-                    テキストで開く
-                </button>
+                {!readOnly && (
+                    <button
+                        className="btn btn-secondary"
+                        id="openTextEditorBtn"
+                        title="通常のテキストエディタで開く"
+                        type="button"
+                        onClick={onOpenTextEditor}
+                    >
+                        テキストで開く
+                    </button>
+                )}
             </div>
         </div>
     );

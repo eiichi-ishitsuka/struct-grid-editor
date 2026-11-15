@@ -1,7 +1,7 @@
 /**
  * サポートされているドキュメントファイル形式。
  */
-export type DocumentFileType = 'json' | 'yaml' | 'jsonl' | 'csv' | 'tsv';
+export type DocumentFileType = 'json' | 'yaml' | 'jsonl' | 'csv' | 'tsv' | 'parquet' | 'avro';
 
 /**
  * ドキュメントの書式オプション。
@@ -105,6 +105,30 @@ export class DocumentFormat {
                 hasHeader: true,
                 newline: '\n',
             },
+        });
+    }
+
+    /**
+     * デフォルトの Apache Parquet 書式を生成します（読み取り専用）。
+     * @returns デフォルトParquet書式
+     */
+    public static defaultParquet(): DocumentFormat {
+        return new DocumentFormat({
+            fileType: 'parquet',
+            indent: 0,
+            hasTrailingNewline: false,
+        });
+    }
+
+    /**
+     * デフォルトの Apache Avro 書式を生成します（読み取り専用）。
+     * @returns デフォルトAvro書式
+     */
+    public static defaultAvro(): DocumentFormat {
+        return new DocumentFormat({
+            fileType: 'avro',
+            indent: 0,
+            hasTrailingNewline: false,
         });
     }
 }

@@ -2,8 +2,8 @@
 
 本ドキュメントは、`src/test/` 配下のテストコード（JSDoc / docstring）から自動抽出・生成されたテスト仕様一覧です。
 
-- **総テストスイート数**: 20
-- **総テストケース数**: 123
+- **総テストスイート数**: 21
+- **総テストケース数**: 127
 - **生成スクリプト**: `scripts/generate-test-docs.js` (`npm run doc` にて自動更新)
 
 ## 目次
@@ -14,20 +14,21 @@
 4. [TableView Domain Model (4件)](#tableview-domain-model)
 5. [TreeFlattener (4件)](#treeflattener)
 6. [Extension Test Suite (1件)](#extension-test-suite)
-7. [JsonDocumentParser (14件)](#jsondocumentparser)
-8. [WebviewRenderer (3件)](#webviewrenderer)
-9. [Tiptap Editor Extensions Integration (10件)](#tiptap-editor-extensions-integration)
-10. [markdownCodec - Markdown <-> HTML Codec (12件)](#markdowncodec---markdown---html-codec)
-11. [React Webview App (11件)](#react-webview-app)
-12. [Breadcrumbs Component (2件)](#breadcrumbs-component)
-13. [ColumnVisibilityMenu Component (3件)](#columnvisibilitymenu-component)
-14. [EditableCell Component (4件)](#editablecell-component)
-15. [Pagination Component (4件)](#pagination-component)
-16. [Webview UI hooks (7件)](#webview-ui-hooks)
-17. [Webview message protocol (1件)](#webview-message-protocol)
-18. [table view model (8件)](#table-view-model)
-19. [TSV Generation Utilities (5件)](#tsv-generation-utilities)
-20. [vscodeApi wrapper (3件)](#vscodeapi-wrapper)
+7. [BinaryDocumentParser (4件)](#binarydocumentparser)
+8. [JsonDocumentParser (14件)](#jsondocumentparser)
+9. [WebviewRenderer (3件)](#webviewrenderer)
+10. [Tiptap Editor Extensions Integration (10件)](#tiptap-editor-extensions-integration)
+11. [markdownCodec - Markdown <-> HTML Codec (12件)](#markdowncodec---markdown---html-codec)
+12. [React Webview App (11件)](#react-webview-app)
+13. [Breadcrumbs Component (2件)](#breadcrumbs-component)
+14. [ColumnVisibilityMenu Component (3件)](#columnvisibilitymenu-component)
+15. [EditableCell Component (4件)](#editablecell-component)
+16. [Pagination Component (4件)](#pagination-component)
+17. [Webview UI hooks (7件)](#webview-ui-hooks)
+18. [Webview message protocol (1件)](#webview-message-protocol)
+19. [table view model (8件)](#table-view-model)
+20. [TSV Generation Utilities (5件)](#tsv-generation-utilities)
+21. [vscodeApi wrapper (3件)](#vscodeapi-wrapper)
 
 ---
 
@@ -115,7 +116,19 @@
 | :--- | :--- | :--- | :--- |
 | 1 | `Sample test` | VS Code拡張機能ホスト環境の起動と基本的なアサーション動作確認 | VS Codeテストランナー上でテスト環境が正常に初期化され、基本配列操作のアサーションが成功することを検証する。 |
 
-## 7. JsonDocumentParser
+## 7. BinaryDocumentParser
+
+- **テストファイル**: [`src/test/infrastructure/BinaryDocumentParser.test.ts`](../src/test/infrastructure/BinaryDocumentParser.test.ts)
+- **ケース数**: 4
+
+| # | テストケース名 | 観点 | テスト内容（検証内容） |
+| :--- | :--- | :--- | :--- |
+| 1 | `normalizes BigInt, Date, Uint8Array, and Map values into plain JSON-safe values` | バイナリ固有型（BigInt / Date / Uint8Array / Map）の正規化 | Parquet / Avro に含まれる BigInt・Date・Uint8Array・Map 等の値が JSON 安全なプレーン値へ正規化されることを検証する。 |
+| 2 | `parses Apache Avro container buffer and enforces maxRows truncation` | Apache Avro コンテナファイルの解析と最大行数制限 | Avro バイナリを解析して StructuredDocument が生成され、maxRows を超える場合は isTruncated が true になることを検証する。 |
+| 3 | `parses Avro long values exceeding Number.MAX_SAFE_INTEGER without precision loss error` | 64bit 整数（Number.MAX_SAFE_INTEGER 超過）を含む Avro ファイルの解析 | Iceberg メタデータ等に含まれる 53bit 超の long 値を含む Avro バイナリが potential precision loss エラーにならず文字列として保持されることを検証する。 |
+| 4 | `parses Apache Parquet buffer and reports totalSourceRows and truncation` | Apache Parquet バイナリの解析と最大行数制限 | Parquet バイナリを解析して BigInt 等が正規化された StructuredDocument が生成され、maxRows 超過時に isTruncated と totalSourceRows が設定されることを検証する。 |
+
+## 8. JsonDocumentParser
 
 - **テストファイル**: [`src/test/infrastructure/Parsers.test.ts`](../src/test/infrastructure/Parsers.test.ts)
 - **ケース数**: 14
@@ -137,7 +150,7 @@
 | 13 | `handles escaped quotes and multiline cells in CSV` | RFC 4180 ダブルクォートエスケープ（""）およびセル内改行のパース・シリアライズ確認 | ダブルクォートの二重エスケープや改行を含むCSVセルが1つのセル文字列として正確に解析され、再シリアライズで元のRFC 4180表現に戻ることを検証する。 |
 | 14 | `parses and serializes TSV correctly` | TSVドキュメントのパースおよびシリアライズ確認 | CRLF改行およびタブ区切りを持つTSV文字列をパースし、セル値更新後もCRLF改行とタブ区切りを維持してシリアライズされることを検証する。 |
 
-## 8. WebviewRenderer
+## 9. WebviewRenderer
 
 - **テストファイル**: [`src/test/infrastructure/WebviewRenderer.test.ts`](../src/test/infrastructure/WebviewRenderer.test.ts)
 - **ケース数**: 3
@@ -148,7 +161,7 @@
 | 2 | `escapes HTML-like initial data before embedding it in the shell` | 初期データ内のタグをスクリプトとして解釈させないこと | 未記載 |
 | 3 | `renders the error view with the same CSP protections` | 構文エラー画面にも同じ CSP と nonce を適用すること | 未記載 |
 
-## 9. Tiptap Editor Extensions Integration
+## 10. Tiptap Editor Extensions Integration
 
 - **テストファイル**: [`src/test/md-webview/editorExtensions.test.ts`](../src/test/md-webview/editorExtensions.test.ts)
 - **ケース数**: 10
@@ -166,7 +179,7 @@
 | 9 | `renders ReadOnly, SplitView, and Index toggles with expected defaults and toggles state` | ツールバーの ReadOnly / 左右分割 / Index トグル初期値と切り替え動作 | ReadOnly(OFF)・左右分割(OFF)・Index(ON) の各トグルボタンが初期状態で表示され、クリックで状態が切り替わることを検証する。 |
 | 10 | `renders heading index list and scrolls to heading on click` | Index パネルの見出し一覧描画とクリックによる見出しジャンプ | ドキュメント内の見出しが Index パネルに一覧表示され、項目クリックで対象見出し要素へスクロールジャンプすることを検証する。 |
 
-## 10. markdownCodec - Markdown <-> HTML Codec
+## 11. markdownCodec - Markdown <-> HTML Codec
 
 - **テストファイル**: [`src/test/md-webview/markdownCodec.test.ts`](../src/test/md-webview/markdownCodec.test.ts)
 - **ケース数**: 12
@@ -186,7 +199,7 @@
 | 11 | `resolves relative image paths to webview URIs while keeping original path in Markdown` | ローカル相対画像パスのWebview URI変換と元パスの保持 | 相対パスの画像記法が表示用のWebview URIに変換されつつ、data-raw-src属性によって保存時には元の相対パスへ復元されることを検証する。 |
 | 12 | `leaves external https image URLs untouched` | 外部URL画像のパス無変換維持 | https:// で始まる外部画像URLはベースURIの付与を行わず、そのままのURLが返されることを検証する。 |
 
-## 11. React Webview App
+## 12. React Webview App
 
 - **テストファイル**: [`src/test/webview/App.test.tsx`](../src/test/webview/App.test.tsx)
 - **ケース数**: 11
@@ -205,7 +218,7 @@
 | 10 | `navigates sub-array in KV mode and preserves array view across state restoration` | KVモードの配列を「編集する」で開いた後、Webview再読み込み（編集・行追加）が発生しても配列画面を維持すること | 未記載 |
 | 11 | `renders CSV header toggle and sends set_csv_header message when toggled` | CSV/TSV ドキュメント表示時に「1行目をヘッダーにする」チェックボックスが表示され、切り替え時に set_csv_header メッセージを送信すること | documentTypeがcsvのデータでAppを描画し、ツールバーのヘッダートグルをクリックした際にset_csv_headerメッセージがpostMessageされることを検証する。 |
 
-## 12. Breadcrumbs Component
+## 13. Breadcrumbs Component
 
 - **テストファイル**: [`src/test/webview/Breadcrumbs.test.tsx`](../src/test/webview/Breadcrumbs.test.tsx)
 - **ケース数**: 2
@@ -215,7 +228,7 @@
 | 1 | `renders root as current when path is empty or null` | ルートパス時は root/ のみをカレント表示すること | 未記載 |
 | 2 | `renders nested path segments and triggers navigation on click` | ネストしたパスでパンくずリンクを階層順に生成し、クリックでナビゲートできること | 未記載 |
 
-## 13. ColumnVisibilityMenu Component
+## 14. ColumnVisibilityMenu Component
 
 - **テストファイル**: [`src/test/webview/ColumnVisibilityMenu.test.tsx`](../src/test/webview/ColumnVisibilityMenu.test.tsx)
 - **ケース数**: 3
@@ -226,7 +239,7 @@
 | 2 | `toggles column visibility via checkbox` | チェックボックスの操作で列の非表示・再表示が切り替わること | 未記載 |
 | 3 | `restores all columns on ` | 「すべて表示」リンクをクリックすると全列が表示状態になること | 未記載 |
 
-## 14. EditableCell Component
+## 15. EditableCell Component
 
 - **テストファイル**: [`src/test/webview/EditableCell.test.tsx`](../src/test/webview/EditableCell.test.tsx)
 - **ケース数**: 4
@@ -238,7 +251,7 @@
 | 3 | `commits value and triggers navigation on Enter` | Enter キーで値を確定し、下方向セルへ移動を通知すること | 未記載 |
 | 4 | `commits value and triggers navigation on Shift + Tab` | Shift + Tab キーで値を確定し、左方向セルへ移動を通知すること | 未記載 |
 
-## 15. Pagination Component
+## 16. Pagination Component
 
 - **テストファイル**: [`src/test/webview/Pagination.test.tsx`](../src/test/webview/Pagination.test.tsx)
 - **ケース数**: 4
@@ -250,7 +263,7 @@
 | 3 | `calls onPageChange on next and last button clicks` | 次へ・最後のページボタンクリックで onPageChange が呼ばれること | 未記載 |
 | 4 | `jumps to a valid page number on Enter in jump input` | 入力欄にページ番号を入力して Enter でジャンプできること | 未記載 |
 
-## 16. Webview UI hooks
+## 17. Webview UI hooks
 
 - **テストファイル**: [`src/test/webview/hooks.test.tsx`](../src/test/webview/hooks.test.tsx)
 - **ケース数**: 7
@@ -265,7 +278,7 @@
 | 6 | `provides selectRow, selectCol, and selectAll helpers` | 行選択・列選択・全選択のヘルパーが正しい selection を設定すること | 未記載 |
 | 7 | `persists activeArrayPath into uiState on navigation` | 配列パスの解決とフォールバックが正しく行われること | 未記載 |
 
-## 17. Webview message protocol
+## 18. Webview message protocol
 
 - **テストファイル**: [`src/test/webview/protocol.test.ts`](../src/test/webview/protocol.test.ts)
 - **ケース数**: 1
@@ -274,7 +287,7 @@
 | :--- | :--- | :--- | :--- |
 | 1 | `accepts every supported command and its payload` | 定義済みの全コマンドを受信できること | 未記載 |
 
-## 18. table view model
+## 19. table view model
 
 - **テストファイル**: [`src/test/webview/tableView.test.ts`](../src/test/webview/tableView.test.ts)
 - **ケース数**: 8
@@ -290,7 +303,7 @@
 | 7 | `filters case-insensitively and clamps pagination to the final page` | 検索結果に表示順の行番号を付け、検索後の最終ページへ補正すること | 未記載 |
 | 8 | `clamps negative page numbers and throws on invalid page sizes` | ページ番号が1未満のときは1に補正され、pageSizeが不正な場合は例外を投げること | 未記載 |
 
-## 19. TSV Generation Utilities
+## 20. TSV Generation Utilities
 
 - **テストファイル**: [`src/test/webview/tsv.test.ts`](../src/test/webview/tsv.test.ts)
 - **ケース数**: 5
@@ -303,7 +316,7 @@
 | 4 | `generates TSV for column selection` | 列選択（col）時のTSV文字列生成 | 列選択状態で generateTsv を呼び出した際、指定したカラムの全行の値が改行区切りで出力されることを検証する。 |
 | 5 | `generates TSV for cell selection` | 単一セル選択（cell）時のTSV文字列生成 | セル選択状態で generateTsv を呼び出した際、対象セルの値のみが出力されることを検証する。 |
 
-## 20. vscodeApi wrapper
+## 21. vscodeApi wrapper
 
 - **テストファイル**: [`src/test/webview/vscodeApi.test.ts`](../src/test/webview/vscodeApi.test.ts)
 - **ケース数**: 3

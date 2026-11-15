@@ -17,6 +17,7 @@ export interface EditableCellProps {
     className?: string;
     style?: CSSProperties;
     isSelected?: boolean;
+    readOnly?: boolean;
     onUpdateCell: (path: string, value: string) => void;
     onSelectCell: (rowIndex: number, colKey: string, path: string) => void;
     onNavigateAdjacent?: (direction: GridNavigationDirection) => void;
@@ -60,6 +61,7 @@ export function EditableCell({
     className = 'col-val',
     style,
     isSelected = false,
+    readOnly = false,
     onUpdateCell,
     onSelectCell,
     onNavigateAdjacent,
@@ -78,14 +80,14 @@ export function EditableCell({
     }, [displayValue]);
 
     const commitChange = useCallback(() => {
-        if (!cellRef.current) {
+        if (readOnly || !cellRef.current) {
             return;
         }
         const currentValue = cellRef.current.innerText ?? '';
         if (currentValue !== displayValue) {
             onUpdateCell(path, currentValue);
         }
-    }, [displayValue, onUpdateCell, path]);
+    }, [displayValue, onUpdateCell, path, readOnly]);
 
     const handleFocus = useCallback(() => {
         isEditingRef.current = true;
@@ -108,7 +110,7 @@ export function EditableCell({
         }
 
         // Alt + Enter または Ctrl + Enter: セル内改行
-        if ((event.altKey || (event.ctrlKey && !event.metaKey)) && (event.key === 'Enter' || event.code === 'NumpadEnter')) {
+        if (!readOnly && (event.altKey || (event.ctrlKey && !event.metaKey)) && (event.key === 'Enter' || event.code === 'NumpadEnter')) {
             event.preventDefault();
             document.execCommand('insertLineBreak');
             return;
@@ -167,7 +169,7 @@ export function EditableCell({
             ref={cellRef}
             className={className}
             style={style}
-            contentEditable={true}
+            contentEditable={!readOnly}
             suppressContentEditableWarning={true}
             data-path={path}
             data-col-key={colKey}

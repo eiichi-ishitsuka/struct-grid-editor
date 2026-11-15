@@ -1,3 +1,5 @@
+import type { DocumentFileType } from '../../domain/model/DocumentFormat';
+
 /**
  * テーブルビューのカラム情報 DTO。
  */
@@ -104,8 +106,8 @@ export interface GridRowDto {
  * Webview に渡されるグリッド全体のデータ DTO。
  */
 export interface GridDataDto {
-    /** ドキュメント形式 ('json', 'yaml', 'jsonl', 'csv' または 'tsv') */
-    documentType: 'json' | 'yaml' | 'jsonl' | 'csv' | 'tsv';
+    /** ドキュメント形式 ('json', 'yaml', 'jsonl', 'csv', 'tsv', 'parquet' または 'avro') */
+    documentType: DocumentFileType;
     /** 現在の表示モード ('table' または 'kv') */
     viewMode: 'table' | 'kv';
     /** Key-Value 表示時の行リスト */
@@ -118,6 +120,12 @@ export interface GridDataDto {
     subArrays?: SubArrayInfoDto[];
     /** CSV/TSV の場合に1行目をヘッダーとして扱っているかどうか */
     hasHeader?: boolean;
+    /** 読み取り専用モード（Parquet/Avro 等のバイナリ形式） */
+    readOnly?: boolean;
+    /** 最大読み込み行数制限により一部のみ表示しているかどうか */
+    isTruncated?: boolean;
+    /** 元ファイルの総レコード数（取得できた場合） */
+    totalSourceRows?: number;
     /** 解析エラー等のメッセージ（存在する場合） */
     error?: string;
 }

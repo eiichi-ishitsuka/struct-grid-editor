@@ -17,6 +17,8 @@ JSON, JSONL, YAML, CSV, TSV 形式の構造化データをスプレッドシー�
 - **YAML**: `*.yaml`, `*.yml`（スプレッドシート / ツリー表示）
 - **CSV**: `*.csv`（スプレッドシート表示、ヘッダー行あり / なし切り替え対応）
 - **TSV**: `*.tsv`（スプレッドシート表示、ヘッダー行あり / なし切り替え対応）
+- **Apache Parquet**: `*.parquet`（スプレッドシート表示、読み取り専用 / Read-Only）
+- **Apache Avro**: `*.avro`（スプレッドシート表示、読み取り専用 / Read-Only）
 - **Markdown**: `*.md`, `*.markdown`（Live Preview / WYSIWYG 表示）
 
 ### 2\. 起動方法とデフォルトエディタ設定
