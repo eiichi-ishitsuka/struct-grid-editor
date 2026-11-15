@@ -8,7 +8,7 @@
 
 > `const` **LivePreviewExtension**: `Extension`\<`any`, `any`\>
 
-Defined in: [md-webview/livePreviewExtension.ts:27](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/md-webview/livePreviewExtension.ts#L27)
+Defined in: [md-webview/livePreviewExtension.ts:27](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/f2bc95f4d1b429803858e0f71617e0d396de529f/src/md-webview/livePreviewExtension.ts#L27)
 
 カーソル位置に連動して Markdown 記法マーカーを動的に表示する Live Preview 拡張。
 - カーソルが置かれている見出し行に `# `, `## `, `### ` 等を表示します。

@@ -6,7 +6,7 @@
 
 # Interface: IDocumentParser
 
-Defined in: [domain/port/IDocumentParser.ts:15](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/domain/port/IDocumentParser.ts#L15)
+Defined in: [domain/port/IDocumentParser.ts:15](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/f2bc95f4d1b429803858e0f71617e0d396de529f/src/domain/port/IDocumentParser.ts#L15)
 
 ドキュメントパーサーおよびシリアライザー（JSON、YAML、CSV、TSVなど）のポートインターフェース。
 依存性逆転の原則（DIP）に準拠します。
@@ -17,7 +17,7 @@ Defined in: [domain/port/IDocumentParser.ts:15](https://github.com/eiichi-ishits
 
 > **parse**(`text`, `options?`): [`StructuredDocument`](../../../model/StructuredDocument/classes/StructuredDocument.md)
 
-Defined in: [domain/port/IDocumentParser.ts:22](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/domain/port/IDocumentParser.ts#L22)
+Defined in: [domain/port/IDocumentParser.ts:22](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/f2bc95f4d1b429803858e0f71617e0d396de529f/src/domain/port/IDocumentParser.ts#L22)
 
 ソーステキストを解析し、ドメインの StructuredDocument 集約ルートを生成します。
 
@@ -47,7 +47,7 @@ Defined in: [domain/port/IDocumentParser.ts:22](https://github.com/eiichi-ishits
 
 > **serialize**(`document`): `string`
 
-Defined in: [domain/port/IDocumentParser.ts:29](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/domain/port/IDocumentParser.ts#L29)
+Defined in: [domain/port/IDocumentParser.ts:29](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/f2bc95f4d1b429803858e0f71617e0d396de529f/src/domain/port/IDocumentParser.ts#L29)
 
 ドメインの StructuredDocument を、書式やコメントを保持しながらテキスト形式にシリアライズします。
 
@@ -71,7 +71,7 @@ Defined in: [domain/port/IDocumentParser.ts:29](https://github.com/eiichi-ishits
 
 > **supports**(`fileExtension`): `boolean`
 
-Defined in: [domain/port/IDocumentParser.ts:36](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/domain/port/IDocumentParser.ts#L36)
+Defined in: [domain/port/IDocumentParser.ts:36](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/f2bc95f4d1b429803858e0f71617e0d396de529f/src/domain/port/IDocumentParser.ts#L36)
 
 指定されたファイル拡張子（例: "json", "yaml", "yml"）を本パーサーがサポートしているかを判定します。
 

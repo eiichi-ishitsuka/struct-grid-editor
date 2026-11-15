@@ -6,7 +6,7 @@
 
 # Class: MarkdownEditorProvider
 
-Defined in: [infrastructure/vscode/MarkdownEditorProvider.ts:9](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/infrastructure/vscode/MarkdownEditorProvider.ts#L9)
+Defined in: [infrastructure/vscode/MarkdownEditorProvider.ts:25](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/f2bc95f4d1b429803858e0f71617e0d396de529f/src/infrastructure/vscode/MarkdownEditorProvider.ts#L25)
 
 Markdown ファイルを WYSIWYG / Live Preview 形式で表示・編集する VS Code カスタムテキストエディタプロバイダー。
 ドキュメントの双方向同期、ローカル画像パスの Webview URI 変換、およびクリップボード画像の保存処理を担当します。
@@ -21,7 +21,7 @@ Markdown ファイルを WYSIWYG / Live Preview 形式で表示・編集する V
 
 > **new MarkdownEditorProvider**(`context`): `MarkdownEditorProvider`
 
-Defined in: [infrastructure/vscode/MarkdownEditorProvider.ts:36](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/infrastructure/vscode/MarkdownEditorProvider.ts#L36)
+Defined in: [infrastructure/vscode/MarkdownEditorProvider.ts:52](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/f2bc95f4d1b429803858e0f71617e0d396de529f/src/infrastructure/vscode/MarkdownEditorProvider.ts#L52)
 
 プロバイダーのインスタンスを生成します。
 
@@ -43,7 +43,7 @@ Defined in: [infrastructure/vscode/MarkdownEditorProvider.ts:36](https://github.
 
 > `readonly` `static` **viewType**: `"struct-grid-editor.markdownEditor"` = `'struct-grid-editor.markdownEditor'`
 
-Defined in: [infrastructure/vscode/MarkdownEditorProvider.ts:11](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/infrastructure/vscode/MarkdownEditorProvider.ts#L11)
+Defined in: [infrastructure/vscode/MarkdownEditorProvider.ts:27](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/f2bc95f4d1b429803858e0f71617e0d396de529f/src/infrastructure/vscode/MarkdownEditorProvider.ts#L27)
 
 カスタムエディタのビュータイプ識別子
 
@@ -53,7 +53,7 @@ Defined in: [infrastructure/vscode/MarkdownEditorProvider.ts:11](https://github.
 
 > **handleOpenLink**(`document`, `rawHref`): `Promise`\<`void`\>
 
-Defined in: [infrastructure/vscode/MarkdownEditorProvider.ts:224](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/infrastructure/vscode/MarkdownEditorProvider.ts#L224)
+Defined in: [infrastructure/vscode/MarkdownEditorProvider.ts:255](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/f2bc95f4d1b429803858e0f71617e0d396de529f/src/infrastructure/vscode/MarkdownEditorProvider.ts#L255)
 
 エディタ内のリンクが Ctrl/Cmd + クリックされた際の遷移処理を行います。
 - http / https 等の外部 URL: 確認ダイアログを表示し、承認された場合のみ外部ブラウザで開きます。
@@ -83,7 +83,7 @@ Defined in: [infrastructure/vscode/MarkdownEditorProvider.ts:224](https://github
 
 > **resolveCustomTextEditor**(`document`, `webviewPanel`, `_token`): `Promise`\<`void`\>
 
-Defined in: [infrastructure/vscode/MarkdownEditorProvider.ts:44](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/infrastructure/vscode/MarkdownEditorProvider.ts#L44)
+Defined in: [infrastructure/vscode/MarkdownEditorProvider.ts:60](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/f2bc95f4d1b429803858e0f71617e0d396de529f/src/infrastructure/vscode/MarkdownEditorProvider.ts#L60)
 
 カスタムテキストエディタの Webview パネルを初期化し、対象ドキュメントと双方向バインディングします。
 
@@ -121,7 +121,7 @@ Defined in: [infrastructure/vscode/MarkdownEditorProvider.ts:44](https://github.
 
 > `static` **register**(`context`): `Disposable`
 
-Defined in: [infrastructure/vscode/MarkdownEditorProvider.ts:18](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/infrastructure/vscode/MarkdownEditorProvider.ts#L18)
+Defined in: [infrastructure/vscode/MarkdownEditorProvider.ts:34](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/f2bc95f4d1b429803858e0f71617e0d396de529f/src/infrastructure/vscode/MarkdownEditorProvider.ts#L34)
 
 カスタムエディタプロバイダーを VS Code に登録します。
 

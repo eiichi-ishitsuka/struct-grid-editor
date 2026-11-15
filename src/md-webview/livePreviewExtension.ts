@@ -94,11 +94,15 @@ export const LivePreviewExtension = Extension.create({
   },
 
   addProseMirrorPlugins() {
+    const editor = this.editor;
     return [
       new Plugin({
         key: livePreviewPluginKey,
         props: {
           decorations: (state) => {
+            if (!editor.isEditable) {
+              return DecorationSet.empty;
+            }
             const { doc, selection } = state;
             const { $from, from, to } = selection;
             const decorations: Decoration[] = [];

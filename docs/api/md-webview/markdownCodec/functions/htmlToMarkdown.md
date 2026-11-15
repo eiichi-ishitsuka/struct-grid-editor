@@ -8,7 +8,7 @@
 
 > **htmlToMarkdown**(`html`): `string`
 
-Defined in: [md-webview/markdownCodec.ts:334](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/md-webview/markdownCodec.ts#L334)
+Defined in: [md-webview/markdownCodec.ts:334](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/f2bc95f4d1b429803858e0f71617e0d396de529f/src/md-webview/markdownCodec.ts#L334)
 
 Tiptap エディタが出力した HTML を GFM / Python-Markdown 互換の Markdown 文字列へ変換します。
 保持されている YAML Frontmatter がある場合は先頭に付与して返します。

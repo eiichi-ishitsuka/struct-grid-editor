@@ -6,7 +6,7 @@
 
 # Interface: TableCell
 
-Defined in: [domain/model/TableView.ts:22](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/domain/model/TableView.ts#L22)
+Defined in: [domain/model/TableView.ts:22](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/f2bc95f4d1b429803858e0f71617e0d396de529f/src/domain/model/TableView.ts#L22)
 
 テーブルビュー内の個別セル。
 
@@ -16,7 +16,7 @@ Defined in: [domain/model/TableView.ts:22](https://github.com/eiichi-ishitsuka/s
 
 > **key**: `string`
 
-Defined in: [domain/model/TableView.ts:28](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/domain/model/TableView.ts#L28)
+Defined in: [domain/model/TableView.ts:28](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/f2bc95f4d1b429803858e0f71617e0d396de529f/src/domain/model/TableView.ts#L28)
 
 カラム識別キー
 
@@ -26,7 +26,7 @@ Defined in: [domain/model/TableView.ts:28](https://github.com/eiichi-ishitsuka/s
 
 > **path**: [`CellPath`](../../CellPath/classes/CellPath.md)
 
-Defined in: [domain/model/TableView.ts:24](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/domain/model/TableView.ts#L24)
+Defined in: [domain/model/TableView.ts:24](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/f2bc95f4d1b429803858e0f71617e0d396de529f/src/domain/model/TableView.ts#L24)
 
 セルの絶対アクセスパス
 
@@ -36,6 +36,6 @@ Defined in: [domain/model/TableView.ts:24](https://github.com/eiichi-ishitsuka/s
 
 > **value**: [`CellValue`](../../CellValue/classes/CellValue.md)
 
-Defined in: [domain/model/TableView.ts:26](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/domain/model/TableView.ts#L26)
+Defined in: [domain/model/TableView.ts:26](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/f2bc95f4d1b429803858e0f71617e0d396de529f/src/domain/model/TableView.ts#L26)
 
 セルの値

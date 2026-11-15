@@ -8,7 +8,7 @@
 
 > **stripJsonComments**(`text`): `string`
 
-Defined in: [infrastructure/parser/JsonDocumentParser.ts:9](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/infrastructure/parser/JsonDocumentParser.ts#L9)
+Defined in: [infrastructure/parser/JsonDocumentParser.ts:9](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/f2bc95f4d1b429803858e0f71617e0d396de529f/src/infrastructure/parser/JsonDocumentParser.ts#L9)
 
 JSON文字列からコメント（//, /* ... */）を除去し、JSONCをパース可能にします。
 

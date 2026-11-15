@@ -8,7 +8,7 @@
 
 > **resetVsCodeApiForTesting**(): `void`
 
-Defined in: [webview/vscodeApi.ts:38](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/webview/vscodeApi.ts#L38)
+Defined in: [webview/vscodeApi.ts:38](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/f2bc95f4d1b429803858e0f71617e0d396de529f/src/webview/vscodeApi.ts#L38)
 
 テスト用: キャッシュされた VS Code API インスタンスを破棄する。
 

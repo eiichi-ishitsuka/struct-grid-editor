@@ -6,7 +6,7 @@
 
 # Interface: TableColumnDto
 
-Defined in: [application/dto/GridData.ts:4](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/application/dto/GridData.ts#L4)
+Defined in: [application/dto/GridData.ts:4](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/f2bc95f4d1b429803858e0f71617e0d396de529f/src/application/dto/GridData.ts#L4)
 
 テーブルビューのカラム情報 DTO。
 
@@ -16,7 +16,7 @@ Defined in: [application/dto/GridData.ts:4](https://github.com/eiichi-ishitsuka/
 
 > **key**: `string`
 
-Defined in: [application/dto/GridData.ts:6](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/application/dto/GridData.ts#L6)
+Defined in: [application/dto/GridData.ts:6](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/f2bc95f4d1b429803858e0f71617e0d396de529f/src/application/dto/GridData.ts#L6)
 
 カラムのキー名
 
@@ -26,7 +26,7 @@ Defined in: [application/dto/GridData.ts:6](https://github.com/eiichi-ishitsuka/
 
 > **label**: `string`
 
-Defined in: [application/dto/GridData.ts:8](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/application/dto/GridData.ts#L8)
+Defined in: [application/dto/GridData.ts:8](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/f2bc95f4d1b429803858e0f71617e0d396de529f/src/application/dto/GridData.ts#L8)
 
 カラムの表示名
 
@@ -36,7 +36,7 @@ Defined in: [application/dto/GridData.ts:8](https://github.com/eiichi-ishitsuka/
 
 > `optional` **type?**: `string`
 
-Defined in: [application/dto/GridData.ts:10](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/application/dto/GridData.ts#L10)
+Defined in: [application/dto/GridData.ts:10](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/f2bc95f4d1b429803858e0f71617e0d396de529f/src/application/dto/GridData.ts#L10)
 
 データ型
 
@@ -46,6 +46,6 @@ Defined in: [application/dto/GridData.ts:10](https://github.com/eiichi-ishitsuka
 
 > `optional` **typeSymbol?**: `string`
 
-Defined in: [application/dto/GridData.ts:12](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/application/dto/GridData.ts#L12)
+Defined in: [application/dto/GridData.ts:12](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/f2bc95f4d1b429803858e0f71617e0d396de529f/src/application/dto/GridData.ts#L12)
 
 型シンボル表示（例: "1234", "Aa", "[ ]" 等）

@@ -8,6 +8,7 @@ import { AdmonitionBlock } from '../../md-webview/admonitionExtension';
 import { InlineMath, BlockMath } from '../../md-webview/mathExtension';
 import { LivePreviewExtension } from '../../md-webview/livePreviewExtension';
 import { createToolbar } from '../../md-webview/toolbar';
+import { renderOutline } from '../../md-webview/outline';
 import { markdownToHtml, htmlToMarkdown } from '../../md-webview/markdownCodec';
 
 const mockMermaid = {
@@ -225,6 +226,117 @@ describe('Tiptap Editor Extensions Integration', () => {
     expect(linkMarkers[1].getAttribute('data-link-href')).toBe(
       '../.agents/rules/ai-development-workflow.md'
     );
+
+    editor.destroy();
+  });
+
+  /**
+   * 【観点】ReadOnly モード時の Live Preview 構文マーカー非表示
+   * 【テスト内容】editor.setEditable(false) の状態で見出しや太字行にカーソルを置いても、## や ** などの rawtext 構文マーカーが表示されないことを検証する。
+   */
+  it('hides Markdown syntax markers when editor is in ReadOnly mode', () => {
+    const md = '## 見出し\n\n**太字** のテキスト\n';
+    const editor = createTestEditor(md);
+
+    editor.setEditable(false);
+    editor.commands.setTextSelection(2);
+    expect(container.querySelector('.md-syntax-heading')).toBeNull();
+
+    editor.commands.setTextSelection(10);
+    expect(container.querySelector('.md-syntax-bold')).toBeNull();
+
+    editor.destroy();
+  });
+
+  /**
+   * 【観点】ツールバーの ReadOnly / 左右分割 / Index トグル初期値と切り替え動作
+   * 【テスト内容】ReadOnly(OFF)・左右分割(OFF)・Index(ON) の各トグルボタンが初期状態で表示され、クリックで状態が切り替わることを検証する。
+   */
+  it('renders ReadOnly, SplitView, and Index toggles with expected defaults and toggles state', () => {
+    const editor = createTestEditor('# Toggle Test\n');
+    const toolbarEl = document.createElement('div');
+    const tableBannerEl = document.createElement('div');
+
+    let readOnly = false;
+    let splitView = false;
+    let outlineVisible = true;
+
+    createToolbar(toolbarEl, tableBannerEl, editor, {
+      onSwitchToText: vi.fn(),
+      getCurrentTheme: () => 'default',
+      onToggleTheme: () => 'default',
+      getReadOnly: () => readOnly,
+      onToggleReadOnly: () => {
+        readOnly = !readOnly;
+        return readOnly;
+      },
+      getSplitView: () => splitView,
+      onToggleSplitView: () => {
+        splitView = !splitView;
+        return splitView;
+      },
+      getOutlineVisible: () => outlineVisible,
+      onToggleOutline: () => {
+        outlineVisible = !outlineVisible;
+        return outlineVisible;
+      },
+    });
+
+    const spacer = toolbarEl.querySelector('.toolbar-spacer') as HTMLElement;
+    const roBtn = toolbarEl.querySelector('.toolbar-toggle-readonly') as HTMLButtonElement;
+    const splitBtn = toolbarEl.querySelector('.toolbar-toggle-split') as HTMLButtonElement;
+    const outlineBtn = toolbarEl.querySelector('.toolbar-toggle-outline') as HTMLButtonElement;
+
+    // トグルはスペーサーの後ろ（右揃え）に配置される
+    expect(spacer.compareDocumentPosition(roBtn) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+
+    expect(roBtn.textContent).toBe('Read Mode: OFF');
+    expect(roBtn.classList.contains('active')).toBe(false);
+    expect(splitBtn.textContent).toBe('Split View: OFF');
+    expect(splitBtn.classList.contains('active')).toBe(false);
+    expect(outlineBtn.textContent).toBe('Show Index: ON');
+    expect(outlineBtn.classList.contains('active')).toBe(true);
+
+    roBtn.dispatchEvent(new MouseEvent('mousedown', { bubbles: true }));
+    splitBtn.dispatchEvent(new MouseEvent('mousedown', { bubbles: true }));
+    outlineBtn.dispatchEvent(new MouseEvent('mousedown', { bubbles: true }));
+
+    expect(roBtn.textContent).toBe('Read Mode: ON');
+    expect(roBtn.classList.contains('active')).toBe(true);
+    expect(splitBtn.textContent).toBe('Split View: ON');
+    expect(splitBtn.classList.contains('active')).toBe(true);
+    expect(outlineBtn.textContent).toBe('Show Index: OFF');
+    expect(outlineBtn.classList.contains('active')).toBe(false);
+
+    editor.destroy();
+  });
+
+  /**
+   * 【観点】Index パネルの見出し一覧描画とクリックによる見出しジャンプ
+   * 【テスト内容】ドキュメント内の見出しが Index パネルに一覧表示され、項目クリックで対象見出し要素へスクロールジャンプすることを検証する。
+   */
+  it('renders heading index list and scrolls to heading on click', () => {
+    const md = '# タイトル\n\n本文\n\n## セクション1\n\n### サブセクション\n';
+    const editor = createTestEditor(md);
+    const panel = document.createElement('aside');
+
+    renderOutline(panel, editor);
+
+    const items = panel.querySelectorAll('.outline-item');
+    expect(items.length).toBe(3);
+    expect(items[0].textContent).toBe('タイトル');
+    expect(items[0].classList.contains('outline-level-1')).toBe(true);
+    expect(items[1].textContent).toBe('セクション1');
+    expect(items[1].classList.contains('outline-level-2')).toBe(true);
+    expect(items[2].textContent).toBe('サブセクション');
+    expect(items[2].classList.contains('outline-level-3')).toBe(true);
+
+    const h2 = container.querySelector('h2') as HTMLElement;
+    const scrollIntoViewMock = vi.fn();
+    h2.scrollIntoView = scrollIntoViewMock;
+
+    (items[1] as HTMLButtonElement).click();
+    expect(scrollIntoViewMock).toHaveBeenCalledWith({ behavior: 'smooth', block: 'start' });
 
     editor.destroy();
   });

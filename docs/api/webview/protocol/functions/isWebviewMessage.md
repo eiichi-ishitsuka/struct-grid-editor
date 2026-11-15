@@ -8,7 +8,7 @@
 
 > **isWebviewMessage**(`value`): `value is WebviewMessage`
 
-Defined in: [webview/protocol.ts:40](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/webview/protocol.ts#L40)
+Defined in: [webview/protocol.ts:40](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/f2bc95f4d1b429803858e0f71617e0d396de529f/src/webview/protocol.ts#L40)
 
 VS Code Webview 境界で受け取った未知の値を WebviewMessage として検証する。
 

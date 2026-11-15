@@ -6,7 +6,7 @@
 
 # Interface: SpreadsheetGridProps
 
-Defined in: [webview/components/SpreadsheetGrid.tsx:17](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/webview/components/SpreadsheetGrid.tsx#L17)
+Defined in: [webview/components/SpreadsheetGrid.tsx:17](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/f2bc95f4d1b429803858e0f71617e0d396de529f/src/webview/components/SpreadsheetGrid.tsx#L17)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [webview/components/SpreadsheetGrid.tsx:17](https://github.com/eiich
 
 > `optional` **colWidths?**: `Record`\<`string`, `number`\>
 
-Defined in: [webview/components/SpreadsheetGrid.tsx:22](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/webview/components/SpreadsheetGrid.tsx#L22)
+Defined in: [webview/components/SpreadsheetGrid.tsx:22](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/f2bc95f4d1b429803858e0f71617e0d396de529f/src/webview/components/SpreadsheetGrid.tsx#L22)
 
 ***
 
@@ -22,7 +22,7 @@ Defined in: [webview/components/SpreadsheetGrid.tsx:22](https://github.com/eiich
 
 > `optional` **onAddColumn?**: () => `void`
 
-Defined in: [webview/components/SpreadsheetGrid.tsx:32](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/webview/components/SpreadsheetGrid.tsx#L32)
+Defined in: [webview/components/SpreadsheetGrid.tsx:32](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/f2bc95f4d1b429803858e0f71617e0d396de529f/src/webview/components/SpreadsheetGrid.tsx#L32)
 
 #### Returns
 
@@ -34,7 +34,7 @@ Defined in: [webview/components/SpreadsheetGrid.tsx:32](https://github.com/eiich
 
 > `optional` **onAddRow?**: () => `void`
 
-Defined in: [webview/components/SpreadsheetGrid.tsx:33](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/webview/components/SpreadsheetGrid.tsx#L33)
+Defined in: [webview/components/SpreadsheetGrid.tsx:33](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/f2bc95f4d1b429803858e0f71617e0d396de529f/src/webview/components/SpreadsheetGrid.tsx#L33)
 
 #### Returns
 
@@ -46,7 +46,7 @@ Defined in: [webview/components/SpreadsheetGrid.tsx:33](https://github.com/eiich
 
 > **onCellClick**: (`rowIndex`, `colKey`, `path`) => `void`
 
-Defined in: [webview/components/SpreadsheetGrid.tsx:24](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/webview/components/SpreadsheetGrid.tsx#L24)
+Defined in: [webview/components/SpreadsheetGrid.tsx:24](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/f2bc95f4d1b429803858e0f71617e0d396de529f/src/webview/components/SpreadsheetGrid.tsx#L24)
 
 #### Parameters
 
@@ -72,7 +72,7 @@ Defined in: [webview/components/SpreadsheetGrid.tsx:24](https://github.com/eiich
 
 > `optional` **onCellContextMenu?**: (`event`, `cell`) => `void`
 
-Defined in: [webview/components/SpreadsheetGrid.tsx:42](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/webview/components/SpreadsheetGrid.tsx#L42)
+Defined in: [webview/components/SpreadsheetGrid.tsx:42](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/f2bc95f4d1b429803858e0f71617e0d396de529f/src/webview/components/SpreadsheetGrid.tsx#L42)
 
 #### Parameters
 
@@ -94,7 +94,7 @@ Defined in: [webview/components/SpreadsheetGrid.tsx:42](https://github.com/eiich
 
 > **onColClick**: (`colKey`) => `void`
 
-Defined in: [webview/components/SpreadsheetGrid.tsx:26](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/webview/components/SpreadsheetGrid.tsx#L26)
+Defined in: [webview/components/SpreadsheetGrid.tsx:26](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/f2bc95f4d1b429803858e0f71617e0d396de529f/src/webview/components/SpreadsheetGrid.tsx#L26)
 
 #### Parameters
 
@@ -112,7 +112,7 @@ Defined in: [webview/components/SpreadsheetGrid.tsx:26](https://github.com/eiich
 
 > `optional` **onColContextMenu?**: (`event`, `colKey`, `colIndex`) => `void`
 
-Defined in: [webview/components/SpreadsheetGrid.tsx:41](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/webview/components/SpreadsheetGrid.tsx#L41)
+Defined in: [webview/components/SpreadsheetGrid.tsx:41](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/f2bc95f4d1b429803858e0f71617e0d396de529f/src/webview/components/SpreadsheetGrid.tsx#L41)
 
 #### Parameters
 
@@ -138,7 +138,7 @@ Defined in: [webview/components/SpreadsheetGrid.tsx:41](https://github.com/eiich
 
 > `optional` **onCornerContextMenu?**: (`event`) => `void`
 
-Defined in: [webview/components/SpreadsheetGrid.tsx:39](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/webview/components/SpreadsheetGrid.tsx#L39)
+Defined in: [webview/components/SpreadsheetGrid.tsx:39](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/f2bc95f4d1b429803858e0f71617e0d396de529f/src/webview/components/SpreadsheetGrid.tsx#L39)
 
 #### Parameters
 
@@ -156,7 +156,7 @@ Defined in: [webview/components/SpreadsheetGrid.tsx:39](https://github.com/eiich
 
 > `optional` **onMoveColumn?**: (`fromIndex`, `toIndex`) => `void`
 
-Defined in: [webview/components/SpreadsheetGrid.tsx:34](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/webview/components/SpreadsheetGrid.tsx#L34)
+Defined in: [webview/components/SpreadsheetGrid.tsx:34](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/f2bc95f4d1b429803858e0f71617e0d396de529f/src/webview/components/SpreadsheetGrid.tsx#L34)
 
 #### Parameters
 
@@ -178,7 +178,7 @@ Defined in: [webview/components/SpreadsheetGrid.tsx:34](https://github.com/eiich
 
 > `optional` **onMoveRow?**: (`fromIndex`, `toIndex`) => `void`
 
-Defined in: [webview/components/SpreadsheetGrid.tsx:35](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/webview/components/SpreadsheetGrid.tsx#L35)
+Defined in: [webview/components/SpreadsheetGrid.tsx:35](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/f2bc95f4d1b429803858e0f71617e0d396de529f/src/webview/components/SpreadsheetGrid.tsx#L35)
 
 #### Parameters
 
@@ -200,7 +200,7 @@ Defined in: [webview/components/SpreadsheetGrid.tsx:35](https://github.com/eiich
 
 > **onNavigateAdjacent**: (`current`, `direction`) => `void`
 
-Defined in: [webview/components/SpreadsheetGrid.tsx:30](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/webview/components/SpreadsheetGrid.tsx#L30)
+Defined in: [webview/components/SpreadsheetGrid.tsx:30](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/f2bc95f4d1b429803858e0f71617e0d396de529f/src/webview/components/SpreadsheetGrid.tsx#L30)
 
 #### Parameters
 
@@ -222,7 +222,7 @@ Defined in: [webview/components/SpreadsheetGrid.tsx:30](https://github.com/eiich
 
 > `optional` **onNavigateArray?**: (`arrayPath`) => `void`
 
-Defined in: [webview/components/SpreadsheetGrid.tsx:38](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/webview/components/SpreadsheetGrid.tsx#L38)
+Defined in: [webview/components/SpreadsheetGrid.tsx:38](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/f2bc95f4d1b429803858e0f71617e0d396de529f/src/webview/components/SpreadsheetGrid.tsx#L38)
 
 #### Parameters
 
@@ -240,7 +240,7 @@ Defined in: [webview/components/SpreadsheetGrid.tsx:38](https://github.com/eiich
 
 > **onPageChange**: (`page`) => `void`
 
-Defined in: [webview/components/SpreadsheetGrid.tsx:23](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/webview/components/SpreadsheetGrid.tsx#L23)
+Defined in: [webview/components/SpreadsheetGrid.tsx:23](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/f2bc95f4d1b429803858e0f71617e0d396de529f/src/webview/components/SpreadsheetGrid.tsx#L23)
 
 #### Parameters
 
@@ -258,7 +258,7 @@ Defined in: [webview/components/SpreadsheetGrid.tsx:23](https://github.com/eiich
 
 > `optional` **onRenameColumn?**: (`oldKey`, `newKey`) => `void`
 
-Defined in: [webview/components/SpreadsheetGrid.tsx:31](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/webview/components/SpreadsheetGrid.tsx#L31)
+Defined in: [webview/components/SpreadsheetGrid.tsx:31](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/f2bc95f4d1b429803858e0f71617e0d396de529f/src/webview/components/SpreadsheetGrid.tsx#L31)
 
 #### Parameters
 
@@ -280,7 +280,7 @@ Defined in: [webview/components/SpreadsheetGrid.tsx:31](https://github.com/eiich
 
 > `optional` **onResetColWidth?**: (`colKey`) => `void`
 
-Defined in: [webview/components/SpreadsheetGrid.tsx:37](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/webview/components/SpreadsheetGrid.tsx#L37)
+Defined in: [webview/components/SpreadsheetGrid.tsx:37](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/f2bc95f4d1b429803858e0f71617e0d396de529f/src/webview/components/SpreadsheetGrid.tsx#L37)
 
 #### Parameters
 
@@ -298,7 +298,7 @@ Defined in: [webview/components/SpreadsheetGrid.tsx:37](https://github.com/eiich
 
 > `optional` **onResizeColumn?**: (`colKey`, `width`) => `void`
 
-Defined in: [webview/components/SpreadsheetGrid.tsx:36](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/webview/components/SpreadsheetGrid.tsx#L36)
+Defined in: [webview/components/SpreadsheetGrid.tsx:36](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/f2bc95f4d1b429803858e0f71617e0d396de529f/src/webview/components/SpreadsheetGrid.tsx#L36)
 
 #### Parameters
 
@@ -320,7 +320,7 @@ Defined in: [webview/components/SpreadsheetGrid.tsx:36](https://github.com/eiich
 
 > **onRowClick**: (`rowIndex`, `path`) => `void`
 
-Defined in: [webview/components/SpreadsheetGrid.tsx:25](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/webview/components/SpreadsheetGrid.tsx#L25)
+Defined in: [webview/components/SpreadsheetGrid.tsx:25](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/f2bc95f4d1b429803858e0f71617e0d396de529f/src/webview/components/SpreadsheetGrid.tsx#L25)
 
 #### Parameters
 
@@ -342,7 +342,7 @@ Defined in: [webview/components/SpreadsheetGrid.tsx:25](https://github.com/eiich
 
 > `optional` **onRowContextMenu?**: (`event`, `rowIndex`, `path`) => `void`
 
-Defined in: [webview/components/SpreadsheetGrid.tsx:40](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/webview/components/SpreadsheetGrid.tsx#L40)
+Defined in: [webview/components/SpreadsheetGrid.tsx:40](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/f2bc95f4d1b429803858e0f71617e0d396de529f/src/webview/components/SpreadsheetGrid.tsx#L40)
 
 #### Parameters
 
@@ -368,7 +368,7 @@ Defined in: [webview/components/SpreadsheetGrid.tsx:40](https://github.com/eiich
 
 > **onSelectAll**: () => `void`
 
-Defined in: [webview/components/SpreadsheetGrid.tsx:27](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/webview/components/SpreadsheetGrid.tsx#L27)
+Defined in: [webview/components/SpreadsheetGrid.tsx:27](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/f2bc95f4d1b429803858e0f71617e0d396de529f/src/webview/components/SpreadsheetGrid.tsx#L27)
 
 #### Returns
 
@@ -380,7 +380,7 @@ Defined in: [webview/components/SpreadsheetGrid.tsx:27](https://github.com/eiich
 
 > **onSortChange**: (`colKey`) => `void`
 
-Defined in: [webview/components/SpreadsheetGrid.tsx:28](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/webview/components/SpreadsheetGrid.tsx#L28)
+Defined in: [webview/components/SpreadsheetGrid.tsx:28](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/f2bc95f4d1b429803858e0f71617e0d396de529f/src/webview/components/SpreadsheetGrid.tsx#L28)
 
 #### Parameters
 
@@ -398,7 +398,7 @@ Defined in: [webview/components/SpreadsheetGrid.tsx:28](https://github.com/eiich
 
 > **onUpdateCell**: (`path`, `value`) => `void`
 
-Defined in: [webview/components/SpreadsheetGrid.tsx:29](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/webview/components/SpreadsheetGrid.tsx#L29)
+Defined in: [webview/components/SpreadsheetGrid.tsx:29](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/f2bc95f4d1b429803858e0f71617e0d396de529f/src/webview/components/SpreadsheetGrid.tsx#L29)
 
 #### Parameters
 
@@ -420,7 +420,7 @@ Defined in: [webview/components/SpreadsheetGrid.tsx:29](https://github.com/eiich
 
 > **page**: [`TablePage`](../../../model/tableView/interfaces/TablePage.md)
 
-Defined in: [webview/components/SpreadsheetGrid.tsx:19](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/webview/components/SpreadsheetGrid.tsx#L19)
+Defined in: [webview/components/SpreadsheetGrid.tsx:19](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/f2bc95f4d1b429803858e0f71617e0d396de529f/src/webview/components/SpreadsheetGrid.tsx#L19)
 
 ***
 
@@ -428,7 +428,7 @@ Defined in: [webview/components/SpreadsheetGrid.tsx:19](https://github.com/eiich
 
 > **selection**: [`GridSelection`](../../../hooks/gridUiState/type-aliases/GridSelection.md)
 
-Defined in: [webview/components/SpreadsheetGrid.tsx:20](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/webview/components/SpreadsheetGrid.tsx#L20)
+Defined in: [webview/components/SpreadsheetGrid.tsx:20](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/f2bc95f4d1b429803858e0f71617e0d396de529f/src/webview/components/SpreadsheetGrid.tsx#L20)
 
 ***
 
@@ -436,7 +436,7 @@ Defined in: [webview/components/SpreadsheetGrid.tsx:20](https://github.com/eiich
 
 > **sortState**: [`TableSortState`](../../../model/tableView/interfaces/TableSortState.md) \| `undefined`
 
-Defined in: [webview/components/SpreadsheetGrid.tsx:21](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/webview/components/SpreadsheetGrid.tsx#L21)
+Defined in: [webview/components/SpreadsheetGrid.tsx:21](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/f2bc95f4d1b429803858e0f71617e0d396de529f/src/webview/components/SpreadsheetGrid.tsx#L21)
 
 ***
 
@@ -444,4 +444,4 @@ Defined in: [webview/components/SpreadsheetGrid.tsx:21](https://github.com/eiich
 
 > **tableView**: [`OrderedTableView`](../../../model/tableView/interfaces/OrderedTableView.md)
 
-Defined in: [webview/components/SpreadsheetGrid.tsx:18](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/webview/components/SpreadsheetGrid.tsx#L18)
+Defined in: [webview/components/SpreadsheetGrid.tsx:18](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/f2bc95f4d1b429803858e0f71617e0d396de529f/src/webview/components/SpreadsheetGrid.tsx#L18)

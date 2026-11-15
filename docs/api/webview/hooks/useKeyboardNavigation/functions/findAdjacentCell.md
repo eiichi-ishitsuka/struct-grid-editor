@@ -8,7 +8,7 @@
 
 > **findAdjacentCell**(`rows`, `tableView`, `current`, `direction`): [`GridCellCoordinate`](../interfaces/GridCellCoordinate.md) \| `null`
 
-Defined in: [webview/hooks/useKeyboardNavigation.ts:15](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/webview/hooks/useKeyboardNavigation.ts#L15)
+Defined in: [webview/hooks/useKeyboardNavigation.ts:15](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/f2bc95f4d1b429803858e0f71617e0d396de529f/src/webview/hooks/useKeyboardNavigation.ts#L15)
 
 表の可視セル間で、指定方向に隣接するセルを返す。
 

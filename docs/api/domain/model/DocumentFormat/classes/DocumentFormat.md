@@ -6,7 +6,7 @@
 
 # Class: DocumentFormat
 
-Defined in: [domain/model/DocumentFormat.ts:24](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/domain/model/DocumentFormat.ts#L24)
+Defined in: [domain/model/DocumentFormat.ts:24](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/f2bc95f4d1b429803858e0f71617e0d396de529f/src/domain/model/DocumentFormat.ts#L24)
 
 ドキュメントの書式特性をカプセル化する値オブジェクト（Value Object）。
 編集時にも元のインデントや改行などの書式を保持するために使用されます。
@@ -17,7 +17,7 @@ Defined in: [domain/model/DocumentFormat.ts:24](https://github.com/eiichi-ishits
 
 > **new DocumentFormat**(`options`): `DocumentFormat`
 
-Defined in: [domain/model/DocumentFormat.ts:34](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/domain/model/DocumentFormat.ts#L34)
+Defined in: [domain/model/DocumentFormat.ts:34](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/f2bc95f4d1b429803858e0f71617e0d396de529f/src/domain/model/DocumentFormat.ts#L34)
 
 #### Parameters
 
@@ -35,7 +35,7 @@ Defined in: [domain/model/DocumentFormat.ts:34](https://github.com/eiichi-ishits
 
 > `readonly` **fileType**: [`DocumentFileType`](../type-aliases/DocumentFileType.md)
 
-Defined in: [domain/model/DocumentFormat.ts:26](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/domain/model/DocumentFormat.ts#L26)
+Defined in: [domain/model/DocumentFormat.ts:26](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/f2bc95f4d1b429803858e0f71617e0d396de529f/src/domain/model/DocumentFormat.ts#L26)
 
 ファイル形式
 
@@ -45,7 +45,7 @@ Defined in: [domain/model/DocumentFormat.ts:26](https://github.com/eiichi-ishits
 
 > `readonly` **hasTrailingNewline**: `boolean`
 
-Defined in: [domain/model/DocumentFormat.ts:30](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/domain/model/DocumentFormat.ts#L30)
+Defined in: [domain/model/DocumentFormat.ts:30](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/f2bc95f4d1b429803858e0f71617e0d396de529f/src/domain/model/DocumentFormat.ts#L30)
 
 末尾改行が存在するかどうか
 
@@ -55,7 +55,7 @@ Defined in: [domain/model/DocumentFormat.ts:30](https://github.com/eiichi-ishits
 
 > `readonly` **indent**: `string` \| `number`
 
-Defined in: [domain/model/DocumentFormat.ts:28](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/domain/model/DocumentFormat.ts#L28)
+Defined in: [domain/model/DocumentFormat.ts:28](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/f2bc95f4d1b429803858e0f71617e0d396de529f/src/domain/model/DocumentFormat.ts#L28)
 
 インデント幅またはインデント文字列
 
@@ -65,7 +65,7 @@ Defined in: [domain/model/DocumentFormat.ts:28](https://github.com/eiichi-ishits
 
 > `readonly` **metadata**: `Readonly`\<`Record`\<`string`, `any`\>\>
 
-Defined in: [domain/model/DocumentFormat.ts:32](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/domain/model/DocumentFormat.ts#L32)
+Defined in: [domain/model/DocumentFormat.ts:32](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/f2bc95f4d1b429803858e0f71617e0d396de529f/src/domain/model/DocumentFormat.ts#L32)
 
 各フォーマット固有の追加メタデータ
 
@@ -75,7 +75,7 @@ Defined in: [domain/model/DocumentFormat.ts:32](https://github.com/eiichi-ishits
 
 > `static` **defaultCsv**(): `DocumentFormat`
 
-Defined in: [domain/model/DocumentFormat.ts:81](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/domain/model/DocumentFormat.ts#L81)
+Defined in: [domain/model/DocumentFormat.ts:81](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/f2bc95f4d1b429803858e0f71617e0d396de529f/src/domain/model/DocumentFormat.ts#L81)
 
 デフォルトのCSV書式を生成します。
 
@@ -91,7 +91,7 @@ Defined in: [domain/model/DocumentFormat.ts:81](https://github.com/eiichi-ishits
 
 > `static` **defaultJson**(): `DocumentFormat`
 
-Defined in: [domain/model/DocumentFormat.ts:45](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/domain/model/DocumentFormat.ts#L45)
+Defined in: [domain/model/DocumentFormat.ts:45](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/f2bc95f4d1b429803858e0f71617e0d396de529f/src/domain/model/DocumentFormat.ts#L45)
 
 デフォルトのJSON書式を生成します。
 
@@ -107,7 +107,7 @@ Defined in: [domain/model/DocumentFormat.ts:45](https://github.com/eiichi-ishits
 
 > `static` **defaultJsonl**(): `DocumentFormat`
 
-Defined in: [domain/model/DocumentFormat.ts:69](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/domain/model/DocumentFormat.ts#L69)
+Defined in: [domain/model/DocumentFormat.ts:69](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/f2bc95f4d1b429803858e0f71617e0d396de529f/src/domain/model/DocumentFormat.ts#L69)
 
 デフォルトのJSONL書式を生成します。
 
@@ -123,7 +123,7 @@ Defined in: [domain/model/DocumentFormat.ts:69](https://github.com/eiichi-ishits
 
 > `static` **defaultTsv**(): `DocumentFormat`
 
-Defined in: [domain/model/DocumentFormat.ts:98](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/domain/model/DocumentFormat.ts#L98)
+Defined in: [domain/model/DocumentFormat.ts:98](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/f2bc95f4d1b429803858e0f71617e0d396de529f/src/domain/model/DocumentFormat.ts#L98)
 
 デフォルトのTSV書式を生成します。
 
@@ -139,7 +139,7 @@ Defined in: [domain/model/DocumentFormat.ts:98](https://github.com/eiichi-ishits
 
 > `static` **defaultYaml**(): `DocumentFormat`
 
-Defined in: [domain/model/DocumentFormat.ts:57](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/c2f468ee741712cd43b1ecdb62cc88f119a9e904/src/domain/model/DocumentFormat.ts#L57)
+Defined in: [domain/model/DocumentFormat.ts:57](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/f2bc95f4d1b429803858e0f71617e0d396de529f/src/domain/model/DocumentFormat.ts#L57)
 
 デフォルトのYAML書式を生成します。
 

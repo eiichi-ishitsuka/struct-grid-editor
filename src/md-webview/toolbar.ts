@@ -10,6 +10,47 @@ export interface ToolbarCallbacks {
   onToggleTheme: () => 'default' | 'slate';
   /** 現在の表示テーマスキーム名（`'default'` または `'slate'`）を取得します。 */
   getCurrentTheme: () => 'default' | 'slate';
+  /** ReadOnly モード切り替え時に呼び出され、切り替え後の状態を返します。 */
+  onToggleReadOnly?: () => boolean;
+  /** 現在の ReadOnly 状態を取得します。 */
+  getReadOnly?: () => boolean;
+  /** 左右分割表示切り替え時に呼び出され、切り替え後の状態を返します。 */
+  onToggleSplitView?: () => boolean;
+  /** 現在の左右分割表示状態を取得します。 */
+  getSplitView?: () => boolean;
+  /** 見出し Index パネル表示切り替え時に呼び出され、切り替え後の状態を返します。 */
+  onToggleOutline?: () => boolean;
+  /** 現在の見出し Index パネル表示状態を取得します。 */
+  getOutlineVisible?: () => boolean;
+}
+
+function createToggleButton(options: {
+  label: string;
+  title: string;
+  extraClass: string;
+  initialActive: boolean;
+  onToggle: () => boolean;
+}): HTMLButtonElement {
+  const btn = document.createElement('button');
+  btn.type = 'button';
+  btn.className = `toolbar-btn toolbar-toggle ${options.extraClass}`.trim();
+  btn.title = options.title;
+
+  const syncState = (active: boolean) => {
+    btn.classList.toggle('active', active);
+    btn.setAttribute('aria-pressed', String(active));
+    btn.textContent = `${options.label}: ${active ? 'ON' : 'OFF'}`;
+  };
+
+  syncState(options.initialActive);
+
+  btn.addEventListener('mousedown', (e) => {
+    e.preventDefault();
+    const next = options.onToggle();
+    syncState(next);
+  });
+
+  return btn;
 }
 
 /**
@@ -33,6 +74,56 @@ export function createToolbar(
   spacer.className = 'toolbar-spacer';
   bar.appendChild(spacer);
 
+  if (callbacks.onToggleReadOnly) {
+    let readOnly = callbacks.getReadOnly ? callbacks.getReadOnly() : false;
+    bar.appendChild(
+      createToggleButton({
+        label: 'Read Mode',
+        title: '読み取り専用モード（行クリック時のMarkdown記法表示を無効化）',
+        extraClass: 'toolbar-toggle-readonly',
+        initialActive: readOnly,
+        onToggle: () => {
+          readOnly = callbacks.onToggleReadOnly ? callbacks.onToggleReadOnly() : !readOnly;
+          return readOnly;
+        },
+      })
+    );
+  }
+
+  if (callbacks.onToggleSplitView) {
+    let splitView = callbacks.getSplitView ? callbacks.getSplitView() : false;
+    bar.appendChild(
+      createToggleButton({
+        label: 'Split View',
+        title: '左側にプレビュー、右側にローテキストエディタを表示',
+        extraClass: 'toolbar-toggle-split',
+        initialActive: splitView,
+        onToggle: () => {
+          splitView = callbacks.onToggleSplitView ? callbacks.onToggleSplitView() : !splitView;
+          return splitView;
+        },
+      })
+    );
+  }
+
+  if (callbacks.onToggleOutline) {
+    let outlineVisible = callbacks.getOutlineVisible ? callbacks.getOutlineVisible() : true;
+    bar.appendChild(
+      createToggleButton({
+        label: 'Show Index',
+        title: 'プレビュー右上の見出しインデックス表示を切り替え',
+        extraClass: 'toolbar-toggle-outline',
+        initialActive: outlineVisible,
+        onToggle: () => {
+          outlineVisible = callbacks.onToggleOutline
+            ? callbacks.onToggleOutline()
+            : !outlineVisible;
+          return outlineVisible;
+        },
+      })
+    );
+  }
+
   const themeBtn = document.createElement('button');
   themeBtn.type = 'button';
   themeBtn.className = 'toolbar-btn toolbar-btn-source';
@@ -52,7 +143,7 @@ export function createToolbar(
   const sourceBtn = document.createElement('button');
   sourceBtn.type = 'button';
   sourceBtn.className = 'toolbar-btn toolbar-btn-source';
-  sourceBtn.textContent = 'ソース表示';
+  sourceBtn.textContent = 'View Source';
   sourceBtn.title = 'VSCode標準のテキストエディタでMarkdownソースを開く';
   sourceBtn.addEventListener('mousedown', (e) => {
     e.preventDefault();
@@ -100,7 +191,7 @@ export function createToolbar(
   tableBannerContainer.appendChild(tableBar);
 
   const updateToolbarState = () => {
-    if (editor.isActive('table')) {
+    if (editor.isEditable && editor.isActive('table')) {
       tableBar.classList.remove('hidden');
     } else {
       tableBar.classList.add('hidden');

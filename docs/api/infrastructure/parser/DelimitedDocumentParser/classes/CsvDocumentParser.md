@@ -6,7 +6,7 @@
 
 # Class: CsvDocumentParser
 
-Defined in: infrastructure/parser/DelimitedDocumentParser.ts:306
+Defined in: [infrastructure/parser/DelimitedDocumentParser.ts:306](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/f2bc95f4d1b429803858e0f71617e0d396de529f/src/infrastructure/parser/DelimitedDocumentParser.ts#L306)
 
 CSV（カンマ区切り）ドキュメントパーサー。
 
@@ -20,7 +20,7 @@ CSV（カンマ区切り）ドキュメントパーサー。
 
 > **new CsvDocumentParser**(): `CsvDocumentParser`
 
-Defined in: infrastructure/parser/DelimitedDocumentParser.ts:307
+Defined in: [infrastructure/parser/DelimitedDocumentParser.ts:307](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/f2bc95f4d1b429803858e0f71617e0d396de529f/src/infrastructure/parser/DelimitedDocumentParser.ts#L307)
 
 #### Returns
 
@@ -36,7 +36,7 @@ Defined in: infrastructure/parser/DelimitedDocumentParser.ts:307
 
 > **parse**(`text`, `options?`): [`StructuredDocument`](../../../../domain/model/StructuredDocument/classes/StructuredDocument.md)
 
-Defined in: infrastructure/parser/DelimitedDocumentParser.ts:38
+Defined in: [infrastructure/parser/DelimitedDocumentParser.ts:38](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/f2bc95f4d1b429803858e0f71617e0d396de529f/src/infrastructure/parser/DelimitedDocumentParser.ts#L38)
 
 区切り文字形式のテキストを解析し、オブジェクト配列をルートとする StructuredDocument を生成します。
 
@@ -70,7 +70,7 @@ Defined in: infrastructure/parser/DelimitedDocumentParser.ts:38
 
 > **serialize**(`document`): `string`
 
-Defined in: infrastructure/parser/DelimitedDocumentParser.ts:105
+Defined in: [infrastructure/parser/DelimitedDocumentParser.ts:105](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/f2bc95f4d1b429803858e0f71617e0d396de529f/src/infrastructure/parser/DelimitedDocumentParser.ts#L105)
 
 StructuredDocument を CSV または TSV 形式の文字列にシリアライズします。
 
@@ -98,7 +98,7 @@ StructuredDocument を CSV または TSV 形式の文字列にシリアライズ
 
 > **supports**(`fileExtension`): `boolean`
 
-Defined in: infrastructure/parser/DelimitedDocumentParser.ts:27
+Defined in: [infrastructure/parser/DelimitedDocumentParser.ts:27](https://github.com/eiichi-ishitsuka/struct-grid-editor/blob/f2bc95f4d1b429803858e0f71617e0d396de529f/src/infrastructure/parser/DelimitedDocumentParser.ts#L27)
 
 指定された拡張子が本パーサーの対象（csv または tsv）であるかを判定します。
 

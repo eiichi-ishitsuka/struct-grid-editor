@@ -9,3 +9,7 @@
 ## Classes
 
 - [MarkdownEditorProvider](classes/MarkdownEditorProvider.md)
+
+## Interfaces
+
+- [MarkdownViewPreferences](interfaces/MarkdownViewPreferences.md)

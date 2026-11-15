@@ -3,6 +3,22 @@ import * as path from 'path';
 import * as fs from 'fs';
 
 /**
+ * Markdown エディタの表示設定（複数ファイル間で共有・永続化）。
+ */
+export interface MarkdownViewPreferences {
+  readOnly: boolean;
+  splitView: boolean;
+  showIndex: boolean;
+}
+
+const PREFERENCES_STATE_KEY = 'struct-grid-editor.markdownViewPreferences';
+const DEFAULT_VIEW_PREFERENCES: MarkdownViewPreferences = {
+  readOnly: false,
+  splitView: false,
+  showIndex: true,
+};
+
+/**
  * Markdown ファイルを WYSIWYG / Live Preview 形式で表示・編集する VS Code カスタムテキストエディタプロバイダー。
  * ドキュメントの双方向同期、ローカル画像パスの Webview URI 変換、およびクリップボード画像の保存処理を担当します。
  */
@@ -99,7 +115,22 @@ export class MarkdownEditorProvider implements vscode.CustomTextEditorProvider {
             type: 'init',
             text: lastContentFromWebview,
             baseUri: getBaseUriString(),
+            preferences: this.getViewPreferences(),
           });
+          break;
+        }
+
+        case 'updatePreferences': {
+          const prefs = message.preferences as Partial<MarkdownViewPreferences> | undefined;
+          if (prefs && typeof prefs === 'object') {
+            const current = this.getViewPreferences();
+            const next: MarkdownViewPreferences = {
+              readOnly: typeof prefs.readOnly === 'boolean' ? prefs.readOnly : current.readOnly,
+              splitView: typeof prefs.splitView === 'boolean' ? prefs.splitView : current.splitView,
+              showIndex: typeof prefs.showIndex === 'boolean' ? prefs.showIndex : current.showIndex,
+            };
+            await this.context.globalState.update(PREFERENCES_STATE_KEY, next);
+          }
           break;
         }
 
@@ -296,6 +327,26 @@ export class MarkdownEditorProvider implements vscode.CustomTextEditorProvider {
     }
   }
 
+  private getViewPreferences(): MarkdownViewPreferences {
+    const stored = this.context.globalState.get<Partial<MarkdownViewPreferences>>(
+      PREFERENCES_STATE_KEY
+    );
+    return {
+      readOnly:
+        typeof stored?.readOnly === 'boolean'
+          ? stored.readOnly
+          : DEFAULT_VIEW_PREFERENCES.readOnly,
+      splitView:
+        typeof stored?.splitView === 'boolean'
+          ? stored.splitView
+          : DEFAULT_VIEW_PREFERENCES.splitView,
+      showIndex:
+        typeof stored?.showIndex === 'boolean'
+          ? stored.showIndex
+          : DEFAULT_VIEW_PREFERENCES.showIndex,
+    };
+  }
+
   private getHtmlForWebview(
     webview: vscode.Webview,
     initialText: string,
@@ -318,6 +369,7 @@ export class MarkdownEditorProvider implements vscode.CustomTextEditorProvider {
     const initialPayload = JSON.stringify({
       text: initialText,
       baseUri,
+      preferences: this.getViewPreferences(),
     }).replace(/</g, '\\u003c');
 
     return `<!DOCTYPE html>
@@ -334,8 +386,17 @@ export class MarkdownEditorProvider implements vscode.CustomTextEditorProvider {
   <div id="app">
     <div id="toolbar-container"></div>
     <div id="table-Banner-container"></div>
-    <div id="editor-wrapper">
-      <div id="editor"></div>
+    <div id="main-container">
+      <div id="preview-pane">
+        <div id="editor-wrapper">
+          <div id="editor"></div>
+        </div>
+        <aside id="outline-panel" class="outline-panel" aria-label="見出しインデックス"></aside>
+      </div>
+      <div id="raw-editor-pane" class="raw-editor-pane hidden">
+        <div class="raw-editor-header">Markdown (Raw)</div>
+        <textarea id="raw-editor" class="raw-editor-textarea" spellcheck="false" aria-label="Markdown Raw Text Editor"></textarea>
+      </div>
     </div>
     <div id="slash-menu" class="slash-menu hidden"></div>
     <div id="status-bar">
