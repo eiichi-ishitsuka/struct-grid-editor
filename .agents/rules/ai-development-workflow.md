@@ -93,10 +93,9 @@
     npm run doc
     ```
   - **生成・更新される成果物**:
-    1. **ソースコード API 仕様書**: [`docs/api/`](../api/) 配下の Markdown 群（TypeDoc）
-    2. **テスト仕様書**: [`docs/test-specifications.md`](../test-specifications.md)（各テストの【観点】【テスト内容】一覧）
+    - **テスト仕様書**: [`docs/test-specifications.md`](../test-specifications.md)（各テストの【観点】【テスト内容】一覧）
   - **Markdown 統一原則**: すべてのドキュメント出力は Markdown（.md）形式とし、HTML などの非 Markdown アセットを出力・コミットしないこと。
-  - **Git管理の徹底**: 生成された `docs/api/` および `docs/test-specifications.md` はコード本体と同期させて Git 管理（コミット対象）に含めること。
+  - **Git管理の徹底**: 生成された `docs/test-specifications.md` はコード本体と同期させて Git 管理（コミット対象）に含めること。
 
 ---
 

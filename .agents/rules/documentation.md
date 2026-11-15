@@ -46,9 +46,9 @@
 
 ## 5. 自動生成ドキュメントのGit管理ルール
 - **Git管理対象**:
-  `docs/api/`（TypeDoc生成のAPI仕様書群）および `docs/test-specifications.md`（テスト仕様書）は、GitHub上およびエディタ内での直接閲覧を可能にするため、Markdown形式のまま**Git管理（コミット対象）**とします。
+  `docs/test-specifications.md`（テスト仕様書）は、GitHub上およびエディタ内での直接閲覧を可能にするため、Markdown形式のまま**Git管理（コミット対象）**とします。
 - **コード変更時の同時コミット義務**:
-  ソースコードまたはテストコードを変更した際は、コミット前に必ず `npm run doc` を実行してドキュメントを同期更新し、同一のコミット／PRに含めること。
+  テストコードを変更した際は、コミット前に `npm run doc` を実行して `docs/test-specifications.md` を同期更新し、同一のコミット／PRに含めること。
 - **非Markdownファイルの除外**:
   HTMLや中間キャッシュファイル等の非Markdownアセットはリポジトリにコミットしないこと。
 
