@@ -30,7 +30,7 @@ describe('Tiptap Editor Extensions Integration', () => {
     return new Editor({
       element: container,
       extensions: [
-        StarterKit.configure({ codeBlock: false }),
+        StarterKit.configure({ codeBlock: false, link: false }),
         Link.configure({
           openOnClick: false,
           autolink: true,

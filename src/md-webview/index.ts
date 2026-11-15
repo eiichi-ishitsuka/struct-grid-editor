@@ -6,7 +6,7 @@ import Image from '@tiptap/extension-image';
 import Highlight from '@tiptap/extension-highlight';
 import TaskList from '@tiptap/extension-task-list';
 import TaskItem from '@tiptap/extension-task-item';
-import Table from '@tiptap/extension-table';
+import { Table } from '@tiptap/extension-table';
 import TableRow from '@tiptap/extension-table-row';
 import TableHeader from '@tiptap/extension-table-header';
 import TableCell from '@tiptap/extension-table-cell';
@@ -181,6 +181,7 @@ const editor = new Editor({
   extensions: [
     StarterKit.configure({
       codeBlock: false,
+      link: false,
     }),
     CustomCodeBlock,
     AdmonitionBlock,
@@ -351,7 +352,7 @@ rawEditorEl?.addEventListener('input', () => {
     try {
       const html = markdownToHtml(rawText);
       renderFrontmatterPanel();
-      editor.commands.setContent(html, false);
+      editor.commands.setContent(html, { emitUpdate: false });
       updateStats(editor);
       updateOutline();
     } finally {
@@ -589,7 +590,7 @@ window.addEventListener('message', (event) => {
       try {
         const html = markdownToHtml(incomingMd);
         renderFrontmatterPanel();
-        editor.commands.setContent(html, false);
+        editor.commands.setContent(html, { emitUpdate: false });
         updateStats(editor);
         updateOutline();
         if (isSplitView && rawEditorEl && document.activeElement !== rawEditorEl) {
