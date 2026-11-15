@@ -6,6 +6,7 @@ import { ValueTypeTag } from './ValueTypeTag';
 export interface KvGridProps {
     rows: GridRowDto[];
     searchQuery: string;
+    readOnly?: boolean;
     onUpdateCell?: (path: string, value: string) => void;
     onRenameKey?: (path: string, oldKey: string, newKey: string) => void;
     onAddKvRow?: () => void;
@@ -17,6 +18,7 @@ export interface KvGridProps {
 export function KvGrid({
     rows,
     searchQuery,
+    readOnly = false,
     onUpdateCell,
     onRenameKey,
     onAddKvRow,
@@ -79,7 +81,7 @@ export function KvGrid({
                                         type="button"
                                         onClick={() => onNavigateArray?.(row.path)}
                                     >
-                                        編集する
+                                        {readOnly ? '表示する' : '編集する'}
                                     </button>
                                 </td>
                             );
@@ -94,6 +96,7 @@ export function KvGrid({
                                     displayValue={row.displayValue}
                                     type={row.type}
                                     className="col-val"
+                                    readOnly={readOnly}
                                     onUpdateCell={(path, val) => onUpdateCell?.(path, val)}
                                     onSelectCell={() => {}}
                                     onContextMenu={event => onCellContextMenu?.(event, row.path)}
@@ -107,11 +110,11 @@ export function KvGrid({
                                     <span className="path-connector">{row.depth > 1 ? '└─ ' : ''}</span>
                                     <span
                                         className="path-text"
-                                        contentEditable={true}
+                                        contentEditable={!readOnly}
                                         suppressContentEditableWarning={true}
                                         data-path={row.path}
                                         data-old-key={safeKey}
-                                        title="クリックしてキー名を編集 / 右クリックでキーを削除"
+                                        title={readOnly ? safeKey : 'クリックしてキー名を編集 / 右クリックでキーを削除'}
                                         onBlur={event => handleKeyBlur(row, event.currentTarget)}
                                         onKeyDown={event => handleKeyKeyDown(event, safeKey)}
                                         onContextMenu={event => onKeyContextMenu?.(event, row)}
@@ -126,17 +129,19 @@ export function KvGrid({
                     })}
                 </tbody>
             </table>
-            <div className="add-row-bottom">
-                <button
-                    className="btn-add-plus"
-                    id="addKvRowBtn"
-                    title="項目を追加"
-                    type="button"
-                    onClick={onAddKvRow}
-                >
-                    ＋
-                </button>
-            </div>
+            {!readOnly && (
+                <div className="add-row-bottom">
+                    <button
+                        className="btn-add-plus"
+                        id="addKvRowBtn"
+                        title="項目を追加"
+                        type="button"
+                        onClick={onAddKvRow}
+                    >
+                        ＋
+                    </button>
+                </div>
+            )}
         </div>
     );
 }

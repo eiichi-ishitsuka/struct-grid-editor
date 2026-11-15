@@ -22,6 +22,7 @@ export interface AppProps {
 }
 
 export function App({ initialData }: AppProps) {
+    const isReadOnly = Boolean(initialData.readOnly);
     const [savedUiState, setSavedUiState] = useVsCodeState(defaultGridUiState);
     const uiState = normalizeGridUiState(savedUiState);
     const { selection, setSelection, clearSelection, selectCell, selectRow, selectCol, selectAll } = useGridSelection();
@@ -493,7 +494,7 @@ export function App({ initialData }: AppProps) {
                     e.preventDefault();
                     void copySelection(true);
                 }
-            } else if (isCmdOrCtrl && (e.key === 'x' || e.key === 'X')) {
+            } else if (!isReadOnly && isCmdOrCtrl && (e.key === 'x' || e.key === 'X')) {
                 if (selection.type !== 'none') {
                     e.preventDefault();
                     void cutSelection();
@@ -501,7 +502,7 @@ export function App({ initialData }: AppProps) {
             } else if (isCmdOrCtrl && (e.key === 'a' || e.key === 'A')) {
                 e.preventDefault();
                 selectAll();
-            } else if (e.key === 'Delete' || e.key === 'Backspace') {
+            } else if (!isReadOnly && (e.key === 'Delete' || e.key === 'Backspace')) {
                 if (selection.type !== 'none') {
                     e.preventDefault();
                     deleteSelection();
@@ -544,6 +545,9 @@ export function App({ initialData }: AppProps) {
                 onOpenTextEditor={handleOpenTextEditor}
                 hasHeader={initialData.hasHeader}
                 onToggleHeader={handleToggleCsvHeader}
+                readOnly={isReadOnly}
+                isTruncated={initialData.isTruncated}
+                totalSourceRows={initialData.totalSourceRows}
             >
                 {isTableMode && (
                     <ColumnVisibilityMenu
@@ -561,6 +565,7 @@ export function App({ initialData }: AppProps) {
                     selection={selection}
                     sortState={table.sortState}
                     colWidths={uiState.customColWidths[table.pathKey] ?? {}}
+                    readOnly={isReadOnly}
                     onPageChange={table.setCurrentPage}
                     onCellClick={selectCell}
                     onRowClick={selectRow}
@@ -577,20 +582,21 @@ export function App({ initialData }: AppProps) {
                     onResizeColumn={handleResizeColumn}
                     onResetColWidth={handleResetColWidth}
                     onNavigateArray={table.setActiveArrayPath}
-                    onCornerContextMenu={handleCornerContextMenu}
-                    onRowContextMenu={handleRowContextMenu}
-                    onColContextMenu={handleColContextMenu}
-                    onCellContextMenu={handleCellContextMenu}
+                    onCornerContextMenu={isReadOnly ? undefined : handleCornerContextMenu}
+                    onRowContextMenu={isReadOnly ? undefined : handleRowContextMenu}
+                    onColContextMenu={isReadOnly ? undefined : handleColContextMenu}
+                    onCellContextMenu={isReadOnly ? undefined : handleCellContextMenu}
                 />
             ) : (
                 <KvGrid
                     rows={initialData.rows}
                     searchQuery={table.searchQuery}
+                    readOnly={isReadOnly}
                     onUpdateCell={handleUpdateCell}
                     onRenameKey={handleRenameKey}
                     onAddKvRow={handleAddKvRow}
                     onNavigateArray={table.setActiveArrayPath}
-                    onKeyContextMenu={handleKvKeyContextMenu}
+                    onKeyContextMenu={isReadOnly ? undefined : handleKvKeyContextMenu}
                 />
             )}
             <ContextMenu

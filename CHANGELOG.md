@@ -1,5 +1,12 @@
 # Change Log
 
+## 0.4.0 - 2026-11-15
+
+- Apache Parquet（`*.parquet`）および Apache Avro（`*.avro`）ファイルを読み取り専用（Read-Only）でスプレッドシート／ツリー形式で閲覧できる機能を追加
+- `hyparquet` / `hyparquet-compressors`（Snappy / GZIP / ZSTD 等の圧縮対応）および `avsc` によるバイナリ解析と、`BigInt`・`Timestamp`・バイナリ値の正規化表示に対応
+- 大容量ファイル対策として既定で最大 `10,000` 行までのプレビュー読み込みと件数案内表示、および Webview 側の Read-Only モード（`READ ONLY` バッジ表示・編集操作の無効化）を追加
+- デフォルト起動設定に `struct-grid-editor.openByDefault.parquet` および `struct-grid-editor.openByDefault.avro`（初期値: `true`）を追加
+
 ## 0.3.0 - 2026-11-15
 
 - Markdown Live Preview Editor に **Read Mode**（上部ツールバー右側の `Read Mode` トグルで切り替え、デフォルト OFF）を追加し、有効時は行をクリックしても rawtext 記法マーカーが表示されないよう対応

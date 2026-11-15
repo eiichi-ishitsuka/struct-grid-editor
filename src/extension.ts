@@ -19,6 +19,7 @@ import {
 } from './application/usecase/RowModificationUseCases';
 import { WebviewRenderer } from './infrastructure/vscode/WebviewRenderer';
 import { StructGridEditorProvider } from './infrastructure/vscode/StructGridEditorProvider';
+import { BinaryGridEditorProvider } from './infrastructure/vscode/BinaryGridEditorProvider';
 import { MarkdownEditorProvider } from './infrastructure/vscode/MarkdownEditorProvider';
 
 /**
@@ -72,6 +73,10 @@ export function activate(context: vscode.ExtensionContext) {
         )
     );
 
+    context.subscriptions.push(
+        BinaryGridEditorProvider.register(context, parseUseCase, renderer)
+    );
+
     context.subscriptions.push(MarkdownEditorProvider.register(context));
 
     // 5. エディタ切り替えコマンドの登録
@@ -79,7 +84,11 @@ export function activate(context: vscode.ExtensionContext) {
         vscode.commands.registerCommand('struct-grid-editor.openInGrid', async (uri?: vscode.Uri) => {
             const targetUri = uri ?? getActiveUri();
             if (targetUri) {
-                await vscode.commands.executeCommand('vscode.openWith', targetUri, StructGridEditorProvider.viewType);
+                const lowerPath = targetUri.fsPath.toLowerCase();
+                const viewType = (lowerPath.endsWith('.parquet') || lowerPath.endsWith('.avro'))
+                    ? BinaryGridEditorProvider.viewType
+                    : StructGridEditorProvider.viewType;
+                await vscode.commands.executeCommand('vscode.openWith', targetUri, viewType);
             }
         })
     );
@@ -141,6 +150,8 @@ async function ensureEditorAssociations(): Promise<void> {
         const openJsonl = extConfig.get<boolean>('openByDefault.jsonl', true);
         const openCsv = extConfig.get<boolean>('openByDefault.csv', true);
         const openTsv = extConfig.get<boolean>('openByDefault.tsv', true);
+        const openParquet = extConfig.get<boolean>('openByDefault.parquet', true);
+        const openAvro = extConfig.get<boolean>('openByDefault.avro', true);
         const openJson = extConfig.get<boolean>('openByDefault.json', false);
         const openYaml = extConfig.get<boolean>('openByDefault.yaml', false);
 
@@ -164,6 +175,16 @@ async function ensureEditorAssociations(): Promise<void> {
                 patterns: ['*.tsv'],
                 enabled: openTsv,
                 viewType: StructGridEditorProvider.viewType,
+            },
+            {
+                patterns: ['*.parquet'],
+                enabled: openParquet,
+                viewType: BinaryGridEditorProvider.viewType,
+            },
+            {
+                patterns: ['*.avro'],
+                enabled: openAvro,
+                viewType: BinaryGridEditorProvider.viewType,
             },
             {
                 patterns: ['*.json'],

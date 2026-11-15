@@ -8,7 +8,7 @@
     "type": "git",
     "url": "https://github.com/eiichi-ishitsuka/struct-grid-editor"
   },
-  "version": "0.3.0",
+  "version": "0.4.0",
   "license": "MIT",
   "engines": {
     "vscode": "^1.107.0"
@@ -70,7 +70,7 @@
       "explorer/context": [
         {
           "command": "struct-grid-editor.openInGrid",
-          "when": "resourceExtname == .json || resourceExtname == .yaml || resourceExtname == .yml || resourceExtname == .jsonl || resourceExtname == .csv || resourceExtname == .tsv",
+          "when": "resourceExtname == .json || resourceExtname == .yaml || resourceExtname == .yml || resourceExtname == .jsonl || resourceExtname == .csv || resourceExtname == .tsv || resourceExtname == .parquet || resourceExtname == .avro",
           "group": "navigation"
         },
         {
@@ -82,7 +82,7 @@
       "editor/title/context": [
         {
           "command": "struct-grid-editor.openInGrid",
-          "when": "resourceExtname == .json || resourceExtname == .yaml || resourceExtname == .yml || resourceExtname == .jsonl || resourceExtname == .csv || resourceExtname == .tsv",
+          "when": "resourceExtname == .json || resourceExtname == .yaml || resourceExtname == .yml || resourceExtname == .jsonl || resourceExtname == .csv || resourceExtname == .tsv || resourceExtname == .parquet || resourceExtname == .avro",
           "group": "navigation"
         },
         {
@@ -94,7 +94,7 @@
       "editor/title": [
         {
           "command": "struct-grid-editor.openInGrid",
-          "when": "resourceExtname == .json || resourceExtname == .yaml || resourceExtname == .yml || resourceExtname == .jsonl || resourceExtname == .csv || resourceExtname == .tsv",
+          "when": "resourceExtname == .json || resourceExtname == .yaml || resourceExtname == .yml || resourceExtname == .jsonl || resourceExtname == .csv || resourceExtname == .tsv || resourceExtname == .parquet || resourceExtname == .avro",
           "group": "navigation"
         },
         {
@@ -154,6 +154,25 @@
         "priority": "option"
       },
       {
+        "viewType": "struct-grid-editor.binaryGridEditor",
+        "displayName": "StructGridEditor (Read-Only)",
+        "selector": [
+          {
+            "filenamePattern": "*.parquet"
+          },
+          {
+            "filenamePattern": "**/*.parquet"
+          },
+          {
+            "filenamePattern": "*.avro"
+          },
+          {
+            "filenamePattern": "**/*.avro"
+          }
+        ],
+        "priority": "option"
+      },
+      {
         "viewType": "struct-grid-editor.markdownEditor",
         "displayName": "Markdown Live Preview Editor",
         "selector": [
@@ -195,6 +214,16 @@
           "type": "boolean",
           "default": true,
           "description": "TSVファイル (*.tsv) をデフォルトで StructGridEditor で開く"
+        },
+        "struct-grid-editor.openByDefault.parquet": {
+          "type": "boolean",
+          "default": true,
+          "description": "Apache Parquetファイル (*.parquet) をデフォルトで StructGridEditor (Read-Only) で開く"
+        },
+        "struct-grid-editor.openByDefault.avro": {
+          "type": "boolean",
+          "default": true,
+          "description": "Apache Avroファイル (*.avro) をデフォルトで StructGridEditor (Read-Only) で開く"
         },
         "struct-grid-editor.openByDefault.json": {
           "type": "boolean",
@@ -281,6 +310,9 @@
     "@tiptap/extension-task-list": "^2.11.5",
     "@tiptap/pm": "^2.11.5",
     "@tiptap/starter-kit": "^2.11.5",
+    "avsc": "^5.7.9",
+    "hyparquet": "^1.33.0",
+    "hyparquet-compressors": "^1.1.3",
     "katex": "^0.16.11",
     "marked": "^12.0.2",
     "mermaid": "^10.9.1",
