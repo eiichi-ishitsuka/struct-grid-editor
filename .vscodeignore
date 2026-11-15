@@ -18,7 +18,6 @@ vsc-extension-quickstart.md
 docs/**
 samples/**
 scripts/**
-typedoc.json
 vitest.config.ts
 extester.config.json
 tsconfig.ui-test.json
