@@ -37,6 +37,11 @@ JSON, JSONL, YAML, CSV, TSV 形式の構造化データをスプレッドシー�
         - `struct-grid-editor.openByDefault.json`（初期値: `false`）
         - `struct-grid-editor.openByDefault.yaml`（初期値: `false`）
     - ※ Markdown Live Preview エディタで編集・保存した際は、標準の GFM / Admonition / 4スペースインデントリスト形式に正規化されます（`<img width="...">` 等の生 HTML タグ属性や HTML コメントをそのまま維持したいファイルは「ソース表示」で標準テキストエディタに切り替えて編集してください）。
+- **ショートカットキーによる元のエディタへの切り替え**:
+    - カスタムエディタビュー（StructGridEditor / Markdown Live Preview Editor / StructGridEditor Read-Only）表示中に以下のショートカットを押すと、VS Code 標準エディタへ切り替えられます。
+        - Windows / Linux: `Ctrl + Alt + E`
+        - macOS: `Cmd + Alt + E`
+    - **変更方法**: VS Code の「キーボード ショートカット」（`Ctrl + K Ctrl + S` / Mac: `Cmd + K Cmd + S`）で `struct-grid-editor.openAsText`（または「元のエディタで開く」）を検索し、任意のキーバインドに変更・削除できます。
 
 ---
 
@@ -67,10 +72,10 @@ $$
 
 ### 4\. Read Mode・Split View・Show Index・画像貼り付け・リンク遷移・テーマ切り替え
 
-- **Read Mode**: 上部ツールバー右側の **「Read Mode」** トグル（初期値: OFF）を ON にすると、編集をロックし、行をクリックしても Markdown 記法マーカー（rawtext）が表示されない閲覧専用状態になります。
-- **Split View（左右分割）**: 上部ツールバー右側の **「Split View」** トグル（初期値: OFF）を ON にすると、左側にプレビュー、右側にローテキストの Markdown エディタを表示し、双方向にリアルタイム同期しながら編集できます。
-- **Show Index（見出し一覧）**: プレビュー画面右上にドキュメント内の見出し一覧が表示され、クリックで該当見出しへジャンプできます。上部ツールバー右側の **「Show Index」** トグル（初期値: ON）で表示・非表示を切り替えられます。
-- 各トグルの設定状態は保存され、別の Markdown ファイルを開いても維持されます。
+- **Read Mode**: 上部ツールバー右側の **「Read Mode」** トグル（初期値: OFF / ショートカット: `Ctrl + Alt + R`、Mac: `Cmd + Alt + R`）を ON にすると、編集をロックし、行をクリックしても Markdown 記法マーカー（rawtext）が表示されない閲覧専用状態になります。
+- **Split View（左右分割）**: 上部ツールバー右側の **「Split View」** トグル（初期値: OFF / ショートカット: `Ctrl + Alt + V`、Mac: `Cmd + Alt + V`）を ON にすると、左側にプレビュー、右側にローテキストの Markdown エディタを表示し、双方向にリアルタイム同期しながら編集できます。
+- **Show Index（見出し一覧）**: プレビュー画面右上にドキュメント内の見出し一覧が表示され、クリックで該当見出しへジャンプできます。上部ツールバー右側の **「Show Index」** トグル（初期値: ON / ショートカット: `Ctrl + Alt + O`、Mac: `Cmd + Alt + O`）で表示・非表示を切り替えられます。
+- 各トグルの設定状態は保存され、別の Markdown ファイルを開いても維持されます。また、右上の各ボタンにマウスオーバーするとショートカットキーを確認でき、VS Code の「キーボード ショートカット」から `struct-grid-editor.toggleMarkdownReadOnly` / `toggleMarkdownSplitView` / `toggleMarkdownShowIndex` を検索してキー割り当てを変更できます。
 - **Ctrl + クリック（Mac: Cmd + クリック）によるリンク遷移**:
     - **ローカルファイルリンク**（例: `[ai-development-workflow.md](../.agents/rules/ai-development-workflow.md)`）を `Ctrl + クリック` すると、該当ファイルが存在する場合は新しいエディタタブで開きます（存在しないパスの場合はスキップします）。
     - **外部 Web リンク**（`http://` / `https://`）を `Ctrl + クリック` すると、開いてよいかの確認ダイアログを表示した上で外部ブラウザで開きます。

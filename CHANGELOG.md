@@ -1,5 +1,12 @@
 # Change Log
 
+## 0.5.0 - 2026-11-18
+
+- カスタムエディタビュー（StructGridEditor / Markdown Live Preview Editor / StructGridEditor Read-Only）から元の標準エディタへ切り替えるコマンド `struct-grid-editor.openAsText` およびデフォルトショートカット（Windows/Linux: `Ctrl+Alt+E`, macOS: `Cmd+Alt+E`）を追加
+- Markdown Live Preview Editor の **Read Mode**（`Ctrl+Alt+R` / `Cmd+Alt+R`）、**Split View**（`Ctrl+Alt+V` / `Cmd+Alt+V`）、**Show Index**（`Ctrl+Alt+O` / `Cmd+Alt+O`）の切り替えコマンドとデフォルトショートカットを追加
+- 右上ツールバーの各切り替えボタンのマウスオーバー（ツールチップ）に割り当てられたショートカットキーを表示するよう改善
+- Markdown Live Preview Editor のコードブロック右上に、全行をクリップボードへコピーする「コピー」ボタンを追加
+
 ## 0.4.2 - 2026-11-16
 
 - 依存するライブラリのアップデート

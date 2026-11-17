@@ -8,7 +8,7 @@
     "type": "git",
     "url": "https://github.com/eiichi-ishitsuka/struct-grid-editor"
   },
-  "version": "0.4.2",
+  "version": "0.5.0",
   "license": "MIT",
   "engines": {
     "vscode": "^1.107.0"
@@ -64,6 +64,52 @@
         "command": "struct-grid-editor.openMarkdownAsText",
         "title": "標準テキストエディタで開く (ソース表示)",
         "category": "StructGridEditor"
+      },
+      {
+        "command": "struct-grid-editor.openAsText",
+        "title": "元のエディタで開く (標準テキストエディタ)",
+        "category": "StructGridEditor"
+      },
+      {
+        "command": "struct-grid-editor.toggleMarkdownReadOnly",
+        "title": "Markdown: Read Mode を切り替え",
+        "category": "StructGridEditor"
+      },
+      {
+        "command": "struct-grid-editor.toggleMarkdownSplitView",
+        "title": "Markdown: Split View を切り替え",
+        "category": "StructGridEditor"
+      },
+      {
+        "command": "struct-grid-editor.toggleMarkdownShowIndex",
+        "title": "Markdown: Show Index を切り替え",
+        "category": "StructGridEditor"
+      }
+    ],
+    "keybindings": [
+      {
+        "command": "struct-grid-editor.openAsText",
+        "key": "ctrl+alt+e",
+        "mac": "cmd+alt+e",
+        "when": "activeCustomEditorId == 'struct-grid-editor.jsonEditor' || activeCustomEditorId == 'struct-grid-editor.markdownEditor' || activeCustomEditorId == 'struct-grid-editor.binaryGridEditor'"
+      },
+      {
+        "command": "struct-grid-editor.toggleMarkdownReadOnly",
+        "key": "ctrl+alt+r",
+        "mac": "cmd+alt+r",
+        "when": "activeCustomEditorId == 'struct-grid-editor.markdownEditor'"
+      },
+      {
+        "command": "struct-grid-editor.toggleMarkdownSplitView",
+        "key": "ctrl+alt+v",
+        "mac": "cmd+alt+v",
+        "when": "activeCustomEditorId == 'struct-grid-editor.markdownEditor'"
+      },
+      {
+        "command": "struct-grid-editor.toggleMarkdownShowIndex",
+        "key": "ctrl+alt+o",
+        "mac": "cmd+alt+o",
+        "when": "activeCustomEditorId == 'struct-grid-editor.markdownEditor'"
       }
     ],
     "menus": {

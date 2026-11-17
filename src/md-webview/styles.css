@@ -590,7 +590,14 @@ ul[data-type='taskList'] li[data-checked='true'] > div {
   cursor: pointer;
 }
 
-.code-toggle-btn {
+.code-block-actions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.code-toggle-btn,
+.code-copy-btn {
   background-color: var(--bg-color);
   color: var(--fg-color);
   border: 1px solid var(--strong-border-color);
@@ -601,8 +608,14 @@ ul[data-type='taskList'] li[data-checked='true'] > div {
   cursor: pointer;
 }
 
-.code-toggle-btn:hover {
+.code-toggle-btn:hover,
+.code-copy-btn:hover {
   background-color: var(--hover-bg);
+  border-color: var(--accent-color);
+  color: var(--accent-color);
+}
+
+.code-copy-btn.copied {
   border-color: var(--accent-color);
   color: var(--accent-color);
 }

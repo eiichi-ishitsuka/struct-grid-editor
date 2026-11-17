@@ -622,6 +622,30 @@ window.addEventListener('message', (event) => {
         .run();
       break;
     }
+
+    case 'togglePreference': {
+      const target = message.target as 'readOnly' | 'splitView' | 'showIndex' | undefined;
+      if (target === 'readOnly') {
+        setReadOnly(!isReadOnly);
+      } else if (target === 'splitView') {
+        setSplitView(!isSplitView);
+      } else if (target === 'showIndex') {
+        setOutlineVisible(!isOutlineVisible);
+      } else {
+        break;
+      }
+      persistViewPreferences();
+      window.dispatchEvent(
+        new CustomEvent('md-preference-sync', {
+          detail: {
+            readOnly: isReadOnly,
+            splitView: isSplitView,
+            showIndex: isOutlineVisible,
+          },
+        })
+      );
+      break;
+    }
   }
 });
 

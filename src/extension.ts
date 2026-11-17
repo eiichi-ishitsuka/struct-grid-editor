@@ -103,11 +103,28 @@ export function activate(context: vscode.ExtensionContext) {
     );
 
     context.subscriptions.push(
-        vscode.commands.registerCommand('struct-grid-editor.openMarkdownAsText', async (uri?: vscode.Uri) => {
-            const targetUri = uri ?? getActiveUri();
-            if (targetUri) {
-                await vscode.commands.executeCommand('vscode.openWith', targetUri, 'default');
-            }
+        vscode.commands.registerCommand('struct-grid-editor.openMarkdownAsText', openWithDefaultEditor)
+    );
+
+    context.subscriptions.push(
+        vscode.commands.registerCommand('struct-grid-editor.openAsText', openWithDefaultEditor)
+    );
+
+    context.subscriptions.push(
+        vscode.commands.registerCommand('struct-grid-editor.toggleMarkdownReadOnly', () => {
+            MarkdownEditorProvider.toggleActivePreference('readOnly');
+        })
+    );
+
+    context.subscriptions.push(
+        vscode.commands.registerCommand('struct-grid-editor.toggleMarkdownSplitView', () => {
+            MarkdownEditorProvider.toggleActivePreference('splitView');
+        })
+    );
+
+    context.subscriptions.push(
+        vscode.commands.registerCommand('struct-grid-editor.toggleMarkdownShowIndex', () => {
+            MarkdownEditorProvider.toggleActivePreference('showIndex');
         })
     );
 
@@ -122,6 +139,17 @@ export function activate(context: vscode.ExtensionContext) {
             }
         })
     );
+}
+
+/**
+ * 指定された URI（未指定時は現在アクティブなタブの URI）を VS Code の標準エディタ（default）で開き直します。
+ * @param uri 対象ファイルの URI
+ */
+async function openWithDefaultEditor(uri?: vscode.Uri): Promise<void> {
+    const targetUri = uri ?? getActiveUri();
+    if (targetUri) {
+        await vscode.commands.executeCommand('vscode.openWith', targetUri, 'default');
+    }
 }
 
 /**
