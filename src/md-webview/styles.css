@@ -546,6 +546,42 @@ ul[data-type='taskList'] li[data-checked='true'] > div {
   pointer-events: none;
 }
 
+/* Table Edge Add Controls */
+.table-edge-guide {
+  position: absolute;
+  z-index: 18;
+  background-color: var(--accent-color);
+  pointer-events: none;
+  opacity: 0.75;
+}
+
+.table-edge-add-btn {
+  position: absolute;
+  z-index: 20;
+  width: 20px;
+  height: 20px;
+  padding: 0;
+  border-radius: 50%;
+  border: 1.5px solid var(--bg-color);
+  background-color: var(--accent-color);
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transform: translate(-50%, -50%);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+  transition: transform 0.12s ease, filter 0.12s ease;
+}
+
+.table-edge-add-btn:hover {
+  transform: translate(-50%, -50%) scale(1.15);
+  filter: brightness(1.08);
+}
+
 /* Images */
 .ProseMirror img {
   max-width: 100%;
@@ -590,7 +626,14 @@ ul[data-type='taskList'] li[data-checked='true'] > div {
   cursor: pointer;
 }
 
-.code-toggle-btn {
+.code-block-actions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.code-toggle-btn,
+.code-copy-btn {
   background-color: var(--bg-color);
   color: var(--fg-color);
   border: 1px solid var(--strong-border-color);
@@ -601,8 +644,14 @@ ul[data-type='taskList'] li[data-checked='true'] > div {
   cursor: pointer;
 }
 
-.code-toggle-btn:hover {
+.code-toggle-btn:hover,
+.code-copy-btn:hover {
   background-color: var(--hover-bg);
+  border-color: var(--accent-color);
+  color: var(--accent-color);
+}
+
+.code-copy-btn.copied {
   border-color: var(--accent-color);
   color: var(--accent-color);
 }

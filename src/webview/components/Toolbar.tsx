@@ -72,7 +72,7 @@ export function Toolbar({
                     <button
                         className="btn btn-secondary"
                         id="openTextEditorBtn"
-                        title="通常のテキストエディタで開く"
+                        title="通常のテキストエディタで開く (Ctrl+Alt+E / Cmd+Alt+E)"
                         type="button"
                         onClick={onOpenTextEditor}
                     >

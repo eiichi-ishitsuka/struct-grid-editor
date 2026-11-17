@@ -175,11 +175,18 @@ export const CustomCodeBlock = Node.create({
       const actionsRight = document.createElement('div');
       actionsRight.className = 'code-block-actions';
 
+      const copyBtn = document.createElement('button');
+      copyBtn.type = 'button';
+      copyBtn.className = 'code-copy-btn';
+      copyBtn.textContent = 'コピー';
+      copyBtn.title = 'コードブロックの全行をクリップボードにコピー';
+
       const toggleCodeBtn = document.createElement('button');
       toggleCodeBtn.type = 'button';
       toggleCodeBtn.className = 'code-toggle-btn';
       toggleCodeBtn.textContent = 'ソースを編集';
 
+      actionsRight.appendChild(copyBtn);
       actionsRight.appendChild(toggleCodeBtn);
       header.appendChild(langSelect);
       header.appendChild(actionsRight);
@@ -199,6 +206,7 @@ export const CustomCodeBlock = Node.create({
 
       let showCodeForMermaid = false;
       let renderTimer: number | undefined;
+      let copyResetTimer: number | undefined;
       let lastRenderedSource = '';
 
       const updateVisibility = () => {
@@ -290,6 +298,43 @@ export const CustomCodeBlock = Node.create({
         }
       };
 
+      copyBtn.addEventListener('click', async (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        const text = currentNode.textContent;
+        let copied = false;
+        try {
+          if (navigator.clipboard?.writeText) {
+            await navigator.clipboard.writeText(text);
+            copied = true;
+          }
+        } catch {
+          copied = false;
+        }
+        if (!copied) {
+          const textarea = document.createElement('textarea');
+          textarea.value = text;
+          textarea.style.position = 'fixed';
+          textarea.style.opacity = '0';
+          document.body.appendChild(textarea);
+          textarea.select();
+          copied = document.execCommand('copy');
+          document.body.removeChild(textarea);
+        }
+        if (copied) {
+          if (copyResetTimer) {
+            window.clearTimeout(copyResetTimer);
+          }
+          copyBtn.textContent = 'コピー済み';
+          copyBtn.classList.add('copied');
+          copyResetTimer = window.setTimeout(() => {
+            copyBtn.textContent = 'コピー';
+            copyBtn.classList.remove('copied');
+            copyResetTimer = undefined;
+          }, 1500);
+        }
+      });
+
       toggleCodeBtn.addEventListener('click', (e) => {
         e.preventDefault();
         e.stopPropagation();
@@ -342,6 +387,9 @@ export const CustomCodeBlock = Node.create({
           return true;
         },
         destroy: () => {
+          if (copyResetTimer) {
+            window.clearTimeout(copyResetTimer);
+          }
           window.removeEventListener('mermaid-ready', onMermaidReady);
           window.removeEventListener('md-theme-change', onMermaidReady);
         },

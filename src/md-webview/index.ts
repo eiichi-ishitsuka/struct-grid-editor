@@ -24,6 +24,7 @@ import {
 } from './markdownCodec';
 import { createToolbar } from './toolbar';
 import { setupSlashMenu } from './slashMenu';
+import { setupTableEdgeControls } from './tableEdgeControls';
 import { renderOutline } from './outline';
 
 declare function acquireVsCodeApi(): {
@@ -67,6 +68,7 @@ let isOutlineVisible = true;
 
 const appEl = document.getElementById('app') as HTMLElement;
 const mainContainer = document.getElementById('main-container') as HTMLElement;
+const previewPane = document.getElementById('preview-pane') as HTMLElement;
 const editorWrapper = document.getElementById('editor-wrapper') as HTMLElement;
 const editorElement = document.getElementById('editor') as HTMLElement;
 const outlinePanel = document.getElementById('outline-panel') as HTMLElement;
@@ -452,6 +454,10 @@ createToolbar(toolbarContainer, tableBannerContainer, editor, {
   },
 });
 
+if (previewPane && editorWrapper) {
+  setupTableEdgeControls(previewPane, editorWrapper, editor);
+}
+
 setupSlashMenu(
   slashMenuEl,
   editor,
@@ -620,6 +626,30 @@ window.addEventListener('message', (event) => {
           },
         })
         .run();
+      break;
+    }
+
+    case 'togglePreference': {
+      const target = message.target as 'readOnly' | 'splitView' | 'showIndex' | undefined;
+      if (target === 'readOnly') {
+        setReadOnly(!isReadOnly);
+      } else if (target === 'splitView') {
+        setSplitView(!isSplitView);
+      } else if (target === 'showIndex') {
+        setOutlineVisible(!isOutlineVisible);
+      } else {
+        break;
+      }
+      persistViewPreferences();
+      window.dispatchEvent(
+        new CustomEvent('md-preference-sync', {
+          detail: {
+            readOnly: isReadOnly,
+            splitView: isSplitView,
+            showIndex: isOutlineVisible,
+          },
+        })
+      );
       break;
     }
   }

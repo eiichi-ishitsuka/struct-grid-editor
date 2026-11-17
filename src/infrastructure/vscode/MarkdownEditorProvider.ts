@@ -25,6 +25,7 @@ const DEFAULT_VIEW_PREFERENCES: MarkdownViewPreferences = {
 export class MarkdownEditorProvider implements vscode.CustomTextEditorProvider {
   /** カスタムエディタのビュータイプ識別子 */
   public static readonly viewType = 'struct-grid-editor.markdownEditor';
+  private static activeInstance: MarkdownEditorProvider | undefined;
 
   /**
    * カスタムエディタプロバイダーを VS Code に登録します。
@@ -33,6 +34,7 @@ export class MarkdownEditorProvider implements vscode.CustomTextEditorProvider {
    */
   public static register(context: vscode.ExtensionContext): vscode.Disposable {
     const provider = new MarkdownEditorProvider(context);
+    MarkdownEditorProvider.activeInstance = provider;
     return vscode.window.registerCustomEditorProvider(
       MarkdownEditorProvider.viewType,
       provider,
@@ -44,6 +46,19 @@ export class MarkdownEditorProvider implements vscode.CustomTextEditorProvider {
       }
     );
   }
+
+  /**
+   * 現在アクティブな Markdown エディタのツールバー設定（ReadOnly / Split View / Show Index）を切り替えます。
+   * @param target 切り替え対象の設定キー
+   */
+  public static toggleActivePreference(target: keyof MarkdownViewPreferences): void {
+    MarkdownEditorProvider.activeInstance?.activePanel?.webview.postMessage({
+      type: 'togglePreference',
+      target,
+    });
+  }
+
+  private activePanel: vscode.WebviewPanel | undefined;
 
   /**
    * プロバイダーのインスタンスを生成します。
@@ -103,8 +118,24 @@ export class MarkdownEditorProvider implements vscode.CustomTextEditorProvider {
       }
     });
 
+    if (webviewPanel.active) {
+      this.activePanel = webviewPanel;
+    }
+
+    const viewStateSubscription = webviewPanel.onDidChangeViewState((e) => {
+      if (e.webviewPanel.active) {
+        this.activePanel = webviewPanel;
+      } else if (this.activePanel === webviewPanel) {
+        this.activePanel = undefined;
+      }
+    });
+
     webviewPanel.onDidDispose(() => {
       changeDocumentSubscription.dispose();
+      viewStateSubscription.dispose();
+      if (this.activePanel === webviewPanel) {
+        this.activePanel = undefined;
+      }
     });
 
     webviewPanel.webview.onDidReceiveMessage(async (message) => {

@@ -29,6 +29,7 @@ function createToggleButton(options: {
   title: string;
   extraClass: string;
   initialActive: boolean;
+  syncKey?: 'readOnly' | 'splitView' | 'showIndex';
   onToggle: () => boolean;
 }): HTMLButtonElement {
   const btn = document.createElement('button');
@@ -49,6 +50,18 @@ function createToggleButton(options: {
     const next = options.onToggle();
     syncState(next);
   });
+
+  if (options.syncKey) {
+    const key = options.syncKey;
+    window.addEventListener('md-preference-sync', ((
+      e: CustomEvent<Partial<Record<'readOnly' | 'splitView' | 'showIndex', boolean>>>
+    ) => {
+      const value = e.detail?.[key];
+      if (typeof value === 'boolean') {
+        syncState(value);
+      }
+    }) as EventListener);
+  }
 
   return btn;
 }
@@ -79,9 +92,10 @@ export function createToolbar(
     bar.appendChild(
       createToggleButton({
         label: 'Read Mode',
-        title: '読み取り専用モード（行クリック時のMarkdown記法表示を無効化）',
+        title: '読み取り専用モード（行クリック時のMarkdown記法表示を無効化） (Ctrl+Alt+R / Cmd+Alt+R)',
         extraClass: 'toolbar-toggle-readonly',
         initialActive: readOnly,
+        syncKey: 'readOnly',
         onToggle: () => {
           readOnly = callbacks.onToggleReadOnly ? callbacks.onToggleReadOnly() : !readOnly;
           return readOnly;
@@ -95,9 +109,10 @@ export function createToolbar(
     bar.appendChild(
       createToggleButton({
         label: 'Split View',
-        title: '左側にプレビュー、右側にローテキストエディタを表示',
+        title: '左側にプレビュー、右側にローテキストエディタを表示 (Ctrl+Alt+V / Cmd+Alt+V)',
         extraClass: 'toolbar-toggle-split',
         initialActive: splitView,
+        syncKey: 'splitView',
         onToggle: () => {
           splitView = callbacks.onToggleSplitView ? callbacks.onToggleSplitView() : !splitView;
           return splitView;
@@ -111,9 +126,10 @@ export function createToolbar(
     bar.appendChild(
       createToggleButton({
         label: 'Show Index',
-        title: 'プレビュー右上の見出しインデックス表示を切り替え',
+        title: 'プレビュー右上の見出しインデックス表示を切り替え (Ctrl+Alt+O / Cmd+Alt+O)',
         extraClass: 'toolbar-toggle-outline',
         initialActive: outlineVisible,
+        syncKey: 'showIndex',
         onToggle: () => {
           outlineVisible = callbacks.onToggleOutline
             ? callbacks.onToggleOutline()
@@ -144,7 +160,7 @@ export function createToolbar(
   sourceBtn.type = 'button';
   sourceBtn.className = 'toolbar-btn toolbar-btn-source';
   sourceBtn.textContent = 'View Source';
-  sourceBtn.title = 'VSCode標準のテキストエディタでMarkdownソースを開く';
+  sourceBtn.title = 'VSCode標準のテキストエディタでMarkdownソースを開く (Ctrl+Alt+E / Cmd+Alt+E)';
   sourceBtn.addEventListener('mousedown', (e) => {
     e.preventDefault();
     callbacks.onSwitchToText();
