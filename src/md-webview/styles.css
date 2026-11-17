@@ -546,7 +546,7 @@ ul[data-type='taskList'] li[data-checked='true'] > div {
   pointer-events: none;
 }
 
-/* Miro-like Table Edge Add Controls */
+/* Table Edge Add Controls */
 .table-edge-guide {
   position: absolute;
   z-index: 18;
