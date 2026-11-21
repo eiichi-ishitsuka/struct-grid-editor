@@ -3,7 +3,7 @@
 本ドキュメントは、`src/test/` 配下のテストコード（JSDoc / docstring）から自動抽出・生成されたテスト仕様一覧です。
 
 - **総テストスイート数**: 21
-- **総テストケース数**: 127
+- **総テストケース数**: 131
 - **生成スクリプト**: `scripts/generate-test-docs.js` (`npm run doc` にて自動更新)
 
 ## 目次
@@ -17,7 +17,7 @@
 7. [BinaryDocumentParser (4件)](#binarydocumentparser)
 8. [JsonDocumentParser (14件)](#jsondocumentparser)
 9. [WebviewRenderer (3件)](#webviewrenderer)
-10. [Tiptap Editor Extensions Integration (10件)](#tiptap-editor-extensions-integration)
+10. [Tiptap Editor Extensions Integration (14件)](#tiptap-editor-extensions-integration)
 11. [markdownCodec - Markdown <-> HTML Codec (12件)](#markdowncodec---markdown---html-codec)
 12. [React Webview App (11件)](#react-webview-app)
 13. [Breadcrumbs Component (2件)](#breadcrumbs-component)
@@ -164,7 +164,7 @@
 ## 10. Tiptap Editor Extensions Integration
 
 - **テストファイル**: [`src/test/md-webview/editorExtensions.test.ts`](../src/test/md-webview/editorExtensions.test.ts)
-- **ケース数**: 10
+- **ケース数**: 14
 
 | # | テストケース名 | 観点 | テスト内容（検証内容） |
 | :--- | :--- | :--- | :--- |
@@ -178,6 +178,10 @@
 | 8 | `hides Markdown syntax markers when editor is in ReadOnly mode` | ReadOnly モード時の Live Preview 構文マーカー非表示 | editor.setEditable(false) の状態で見出しや太字行にカーソルを置いても、## や ** などの rawtext 構文マーカーが表示されないことを検証する。 |
 | 9 | `renders ReadOnly, SplitView, and Index toggles with expected defaults and toggles state` | ツールバーの ReadOnly / 左右分割 / Index トグル初期値と切り替え動作 | ReadOnly(OFF)・左右分割(OFF)・Index(ON) の各トグルボタンが初期状態で表示され、クリックで状態が切り替わることを検証する。 |
 | 10 | `renders heading index list and scrolls to heading on click` | Index パネルの見出し一覧描画とクリックによる見出しジャンプ | ドキュメント内の見出しが Index パネルに一覧表示され、項目クリックで対象見出し要素へスクロールジャンプすることを検証する。 |
+| 11 | `reorders bullet list, task list, and ordered list items within the same list` | 箇条書き・チェックリスト・番号付きリストの同一リスト内ドラッグ＆ドロップ並び替え | 箇条書き（-）、チェックリスト（- [ ] / - [x]）、番号付きリスト（1.）の項目を前後へ移動した際、チェック状態やネストされた子リストを保ったまま順番が入れ替わることを検証する。 |
+| 12 | `moves list items across nesting levels (nesting inside and promoting to parent level)` | 階層間の移動（子階層へのネスト化・親階層への引き上げ・自己子孫への無効ドロップ防止） | placement: 'inside' で項目を他項目の子リストへネスト移動でき、さらにネストされた子項目を親項目の後ろへ移動してトップレベルへ引き上げられること、親項目を自身の子孫へ移動できないことを検証する。 |
+| 13 | `moves items between bullet lists and task lists with automatic node type conversion` | 別リスト間の移動と箇条書き ⇔ タスクリストのノード型自動変換 | 通常の箇条書き項目をタスクリストへ移動するとチェックボックス付き項目（- [ ]）に自動変換され、逆にタスクリスト項目を通常の箇条書きへ移動すると通常リスト項目（-）に変換されることを検証する。 |
+| 14 | `displays drag handle on list item hover, hides in ReadOnly mode, and reorders via pointer drag` | ドラッグハンドルUIオーバーレイの表示・ReadOnly時の非表示・同一リスト内ドラッグ操作による並び替えと更新通知 | リスト項目ホバーでドラッグハンドルが表示され、ReadOnlyモードでは非表示となり、ハンドルのドラッグ＆ドロップ操作（mousedown -> mousemove -> mouseup）で同一リスト内の順番が入れ替わりエディタ更新イベントが発火することを検証する。 |
 
 ## 11. markdownCodec - Markdown <-> HTML Codec
 
