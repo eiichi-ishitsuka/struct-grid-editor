@@ -3,12 +3,18 @@ import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { Editor } from '@tiptap/core';
 import StarterKit from '@tiptap/starter-kit';
 import Link from '@tiptap/extension-link';
+import TaskList from '@tiptap/extension-task-list';
+import TaskItem from '@tiptap/extension-task-item';
 import { CustomCodeBlock } from '../../md-webview/mermaidExtension';
 import { AdmonitionBlock } from '../../md-webview/admonitionExtension';
 import { InlineMath, BlockMath } from '../../md-webview/mathExtension';
 import { LivePreviewExtension } from '../../md-webview/livePreviewExtension';
 import { createToolbar } from '../../md-webview/toolbar';
 import { renderOutline } from '../../md-webview/outline';
+import {
+  moveListItem,
+  setupListDragControls,
+} from '../../md-webview/listDragControls';
 import { markdownToHtml, htmlToMarkdown } from '../../md-webview/markdownCodec';
 
 const mockMermaid = {
@@ -41,6 +47,10 @@ describe('Tiptap Editor Extensions Integration', () => {
         LivePreviewExtension,
         InlineMath,
         BlockMath,
+        TaskList,
+        TaskItem.configure({
+          nested: true,
+        }),
       ],
       content: html,
     });
@@ -339,5 +349,251 @@ describe('Tiptap Editor Extensions Integration', () => {
     expect(scrollIntoViewMock).toHaveBeenCalledWith({ behavior: 'smooth', block: 'start' });
 
     editor.destroy();
+  });
+
+  /**
+   * 【観点】箇条書き・チェックリスト・番号付きリストの同一リスト内ドラッグ＆ドロップ並び替え
+   * 【テスト内容】箇条書き（-）、チェックリスト（- [ ] / - [x]）、番号付きリスト（1.）の項目を前後へ移動した際、チェック状態やネストされた子リストを保ったまま順番が入れ替わることを検証する。
+   */
+  it('reorders bullet list, task list, and ordered list items within the same list', () => {
+    const md = [
+      '- 項目A',
+      '    - 子項目A1',
+      '- 項目B',
+      '- 項目C',
+      '',
+      '- [ ] タスク1',
+      '- [x] タスク2',
+      '- [ ] タスク3',
+      '',
+      '1. ステップ1',
+      '2. ステップ2',
+      '3. ステップ3',
+      '',
+    ].join('\n');
+    const editor = createTestEditor(md);
+
+    const lists = container.querySelectorAll('ul, ol');
+    expect(lists.length).toBe(4); // bulletList + nested bulletList + taskList + orderedList
+
+    const topBulletItems = Array.from(lists[0].children).filter(
+      (el) => el.tagName === 'LI'
+    ) as HTMLLIElement[];
+    expect(topBulletItems.length).toBe(3);
+
+    // 項目A（子項目A1付き）を項目Cの後ろへ移動
+    expect(moveListItem(editor, topBulletItems[0], topBulletItems[2], 'after')).toBe(true);
+
+    // タスク3をタスク1の前へ移動
+    const taskListEl = container.querySelector('ul[data-type="taskList"]') as HTMLElement;
+    const taskItems = Array.from(taskListEl.children).filter(
+      (el) => el.tagName === 'LI'
+    ) as HTMLLIElement[];
+    expect(moveListItem(editor, taskItems[2], taskItems[0], 'before')).toBe(true);
+
+    // ステップ3をステップ1の前へ移動
+    const orderedListEl = container.querySelector('ol') as HTMLElement;
+    const orderedItems = Array.from(orderedListEl.children).filter(
+      (el) => el.tagName === 'LI'
+    ) as HTMLLIElement[];
+    expect(moveListItem(editor, orderedItems[2], orderedItems[0], 'before')).toBe(true);
+
+    const serialized = htmlToMarkdown(editor.getHTML());
+    expect(serialized).toBe(
+      [
+        '- 項目B',
+        '- 項目C',
+        '- 項目A',
+        '    - 子項目A1',
+        '',
+        '- [ ] タスク3',
+        '- [ ] タスク1',
+        '- [x] タスク2',
+        '',
+        '1. ステップ3',
+        '2. ステップ1',
+        '3. ステップ2',
+        '',
+      ].join('\n')
+    );
+
+    editor.destroy();
+  });
+
+  /**
+   * 【観点】階層間の移動（子階層へのネスト化・親階層への引き上げ・自己子孫への無効ドロップ防止）
+   * 【テスト内容】placement: 'inside' で項目を他項目の子リストへネスト移動でき、さらにネストされた子項目を親項目の後ろへ移動してトップレベルへ引き上げられること、親項目を自身の子孫へ移動できないことを検証する。
+   */
+  it('moves list items across nesting levels (nesting inside and promoting to parent level)', () => {
+    const md = ['- 親A', '- 親B', '- 親C', ''].join('\n');
+    const editor = createTestEditor(md);
+
+    const getTopItems = () => {
+      const topUl = container.querySelector('.ProseMirror > ul') as HTMLElement;
+      return Array.from(topUl.children).filter((el) => el.tagName === 'LI') as HTMLLIElement[];
+    };
+
+    // 親Bを親Aの子階層（inside）へ移動
+    let topItems = getTopItems();
+    expect(moveListItem(editor, topItems[1], topItems[0], 'inside')).toBe(true);
+    expect(htmlToMarkdown(editor.getHTML())).toBe(
+      ['- 親A', '    - 親B', '- 親C', ''].join('\n')
+    );
+
+    // 親A（親）を自身の子孫である親Bへ移動しようとしても拒否される
+    topItems = getTopItems();
+    const nestedItemB = topItems[0].querySelector('ul > li') as HTMLLIElement;
+    expect(moveListItem(editor, topItems[0], nestedItemB, 'after')).toBe(false);
+
+    // 親Cも親Aの子階層（inside）へ移動（既存の子リストの先頭に追加される）
+    expect(moveListItem(editor, topItems[1], topItems[0], 'inside')).toBe(true);
+    expect(htmlToMarkdown(editor.getHTML())).toBe(
+      ['- 親A', '    - 親C', '    - 親B', ''].join('\n')
+    );
+
+    // 子階層の親Bと親Cを順次トップレベルの親Aの後ろへ引き上げ（アンネスト）
+    topItems = getTopItems();
+    const childItems = Array.from(
+      topItems[0].querySelectorAll(':scope > ul > li')
+    ) as HTMLLIElement[];
+    expect(moveListItem(editor, childItems[1], topItems[0], 'after')).toBe(true);
+
+    topItems = getTopItems();
+    const remainingChild = topItems[0].querySelector(':scope > ul > li') as HTMLLIElement;
+    expect(moveListItem(editor, remainingChild, topItems[1], 'after')).toBe(true);
+
+    expect(htmlToMarkdown(editor.getHTML())).toBe(
+      ['- 親A', '- 親B', '- 親C', ''].join('\n')
+    );
+
+    editor.destroy();
+  });
+
+  /**
+   * 【観点】別リスト間の移動と箇条書き ⇔ タスクリストのノード型自動変換
+   * 【テスト内容】通常の箇条書き項目をタスクリストへ移動するとチェックボックス付き項目（- [ ]）に自動変換され、逆にタスクリスト項目を通常の箇条書きへ移動すると通常リスト項目（-）に変換されることを検証する。
+   */
+  it('moves items between bullet lists and task lists with automatic node type conversion', () => {
+    const md = ['- 通常項目1', '- 通常項目2', '', '- [x] 完了タスク', ''].join('\n');
+    const editor = createTestEditor(md);
+
+    const bulletList = container.querySelector(
+      '.ProseMirror > ul:not([data-type="taskList"])'
+    ) as HTMLElement;
+    const taskList = container.querySelector(
+      '.ProseMirror > ul[data-type="taskList"]'
+    ) as HTMLElement;
+
+    const bulletItems = Array.from(bulletList.children) as HTMLLIElement[];
+    const taskItems = Array.from(taskList.children) as HTMLLIElement[];
+
+    // 通常項目2をタスクリストの完了タスクの後ろへ移動 -> - [ ] 通常項目2 に変換される
+    expect(moveListItem(editor, bulletItems[1], taskItems[0], 'after')).toBe(true);
+    expect(htmlToMarkdown(editor.getHTML())).toBe(
+      ['- 通常項目1', '', '- [x] 完了タスク', '- [ ] 通常項目2', ''].join('\n')
+    );
+
+    // 完了タスクを通常項目1の前へ移動 -> - 完了タスク に変換される
+    const updatedBulletItems = Array.from(
+      container.querySelectorAll('.ProseMirror > ul:not([data-type="taskList"]) > li')
+    ) as HTMLLIElement[];
+    const updatedTaskItems = Array.from(
+      container.querySelectorAll('.ProseMirror > ul[data-type="taskList"] > li')
+    ) as HTMLLIElement[];
+
+    expect(moveListItem(editor, updatedTaskItems[0], updatedBulletItems[0], 'before')).toBe(
+      true
+    );
+    expect(htmlToMarkdown(editor.getHTML())).toBe(
+      ['- 完了タスク', '- 通常項目1', '', '- [ ] 通常項目2', ''].join('\n')
+    );
+
+    editor.destroy();
+  });
+
+  /**
+   * 【観点】ドラッグハンドルUIオーバーレイの表示・ReadOnly時の非表示・同一リスト内ドラッグ操作による並び替えと更新通知
+   * 【テスト内容】リスト項目ホバーでドラッグハンドルが表示され、ReadOnlyモードでは非表示となり、ハンドルのドラッグ＆ドロップ操作（mousedown -> mousemove -> mouseup）で同一リスト内の順番が入れ替わりエディタ更新イベントが発火することを検証する。
+   */
+  it('displays drag handle on list item hover, hides in ReadOnly mode, and reorders via pointer drag', () => {
+    const previewPane = document.createElement('div');
+    const scrollWrapper = document.createElement('div');
+    previewPane.appendChild(scrollWrapper);
+    scrollWrapper.appendChild(container);
+    document.body.appendChild(previewPane);
+
+    const editor = createTestEditor('- ファースト\n- セカンド\n');
+    const onUpdateSpy = vi.fn();
+    editor.on('update', onUpdateSpy);
+
+    const cleanup = setupListDragControls(previewPane, scrollWrapper, editor);
+
+    const handleBtn = previewPane.querySelector('.list-drag-handle') as HTMLButtonElement;
+    const dropGuide = previewPane.querySelector('.list-drop-guide') as HTMLElement;
+    expect(handleBtn).toBeTruthy();
+    expect(dropGuide).toBeTruthy();
+    expect(handleBtn.classList.contains('hidden')).toBe(true);
+
+    const items = Array.from(container.querySelectorAll('li')) as HTMLLIElement[];
+    items[0].getBoundingClientRect = () => new DOMRect(40, 20, 300, 26);
+    items[1].getBoundingClientRect = () => new DOMRect(40, 50, 300, 26);
+
+    // 1つ目の項目にホバーするとドラッグハンドルが表示される
+    items[0].dispatchEvent(
+      new MouseEvent('mousemove', { bubbles: true, clientX: 60, clientY: 30 })
+    );
+    expect(handleBtn.classList.contains('hidden')).toBe(false);
+
+    // ReadOnly モード時はホバーしてもハンドルが非表示になる
+    editor.setEditable(false);
+    items[0].dispatchEvent(
+      new MouseEvent('mousemove', { bubbles: true, clientX: 60, clientY: 30 })
+    );
+    expect(handleBtn.classList.contains('hidden')).toBe(true);
+
+    // 編集可能に戻してドラッグ＆ドロップ操作を実行
+    editor.setEditable(true);
+    items[0].dispatchEvent(
+      new MouseEvent('mousemove', { bubbles: true, clientX: 60, clientY: 30 })
+    );
+    expect(handleBtn.classList.contains('hidden')).toBe(false);
+
+    handleBtn.dispatchEvent(
+      new MouseEvent('mousedown', { bubbles: true, button: 0, clientX: 25, clientY: 30 })
+    );
+    const dragHighlight = previewPane.querySelector('.list-drag-highlight') as HTMLElement;
+    expect(dragHighlight.classList.contains('hidden')).toBe(false);
+
+    // 2つ目の項目の下半分（clientY: 70 > midY 63）へドラッグ移動
+    window.dispatchEvent(
+      new MouseEvent('mousemove', { bubbles: true, clientX: 50, clientY: 70 })
+    );
+    expect(dropGuide.classList.contains('hidden')).toBe(false);
+
+    // ドロップ（mouseup）で順番が入れ替わり update イベントが発火する
+    window.dispatchEvent(new MouseEvent('mouseup', { bubbles: true }));
+    expect(htmlToMarkdown(editor.getHTML())).toBe('- セカンド\n- ファースト\n');
+    expect(onUpdateSpy).toHaveBeenCalled();
+
+    // 2つ目の項目を1つ目の項目の上半分（clientY: 24 < midY 33）へドラッグすると元に戻る
+    const reorderedItems = Array.from(container.querySelectorAll('li')) as HTMLLIElement[];
+    reorderedItems[0].getBoundingClientRect = () => new DOMRect(40, 20, 300, 26);
+    reorderedItems[1].getBoundingClientRect = () => new DOMRect(40, 50, 300, 26);
+
+    reorderedItems[1].dispatchEvent(
+      new MouseEvent('mousemove', { bubbles: true, clientX: 60, clientY: 60 })
+    );
+    handleBtn.dispatchEvent(
+      new MouseEvent('mousedown', { bubbles: true, button: 0, clientX: 25, clientY: 60 })
+    );
+    window.dispatchEvent(
+      new MouseEvent('mousemove', { bubbles: true, clientX: 30, clientY: 24 })
+    );
+    window.dispatchEvent(new MouseEvent('mouseup', { bubbles: true }));
+    expect(htmlToMarkdown(editor.getHTML())).toBe('- ファースト\n- セカンド\n');
+
+    cleanup();
+    editor.destroy();
+    previewPane.remove();
   });
 });

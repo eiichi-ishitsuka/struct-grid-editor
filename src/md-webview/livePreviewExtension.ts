@@ -105,6 +105,9 @@ export const LivePreviewExtension = Extension.create({
             }
             const { doc, selection } = state;
             const { $from, from, to } = selection;
+            if ($from.depth === 0) {
+              return DecorationSet.empty;
+            }
             const decorations: Decoration[] = [];
             const addedMarkKeys = new Set<string>();
 

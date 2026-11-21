@@ -205,40 +205,67 @@ function markdownFragmentToHtml(md: string): string {
   // 標準 GFM タスクリストを Tiptap の <ul data-type="taskList"><li data-type="taskItem"> 構造に変換する
   doc.querySelectorAll('ul').forEach((ul) => {
     const items = Array.from(ul.children).filter((el) => el.tagName === 'LI');
-    const hasTask = items.some(
-      (li) =>
-        li.querySelector(':scope > input[type="checkbox"], :scope > p > input[type="checkbox"]') !==
-        null
-    );
-    if (hasTask) {
-      ul.setAttribute('data-type', 'taskList');
-      items.forEach((li) => {
-        const checkbox = li.querySelector(
-          ':scope > input[type="checkbox"], :scope > p > input[type="checkbox"]'
-        ) as HTMLInputElement | null;
-        if (checkbox) {
-          const checked = checkbox.checked || checkbox.hasAttribute('checked');
-          li.setAttribute('data-type', 'taskItem');
-          li.setAttribute('data-checked', checked ? 'true' : 'false');
-          checkbox.remove();
-          const hasParagraph = li.querySelector(':scope > p') !== null;
-          if (!hasParagraph) {
-            const p = doc.createElement('p');
-            while (li.firstChild) {
-              const child = li.firstChild;
-              if (
-                child.nodeType === Node.ELEMENT_NODE &&
-                ((child as Element).tagName === 'UL' || (child as Element).tagName === 'OL')
-              ) {
-                break;
-              }
-              p.appendChild(child);
+    let taskCount = 0;
+
+    items.forEach((li) => {
+      const checkbox = li.querySelector(
+        ':scope > input[type="checkbox"], :scope > p > input[type="checkbox"]'
+      ) as HTMLInputElement | null;
+      if (checkbox) {
+        taskCount++;
+        const checked = checkbox.checked || checkbox.hasAttribute('checked');
+        li.setAttribute('data-type', 'taskItem');
+        li.setAttribute('data-checked', checked ? 'true' : 'false');
+        checkbox.remove();
+        const hasParagraph = li.querySelector(':scope > p') !== null;
+        if (!hasParagraph) {
+          const p = doc.createElement('p');
+          while (li.firstChild) {
+            const child = li.firstChild;
+            if (
+              child.nodeType === Node.ELEMENT_NODE &&
+              ((child as Element).tagName === 'UL' || (child as Element).tagName === 'OL')
+            ) {
+              break;
             }
-            li.insertBefore(p, li.firstChild);
+            p.appendChild(child);
           }
+          li.insertBefore(p, li.firstChild);
         }
-      });
+      }
+    });
+
+    if (taskCount === 0) {
+      return;
     }
+
+    if (taskCount === items.length) {
+      ul.setAttribute('data-type', 'taskList');
+      return;
+    }
+
+    // 通常の箇条書きとタスクリストが空行を挟んで連続し marked により単一 <ul> に統合された場合、
+    // Tiptap のスキーマ（ul vs ul[data-type="taskList"]）に合わせて連続グループごとに分割する
+    const parent = ul.parentNode;
+    if (!parent) {
+      return;
+    }
+    let currentList: HTMLUListElement | null = null;
+    let currentIsTask: boolean | null = null;
+
+    items.forEach((li) => {
+      const isTask = li.getAttribute('data-type') === 'taskItem';
+      if (!currentList || currentIsTask !== isTask) {
+        currentList = doc.createElement('ul');
+        if (isTask) {
+          currentList.setAttribute('data-type', 'taskList');
+        }
+        parent.insertBefore(currentList, ul);
+        currentIsTask = isTask;
+      }
+      currentList.appendChild(li);
+    });
+    ul.remove();
   });
 
   // 相対画像パスを Webview URI に解決しつつ元の相対パスを data-raw-src 属性に保持する

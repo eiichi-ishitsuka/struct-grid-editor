@@ -25,6 +25,7 @@ import {
 import { createToolbar } from './toolbar';
 import { setupSlashMenu } from './slashMenu';
 import { setupTableEdgeControls } from './tableEdgeControls';
+import { setupListDragControls } from './listDragControls';
 import { renderOutline } from './outline';
 
 declare function acquireVsCodeApi(): {
@@ -456,6 +457,7 @@ createToolbar(toolbarContainer, tableBannerContainer, editor, {
 
 if (previewPane && editorWrapper) {
   setupTableEdgeControls(previewPane, editorWrapper, editor);
+  setupListDragControls(previewPane, editorWrapper, editor);
 }
 
 setupSlashMenu(

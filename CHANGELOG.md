@@ -1,5 +1,10 @@
 # Change Log
 
+## 0.6.0 - 2026-11-21
+
+- Markdown Live Preview Editor の箇条書き（`-`）、番号付きリスト（`1.`）、およびタスクリスト／チェックリスト（`- [ ]` / `- [x]`）において、項目ホバー時に表示されるドラッグハンドル（`⋮⋮`）をドラッグ＆ドロップして順番を入れ替えられる機能を追加
+- 同一リスト・同一階層内の並び替えだけでなく、別リスト間の移動（箇条書き ⇔ チェックリスト間の自動変換を含む）や、別階層への移動（右方向へのドラッグによる子階層化・親階層への引き上げ）に対応
+
 ## 0.5.0 - 2026-11-18
 
 - カスタムエディタビュー（StructGridEditor / Markdown Live Preview Editor / StructGridEditor Read-Only）から元の標準エディタへ切り替えるコマンド `struct-grid-editor.openAsText` およびデフォルトショートカット（Windows/Linux: `Ctrl+Alt+E`, macOS: `Cmd+Alt+E`）を追加
